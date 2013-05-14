@@ -14,6 +14,8 @@ urlpatterns = patterns('',
         view=views.IndexView.as_view(),
         name="index"
     ),
+
+"""
     url(
         regex=r'^(?P<app_label>[_\-\w]+)/(?P<model_name>[_\-\w]+)/$',
         view=views.ModelListView.as_view(),
@@ -39,4 +41,5 @@ urlpatterns = patterns('',
         view=views.ModelDeleteView.as_view(),
         name="model_delete"
     )
+"""
 )

@@ -59,6 +59,7 @@ class Admin2ViewMixin(object):
         return apps
 
     def set_admin2_base(self):
+        # TODO - probably delete
         """ Sets a number of commonly used attributes """
         if hasattr(self, "app_label"):
             # prevents us from calling this multiple times
@@ -74,6 +75,7 @@ class Admin2ViewMixin(object):
         self.models = import_module(self.model_name)
 
     def set_admin2(self):
+        # TODO - probably delete
         """ Returns the Admin2 object for an app_label/document_name style view
         """
         if hasattr(self, "admin2"):
@@ -90,6 +92,7 @@ class Admin2ViewMixin(object):
         # TODO change this to use 'finally' or 'else' or something
         if not hasattr(self, "admin2"):
             raise NoAdmin2Specified("No admin2 for {0}.{1}".format(self.app_label, self.document_name))
+
 
     def set_permissions_in_context(self, context={}):
         """ Provides permissions for admin2 for use in the context"""
