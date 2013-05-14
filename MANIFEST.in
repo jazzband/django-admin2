@@ -1,4 +1,4 @@
 include README.rst
 include LICENSE
 include CONTRIBUTORS.txt
-recursive-include admin2 *.py
+include MANIFEST.in

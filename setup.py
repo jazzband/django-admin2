@@ -27,8 +27,8 @@ setup(
     author_email='pydanny@gmail.com',
     url='http://github.com/pydanny/django-admin2',
     license='MIT',
-    packages=find_packages(exclude=['examples']),
+    packages=find_packages(),
     include_package_data=True,
-    install_requires=['django>=1.5.0', 'django-braces=='],
+    install_requires=['django>=1.5.0', 'django-braces==1.0.0'],
     zip_safe=False,
 )

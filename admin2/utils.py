@@ -16,16 +16,17 @@ class AppStore(object):
         self.models.append(model)
 
 
-def get_admin2s(self):
+def get_admin2s():
     """ Returns a list of all admin2 implementations for the site """
     apps = []
-    for app_name in settings.INSTALLED_APPS:
-        admin2 = "{0}.admin2".format(app_name)
+    for app_name in [x for x in settings.INSTALLED_APPS if x != 'admin2']:
+        name = "{0}.admin2".format(app_name)
         try:
-            module = import_module(admin2)
+            module = import_module(name)
         except ImportError as e:
             if str(e) == "No module named admin2":
                 continue
+            print name
             raise e
 
         app_store = AppStore(module)
