@@ -1,0 +1,2 @@
+class NoAdminSpecified(Exception):
+    pass

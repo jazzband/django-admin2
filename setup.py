@@ -23,7 +23,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='django,admin',
-    author=mongonaut.__author__,
+    author=admin2.__author__,
     author_email='pydanny@gmail.com',
     url='http://github.com/pydanny/django-admin2',
     license='MIT',
