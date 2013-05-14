@@ -9,7 +9,7 @@ Basic Pattern
 
 Our goal is to make this API work:
 
-.. code-block::
+.. code-block:: python
 
     # myapp/admin2.py
 
@@ -21,6 +21,24 @@ Our goal is to make this API work:
 
     # Instantiate the Admin2 class
     # Then attach the admin2 object to your model
-    Post.admin2 = Admin()
+    Post.admin2 = Admin2()
     
 .. note:: You will notice a difference between how and django.contrib.admin and django-admin2 do configuration. The former associates the configuration class with the model object via a registration utility, and the latter does so by adding the configuration class as an attribute of the model object.
+
+Themes
+========
+
+The default theme is whatever bootstrap is most current. Specifically:
+
+.. code-block:: python
+
+    ADMIN2_THEME_DIRECTORY = "/admin2/bootstrap/"
+
+If you create a new theme, please define it thus:
+
+    ADMIN2_THEME_DIRECTORY = "/admin2/foundation/"
+
+REST API
+==========
+
+We plan to expose a REST API using Django Rest Framework. From this, you can define new themes powered by the client framework of your choice.
