@@ -1,3 +1,11 @@
+"""
+
+For wont of a better name, this module is called 'models'. It's role is
+synonymous with the django.contrib.admin.sites model.
+
+"""
+
+
 try:
     import floppyforms as forms
 except ImportError:
