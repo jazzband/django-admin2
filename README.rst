@@ -45,3 +45,8 @@ REST API
 ==========
 
 We plan to expose a REST API using Django Rest Framework. From this, you can define new themes powered by the client framework of your choice.
+
+Contributing
+=============
+
+Yes please! Please read our formal contributing document at: https://github.com/pydanny/django-admin2/blob/master/docs/contributing.rst
