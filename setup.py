@@ -10,7 +10,7 @@ setup(
     description="An introspective interface for Django's ORM.",
     long_description=LONG_DESCRIPTION,
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 2 - Pre-Alpha",
         "Environment :: Web Environment",
         "Framework :: Django",
         "License :: OSI Approved :: BSD License",
@@ -29,6 +29,10 @@ setup(
     license='MIT',
     packages=find_packages(),
     include_package_data=True,
-    install_requires=['django>=1.5.0', 'django-braces==1.0.0'],
+    install_requires=[
+        'django>=1.5.0',
+        'django-braces==1.0.0',
+        'django-rest-framework==2.3'
+        ],
     zip_safe=False,
 )

@@ -22,6 +22,7 @@ Our goal is to make this API work:
     # Instantiate the Admin2 class
     # Then attach the admin2 object to your model
     Post.admin2 = Admin2()
+
     
 .. note:: You will notice a difference between how and django.contrib.admin and django-admin2 do configuration. The former associates the configuration class with the model object via a registration utility, and the latter does so by adding the configuration class as an attribute of the model object.
 
