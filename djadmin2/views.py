@@ -12,6 +12,8 @@ from .utils import get_admin2s
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
 class Admin2Mixin(object):
+    modeladmin = None
+
     def get_template_names(self):
         return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
 
