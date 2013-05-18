@@ -7,11 +7,12 @@ from django.db import models
 
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 
-from .utils import get_admin2s
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
 class Admin2Mixin(object):
+    modeladmin = None
+
     def get_template_names(self):
         return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
 
@@ -27,12 +28,16 @@ class Admin2Mixin(object):
         return modelform_factory(self.get_model())
 
 
-class IndexView(Admin2Mixin, generic.ListView):
+class IndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "index.html"
+    registry = None
 
-    def get_queryset(self):
-        return get_admin2s()
-
+    def get_context_data(self, **kwargs):
+        data = super(IndexView, self).get_context_data(**kwargs)
+        data.update({
+            'registry': self.registry
+        })
+        return data
 
 class ModelListView(Admin2Mixin, generic.ListView):
     default_template_name = "model_list.html"
