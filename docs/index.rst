@@ -1,17 +1,19 @@
-.. django-admin2 documentation master file, created by
-   sphinx-quickstart on Sat May 18 12:59:02 2013.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Welcome to django-admin2's documentation!
 =========================================
 
-Contents:
+**django-admin2** aims to replace django's builtin admin that lives in
+``django.contrib.admin``. Come and help us, have a look at the
+:doc:`contributing` page and see our `GitHub`_ page.
+
+.. _GitHub: https://github.com/pydanny/django-admin2
+
+Content
+-------
 
 .. toctree::
    :maxdepth: 2
 
-
+   contributing
 
 Indices and tables
 ==================
