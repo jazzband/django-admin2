@@ -41,9 +41,6 @@ class Admin2(object):
             app_label = model._meta.app_label
             model_name = model._meta.object_name.lower()        
 
-            app_name = '{}:{}:{}'.format(self.app_name, app_label, model_name)
-            namespace =  '{}:{}:{}'.format(self.name, app_label, model_name)
-
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(app_label, model_name),
                     include(modeladmin.urls)),
