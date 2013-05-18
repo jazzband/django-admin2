@@ -1,10 +1,11 @@
 {% extends "admin2/bootstrap/base.html" %}
+{% load admin2_urls %}
 
 {% block content %}
-    <a href="./create/">add</a>
+    <a href="{% url view|admin2_urlname:'create' %}">add</a>
     <hr/>
 {% for obj in object_list %}
-    {{ obj }} <a href="./{{ obj.pk }}/">detail</a> <a href="./{{ obj.pk }}/update/">edit</a> <a href="./{{ obj.pk }}/delete/">delete</a><br/>
+    {{ obj }} <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">detail</a> <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">edit</a> <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">delete</a><br/>
 {% endfor %}
 
 

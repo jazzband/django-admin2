@@ -1,5 +1,6 @@
 import os
 
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.forms.models import modelform_factory
 from django.views import generic
@@ -12,6 +13,8 @@ ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/boo
 
 class Admin2Mixin(object):
     modeladmin = None
+    model_name = None
+    app_label = None
 
     def get_template_names(self):
         return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
@@ -39,6 +42,7 @@ class IndexView(Admin2Mixin, generic.TemplateView):
         })
         return data
 
+
 class ModelListView(Admin2Mixin, generic.ListView):
     default_template_name = "model_list.html"
 
@@ -57,6 +61,10 @@ class ModelAddFormView(Admin2Mixin, generic.CreateView):
     form_class = None
     success_url = "../"
     default_template_name = "model_add_form.html"
+
+    def get_success_url(self):
+        view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
+        return reverse(view_name, kwargs={'pk': self.object.pk})
 
 
 class ModelDeleteView(Admin2Mixin, generic.DeleteView):

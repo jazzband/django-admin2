@@ -4,6 +4,8 @@ For wont of a better name, this module is called 'models'. It's role is
 synonymous with the django.contrib.admin.sites model.
 
 """
+import functools
+
 from django.conf.urls import patterns, include, url
 
 from djadmin2 import views
@@ -88,8 +90,11 @@ class ModelAdmin2(BaseAdmin2):
     detail_view = views.ModelDetailView
     delete_view = views.ModelDeleteView
 
-    def __init__(self, model, **kwargs):
+    def __init__(self, model, parent, **kwargs):
         self.model = model
+        self.parent = parent
+        self.app_label = model._meta.app_label
+        self.model_name = model._meta.object_name.lower()            
 
         if self.verbose_name is None:
             self.verbose_name = self.model._meta.verbose_name
@@ -98,7 +103,9 @@ class ModelAdmin2(BaseAdmin2):
 
     def get_default_view_kwargs(self):
         return {
+            'app_label': self.app_label,
             'model': self.model,
+            'model_name': self.model_name,
             'modeladmin': self,
         }
 
@@ -126,31 +133,33 @@ class ModelAdmin2(BaseAdmin2):
         return self.get_default_view_kwargs()
 
     def get_urls(self):
+        prefixed_name = functools.partial(str.format, '{}_{}_{}', self.app_label, self.model_name)
+
         return patterns('',
             url(
                 regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
-                name='index'
+                name=prefixed_name('index')
             ),
             url(
                 regex=r'^create/$', 
-                view=self.create_view.as_view(**self.get_create_kwargs()), 
-                name='create'
+                view=self.create_view.as_view(**self.get_create_kwargs()),
+                name=prefixed_name('create')
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.detail_view.as_view(**self.get_detail_kwargs()), 
-                name='detail'
+                view=self.detail_view.as_view(**self.get_detail_kwargs()),
+                name=prefixed_name('detail')
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/update/$',
                 view=self.update_view.as_view(**self.get_update_kwargs()),
-                name='update'
+                name=prefixed_name('update')
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/delete/$',
                 view=self.delete_view.as_view(**self.get_delete_kwargs()),
-                name='delete'
+                name=prefixed_name('delete')
             ),
         )
 

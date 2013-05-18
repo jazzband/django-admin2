@@ -10,15 +10,14 @@ from . import views
 class Admin2(object):
     index_view = views.IndexView
 
-    def __init__(self, name='admin2', app_name='admin2'):
+    def __init__(self, name='admin2'):
         self.registry = {}
         self.name = name
-        self.app_name = app_name
 
     def register(self, model, modeladmin=None, **kwargs):
         if not modeladmin:
             modeladmin = models.ModelAdmin2
-        self.registry[model] = modeladmin(model, **kwargs)
+        self.registry[model] = modeladmin(model, self, **kwargs)
 
     def deregister(self, model):
         del self.registry[model]
@@ -54,4 +53,4 @@ class Admin2(object):
 
     @property
     def urls(self):
-        return self.get_urls(), self.app_name, self.name
+        return self.get_urls(), self.name, self.name
