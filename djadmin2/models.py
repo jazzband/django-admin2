@@ -41,24 +41,41 @@ class BaseAdmin2(object):
     readonly_fields = ()
     ordering = None
 
-    def has_view_permission(self, request):
-        """
-        Returns True if the given HttpRequest has permission to view
-        *at least one* page in the mongonaut site.
-        """
-        return request.user.is_authenticated() and request.user.is_active
 
-    def has_edit_permission(self, request):
+    # TODO: make the model argument required after the registration code has been refactored.
+    # def __init__(self, model):
+    def __init__(self, model=None):
+        super(BaseAdmin2, self).__init__()
+
+        self.model = model
+
+
+    def _user_has_permission(self, user, permission_type, obj=None):
+        """ Generic method for checking whether the user has permission of specified type for the model.
+        Type can be one of view, add, change, delete.
+        You can also specify instance of the model for object-specific permission check.
+        """
+        if not user.is_authenticated() or not user.is_staff:
+            return False
+        opts = self.model._meta
+        full_permission_name = '%s.%s_%s' % (opts.app_label, permission_type, opts.object_name.lower())
+        return user.has_perm(full_permission_name, obj)
+
+    def has_view_permission(self, request, obj=None):
+        """ Can view this object """
+        return self._user_has_permission(request.user, 'view', obj)
+
+    def has_edit_permission(self, request, obj=None):
         """ Can edit this object """
-        return request.user.is_authenticated() and request.user.is_active and request.user.is_staff
+        return self._user_has_permission(request.user, 'change', obj)
 
-    def has_add_permission(self, request):
+    def has_add_permission(self, request, obj=None):
         """ Can add this object """
-        return request.user.is_authenticated() and request.user.is_active and request.user.is_staff
+        return self._user_has_permission(request.user, 'add', obj)
 
-    def has_delete_permission(self, request):
+    def has_delete_permission(self, request, obj=None):
         """ Can delete this object """
-        return request.user.is_authenticated() and request.user.is_active and request.user.is_superuser
+        return self._user_has_permission(request.user, 'delete', obj)
 
 
 class Admin2(BaseAdmin2):
