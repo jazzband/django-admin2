@@ -40,7 +40,7 @@ def get_package_data(package):
     return {package: filepaths}
 
 
-version = get_version('admin2')
+version = get_version('djadmin2')
 
 
 if sys.argv[-1] == 'publish':
@@ -50,7 +50,7 @@ if sys.argv[-1] == 'publish':
     print("  git push --tags")
     sys.exit()
 
-import admin2
+import djadmin2
 
 LONG_DESCRIPTION = open('README.rst').read()
 
@@ -73,11 +73,11 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='django,admin',
-    author=admin2.__author__,
+    author=djadmin2.__author__,
     author_email='pydanny@gmail.com',
     url='http://github.com/pydanny/django-admin2',
     license='MIT',
-    packages=get_packages('admin2'),
+    packages=get_packages('djadmin2'),
     include_package_data=True,
     install_requires=[
         'django>=1.5.0',
