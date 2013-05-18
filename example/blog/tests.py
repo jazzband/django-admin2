@@ -1,16 +1,36 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+from django.utils import unittest
+from django.test.client import RequestFactory
 
-Replace this with more appropriate tests for your application.
-"""
+from djadmin2 import views
 
-from django.test import TestCase
+class ViewTest(unittest.TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+class IndexViewTest(ViewTest):
+    def test_response_ok(self):
+        request = self.factory.get('/admin/blog/post/')
+        response = views.IndexView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+
+
+class ModelListViewTest(ViewTest):
+    pass
+
+
+class ModelDetailViewTest(ViewTest):
+    pass
+
+
+class ModelEditFormViewTest(ViewTest):
+    pass
+
+
+class ModelAddFormViewTest(ViewTest):
+    pass
+
+
+class ModelDeleteViewTest(ViewTest):
+    pass
+
