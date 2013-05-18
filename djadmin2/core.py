@@ -9,6 +9,13 @@ from . import views
 
 
 class Admin2(object):
+    """
+    The base Admin2 object.
+    It keeps a registry of all registered Models and collects the urls of their
+    related ModelAdmin2 instances.
+
+    It also provides an index view that serves as an entry point to the admin site.
+    """
     index_view = views.IndexView
 
     def __init__(self, name='admin2', app_name='admin2'):
@@ -17,6 +24,15 @@ class Admin2(object):
         self.app_name = app_name
 
     def register(self, model, modeladmin=None, **kwargs):
+        """
+        Registers the given model with the given admin class.
+
+        If no modeladmin is passed, it will use ModelAdmin2. If keyword
+        arguments are given they will be passed to the admin class on
+        instantiation.
+
+        If a model is already registered, this will raise ImproperlyConfigured.
+        """
         if model in self.registry:
             raise ImproperlyConfigured
         if not modeladmin:
@@ -24,13 +40,21 @@ class Admin2(object):
         self.registry[model] = modeladmin(model, **kwargs)
 
     def deregister(self, model):
+        """
+        De-registers the given model.
+
+        If the is not already registered, this will raise ImproperlyConfigured.
+        """
         try:
             del self.registry[model]
         except KeyError:
             raise ImproperlyConfigured
 
     def autodiscover(self):
-        apps = []
+        """
+        Auto-discovers all admin2.py modules for apps in INSTALLED_APPS by
+        trying to import them.
+        """
         for app_name in [x for x in settings.INSTALLED_APPS]:
             try:
                 import_module("%s.admin2" % app_name)
