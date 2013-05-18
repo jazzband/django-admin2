@@ -2,7 +2,7 @@
 from djadmin2.models import Admin2
 
 # Import your custom models
-from blog.models import Post, Comment
+from .models import Post, Comment
 
 # Instantiate the Admin2 class
 # Then attach the admin2 object to your model
