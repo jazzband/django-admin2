@@ -6,7 +6,7 @@ TODO - Add URL namespace
 from django.conf.urls.defaults import patterns, url
 
 
-from admin2 import views
+from djadmin2 import views
 
 urlpatterns = patterns('',
     url(
