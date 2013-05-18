@@ -12,7 +12,6 @@ class ViewTest(unittest.TestCase):
 
 
 class IndexViewModelListCreateAPIViewTest(ViewTest):
-
     def test_response_ok(self):
         request = self.factory.get('/admin/api/blog/post/')
         response = apiviews.ModelListCreateAPIView.as_view(model=Post)(request)
