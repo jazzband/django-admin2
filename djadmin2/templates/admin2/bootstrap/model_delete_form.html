@@ -2,6 +2,11 @@
 
 {% block content %}
 
-TODO
+<form method="post">
+    {% csrf_token %}
+    delete {{ object }}
+    {{ form.as_p }}
+    <input type="submit"/>
+</form>
 
 {% endblock content %}

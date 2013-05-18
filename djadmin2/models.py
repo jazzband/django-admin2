@@ -4,14 +4,17 @@ For wont of a better name, this module is called 'models'. It's role is
 synonymous with the django.contrib.admin.sites model.
 
 """
-
+from django.conf.urls import patterns, include, url
 from django.contrib.auth import models as auth_app
 from django.db.models import get_models, signals
+
+from djadmin2 import views
 
 try:
     import floppyforms as forms
 except ImportError:
     from django import forms
+
 
 
 class BaseAdmin2(object):
@@ -80,8 +83,7 @@ class BaseAdmin2(object):
         return self._user_has_permission(request.user, 'delete', obj)
 
 
-class Admin2(BaseAdmin2):
-
+class ModelAdmin2(BaseAdmin2):
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()
@@ -92,6 +94,50 @@ class Admin2(BaseAdmin2):
     search_fields = ()
     save_as = False
     save_on_top = False
+
+    #  Views
+    index_view = views.ModelListView
+    create_view = views.ModelAddFormView
+    update_view = views.ModelEditFormView
+    detail_view = views.ModelDetailView
+    delete_view = views.ModelDeleteView
+
+    def __init__(self, model, **kwargs):
+        self.model = model
+
+    def get_urls(self):
+        return patterns('',
+            url(
+                regex=r'^$',
+                view=self.index_view.as_view(model=self.model),
+                name='index'
+            ),
+            url(
+                regex=r'^create/$', 
+                view=self.create_view.as_view(model=self.model), 
+                name='create'
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/$',
+                view=self.detail_view.as_view(model=self.model), 
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/update/$',
+                view=self.update_view.as_view(model=self.model),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/delete/$',
+                view=self.delete_view.as_view(model=self.model),
+                name='delete'
+            ),
+        )
+
+    @property
+    def urls(self):
+        # We set the application and instance namespace here
+        return self.get_urls(), None, None
 
 
 

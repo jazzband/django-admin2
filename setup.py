@@ -79,7 +79,7 @@ setup(
     license='MIT',
     packages=get_packages('djadmin2'),
     include_package_data=True,
-    test_suite='djadmin2.tests',
+    test_suite='runtests.runtests',
     install_requires=[
         'django>=1.5.0',
         'django-braces==1.0.0',
