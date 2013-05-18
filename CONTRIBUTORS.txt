@@ -1,1 +1,13 @@
+CONTRIBUTORS
+
+Project Lead
+===============
+
 * Daniel Greenfeld <pydanny@gmail.com>
+
+Developers
+=============
+
+* Audrey Roy (@audreyr)
+* Peter Ingelsby (@inglesp)
+* Ludwig Wadenstein (@ludw)
