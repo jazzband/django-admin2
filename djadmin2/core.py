@@ -33,9 +33,14 @@ class Admin2(object):
                     continue
                 raise e
 
+    def get_index_kwargs(self):
+        return {
+            'registry': self.registry,
+        }
+
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(), name='index'),
+            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='index'),
         )
         for model, modeladmin in self.registry.iteritems():
             app_label = model._meta.app_label

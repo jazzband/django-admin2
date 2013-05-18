@@ -75,10 +75,11 @@ class ModelAdmin2(BaseAdmin2):
     search_fields = ()
     save_as = False
     save_on_top = False
+    verbose_name = None
+    verbose_name_plural = None
 
     create_form_class = None
     update_form_class = None
-
 
     #  Views
     index_view = views.ModelListView
@@ -89,6 +90,11 @@ class ModelAdmin2(BaseAdmin2):
 
     def __init__(self, model, **kwargs):
         self.model = model
+
+        if self.verbose_name is None:
+            self.verbose_name = self.model._meta.verbose_name
+        if self.verbose_name_plural is None:
+            self.verbose_name_plural = self.model._meta.verbose_name_plural
 
     def get_default_view_kwargs(self):
         return {

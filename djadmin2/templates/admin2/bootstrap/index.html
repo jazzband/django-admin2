@@ -2,11 +2,9 @@
 
 {% block content %}
 <h1>Index</h1>
-
-{{ object_list }}
 <table>
-{% for obj in object_list %}
-    <tr><td>{{ obj.app_name }}</td></tr>
+{% for modeladmin in registry.values %}
+    <tr><td>{{ modeladmin.verbose_name_plural }}</td></tr>
 {% endfor %}
 </table>
 {% endblock content %}
