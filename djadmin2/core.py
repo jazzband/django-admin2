@@ -90,7 +90,7 @@ class Admin2(object):
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(model._meta.app_label, model._meta.object_name.lower()),
                     include(modeladmin.urls)),
-                url('^api/{}/{}/'.format(model._meta.app_label, model._meta.object_name.lower()),
+                url('^api/{}/{}/'.format(app_label, model_name),
                     include(modeladmin.api_urls)),
             )
         return urlpatterns

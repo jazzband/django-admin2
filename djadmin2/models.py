@@ -165,6 +165,12 @@ class ModelAdmin2(BaseAdmin2):
     def get_index_url(self):
         return reverse('admin2:{}'.format(self.get_prefixed_view_name('index')))
 
+    def get_api_index_kwargs(self):
+        return self.get_default_view_kwargs()
+
+    def get_api_detail_kwargs(self):
+        return self.get_default_view_kwargs()
+
     def get_urls(self):
         return patterns('',
             url(
