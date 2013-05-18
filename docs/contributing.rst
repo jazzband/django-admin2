@@ -120,7 +120,7 @@ Run the tests!
 
 Before you submit a pull request, please run the entire django-admin2 test suite via::
 
-    python manage.py test --settings=settings.test
+    TODO: Get this working then describe how to run tests.
 
 The first thing the core committers will do is run this command. Any pull request that fails this test suite will be **immediately rejected**.
 
