@@ -14,6 +14,7 @@ Content
    :maxdepth: 2
 
    contributing
+   meta
 
 Indices and tables
 ==================
