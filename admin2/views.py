@@ -5,6 +5,7 @@ from django.views.generic import ListView
 
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 
+from .
 from .utils import get_admin2s
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
@@ -28,11 +29,18 @@ class ModelDetailView(object):
 
 
 class ModelEditFormView(object):
-    pass
+
+    def get_form_class(self):
+        """ See ticket #16 """
+        return self.form_class
 
 
 class ModelAddFormView(object):
-    pass
+
+    def get_form_class(self):
+        """ See ticket #16 """
+        return self.form_class
+
 
 
 class ModelDeleteView(object):
