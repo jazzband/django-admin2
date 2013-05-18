@@ -9,7 +9,6 @@ from django.db import models
 
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin, AccessMixin
 
-from .utils import get_admin2s
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
@@ -17,18 +16,6 @@ ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/boo
 class Admin2Mixin(object):
     def get_template_names(self):
         return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
-
-    def get_model(self):
-        return self.modeladmin.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
-
-
-    def get_form_class(self):
-        if self.form_class is not None:
-            return self.form_class
-        return modelform_factory(self.get_model())
 
 
 class AdminModel2Mixin(Admin2Mixin, AccessMixin):
@@ -60,13 +47,28 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
         })
         return context
 
-
-class IndexView(Admin2Mixin, generic.ListView):
-    default_template_name = "index.html"
+    def get_model(self):
+        return self.model
 
     def get_queryset(self):
-        return get_admin2s()
+        return self.get_model()._default_manager.all()
 
+    def get_form_class(self):
+        if self.form_class is not None:
+            return self.form_class
+        return modelform_factory(self.get_model())
+
+
+class IndexView(Admin2Mixin, generic.TemplateView):
+    default_template_name = "index.html"
+    registry = None
+
+    def get_context_data(self, **kwargs):
+        data = super(IndexView, self).get_context_data(**kwargs)
+        data.update({
+            'registry': self.registry
+        })
+        return data
 
 class ModelListView(AdminModel2Mixin, generic.ListView):
     default_template_name = "model_list.html"
