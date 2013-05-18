@@ -2,13 +2,16 @@
 Design
 ======
 
-Workflow
------------
+Workflow Pieces
+----------------
 
-*. Apps
-*. Apps.models
-*. AdminObj
-*. Appstore
+* Apps
+* Apps.models
+* AdminObj
+* Appstore
+
+Workflow
+----------------
 
 1. Instantiate Appstore
 2. Loop through the Apps then models per App
