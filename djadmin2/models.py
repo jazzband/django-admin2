@@ -5,6 +5,8 @@ synonymous with the django.contrib.admin.sites model.
 
 """
 
+from django.contrib.auth import models as auth_app
+from django.db.models import get_models, signals
 
 try:
     import floppyforms as forms
@@ -90,3 +92,55 @@ class Admin2(BaseAdmin2):
     search_fields = ()
     save_as = False
     save_on_top = False
+
+
+
+def create_permissions(app, created_models, verbosity, **kwargs):
+    """
+    Creates 'view' permissions for all models.
+    django.contrib.auth only creates add, change and delete permissions. Since we also support read-only views, we need
+    to add our own extra permission.
+    Copied from django.contrib.auth.management.create_permissions
+    """
+    from django.contrib.contenttypes.models import ContentType
+
+    def _get_permission_codename(action, opts):
+        return u'%s_%s' % (action, opts.object_name.lower())
+
+    app_models = get_models(app)
+
+    # This will hold the permissions we're looking for as
+    # (content_type, (codename, name))
+    searched_perms = list()
+    # The codenames and ctypes that should exist.
+    ctypes = set()
+    for klass in app_models:
+        ctype = ContentType.objects.get_for_model(klass)
+        ctypes.add(ctype)
+
+        opts = klass._meta
+        perm = (_get_permission_codename('view', opts), u'Can view %s' % opts.verbose_name_raw)
+        searched_perms.append((ctype, perm))
+
+    # Find all the Permissions that have a context_type for a model we're
+    # looking for.  We don't need to check for codenames since we already have
+    # a list of the ones we're going to create.
+    all_perms = set(auth_app.Permission.objects.filter(
+        content_type__in=ctypes,
+    ).values_list(
+        "content_type", "codename"
+    ))
+
+    objs = [
+        auth_app.Permission(codename=codename, name=name, content_type=ctype)
+        for ctype, (codename, name) in searched_perms
+        if (ctype.pk, codename) not in all_perms
+    ]
+    auth_app.Permission.objects.bulk_create(objs)
+    if verbosity >= 2:
+        for obj in objs:
+            print "Adding permission '%s'" % obj
+
+
+signals.post_syncdb.connect(create_permissions,
+    dispatch_uid = "django-admin2.djadmin2.models.create_permissions")
