@@ -83,18 +83,18 @@ class Admin2(object):
 
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
+            url(r'^$', self.index_view.as_view(), name='index'),
         )
         for model, modeladmin in self.registry.iteritems():
-            app_label = model._meta.app_label
-            model_name = model._meta.object_name.lower()
-
             urlpatterns += patterns('',
-                url('^{}/{}/'.format(app_label, model_name),
+                url('^{}/{}/'.format(model._meta.app_label, model._meta.object_name.lower()),
                     include(modeladmin.urls)),
+                url('^api/{}/{}/'.format(model._meta.app_label, model._meta.object_name.lower()),
+                    include(modeladmin.api_urls)),
             )
         return urlpatterns
 
     @property
     def urls(self):
+        # We set the application and instance namespace here
         return self.get_urls(), self.name, self.name
