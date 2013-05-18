@@ -1,5 +1,6 @@
-<html>
-<body>
+{% extends "admin/base.html" %}
+
+{% block content %}
 <h1>Index</h1>
 
 <table>
@@ -7,6 +8,4 @@
     <tr><td>{{ obj. }}</td></tr>
 {% endfor %}
 </table>
-
-</body>
-</html>
+{% endblock content %}
