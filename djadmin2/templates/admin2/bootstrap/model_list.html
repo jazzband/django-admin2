@@ -1,10 +1,10 @@
 {% extends "admin/base.html" %}
 
 {% block content %}
-    <a href="./add/">add</a>
+    <a href="./create/">add</a>
     <hr/>
 {% for obj in object_list %}
-    {{ obj }} <a href="./{{ obj.pk }}/">detail</a> <a href="./{{ obj.pk }}/edit/">edit</a> <a href="./{{ obj.pk }}/delete/">delete</a><br/>
+    {{ obj }} <a href="./{{ obj.pk }}/">detail</a> <a href="./{{ obj.pk }}/update/">edit</a> <a href="./{{ obj.pk }}/delete/">delete</a><br/>
 {% endfor %}
 
 
