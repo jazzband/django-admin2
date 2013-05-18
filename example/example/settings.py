@@ -151,3 +151,6 @@ LOGGING = {
         },
     }
 }
+
+
+ADMIN2_THEME_DIRECTORY = "admin2/monkey/"

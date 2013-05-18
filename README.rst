@@ -41,13 +41,13 @@ The default theme is whatever bootstrap is most current. Specifically:
 
 .. code-block:: python
 
-    ADMIN2_THEME_DIRECTORY = "/admin2/bootstrap/"
+    ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
 
 If you create a new theme, please define it thus:
 
 .. code-block:: python
 
-    ADMIN2_THEME_DIRECTORY = "/admin2/foundation/"
+    ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
 
 REST API
 ==========

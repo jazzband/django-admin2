@@ -2,9 +2,10 @@
 <body>
 <h1>Index</h1>
 
+{{ object_list }}
 <table>
 {% for obj in object_list %}
-    <tr><td>{{ obj. }}</td></tr>
+    <tr><td>{{ obj.app_name }}</td></tr>
 {% endfor %}
 </table>
 
