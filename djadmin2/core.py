@@ -10,10 +10,14 @@ from . import views
 class Admin2(object):
     index_view = views.IndexView
 
-    def __init__(self):
+    def __init__(self, name='admin2', app_name='admin2'):
         self.registry = {}
+        self.name = name
+        self.app_name = app_name
 
-    def register(self, model, modeladmin=models.ModelAdmin2, **kwargs):
+    def register(self, model, modeladmin=None, **kwargs):
+        if not modeladmin:
+            modeladmin = models.ModelAdmin2
         self.registry[model] = modeladmin(model, **kwargs)
 
     def deregister(self, model):
@@ -29,19 +33,25 @@ class Admin2(object):
                     continue
                 raise e
 
+    def get_index_kwargs(self):
+        return {
+            'registry': self.registry,
+        }
+
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(), name='index'),
+            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='index'),
         )
         for model, modeladmin in self.registry.iteritems():
+            app_label = model._meta.app_label
+            model_name = model._meta.object_name.lower()        
+
             urlpatterns += patterns('',
-                url('^{}/{}/'.format(model._meta.app_label, model._meta.object_name.lower()),
+                url('^{}/{}/'.format(app_label, model_name),
                     include(modeladmin.urls)),
             )
         return urlpatterns
 
     @property
     def urls(self):
-        # We set the application and instance namespace here
-        return self.get_urls(), None, None
-        
+        return self.get_urls(), self.app_name, self.name
