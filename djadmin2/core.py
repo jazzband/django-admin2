@@ -41,7 +41,7 @@ class Admin2(object):
 
     def deregister(self, model):
         """
-        De-registers the given model.
+        Deregisters the given model.
 
         If the model is not already registered, this will raise ImproperlyConfigured.
         """
@@ -52,7 +52,7 @@ class Admin2(object):
 
     def autodiscover(self):
         """
-        Auto-discovers all admin2.py modules for apps in INSTALLED_APPS by
+        Autodiscovers all admin2.py modules for apps in INSTALLED_APPS by
         trying to import them.
         """
         for app_name in [x for x in settings.INSTALLED_APPS]:
