@@ -1,10 +1,9 @@
-from os.path import join
+import os
 
 from django.conf import settings
-
 from django.forms.models import modelform_factory
-from django.db import models
 from django.views import generic
+from django.db import models
 
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 
@@ -12,77 +11,49 @@ from .utils import get_admin2s
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
-
-class IndexView(generic.ListView): #(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
-
+class Admin2Mixin(object):
     def get_template_names(self):
-        return [join(ADMIN2_THEME_DIRECTORY, "index.html")]
+        return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
+
+    def get_model(self):
+        return self.model
+
+    def get_queryset(self):
+        return self.get_model()._default_manager.all()
+
+    def get_form_class(self):
+        if self.form_class is not None:
+            return self.form_class
+        return modelform_factory(self.get_model())
+
+
+class IndexView(Admin2Mixin, generic.ListView):
+    default_template_name = "index.html"
 
     def get_queryset(self):
         return get_admin2s()
 
 
-class ModelListView(generic.ListView):
-    def get_template_names(self):
-        return [join(ADMIN2_THEME_DIRECTORY, "model_list.html")]
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
+class ModelListView(Admin2Mixin, generic.ListView):
+    default_template_name = "model_list.html"
 
 
-class ModelDetailView(generic.DetailView):
-
-    def get_template_names(self):
-        return [join(ADMIN2_THEME_DIRECTORY, "model_detail.html")]
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
+class ModelDetailView(Admin2Mixin, generic.DetailView):
+    default_template_name = "model_detail.html"
 
 
-
-class ModelEditFormView(generic.UpdateView):
+class ModelEditFormView(Admin2Mixin, generic.UpdateView):
     form_class = None
     success_url = "../../"
+    default_template_name = "model_edit_form.html"
 
 
-    def get_template_names(self):
-        return [join(ADMIN2_THEME_DIRECTORY, "model_edit_form.html")]
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
-
-
-class ModelAddFormView(generic.CreateView):
+class ModelAddFormView(Admin2Mixin, generic.CreateView):
     form_class = None
     success_url = "../"
-
-    def get_template_names(self):
-        return [join(ADMIN2_THEME_DIRECTORY, "model_add_form.html")]
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
+    default_template_name = "model_add_form.html"
 
 
-class ModelDeleteView(generic.DeleteView):
+class ModelDeleteView(Admin2Mixin, generic.DeleteView):
     success_url = "../../"
-
-    def get_template_names(self):
-        return [join(ADMIN2_THEME_DIRECTORY, "model_delete_form.html")]
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
+    default_template_name = "model_delete.html"
