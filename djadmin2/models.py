@@ -35,7 +35,7 @@ class BaseAdmin2(object):
     fields = None
     exclude = None
     fieldsets = None
-    form = forms.ModelForm
+    form_class = None
     filter_vertical = ()
     filter_horizontal = ()
     radio_fields = {}
@@ -76,6 +76,10 @@ class ModelAdmin2(BaseAdmin2):
     save_as = False
     save_on_top = False
 
+    create_form_class = None
+    update_form_class = None
+
+
     #  Views
     index_view = views.ModelListView
     create_view = views.ModelAddFormView
@@ -86,31 +90,60 @@ class ModelAdmin2(BaseAdmin2):
     def __init__(self, model, **kwargs):
         self.model = model
 
+    def get_default_view_kwargs(self):
+        return {
+            'model': self.model,
+            'modeladmin': self,
+        }
+
+    def get_index_kwargs(self):
+        return self.get_default_view_kwargs()
+
+    def get_create_kwargs(self):
+        kwargs = self.get_default_view_kwargs()
+        kwargs.update({
+            'form_class': self.create_form_class if self.create_form_class else self.form_class,
+        })
+        return kwargs
+
+    def get_update_kwargs(self):
+        kwargs = self.get_default_view_kwargs()
+        kwargs.update({
+            'form_class': self.update_form_class if self.update_form_class else self.form_class,
+        })
+        return kwargs
+
+    def get_detail_kwargs(self):
+        return self.get_default_view_kwargs()
+
+    def get_delete_kwargs(self):
+        return self.get_default_view_kwargs()
+
     def get_urls(self):
         return patterns('',
             url(
                 regex=r'^$',
-                view=self.index_view.as_view(model=self.model),
+                view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='index'
             ),
             url(
                 regex=r'^create/$', 
-                view=self.create_view.as_view(model=self.model), 
+                view=self.create_view.as_view(**self.get_create_kwargs()), 
                 name='create'
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.detail_view.as_view(model=self.model), 
+                view=self.detail_view.as_view(**self.get_detail_kwargs()), 
                 name='detail'
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/update/$',
-                view=self.update_view.as_view(model=self.model),
+                view=self.update_view.as_view(**self.get_update_kwargs()),
                 name='update'
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/delete/$',
-                view=self.delete_view.as_view(model=self.model),
+                view=self.delete_view.as_view(**self.get_delete_kwargs()),
                 name='delete'
             ),
         )
