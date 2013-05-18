@@ -3,9 +3,13 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+import djadmin2
+
+djadmin2.default.autodiscover()
+
 urlpatterns = patterns('',
     # Examples:
-    url(r'^admin2/', include('djadmin2.urls')),
+    url(r'^admin2/', include(djadmin2.default.urls)),
     # url(r'^example/', include('example.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
