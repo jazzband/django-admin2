@@ -5,7 +5,7 @@ from django.views.generic import ListView
 
 from braces.views import LoginRequiredMixin, StaffuserRequiredMixin
 
-from .
+
 from .utils import get_admin2s
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
