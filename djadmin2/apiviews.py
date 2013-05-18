@@ -1,13 +1,13 @@
-from rest_framework.fields import Field
-from rest_framework.generics import ListCreateAPIView
-from rest_framework.serializers import ModelSerializer
+from rest_framework import fields, generics, serializers
 
 
-class Admin2APISerializer(ModelSerializer):
-    unicode = Field(source='__unicode__')
+class Admin2APISerializer(serializers.ModelSerializer):
+    unicode = fields.Field(source='__unicode__')
 
 
-class ModelListCreateAPIView(ListCreateAPIView):
+class Admin2APIMixin(object):
+    modeladmin = None
+
     def get_serializer_class(self):
         if self.serializer_class is None:
             class ModelAPISerilizer(Admin2APISerializer):
@@ -16,3 +16,11 @@ class ModelListCreateAPIView(ListCreateAPIView):
 
             return ModelAPISerilizer
         return super(ModelListCreateAPIView, self).get_serializer_class()
+
+
+class ModelListCreateAPIView(Admin2APIMixin, generics.ListCreateAPIView):
+    pass
+
+
+class ModelRetrieveUpdateDestroyAPIView(Admin2APIMixin, generics.RetrieveUpdateDestroyAPIView):
+    pass
