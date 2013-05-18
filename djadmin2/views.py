@@ -14,7 +14,7 @@ from .utils import get_admin2s
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
 
-class IndexView(ListView): #(LoginRequiredMixin, StaffuserRequiredMixin, ListView):
+class IndexView(ListView):
 
     def get_template_names(self):
         return [join(ADMIN2_THEME_DIRECTORY, "index.html")]
@@ -32,8 +32,6 @@ class ModelListView(ListView):
 
     def get_queryset(self):
         return self.get_model()._default_manager.all()
-
-
 
 
 class ModelDetailView(DetailView):
