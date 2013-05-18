@@ -7,12 +7,20 @@ import os
 import sys
 
 
+def get_author(package):
+    """
+    Return package version as listed in `__version__` in `init.py`.
+    """
+    init_py = open(os.path.join(package, '__init__.py')).read()
+    return re.search("__author__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+
+
 def get_version(package):
     """
     Return package version as listed in `__version__` in `init.py`.
     """
     init_py = open(os.path.join(package, '__init__.py')).read()
-    return re.match("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
+    return re.search("__version__ = ['\"]([^'\"]+)['\"]", init_py).group(1)
 
 
 def get_packages(package):
@@ -40,6 +48,7 @@ def get_package_data(package):
     return {package: filepaths}
 
 
+author = get_author('djadmin2')
 version = get_version('djadmin2')
 
 
@@ -49,8 +58,6 @@ if sys.argv[-1] == 'publish':
     print("  git tag -a %s -m 'version %s'" % (version, version))
     print("  git push --tags")
     sys.exit()
-
-import djadmin2
 
 LONG_DESCRIPTION = open('README.rst').read()
 
@@ -73,13 +80,13 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='django,admin',
-    author=djadmin2.__author__,
+    author=author,
     author_email='pydanny@gmail.com',
     url='http://github.com/pydanny/django-admin2',
     license='MIT',
     packages=get_packages('djadmin2'),
     include_package_data=True,
-    test_suite='djadmin2.tests',
+    test_suite='runtests.runtests',
     install_requires=[
         'django>=1.5.0',
         'django-braces==1.0.0',
