@@ -152,4 +152,4 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "admin2/monkey/"
+ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
