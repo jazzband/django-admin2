@@ -14,4 +14,4 @@ Developers
 * Raphael Kimmig (@RaphaelKimmig)
 * Andrew Ingram (@AndrewIngram)
 * Gregor Müllegger (@gregmuellegger)
-
+* Rivo Laks (@rivol)
