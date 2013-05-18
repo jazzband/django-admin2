@@ -35,6 +35,7 @@ Content
 
    contributing
    design
+   meta
 
 Indices and tables
 ==================
