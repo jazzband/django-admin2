@@ -67,6 +67,7 @@ class Admin2(object):
         Autodiscovers all admin2.py modules for apps in INSTALLED_APPS by
         trying to import them.
         """
+        apps = []
         for app_name in [x for x in settings.INSTALLED_APPS]:
             try:
                 import_module("%s.admin2" % app_name)

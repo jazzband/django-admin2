@@ -5,14 +5,12 @@ synonymous with the django.contrib.admin.sites model.
 
 """
 
-from djadmin2 import apiviews
-from djadmin2 import views
-
 from django.core.urlresolvers import reverse
 from django.conf.urls import patterns, url
 from django.contrib.auth import models as auth_app
 from django.db.models import get_models, signals
 
+from djadmin2 import apiviews
 from djadmin2 import views
 
 try:
@@ -110,6 +108,7 @@ class ModelAdmin2(BaseAdmin2):
     detail_view = views.ModelDetailView
     delete_view = views.ModelDeleteView
 
+    # API Views
     api_index_view = apiviews.ModelListCreateAPIView
     api_detail_view = apiviews.ModelRetrieveUpdateDestroyAPIView
 
@@ -200,12 +199,12 @@ class ModelAdmin2(BaseAdmin2):
             url(
                 regex=r'^$',
                 view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
-                name='api-index'
+                name=self.get_prefixed_view_name('api-index'),
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
                 view=self.api_detail_view.as_view(**self.get_api_detail_kwargs()),
-                name='api-detail'
+                name=self.get_prefixed_view_name('api-detail'),
             ),
         )
 
