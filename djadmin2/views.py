@@ -78,7 +78,6 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context = super(ModelListView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()._meta.verbose_name
         context['model_pluralized'] = self.get_model()._meta.verbose_name_plural
-        # context['model'] = self.get_queryset().model._meta.verbose_name
         return context
 
 
