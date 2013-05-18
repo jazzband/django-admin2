@@ -20,7 +20,7 @@ class IndexView(ListView): #(LoginRequiredMixin, StaffuserRequiredMixin, ListVie
         return get_admin2s()
 
 
-class ModelListView(object):
+class ModelListView(ListView):
     pass
 
 
