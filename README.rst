@@ -22,7 +22,7 @@ Our goal is to make this API work:
     # myapp/admin2.py
 
     # Import the Admin2 base class
-    from admin2.sites import Admin2
+    from admin2.models import Admin2
 
     # Import your custom models
     from blog.models import Post
