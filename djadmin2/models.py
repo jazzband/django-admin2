@@ -153,7 +153,7 @@ class ModelAdmin2(BaseAdmin2):
                 name='index'
             ),
             url(
-                regex=r'^create/$', 
+                regex=r'^create/$',
                 view=self.create_view.as_view(**self.get_create_kwargs()),
                 name='create'
             ),

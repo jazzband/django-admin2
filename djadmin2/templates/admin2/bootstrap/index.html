@@ -4,7 +4,7 @@
 <h1>Index</h1>
 <table>
 {% for modeladmin in registry.values %}
-    <tr><td>{{ modeladmin.verbose_name_plural }}</td></tr>
+    <tr><td><a href="">{{ modeladmin.verbose_name_plural }}</a></td></tr>
 {% endfor %}
 </table>
 {% endblock content %}
