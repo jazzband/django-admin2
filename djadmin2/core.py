@@ -43,7 +43,7 @@ class Admin2(object):
         """
         De-registers the given model.
 
-        If the is not already registered, this will raise ImproperlyConfigured.
+        If the model is not already registered, this will raise ImproperlyConfigured.
         """
         try:
             del self.registry[model]
