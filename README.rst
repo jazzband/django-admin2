@@ -2,6 +2,10 @@
 django-admin2
 ===============
 
+.. image:: https://travis-ci.org/pydanny/django-admin2.png
+   :alt: Build Status
+   :target: https://travis-ci.org/pydanny/django-admin2
+
 One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
 
 **Note:** This is pre-alpha and currently non-functional. We'll try and have a rough working prototype by the end of May 18th, 2013.
