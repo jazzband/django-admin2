@@ -88,11 +88,31 @@ class ModelAdmin2(BaseAdmin2):
 
     def get_urls(self):
         return patterns('',
-            url(r'^$', self.index_view.as_view(model=self.model), name='index'),
-            url(r'^create/$', self.create_view.as_view(model=self.model), name='create'),
-            url(r'^(?P<pk>[0-9]+)/$', self.detail_view.as_view(model=self.model), name='detail'),
-            url(r'^(?P<pk>[0-9]+)/update/$', self.update_view.as_view(model=self.model), name='update'),
-            url(r'^(?P<pk>[0-9]+)/delete/$', self.delete_view.as_view(model=self.model), name='delete'),
+            url(
+                regex=r'^$',
+                view=self.index_view.as_view(model=self.model),
+                name='index'
+            ),
+            url(
+                regex=r'^create/$', 
+                view=self.create_view.as_view(model=self.model), 
+                name='create'
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/$',
+                view=self.detail_view.as_view(model=self.model), 
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/update/$',
+                view=self.update_view.as_view(model=self.model),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/delete/$',
+                view=self.delete_view.as_view(model=self.model),
+                name='delete'
+            ),
         )
 
     @property
