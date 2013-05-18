@@ -11,3 +11,4 @@ Developers
 * Audrey Roy (@audreyr)
 * Peter Ingelsby (@inglesp)
 * Ludwig Wadenstein (@ludw)
+* Raphael Kimmig (@RaphaelKimmig)
