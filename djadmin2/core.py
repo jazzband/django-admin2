@@ -44,3 +44,4 @@ class Admin2(object):
     def urls(self):
         # We set the application and instance namespace here
         return self.get_urls(), None, None
+        
