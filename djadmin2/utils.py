@@ -9,7 +9,6 @@ class AppStore(object):
         for key in module.__dict__.keys():
             model_candidate = getattr(module, key)
             if hasattr(model_candidate, 'admin2'):
-                print model_candidate
                 self.add_model(model_candidate)
 
     def add_model(self, model):
