@@ -1,10 +1,20 @@
 {% extends "admin2/bootstrap/base.html" %}
 
 {% block content %}
-    <a href="./create/">add</a>
+    {% if has_add_permission %}
+        <a href="./create/">add</a>
+    {% endif %}
     <hr/>
 {% for obj in object_list %}
-    {{ obj }} <a href="./{{ obj.pk }}/">detail</a> <a href="./{{ obj.pk }}/update/">edit</a> <a href="./{{ obj.pk }}/delete/">delete</a><br/>
+    {{ obj }}
+    <a href="./{{ obj.pk }}/">detail</a>
+    {% if has_edit_permission %}
+        <a href="./{{ obj.pk }}/update/">edit</a>
+    {% endif %}
+    {% if has_delete_permission %}
+        <a href="./{{ obj.pk }}/delete/">delete</a>
+    {% endif %}
+    <br/>
 {% endfor %}
 
 

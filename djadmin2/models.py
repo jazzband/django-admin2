@@ -47,9 +47,7 @@ class BaseAdmin2(object):
     ordering = None
 
 
-    # TODO: make the model argument required after the registration code has been refactored.
-    # def __init__(self, model):
-    def __init__(self, model=None):
+    def __init__(self, model):
         super(BaseAdmin2, self).__init__()
 
         self.model = model
@@ -66,21 +64,24 @@ class BaseAdmin2(object):
         full_permission_name = '%s.%s_%s' % (opts.app_label, permission_type, opts.object_name.lower())
         return user.has_perm(full_permission_name, obj)
 
+    def has_permission(self, request, permission_type, obj=None):
+        return self._user_has_permission(request.user, permission_type, obj)
+
     def has_view_permission(self, request, obj=None):
         """ Can view this object """
-        return self._user_has_permission(request.user, 'view', obj)
+        return self.has_permission(request, 'view', obj)
 
     def has_edit_permission(self, request, obj=None):
         """ Can edit this object """
-        return self._user_has_permission(request.user, 'change', obj)
+        return self.has_permission(request, 'change', obj)
 
     def has_add_permission(self, request, obj=None):
         """ Can add this object """
-        return self._user_has_permission(request.user, 'add', obj)
+        return self.has_permission(request, 'add', obj)
 
     def has_delete_permission(self, request, obj=None):
         """ Can delete this object """
-        return self._user_has_permission(request.user, 'delete', obj)
+        return self.has_permission(request, 'delete', obj)
 
 
 class ModelAdmin2(BaseAdmin2):
@@ -109,27 +110,27 @@ class ModelAdmin2(BaseAdmin2):
         return patterns('',
             url(
                 regex=r'^$',
-                view=self.index_view.as_view(model=self.model),
+                view=self.index_view.as_view(modeladmin=self),
                 name='index'
             ),
             url(
                 regex=r'^create/$', 
-                view=self.create_view.as_view(model=self.model), 
+                view=self.create_view.as_view(modeladmin=self), 
                 name='create'
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.detail_view.as_view(model=self.model), 
+                view=self.detail_view.as_view(modeladmin=self), 
                 name='detail'
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/update/$',
-                view=self.update_view.as_view(model=self.model),
+                view=self.update_view.as_view(modeladmin=self),
                 name='update'
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/delete/$',
-                view=self.delete_view.as_view(model=self.model),
+                view=self.delete_view.as_view(modeladmin=self),
                 name='delete'
             ),
         )
