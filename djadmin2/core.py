@@ -17,7 +17,7 @@ class Admin2(object):
     def register(self, model, modeladmin=None, **kwargs):
         if not modeladmin:
             modeladmin = models.ModelAdmin2
-        self.registry[model] = modeladmin(model, self, **kwargs)
+        self.registry[model] = modeladmin(model, **kwargs)
 
     def deregister(self, model):
         del self.registry[model]
