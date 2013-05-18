@@ -1,8 +1,9 @@
 {% extends "admin2/bootstrap/base.html" %}
 
 {% block content %}
+    <h2>{{ model_pluralized|title }}</h2>
     {% if has_add_permission %}
-        <a href="./create/">add</a>
+        <a class="btn"  href="./create/">add</a>
     {% endif %}
     <hr/>
 {% for obj in object_list %}
