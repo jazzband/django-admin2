@@ -34,6 +34,7 @@ Content
    :maxdepth: 2
 
    contributing
+   design
 
 Indices and tables
 ==================
