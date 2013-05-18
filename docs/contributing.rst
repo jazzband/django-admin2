@@ -144,7 +144,7 @@ Keep your pull requests limited to a single issue
 django-admin2 pull requests should be as small/atomic as possible. Large, wide-sweeping changes in a pull request will be **rejected**, with comments to isolate the specific code in your pull request. Some examples:
 
 #. If you are making spelling corrections in the docs, don't modify the settings.py file (pydanny_ is guilty of this mistake).
-#. If you are adding a new view don't '*cleanup*' unrelated views. That cleanup belongs in another pull request.
+#. If you are fixing a view don't '*cleanup*' unrelated views. That cleanup belongs in another pull request.
 #. Changing permissions on a file should be in its own pull request with explicit reasons why.
 
 Follow PEP-8 and keep your code simple!
