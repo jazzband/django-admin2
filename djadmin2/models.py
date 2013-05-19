@@ -109,8 +109,8 @@ class ModelAdmin2(BaseAdmin2):
     delete_view = views.ModelDeleteView
 
     # API Views
-    api_index_view = apiviews.ModelListCreateAPIView
-    api_detail_view = apiviews.ModelRetrieveUpdateDestroyAPIView
+    api_index_view = apiviews.ListCreateAPIView
+    api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
 
     def __init__(self, model, **kwargs):
         self.model = model

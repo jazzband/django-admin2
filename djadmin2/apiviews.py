@@ -2,7 +2,7 @@ from rest_framework import fields, generics, serializers
 
 
 class Admin2APISerializer(serializers.ModelSerializer):
-    unicode = fields.Field(source='__unicode__')
+    __str__ = fields.Field(source='__unicode__')
 
 
 class Admin2APIMixin(object):
@@ -15,12 +15,12 @@ class Admin2APIMixin(object):
                     model = self.model
 
             return ModelAPISerilizer
-        return super(ModelListCreateAPIView, self).get_serializer_class()
+        return super(Admin2APIMixin, self).get_serializer_class()
 
 
-class ModelListCreateAPIView(Admin2APIMixin, generics.ListCreateAPIView):
+class ListCreateAPIView(Admin2APIMixin, generics.ListCreateAPIView):
     pass
 
 
-class ModelRetrieveUpdateDestroyAPIView(Admin2APIMixin, generics.RetrieveUpdateDestroyAPIView):
+class RetrieveUpdateDestroyAPIView(Admin2APIMixin, generics.RetrieveUpdateDestroyAPIView):
     pass

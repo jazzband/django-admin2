@@ -14,7 +14,7 @@ class ViewTest(unittest.TestCase):
 class IndexViewModelListCreateAPIViewTest(ViewTest):
     def test_response_ok(self):
         request = self.factory.get('/admin/api/blog/post/')
-        response = apiviews.ModelListCreateAPIView.as_view(model=Post)(request)
+        response = apiviews.ListCreateAPIView.as_view(model=Post)(request)
         self.assertEqual(response.status_code, 200)
 
     def test_list_includes_unicode_field(self):
