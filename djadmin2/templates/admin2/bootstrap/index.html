@@ -23,15 +23,17 @@
                             </a>
                         </td>
                         <td class="text-right">
-                            <a href="">
+                        {# if has_add_permission #}
+                            <a href="TODO">
                                 <i class="icon-plus"></i>
                                 Add
                             </a>
+                        {# endif #}
                         </td>
                         <td class="text-right">
-                            <a href="">
+                            <a href="{{ model_admin.get_index_url }}">
                                 <i class="icon-pencil"></i>
-                                Edit
+                                Change
                             </a>
                         </td>
                     </tr>
