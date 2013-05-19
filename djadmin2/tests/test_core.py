@@ -1,7 +1,6 @@
-import unittest
-
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
+from django.test import TestCase
 
 from ..models import ModelAdmin2
 from ..core import Admin2
@@ -11,7 +10,7 @@ class Thing(models.Model):
     pass
 
 
-class Admin2Test(unittest.TestCase):
+class Admin2Test(TestCase):
     def setUp(self):
         self.admin2 = Admin2()
 
@@ -33,4 +32,4 @@ class Admin2Test(unittest.TestCase):
 
     def test_get_urls(self):
         self.admin2.register(Thing)
-        self.assertEquals(2, len(self.admin2.get_urls()))
+        self.assertEquals(4, len(self.admin2.get_urls()))
