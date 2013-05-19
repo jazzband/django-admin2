@@ -129,5 +129,5 @@ class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
     success_url = "../../"
-    default_template_name = "model_delete.html"
+    default_template_name = "model_delete_form.html"
     permission_type = 'delete'

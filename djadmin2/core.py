@@ -45,7 +45,7 @@ class Admin2(object):
 
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='index'),
+            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
         )
         for model, modeladmin in self.registry.iteritems():
             app_label = model._meta.app_label
