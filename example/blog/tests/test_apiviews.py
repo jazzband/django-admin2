@@ -17,6 +17,15 @@ class ViewTest(unittest.TestCase):
         return ModelAdmin2(model, default)
 
 
+class IndexAPIViewTest(ViewTest):
+
+    def test_response_ok(self):
+        request = self.factory.get(reverse('admin2:api-index'))
+        view = apiviews.IndexAPIView.as_view(**default.get_api_index_kwargs())
+        response = view(request)
+        self.assertEqual(response.status_code, 200)
+
+
 class ListCreateAPIViewTest(ViewTest):
 
     def test_response_ok(self):

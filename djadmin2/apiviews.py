@@ -55,19 +55,18 @@ class IndexAPIView(Admin2APIMixin, APIView):
         }
 
     def get(self, request):
+        model_data = []
+        for model, modeladmin in self.registry.items():
+            model_data.append(self.get_model_data(model, modeladmin))
+        app_data = {
+            'url': '-- todo --',
+            'app_label': '-- todo --',
+            'models': model_data,
+        }
         index_data = {
             'version': API_VERSION,
-            'apps': [],
+            'apps': [app_data],
         }
-        for model, modeladmin in self.registry.items():
-            app_data = {
-                'url': '-- todo --',
-                'app_label': '-- todo --',
-                'models': [
-                    self.get_model_data(model, modeladmin),
-                ],
-            }
-            index_data['apps'].append(app_data)
         return Response(index_data)
 
 
