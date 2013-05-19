@@ -36,9 +36,11 @@ class Admin2APIMixin(Admin2Mixin):
 
 
 class IndexAPIView(Admin2APIMixin, APIView):
+    apps = None
     registry = None
 
-    def get_model_data(self, model, modeladmin):
+    def get_model_data(self, model):
+        modeladmin = self.registry[model]
         opts = {
             'current_app': modeladmin.admin.name,
             'app_label': model._meta.app_label,
@@ -54,18 +56,24 @@ class IndexAPIView(Admin2APIMixin, APIView):
             'verbose_name_plural': force_str(model._meta.verbose_name_plural),
         }
 
-    def get(self, request):
+    def get_app_data(self, app_label, models):
         model_data = []
-        for model, modeladmin in self.registry.items():
-            model_data.append(self.get_model_data(model, modeladmin))
-        app_data = {
+        for model in models:
+            model_data.append(self.get_model_data(model))
+        return {
             'url': '-- todo --',
-            'app_label': '-- todo --',
+            'app_label': app_label,
             'models': model_data,
         }
+
+    def get(self, request):
+        app_data = []
+        for app_label, registry in self.apps.items():
+            models = registry.keys()
+            app_data.append(self.get_app_data(app_label, models))
         index_data = {
             'version': API_VERSION,
-            'apps': [app_data],
+            'apps': app_data,
         }
         return Response(index_data)
 
