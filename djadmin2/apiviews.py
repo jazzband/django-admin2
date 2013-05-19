@@ -61,7 +61,6 @@ class IndexAPIView(Admin2APIMixin, APIView):
         for model in models:
             model_data.append(self.get_model_data(model))
         return {
-            'url': '-- todo --',
             'app_label': app_label,
             'models': model_data,
         }
