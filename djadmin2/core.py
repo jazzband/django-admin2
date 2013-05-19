@@ -4,6 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
 
+from . import apiviews
 from . import models
 from . import views
 
@@ -17,6 +18,7 @@ class Admin2(object):
     It also provides an index view that serves as an entry point to the admin site.
     """
     index_view = views.IndexView
+    api_index_view = apiviews.IndexAPIView
 
     def __init__(self, name='admin2'):
         self.registry = {}
@@ -82,9 +84,15 @@ class Admin2(object):
             'apps': self.apps,
         }
 
+    def get_api_index_kwargs(self):
+        return {
+            'registry': self.registry,
+        }
+
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(), name='index'),
+            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
+            url(r'^api/v0/$', self.api_index_view.as_view(**self.get_index_kwargs()), name='api'),
         )
         for model, modeladmin in self.registry.iteritems():
             urlpatterns += patterns('',
