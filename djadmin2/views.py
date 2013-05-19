@@ -42,7 +42,6 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
 
     def dispatch(self, request, *args, **kwargs):
         # Check if user has necessary permissions. If the permission_type isn't specified then check for staff status.
-        print "distpatch perm check:", self.permission_type
         has_permission = self.modeladmin.has_permission(request, self.permission_type) \
             if self.permission_type else request.user.is_staff
         # Raise exception or redirect to login if user doesn't have permissions.
@@ -79,11 +78,13 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
 class IndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "index.html"
     registry = None
+    apps = None
 
     def get_context_data(self, **kwargs):
         data = super(IndexView, self).get_context_data(**kwargs)
         data.update({
-            'registry': self.registry
+            'apps': self.apps,
+            'registry': self.registry,
         })
         return data
 
