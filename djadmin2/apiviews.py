@@ -1,18 +1,18 @@
 from rest_framework import fields, generics, serializers
+from .views import Admin2Mixin
 
 
 class Admin2APISerializer(serializers.ModelSerializer):
     __str__ = fields.Field(source='__unicode__')
 
 
-class Admin2APIMixin(object):
-    modeladmin = None
-
+class Admin2APIMixin(Admin2Mixin):
     def get_serializer_class(self):
         if self.serializer_class is None:
+            model_class = self.get_model()
             class ModelAPISerilizer(Admin2APISerializer):
                 class Meta:
-                    model = self.model
+                    model = model_class
 
             return ModelAPISerilizer
         return super(Admin2APIMixin, self).get_serializer_class()
