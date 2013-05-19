@@ -61,6 +61,7 @@ Content
    :maxdepth: 2
 
    contributing
+   api
    design
    meta
 
@@ -71,4 +72,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
