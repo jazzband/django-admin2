@@ -173,7 +173,7 @@ First we pull the code into a local branch::
 
 Then we run the tests::
 
-    python manage.py test
+    ./runtests.py
 
 We finish with a non-fastforward merge (to preserve the branch history) and push to GitHub::
 
