@@ -15,7 +15,7 @@ Features (current)
 
 * Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
 * Built-in RESTFUL API powered by ``django-rest-framework``.
-* Default theme built on Twitter Bootstrap.
+* Default theme built on Twitter Bootstrap that is just starting to act like the current Django admin.
 * Easy to implement theme system.
 * Basic permission controls.
 
@@ -27,7 +27,7 @@ Features (Planned)
   * Extending existing views
   * Interacting with the basic Admin2 object.
 
-* More powerful permission controls
+* Improved permission controls
 
 Requirements
 =============
