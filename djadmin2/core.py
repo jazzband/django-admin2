@@ -34,13 +34,13 @@ class Admin2(AdminSite):
         self.apps = {}
         self.name = name
 
-    def register(self, model, modeladmin=None, **kwargs):
+    def register(self, model, model_admin=None, **kwargs):
         """
         Registers the given model with the given admin class. Once a model is
         registered in self.registry, we also add it to app registries in
         self.apps.
 
-        If no modeladmin is passed, it will use ModelAdmin2. If keyword
+        If no model_admin is passed, it will use ModelAdmin2. If keyword
         arguments are given they will be passed to the admin class on
         instantiation.
 
@@ -50,9 +50,9 @@ class Admin2(AdminSite):
         """
         if model in self.registry:
             raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
-        if not modeladmin:
-            modeladmin = models.ModelAdmin2
-        self.registry[model] = modeladmin(model, admin=self, **kwargs)
+        if not model_admin:
+            model_admin = models.ModelAdmin2
+        self.registry[model] = model_admin(model, admin=self, **kwargs)
 
         # Add the model to the apps registry
         app_label = model._meta.app_label
@@ -137,16 +137,16 @@ class Admin2(AdminSite):
                 name='jsi18n'),
         )
 
-        for model, modeladmin in self.registry.iteritems():
+        for model, model_admin in self.registry.iteritems():
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(
                     model._meta.app_label,
                     model._meta.object_name.lower()),
-                    include(modeladmin.urls)),
+                    include(model_admin.urls)),
                 url('^api/v0/{}/{}/'.format(
                     model._meta.app_label,
                     model._meta.object_name.lower()),
-                    include(modeladmin.api_urls)),
+                    include(model_admin.api_urls)),
             )
         return urlpatterns
 

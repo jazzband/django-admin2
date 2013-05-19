@@ -31,18 +31,18 @@ class ListCreateAPIViewTest(ViewTest):
 
     def test_response_ok(self):
         request = self.factory.get(reverse('admin2:blog_post_api-list'))
-        modeladmin = self.get_model_admin(Post)
+        model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
-            **modeladmin.get_api_list_kwargs())
+            **model_admin.get_api_list_kwargs())
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
     def test_list_includes_unicode_field(self):
         Post.objects.create(title='Foo', body='Bar')
         request = self.factory.get(reverse('admin2:blog_post_api-list'))
-        modeladmin = self.get_model_admin(Post)
+        model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
-            **modeladmin.get_api_list_kwargs())
+            **model_admin.get_api_list_kwargs())
         response = view(request)
         response.render()
 
@@ -50,9 +50,9 @@ class ListCreateAPIViewTest(ViewTest):
 
     def test_pagination(self):
         request = self.factory.get(reverse('admin2:blog_post_api-list'))
-        modeladmin = self.get_model_admin(Post)
+        model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
-            **modeladmin.get_api_list_kwargs())
+            **model_admin.get_api_list_kwargs())
         response = view(request)
         response.render()
         data = json.loads(response.content)
@@ -72,8 +72,8 @@ class RetrieveUpdateDestroyAPIViewTest(ViewTest):
         request = self.factory.get(
             reverse('admin2:blog_post_api-detail',
             kwargs={'pk': post.pk}))
-        modeladmin = self.get_model_admin(Post)
+        model_admin = self.get_model_admin(Post)
         view = apiviews.RetrieveUpdateDestroyAPIView.as_view(
-            **modeladmin.get_api_detail_kwargs())
+            **model_admin.get_api_detail_kwargs())
         response = view(request, pk=post.pk)
         self.assertEqual(response.status_code, 200)

@@ -20,6 +20,9 @@ except ImportError:
 
 
 class BaseAdmin2(object):
+    """
+    Warning: This class will likely merged with ModelAdmin2
+    """
 
     search_fields = []
 
@@ -85,6 +88,10 @@ class BaseAdmin2(object):
 
 
 class ModelAdmin2(BaseAdmin2):
+    """
+    Warning: This class is targeted for reduction.
+                It's bloated and ugly.
+    """
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()
@@ -108,6 +115,9 @@ class ModelAdmin2(BaseAdmin2):
     detail_view = views.ModelDetailView
     delete_view = views.ModelDeleteView
 
+    # API configuration
+    api_serializer_class = None
+
     # API Views
     api_list_view = apiviews.ListCreateAPIView
     api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
@@ -128,8 +138,15 @@ class ModelAdmin2(BaseAdmin2):
             'app_label': self.app_label,
             'model': self.model,
             'model_name': self.model_name,
-            'modeladmin': self,
+            'model_admin': self,
         }
+
+    def get_default_api_view_kwargs(self):
+        kwargs = self.get_default_view_kwargs()
+        kwargs.update({
+            'serializer_class': self.api_serializer_class,
+        })
+        return kwargs
 
     def get_prefixed_view_name(self, view_name):
         return '{}_{}_{}'.format(self.app_label, self.model_name, view_name)
@@ -157,24 +174,18 @@ class ModelAdmin2(BaseAdmin2):
     def get_delete_kwargs(self):
         return self.get_default_view_kwargs()
 
-    def get_api_index_kwargs(self):
-        return self.get_default_view_kwargs()
-
-    def get_api_detail_kwargs(self):
-        return self.get_default_view_kwargs()
-
     def get_index_url(self):
         return reverse('admin2:{}'.format(self.get_prefixed_view_name('index')))
 
     def get_api_list_kwargs(self):
-        kwargs = self.get_default_view_kwargs()
+        kwargs = self.get_default_api_view_kwargs()
         kwargs.update({
             'paginate_by': self.list_per_page,
         })
         return kwargs
 
     def get_api_detail_kwargs(self):
-        return self.get_default_view_kwargs()
+        return self.get_default_api_view_kwargs()
 
     def get_urls(self):
         return patterns('',
