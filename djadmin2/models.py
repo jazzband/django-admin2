@@ -20,6 +20,9 @@ except ImportError:
 
 
 class BaseAdmin2(object):
+    """
+    Warning: This class will likely merged with ModelAdmin2
+    """
 
     search_fields = []
 
@@ -85,6 +88,10 @@ class BaseAdmin2(object):
 
 
 class ModelAdmin2(BaseAdmin2):
+    """
+    Warning: This class is targeted for reduction.
+                It's bloated and ugly.
+    """
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()
