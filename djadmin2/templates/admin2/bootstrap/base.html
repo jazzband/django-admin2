@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load i18n %}<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -16,8 +16,30 @@
                     <a class="brand" href="{% url 'admin2:dashboard' %}">Django-Admin2</a>
 
                     <ul class="nav pull-right">
-                        <li><a href="{% url 'admin2:api-index' %}">API</a></li>
-                        <li><a href="TODO">Log out</a></li>
+                        <li><a tabindex="-1" href="{% url 'admin2:api-index' %}">{% trans "API" %}</a></li>
+
+                        {% if docsroot %}
+                            <li><a href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
+                        {% endif %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                {% if user.get_full_name %}
+                                    {{ user.get_full_name }}
+                                {% else %}
+                                    {% blocktrans with user=user.username %}
+                                        Logged in as {{ user }}
+                                    {% endblocktrans %}
+                                {% endif %}
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+</strong>
+                                {% if user.has_usable_password %}
+                                    <li><a tabindex="-1" href="TODO">{% trans "Change password" %}</a></li>
+                                {% endif %}
+                                <li><a tabindex="-1" href="TODO">{% trans "Log out" %}</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
