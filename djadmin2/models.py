@@ -216,12 +216,12 @@ class ModelAdmin2(BaseAdmin2):
 
     @property
     def urls(self):
+        # We set the application and instance namespace here
         return self.get_urls(), None, None
 
     @property
     def api_urls(self):
         return self.get_api_urls(), None, None
-
 
 def create_extra_permissions(app, created_models, verbosity, **kwargs):
     """
