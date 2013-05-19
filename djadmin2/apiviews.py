@@ -25,7 +25,7 @@ class Admin2APIMixin(Admin2Mixin):
                 # about the name of the admin instance when declaring the
                 # Admin2APISerializer base class
                 _default_view_name = ':'.join((
-                    self.modeladmin.admin.name +
+                    self.modeladmin.admin.name,
                     '%(app_label)s_%(model_name)s_api-detail'))
 
                 class Meta:

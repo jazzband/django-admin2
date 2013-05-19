@@ -109,7 +109,7 @@ class ModelAdmin2(BaseAdmin2):
     delete_view = views.ModelDeleteView
 
     # API Views
-    api_index_view = apiviews.ListCreateAPIView
+    api_list_view = apiviews.ListCreateAPIView
     api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
 
     def __init__(self, model, admin, **kwargs):
@@ -166,7 +166,7 @@ class ModelAdmin2(BaseAdmin2):
     def get_index_url(self):
         return reverse('admin2:{}'.format(self.get_prefixed_view_name('index')))
 
-    def get_api_index_kwargs(self):
+    def get_api_list_kwargs(self):
         return self.get_default_view_kwargs()
 
     def get_api_detail_kwargs(self):
@@ -205,7 +205,7 @@ class ModelAdmin2(BaseAdmin2):
         return patterns('',
             url(
                 regex=r'^$',
-                view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
+                view=self.api_list_view.as_view(**self.get_api_list_kwargs()),
                 name=self.get_prefixed_view_name('api-list'),
             ),
             url(
