@@ -12,26 +12,26 @@ class ViewTest(unittest.TestCase):
         self.factory = RequestFactory()
 
 
-class ModelListCreateAPIViewTest(ViewTest):
+class ListCreateAPIViewTest(ViewTest):
 
     def test_response_ok(self):
-        request = self.factory.get(reverse('admin2:api-index', args=['blog', 'post']))
-        response = apiviews.ModelListCreateAPIView.as_view(model=Post)(request)
+        request = self.factory.get(reverse('admin2:blog_post_api-index'))
+        response = apiviews.ListCreateAPIView.as_view(model=Post)(request)
         self.assertEqual(response.status_code, 200)
 
     def test_list_includes_unicode_field(self):
         Post.objects.create(title='Foo', body='Bar')
-        request = self.factory.get(reverse('admin2:api-index'), args=['blog', 'post'])
-        response = apiviews.ModelListCreateAPIView.as_view(model=Post)(request)
+        request = self.factory.get(reverse('admin2:blog_post_api-index'))
+        response = apiviews.ListCreateAPIView.as_view(model=Post)(request)
         response.render()
 
-        self.assertIn('"unicode": "Foo"', response.content)
+        self.assertIn('"__str__": "Foo"', response.content)
 
 
-class ModelRetrieveUpdateDestroyAPIViewTest(ViewTest):
+class RetrieveUpdateDestroyAPIViewTest(ViewTest):
 
     def test_response_ok(self):
         post = Post.objects.create(title='Foo', body='Bar')
-        request = self.factory.get(reverse('admin2:api-detail', args=['blog', 'post', post.pk]))
-        response = apiviews.ModelRetrieveUpdateDestroyAPIView.as_view(model=Post)(request)
+        request = self.factory.get(reverse('admin2:blog_post_api-detail', kwargs={'pk': post.pk}))
+        response = apiviews.RetrieveUpdateDestroyAPIView.as_view(model=Post)(request, pk=post.pk)
         self.assertEqual(response.status_code, 200)
