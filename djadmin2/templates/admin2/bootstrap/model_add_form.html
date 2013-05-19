@@ -5,6 +5,12 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+
+
+	{% for formset in inlines %}
+	{{ formset }}
+	{% endfor %}
+
     <input type="submit"/>
 </form>
 

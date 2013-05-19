@@ -101,6 +101,8 @@ class ModelAdmin2(BaseAdmin2):
     create_form_class = None
     update_form_class = None
 
+    inlines = []
+
     #  Views
     index_view = views.ModelListView
     create_view = views.ModelAddFormView
@@ -135,6 +137,7 @@ class ModelAdmin2(BaseAdmin2):
     def get_create_kwargs(self):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({
+            'inlines': self.inlines,
             'form_class': self.create_form_class if self.create_form_class else self.form_class,
         })
         return kwargs
@@ -142,6 +145,7 @@ class ModelAdmin2(BaseAdmin2):
     def get_update_kwargs(self):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({
+            'inlines': self.inlines,
             'form_class': self.update_form_class if self.update_form_class else self.form_class,
         })
         return kwargs

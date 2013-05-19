@@ -90,6 +90,7 @@ setup(
     install_requires=[
         'django>=1.5.0',
         'django-braces==1.0.0',
+        'django-extra-views==0.6.2',
         'djangorestframework==2.3.3'
         ],
     zip_safe=False,
