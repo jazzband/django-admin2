@@ -38,13 +38,7 @@
                 {% for obj in object_list %}
                     <td><input type="checkbox"></td>
                     <td>
-                        {{ obj }} <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">detail</a>
-                        {# if has_edit_permission #}
-                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">edit</a>
-                        {# endif #}
-                        {# if has_delete_permission #}
-                            <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">delete</a>
-                        {# endif #}
+                        <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
                     </td>
                 {% endfor %}
             </tbody>
