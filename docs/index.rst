@@ -7,14 +7,6 @@ Welcome to django-admin2's documentation!
 
 This project is intentionally backwards-incompatible with ``django.contrib.admin``.
 
-Features
-==========
-
-* Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
-* Built-in RESTFUL API powered by ``django-rest-framework``
-* Default theme built on Twitter Bootstrap
-* Easy to implement theme system.
-
 Requirements
 =============
 
