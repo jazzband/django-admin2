@@ -48,10 +48,10 @@ class BaseAdmin2(object):
     readonly_fields = ()
     ordering = None
 
-    def __init__(self, model):
+    def __init__(self, model, admin):
         super(BaseAdmin2, self).__init__()
-
         self.model = model
+        self.admin = admin
 
     def _user_has_permission(self, user, permission_type, obj=None):
         """ Generic method for checking whether the user has permission of specified type for the model.
@@ -112,8 +112,9 @@ class ModelAdmin2(BaseAdmin2):
     api_index_view = apiviews.ListCreateAPIView
     api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
 
-    def __init__(self, model, **kwargs):
+    def __init__(self, model, admin, **kwargs):
         self.model = model
+        self.admin = admin
         self.app_label = model._meta.app_label
         self.model_name = model._meta.object_name.lower()
 

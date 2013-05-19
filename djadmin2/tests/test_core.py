@@ -33,4 +33,4 @@ class Admin2Test(unittest.TestCase):
 
     def test_get_urls(self):
         self.admin2.register(Thing)
-        self.assertEquals(3, len(self.admin2.get_urls()))
+        self.assertEquals(4, len(self.admin2.get_urls()))

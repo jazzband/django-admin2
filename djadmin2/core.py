@@ -42,7 +42,7 @@ class Admin2(object):
             raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
         if not modeladmin:
             modeladmin = models.ModelAdmin2
-        self.registry[model] = modeladmin(model, **kwargs)
+        self.registry[model] = modeladmin(model, admin=self, **kwargs)
 
         # Add the model to the apps registry
         app_label = model._meta.app_label

@@ -19,7 +19,15 @@ class Admin2APIMixin(Admin2Mixin):
     def get_serializer_class(self):
         if self.serializer_class is None:
             model_class = self.get_model()
+
             class ModelAPISerilizer(Admin2APISerializer):
+                # we need to reset this here, since we don't know anything
+                # about the name of the admin instance when declaring the
+                # Admin2APISerializer base class
+                _default_view_name = ':'.join((
+                    self.modeladmin.admin.name +
+                    '%(app_label)s_%(model_name)s_api-detail'))
+
                 class Meta:
                     model = model_class
 
@@ -32,11 +40,12 @@ class IndexAPIView(Admin2APIMixin, APIView):
 
     def get_model_data(self, model, modeladmin):
         opts = {
+            'current_app': modeladmin.admin.name,
             'app_label': model._meta.app_label,
             'model_name': model._meta.object_name.lower(),
         }
         model_url = reverse(
-            'admin2:%(app_label)s_%(model_name)s_api-list' % opts,
+            '%(current_app)s:%(app_label)s_%(model_name)s_api-list' % opts,
             request=self.request,
             format=self.kwargs.get('format'))
         return {
