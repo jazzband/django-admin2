@@ -6,14 +6,28 @@ django-admin2
    :alt: Build Status
    :target: https://travis-ci.org/pydanny/django-admin2
 
-One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
+**Warning:** This project is currently in an **alpha** state and currently not meant for real projects.
 
-**Note:** This is pre-alpha and currently non-functional. We'll try and have a rough working prototype by the end of May 18th, 2013.
+One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility and adaptability. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
 
-Contributing
-=============
+Features (current)
+====================
 
-Yes please! Please read our formal contributing document at: https://github.com/pydanny/django-admin2/blob/master/docs/contributing.rst
+* Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
+* Built-in RESTFUL API powered by ``django-rest-framework``.
+* Default theme built on Twitter Bootstrap that is just starting to act like the current Django admin.
+* Easy to implement theme system.
+* Basic permission controls.
+
+Features (Planned)
+====================
+
+* Much improved documentation including tutorials and reference guides.
+
+  * Extending existing views
+  * Interacting with the basic Admin2 object.
+
+* Improved permission controls
 
 Requirements
 =============
@@ -22,7 +36,13 @@ Requirements
 * Python 2.7+ (Python 3.3+ support is pending)
 * django-braces
 * django-rest-framework
+* django-floppyforms
 * Sphinx (for documentation)
+
+Contributing
+=============
+
+Yes please! Please read our formal contributing document at: https://github.com/pydanny/django-admin2/blob/master/docs/contributing.rst
 
 Basic Pattern
 ==============

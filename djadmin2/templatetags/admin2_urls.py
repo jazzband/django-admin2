@@ -4,5 +4,9 @@ register = template.Library()
 
 
 @register.filter
-def admin2_urlname(value, arg):
-    return 'admin2:%s_%s_%s' % (value.app_label, value.model_name, arg)
+def admin2_urlname(view, action):
+    """
+    Converts the view and the specified action into a valid namespaced URLConf name.
+    """
+    return 'admin2:%s_%s_%s' % (view.app_label, view.model_name, action)
+
