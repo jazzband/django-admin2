@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
 
@@ -16,12 +17,17 @@ class Admin2(object):
         self.app_name = app_name
 
     def register(self, model, modeladmin=None, **kwargs):
+        if model in self.registry:
+            raise ImproperlyConfigured
         if not modeladmin:
             modeladmin = models.ModelAdmin2
         self.registry[model] = modeladmin(model, **kwargs)
 
     def deregister(self, model):
-        del self.registry[model]
+        try:
+            del self.registry[model]
+        except KeyError:
+            raise ImproperlyConfigured
 
     def autodiscover(self):
         apps = []
