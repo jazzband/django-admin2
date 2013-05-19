@@ -93,7 +93,7 @@ class Admin2(object):
         urlpatterns = patterns('',
             url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
             url(r'^api/v0/$',
-            self.api_index_view.as_view(**self.get_index_kwargs()), name='api-index'),
+            self.api_index_view.as_view(**self.get_api_index_kwargs()), name='api-index'),
         )
         for model, modeladmin in self.registry.iteritems():
             urlpatterns += patterns('',
