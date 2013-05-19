@@ -6,47 +6,44 @@
     <div class="span10">
         <h3>Select {{ model }} to change</h3>
     </div>
-    <div class="span2">
-        {# if has_add_permission #}
-            <a href="{% url view|admin2_urlname:'create' %}">add</a>
-        {# endif #}
-    </div>
 </div>
 
-<hr/>
 
 <div class="row">
     <div class="span12">
-        Action:
-        <select>
-          <option>----------</option>
-          <option>Delete selected {{ model }}{{ object_list|pluralize }}</option>
-        </select>
-        <a class="btn btn-mini" href="TODO">Go</a>
-        TODO of {{ object_list|length }} selected
+        <div class="space-below">
+            <div class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    Actions
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#">Delete selected {{ model }}{{ object_list|pluralize }}</a></li>
+                </ul>
+            </div>
+            <small class="muted">TODO of {{ object_list|length }} selected</small>
+            <div class="pull-right">
+                {# if has_add_permission #}
+                <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model }}</a>
+                {# endif #}
+            </div>
+        </div>
 
         <table class="table table-bordered table-striped">
             <thead>
-                <th><input type="checkbox"></th>
+                <th class="checkbox-column"><input type="checkbox"></th>
                 <th>{{ model|title}}</th>
             </thead>
             <tbody>
                 {% for obj in object_list %}
                     <td><input type="checkbox"></td>
                     <td>
-                        {{ obj }} <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">detail</a>
-                        {# if has_edit_permission #}
-                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">edit</a>
-                        {# endif #}
-                        {# if has_delete_permission #}
-                            <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">delete</a>
-                        {# endif #}
+                        <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
                     </td>
                 {% endfor %}
             </tbody>
         </table>
-
-        {{ object_list|length }} {{ model }}{{ object_list|pluralize }}
+        <p>{{ object_list|length }} {{ model }}{{ object_list|pluralize }}</p>
     </div>
 </div>
 
