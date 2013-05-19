@@ -73,7 +73,7 @@ class Admin2(object):
         )
         for model, modeladmin in self.registry.iteritems():
             app_label = model._meta.app_label
-            model_name = model._meta.object_name.lower()        
+            model_name = model._meta.object_name.lower()
 
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(app_label, model_name),

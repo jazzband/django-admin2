@@ -4,10 +4,10 @@ For wont of a better name, this module is called 'models'. It's role is
 synonymous with the django.contrib.admin.sites model.
 
 """
-import functools
+
 
 from django.core.urlresolvers import reverse
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from django.contrib.auth import models as auth_app
 from django.db.models import get_models, signals
 
@@ -17,7 +17,6 @@ try:
     import floppyforms as forms
 except ImportError:
     from django import forms
-
 
 
 class BaseAdmin2(object):
@@ -49,12 +48,10 @@ class BaseAdmin2(object):
     readonly_fields = ()
     ordering = None
 
-
     def __init__(self, model):
         super(BaseAdmin2, self).__init__()
 
         self.model = model
-
 
     def _user_has_permission(self, user, permission_type, obj=None):
         """ Generic method for checking whether the user has permission of specified type for the model.
@@ -166,7 +163,7 @@ class ModelAdmin2(BaseAdmin2):
                 name=self.get_prefixed_view_name('index')
             ),
             url(
-                regex=r'^create/$', 
+                regex=r'^create/$',
                 view=self.create_view.as_view(**self.get_create_kwargs()),
                 name=self.get_prefixed_view_name('create')
             ),
@@ -191,7 +188,6 @@ class ModelAdmin2(BaseAdmin2):
     def urls(self):
         # We set the application and instance namespace here
         return self.get_urls(), None, None
-
 
 
 def create_permissions(app, created_models, verbosity, **kwargs):
