@@ -1,9 +1,21 @@
 Welcome to django-admin2's documentation!
 =========================================
 
-**django-admin2** aims to replace django's builtin admin that lives in
+**django-admin2** aims to replace django's built-in admin that lives in
 ``django.contrib.admin``. Come and help us, have a look at the
 :doc:`contributing` page and see our `GitHub`_ page.
+
+This project is intentionally backwards-incompatible with ``django.contrib.admin``.
+
+Requirements
+=============
+
+* Django 1.5+
+* Python 2.7+ (Python 3.3+ support is pending)
+* django-braces
+* django-rest-framework
+* Sphinx (for documentation)
+
 
 Basic API
 ==============
@@ -41,8 +53,11 @@ Content
    :maxdepth: 2
 
    contributing
+   api
    design
+   themes
    meta
+
 
 Indices and tables
 ==================
@@ -50,4 +65,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

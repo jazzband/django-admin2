@@ -108,6 +108,8 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -118,6 +120,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'django_coverage',
+    'rest_framework',
     'djadmin2',
     'blog',
 )
@@ -153,3 +157,19 @@ LOGGING = {
 
 
 ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+
+
+########## TOOLBAR CONFIGURATION
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INSTALLED_APPS += (
+    'debug_toolbar',
+)
+
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INTERNAL_IPS = ('127.0.0.1',)
+
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+MIDDLEWARE_CLASSES += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+########## END TOOLBAR CONFIGURATION

@@ -4,20 +4,19 @@ For wont of a better name, this module is called 'models'. It's role is
 synonymous with the django.contrib.admin.sites model.
 
 """
-import functools
 
 from django.core.urlresolvers import reverse
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 from django.contrib.auth import models as auth_app
 from django.db.models import get_models, signals
 
+from djadmin2 import apiviews
 from djadmin2 import views
 
 try:
     import floppyforms as forms
 except ImportError:
     from django import forms
-
 
 
 class BaseAdmin2(object):
@@ -49,12 +48,10 @@ class BaseAdmin2(object):
     readonly_fields = ()
     ordering = None
 
-
-    def __init__(self, model):
+    def __init__(self, model, admin):
         super(BaseAdmin2, self).__init__()
-
         self.model = model
-
+        self.admin = admin
 
     def _user_has_permission(self, user, permission_type, obj=None):
         """ Generic method for checking whether the user has permission of specified type for the model.
@@ -111,8 +108,13 @@ class ModelAdmin2(BaseAdmin2):
     detail_view = views.ModelDetailView
     delete_view = views.ModelDeleteView
 
-    def __init__(self, model, **kwargs):
+    # API Views
+    api_list_view = apiviews.ListCreateAPIView
+    api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
+
+    def __init__(self, model, admin, **kwargs):
         self.model = model
+        self.admin = admin
         self.app_label = model._meta.app_label
         self.model_name = model._meta.object_name.lower()
 
@@ -155,8 +157,24 @@ class ModelAdmin2(BaseAdmin2):
     def get_delete_kwargs(self):
         return self.get_default_view_kwargs()
 
+    def get_api_index_kwargs(self):
+        return self.get_default_view_kwargs()
+
+    def get_api_detail_kwargs(self):
+        return self.get_default_view_kwargs()
+
     def get_index_url(self):
         return reverse('admin2:{}'.format(self.get_prefixed_view_name('index')))
+
+    def get_api_list_kwargs(self):
+        kwargs = self.get_default_view_kwargs()
+        kwargs.update({
+            'paginate_by': self.list_per_page,
+        })
+        return kwargs
+
+    def get_api_detail_kwargs(self):
+        return self.get_default_view_kwargs()
 
     def get_urls(self):
         return patterns('',
@@ -166,7 +184,7 @@ class ModelAdmin2(BaseAdmin2):
                 name=self.get_prefixed_view_name('index')
             ),
             url(
-                regex=r'^create/$', 
+                regex=r'^create/$',
                 view=self.create_view.as_view(**self.get_create_kwargs()),
                 name=self.get_prefixed_view_name('create')
             ),
@@ -187,14 +205,30 @@ class ModelAdmin2(BaseAdmin2):
             ),
         )
 
+    def get_api_urls(self):
+        return patterns('',
+            url(
+                regex=r'^$',
+                view=self.api_list_view.as_view(**self.get_api_list_kwargs()),
+                name=self.get_prefixed_view_name('api-list'),
+            ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/$',
+                view=self.api_detail_view.as_view(**self.get_api_detail_kwargs()),
+                name=self.get_prefixed_view_name('api-detail'),
+            ),
+        )
+
     @property
     def urls(self):
         # We set the application and instance namespace here
         return self.get_urls(), None, None
 
+    @property
+    def api_urls(self):
+        return self.get_api_urls(), None, None
 
-
-def create_permissions(app, created_models, verbosity, **kwargs):
+def create_extra_permissions(app, created_models, verbosity, **kwargs):
     """
     Creates 'view' permissions for all models.
     django.contrib.auth only creates add, change and delete permissions. Since we also support read-only views, we need
@@ -202,9 +236,6 @@ def create_permissions(app, created_models, verbosity, **kwargs):
     Copied from django.contrib.auth.management.create_permissions
     """
     from django.contrib.contenttypes.models import ContentType
-
-    def _get_permission_codename(action, opts):
-        return u'%s_%s' % (action, opts.object_name.lower())
 
     app_models = get_models(app)
 
@@ -218,10 +249,10 @@ def create_permissions(app, created_models, verbosity, **kwargs):
         ctypes.add(ctype)
 
         opts = klass._meta
-        perm = (_get_permission_codename('view', opts), u'Can view %s' % opts.verbose_name_raw)
+        perm = ('view_%s' % opts.object_name.lower(), u'Can view %s' % opts.verbose_name_raw)
         searched_perms.append((ctype, perm))
 
-    # Find all the Permissions that have a context_type for a model we're
+    # Find all the Permissions that have a content_type for a model we're
     # looking for.  We don't need to check for codenames since we already have
     # a list of the ones we're going to create.
     all_perms = set(auth_app.Permission.objects.filter(
@@ -230,16 +261,16 @@ def create_permissions(app, created_models, verbosity, **kwargs):
         "content_type", "codename"
     ))
 
-    objs = [
+    perms = [
         auth_app.Permission(codename=codename, name=name, content_type=ctype)
         for ctype, (codename, name) in searched_perms
         if (ctype.pk, codename) not in all_perms
     ]
-    auth_app.Permission.objects.bulk_create(objs)
+    auth_app.Permission.objects.bulk_create(perms)
     if verbosity >= 2:
-        for obj in objs:
-            print "Adding permission '%s'" % obj
+        for perm in perms:
+            print "Adding permission '%s'" % perm
 
 
-signals.post_syncdb.connect(create_permissions,
-    dispatch_uid = "django-admin2.djadmin2.models.create_permissions")
+signals.post_syncdb.connect(create_extra_permissions,
+    dispatch_uid = "django-admin2.djadmin2.models.create_extra_permissions")

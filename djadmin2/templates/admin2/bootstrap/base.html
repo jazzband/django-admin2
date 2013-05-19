@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap-custom.css" rel="stylesheet" media="screen">
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-static-top">
@@ -15,6 +16,7 @@
                     <a class="brand" href="{% url 'admin2:dashboard' %}">Django-Admin2</a>
 
                     <ul class="nav pull-right">
+                        <li><a href="{% url 'admin2:api-index' %}">API</a></li>
                         <li><a href="TODO">Log out</a></li>
                     </ul>
                 </div>
