@@ -22,7 +22,7 @@ Local Installation
 
 1. Create a **virtualenv**. Activate it.
 2. cd into django-admin2
-3. type ``$ python setup.py develop``
+3. type ``$ pip install -r requirements.txt``
 
 
 Issues!
@@ -173,7 +173,7 @@ First we pull the code into a local branch::
 
 Then we run the tests::
 
-    python manage.py test
+    ./runtests.py
 
 We finish with a non-fastforward merge (to preserve the branch history) and push to GitHub::
 

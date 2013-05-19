@@ -25,7 +25,9 @@ class Admin2(object):
 
     def register(self, model, modeladmin=None, **kwargs):
         """
-        Registers the given model with the given admin class.
+        Registers the given model with the given admin class. Once a model is
+        registered in self.registry, we also add it to app registries in
+        self.apps.
 
         If no modeladmin is passed, it will use ModelAdmin2. If keyword
         arguments are given they will be passed to the admin class on
@@ -33,8 +35,7 @@ class Admin2(object):
 
         If a model is already registered, this will raise ImproperlyConfigured.
 
-        Once a model is registered in self.registry, we also add it to app registries
-        in self.apps.
+
         """
         if model in self.registry:
             raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
@@ -51,16 +52,25 @@ class Admin2(object):
 
     def deregister(self, model):
         """
-        Deregisters the given model.
+        Deregisters the given model. Remove the model from the self.app as well
 
         If the model is not already registered, this will raise ImproperlyConfigured.
-
-        TODO: Remove the model from the self.app as well
         """
         try:
             del self.registry[model]
         except KeyError:
-            raise ImproperlyConfigured
+            raise ImproperlyConfigured('%s was never registered in django-admin2' % model)
+
+        # Remove the model from the apps registry
+        # Get the app label
+        app_label = model._meta.app_label
+        # Delete the model from it's app registry
+        del self.apps[app_label][model]
+
+        # if no more models in an app's registry
+        # then delete the app from the apps.
+        if self.apps[app_label] is {}:
+            del self.apps[app_label]  # no
 
     def autodiscover(self):
         """
@@ -78,6 +88,7 @@ class Admin2(object):
     def get_index_kwargs(self):
         return {
             'registry': self.registry,
+            'apps': self.apps,
         }
 
     def get_urls(self):

@@ -1,2 +1,0 @@
-class NoAdminSpecified(Exception):
-    pass
