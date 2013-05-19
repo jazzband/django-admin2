@@ -17,6 +17,14 @@
 
 <div class="row">
     <div class="span12">
+        Action:
+        <select>
+          <option>----------</option>
+          <option>Delete selected {{ model }}{{ object_list|pluralize }}</option>
+        </select>
+        <a class="btn btn-mini" href="TODO">Go</a>
+        TODO of {{ object_list|length }} selected
+
         <table class="table table-bordered table-striped">
             <thead>
                 <th><input type="checkbox"></th>
@@ -37,6 +45,8 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {{ object_list|length }} {{ model }}{{ object_list|pluralize }}
     </div>
 </div>
 
