@@ -2,7 +2,7 @@
 # Import your custom models
 from .models import Post, Comment
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, Permission, User
 
 
 import djadmin2
@@ -18,3 +18,5 @@ class UserAdmin2(ModelAdmin2):
 djadmin2.default.register(Post)
 djadmin2.default.register(Comment)
 djadmin2.default.register(User, UserAdmin2)
+djadmin2.default.register(Permission)
+djadmin2.default.register(Group)

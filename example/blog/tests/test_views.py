@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
-from .models import Post
+from ..models import Post
 
 
 class BaseIntegrationTest(TestCase):
