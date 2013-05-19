@@ -2,7 +2,7 @@
 import os
 import sys
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'example.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'example.settings_test'
 exampleproject_dir = os.path.join(os.path.dirname(__file__), 'example')
 sys.path.insert(0, exampleproject_dir)
 
