@@ -13,3 +13,11 @@
 {
     text-align: left !important;
 }
+
+.checkbox-column {
+    width: 16px;
+}
+
+.space-below {
+    margin-bottom: 10px;
+}
