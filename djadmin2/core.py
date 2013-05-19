@@ -1,3 +1,7 @@
+"""
+WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
+"""
+
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured

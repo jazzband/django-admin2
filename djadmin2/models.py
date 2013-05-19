@@ -1,4 +1,5 @@
 """
+WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
 
 For wont of a better name, this module is called 'models'. It's role is
 synonymous with the django.contrib.admin.sites model.
