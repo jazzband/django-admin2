@@ -2,7 +2,10 @@ from rest_framework import fields, generics, serializers
 from .views import Admin2Mixin
 
 
-class Admin2APISerializer(serializers.ModelSerializer):
+class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
+    _default_view_name = 'admin2:api_%(app_label)s_%(model_name)s_detail'
+
+    pk = fields.Field(source='pk')
     __str__ = fields.Field(source='__unicode__')
 
 
