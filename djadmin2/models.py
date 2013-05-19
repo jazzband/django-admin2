@@ -205,7 +205,7 @@ class ModelAdmin2(BaseAdmin2):
             url(
                 regex=r'^$',
                 view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
-                name=self.get_prefixed_view_name('api-index'),
+                name=self.get_prefixed_view_name('api-list'),
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
