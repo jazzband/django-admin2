@@ -36,10 +36,12 @@
             </thead>
             <tbody>
                 {% for obj in object_list %}
-                    <td><input type="checkbox"></td>
-                    <td>
-                        <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
-                    </td>
+                    <tr>
+                        <td><input type="checkbox"></td>
+                        <td>
+                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
