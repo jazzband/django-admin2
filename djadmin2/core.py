@@ -11,10 +11,9 @@ from . import views
 class Admin2(object):
     index_view = views.IndexView
 
-    def __init__(self, name='admin2', app_name='admin2'):
+    def __init__(self, name='admin2'):
         self.registry = {}
         self.name = name
-        self.app_name = app_name
 
     def register(self, model, modeladmin=None, **kwargs):
         if model in self.registry:
@@ -60,4 +59,4 @@ class Admin2(object):
 
     @property
     def urls(self):
-        return self.get_urls(), self.app_name, self.name
+        return self.get_urls(), self.name, self.name
