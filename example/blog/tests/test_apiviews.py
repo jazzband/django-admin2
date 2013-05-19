@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
+from django.utils import simplejson as json
 
 
 from djadmin2 import apiviews
@@ -46,6 +47,22 @@ class ListCreateAPIViewTest(ViewTest):
         response.render()
 
         self.assertIn('"__str__": "Foo"', response.content)
+
+    def test_pagination(self):
+        request = self.factory.get(reverse('admin2:blog_post_api-list'))
+        modeladmin = self.get_model_admin(Post)
+        view = apiviews.ListCreateAPIView.as_view(
+            **modeladmin.get_api_list_kwargs())
+        response = view(request)
+        response.render()
+        data = json.loads(response.content)
+        self.assertEqual(data['count'], 0)
+        # next and previous fields exist, but are null because we have no
+        # content
+        self.assertTrue('next' in data)
+        self.assertEqual(data['next'], None)
+        self.assertTrue('previous' in data)
+        self.assertEqual(data['previous'], None)
 
 
 class RetrieveUpdateDestroyAPIViewTest(ViewTest):
