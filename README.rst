@@ -8,7 +8,7 @@ django-admin2
 
 **Warning:** This project is currently in an **alpha** state and currently not meant for real projects.
 
-One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
+One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility and adaptability. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
 
 Features (current)
 ====================
