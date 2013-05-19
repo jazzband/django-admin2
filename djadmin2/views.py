@@ -113,6 +113,11 @@ class ModelEditFormView(AdminModel2Mixin, generic.UpdateView):
     default_template_name = "model_edit_form.html"
     permission_type = 'change'
 
+    def get_context_data(self, **kwargs):
+        context = super(ModelEditFormView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()._meta.verbose_name
+        return context
+
 
 class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
     form_class = None
