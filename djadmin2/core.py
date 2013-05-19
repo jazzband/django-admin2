@@ -20,6 +20,7 @@ class Admin2(object):
 
     def __init__(self, name='admin2'):
         self.registry = {}
+        self.apps = {}
         self.name = name
 
     def register(self, model, modeladmin=None, **kwargs):
@@ -31,18 +32,30 @@ class Admin2(object):
         instantiation.
 
         If a model is already registered, this will raise ImproperlyConfigured.
+
+        Once a model is registered in self.registry, we also add it to app registries
+        in self.apps.
         """
         if model in self.registry:
-            raise ImproperlyConfigured
+            raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
         if not modeladmin:
             modeladmin = models.ModelAdmin2
         self.registry[model] = modeladmin(model, **kwargs)
+
+        # Add the model to the apps registry
+        app_label = model._meta.app_label
+        if app_label in self.apps.keys():
+            self.apps[app_label][model] = self.registry[model]
+        else:
+            self.apps[app_label] = {model: self.registry[model]}
 
     def deregister(self, model):
         """
         Deregisters the given model.
 
         If the model is not already registered, this will raise ImproperlyConfigured.
+
+        TODO: Remove the model from the self.app as well
         """
         try:
             del self.registry[model]
