@@ -15,6 +15,15 @@ Features
 * Default theme built on Twitter Bootstrap
 * Easy to implement theme system.
 
+Requirements
+=============
+
+* Django 1.5+
+* Python 2.7+ (Python 3.3+ support is pending)
+* django-braces
+* django-rest-framework
+* Sphinx (for documentation)
+
 
 Basic API
 ==============
@@ -54,6 +63,7 @@ Content
    contributing
    design
    meta
+
 
 Indices and tables
 ==================

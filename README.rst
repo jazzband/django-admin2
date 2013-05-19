@@ -15,6 +15,14 @@ Contributing
 
 Yes please! Please read our formal contributing document at: https://github.com/pydanny/django-admin2/blob/master/docs/contributing.rst
 
+Requirements
+=============
+
+* Django 1.5+
+* Python 2.7+ (Python 3.3+ support is pending)
+* django-braces
+* django-rest-framework
+* Sphinx (for documentation)
 
 Basic Pattern
 ==============
