@@ -1,10 +1,28 @@
 {% extends "admin2/bootstrap/base.html" %}
 
 {% block content %}
-<h1>Index</h1>
-<table>
-{% for modeladmin in registry.values %}
-    <tr><td><a href="{{ modeladmin.get_index_url }}">{{ modeladmin.verbose_name_plural }}</a></td></tr>
-{% endfor %}
+<h3>Site administration</h3>
+
+{% for app, registry in apps.items %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a href="TODO {{ app.get_index_url }}">{{ app|title }}</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for model_class, model_admin in registry.items %}
+            <tr>
+                <td>
+                    <a href="{{ model_admin.get_index_url }}">
+                        {{ model_admin.verbose_name_plural|title }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
+{% endfor %}
 {% endblock content %}
