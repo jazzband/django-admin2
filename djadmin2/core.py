@@ -22,11 +22,11 @@ class Admin2(object):
         self.registry = {}
         self.name = name
 
-    def register(self, model, modeladmin=None, **kwargs):
+    def register(self, model, model_admin=None, **kwargs):
         """
         Registers the given model with the given admin class.
 
-        If no modeladmin is passed, it will use ModelAdmin2. If keyword
+        If no model_admin is passed, it will use ModelAdmin2. If keyword
         arguments are given they will be passed to the admin class on
         instantiation.
 
@@ -34,9 +34,9 @@ class Admin2(object):
         """
         if model in self.registry:
             raise ImproperlyConfigured
-        if not modeladmin:
-            modeladmin = models.ModelAdmin2
-        self.registry[model] = modeladmin(model, **kwargs)
+        if not model_admin:
+            model_admin = models.ModelAdmin2
+        self.registry[model] = model_admin(model, **kwargs)
 
     def deregister(self, model):
         """
@@ -71,13 +71,13 @@ class Admin2(object):
         urlpatterns = patterns('',
             url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
         )
-        for model, modeladmin in self.registry.iteritems():
+        for model, model_admin in self.registry.iteritems():
             app_label = model._meta.app_label
             model_name = model._meta.object_name.lower()        
 
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(app_label, model_name),
-                    include(modeladmin.urls)),
+                    include(model_admin.urls)),
             )
         return urlpatterns
 

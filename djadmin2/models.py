@@ -126,7 +126,7 @@ class ModelAdmin2(BaseAdmin2):
             'app_label': self.app_label,
             'model': self.model,
             'model_name': self.model_name,
-            'modeladmin': self,
+            'model_admin': self,
         }
 
     def get_prefixed_view_name(self, view_name):

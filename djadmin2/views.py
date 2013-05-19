@@ -15,7 +15,7 @@ ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/boo
 
 
 class Admin2Mixin(object):
-    modeladmin = None
+    model_admin = None
     model_name = None
     app_label = None
     
@@ -36,14 +36,14 @@ class Admin2Mixin(object):
 
 
 class AdminModel2Mixin(Admin2Mixin, AccessMixin):
-    modeladmin = None
+    model_admin = None
     # Permission type to check for when a request is sent to this view.
     permission_type = None
 
     def dispatch(self, request, *args, **kwargs):
         # Check if user has necessary permissions. If the permission_type isn't specified then check for staff status.
         print "distpatch perm check:", self.permission_type
-        has_permission = self.modeladmin.has_permission(request, self.permission_type) \
+        has_permission = self.model_admin.has_permission(request, self.permission_type) \
             if self.permission_type else request.user.is_staff
         # Raise exception or redirect to login if user doesn't have permissions.
         if not has_permission:
@@ -58,9 +58,9 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
     def get_context_data(self, **kwargs):
         context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
         context.update({
-            'has_add_permission': self.modeladmin.has_add_permission(self.request),
-            'has_edit_permission': self.modeladmin.has_edit_permission(self.request),
-            'has_delete_permission': self.modeladmin.has_delete_permission(self.request),
+            'has_add_permission': self.model_admin.has_add_permission(self.request),
+            'has_edit_permission': self.model_admin.has_edit_permission(self.request),
+            'has_delete_permission': self.model_admin.has_delete_permission(self.request),
         })
         return context
 
