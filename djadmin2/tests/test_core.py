@@ -6,8 +6,10 @@ from django.core.exceptions import ImproperlyConfigured
 from ..models import ModelAdmin2
 from ..core import Admin2
 
+
 class Thing(models.Model):
     pass
+
 
 class Admin2Test(unittest.TestCase):
     def setUp(self):
@@ -28,7 +30,7 @@ class Admin2Test(unittest.TestCase):
 
     def test_deregister_error(self):
         self.assertRaises(ImproperlyConfigured, self.admin2.deregister, Thing)
-        
+
     def test_get_urls(self):
         self.admin2.register(Thing)
         self.assertEquals(2, len(self.admin2.get_urls()))

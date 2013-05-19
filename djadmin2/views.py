@@ -1,21 +1,35 @@
 import os
 
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 from django.forms.models import modelform_factory
 from django.views import generic
-from django.db import models
 
-from braces.views import LoginRequiredMixin, StaffuserRequiredMixin, AccessMixin
-
+from braces.views import AccessMixin
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
 
 class Admin2Mixin(object):
+    modeladmin = None
+    model_name = None
+    app_label = None
+
     def get_template_names(self):
         return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
+
+    def get_model(self):
+        return self.model
+
+    def get_queryset(self):
+        return self.get_model()._default_manager.all()
+
+    def get_form_class(self):
+        if self.form_class is not None:
+            return self.form_class
+        return modelform_factory(self.get_model())
 
 
 class AdminModel2Mixin(Admin2Mixin, AccessMixin):
@@ -70,7 +84,9 @@ class IndexView(Admin2Mixin, generic.TemplateView):
         })
         return data
 
-class ModelListView(AdminModel2Mixin, generic.ListView):
+
+class ModelListView(Admin2Mixin, generic.ListView):
+
     default_template_name = "model_list.html"
     permission_type = 'view'
 
@@ -79,6 +95,10 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context['model'] = self.get_model()._meta.verbose_name
         context['model_pluralized'] = self.get_model()._meta.verbose_name_plural
         return context
+
+    def get_success_url(self):
+        view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
+        return reverse(view_name, kwargs={'pk': self.object.pk})
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
@@ -99,8 +119,12 @@ class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
     default_template_name = "model_add_form.html"
     permission_type = 'add'
 
+    def get_success_url(self):
+        view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
+        return reverse(view_name, kwargs={'pk': self.object.pk})
+
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
     success_url = "../../"
-    default_template_name = "model_delete.html"
+    default_template_name = "model_confirm_delete.html"
     permission_type = 'delete'

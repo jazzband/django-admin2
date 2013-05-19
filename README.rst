@@ -15,6 +15,14 @@ Contributing
 
 Yes please! Please read our formal contributing document at: https://github.com/pydanny/django-admin2/blob/master/docs/contributing.rst
 
+Requirements
+=============
+
+* Django 1.5+
+* Python 2.7+ (Python 3.3+ support is pending)
+* django-braces
+* django-rest-framework
+* Sphinx (for documentation)
 
 Basic Pattern
 ==============
@@ -23,20 +31,25 @@ Our goal is to make this API work:
 
 .. code-block:: python
 
-    # myapp/admin2.py
+  # Import your custom models
+  from .models import Post, Comment
+  from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+  from django.contrib.auth.models import User
 
-    # Import the Admin2 base class
-    from admin2.models import Admin2
+  import djadmin2
+  from djadmin2.models import ModelAdmin2
 
-    # Import your custom models
-    from blog.models import Post
 
-    # Instantiate the Admin2 class
-    # Then attach the admin2 object to your model
-    Post.admin2 = Admin2()
+  class UserAdmin2(ModelAdmin2):
+      create_form_class = UserCreationForm
+      update_form_class = UserChangeForm
 
-    
-.. note:: You will notice a difference between how and django.contrib.admin and django-admin2 do configuration. The former associates the configuration class with the model object via a registration utility, and the latter does so by adding the configuration class as an attribute of the model object.
+
+  #  Register each model with the admin
+  djadmin2.default.register(Post)
+  djadmin2.default.register(Comment)
+  djadmin2.default.register(User, UserAdmin2)
+
 
 Themes
 ========
