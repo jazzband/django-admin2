@@ -78,6 +78,7 @@ class Admin2(object):
     def get_index_kwargs(self):
         return {
             'registry': self.registry,
+            'apps': self.apps,
         }
 
     def get_urls(self):

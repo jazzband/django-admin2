@@ -22,7 +22,7 @@ Local Installation
 
 1. Create a **virtualenv**. Activate it.
 2. cd into django-admin2
-3. type ``$ python setup.py develop``
+3. type ``$ pip install -r requirements.txt``
 
 
 Issues!
