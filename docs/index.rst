@@ -63,6 +63,7 @@ Content
    contributing
    api
    design
+   themes
    meta
 
 
