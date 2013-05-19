@@ -98,9 +98,13 @@ class Admin2(object):
         )
         for model, modeladmin in self.registry.iteritems():
             urlpatterns += patterns('',
-                url('^{}/{}/'.format(model._meta.app_label, model._meta.object_name.lower()),
+                url('^{}/{}/'.format(
+                    model._meta.app_label,
+                    model._meta.object_name.lower()),
                     include(modeladmin.urls)),
-                url('^api/v0/{}/{}/'.format(app_label, model_name),
+                url('^api/v0/{}/{}/'.format(
+                    model._meta.app_label,
+                    model._meta.object_name.lower()),
                     include(modeladmin.api_urls)),
             )
         return urlpatterns
