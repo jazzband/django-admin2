@@ -1,4 +1,5 @@
 {% extends "admin2/bootstrap/base.html" %}
+{% load admin2_urls %}
 
 {% block content %}
 <h3>Site administration</h3>
@@ -23,13 +24,14 @@
                             </a>
                         </td>
                         <td class="text-right">
-                            <a href="">
+                            <a href="{% url model_admin|admin2_urlname:'create' %}">
                                 <i class="icon-plus"></i>
+
                                 Add
                             </a>
                         </td>
                         <td class="text-right">
-                            <a href="">
+                            <a href="{# FIXME: edit kind of doesn't make sense for the whole ModelAdmin #}">
                                 <i class="icon-pencil"></i>
                                 Edit
                             </a>
