@@ -1,9 +1,20 @@
 Welcome to django-admin2's documentation!
 =========================================
 
-**django-admin2** aims to replace django's builtin admin that lives in
+**django-admin2** aims to replace django's built-in admin that lives in
 ``django.contrib.admin``. Come and help us, have a look at the
 :doc:`contributing` page and see our `GitHub`_ page.
+
+This project is intentionally backwards-incompatible with ``django.contrib.admin``.
+
+Features
+==========
+
+* Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
+* Built-in RESTFUL API powered by ``django-rest-framework``
+* Default theme built on Twitter Bootstrap
+* Easy to implement theme system.
+
 
 Basic API
 ==============
