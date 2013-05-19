@@ -2,10 +2,21 @@
 
 {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit"/>
-</form>
+<div class="row">
+    <div class="span10">
+        <h3>Change {{ model }}</h3>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="span12">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit"/>
+        </form>
+    </div>
+</div>
 
 {% endblock content %}
