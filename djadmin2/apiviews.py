@@ -25,7 +25,7 @@ class Admin2APIMixin(Admin2Mixin):
                 # about the name of the admin instance when declaring the
                 # Admin2APISerializer base class
                 _default_view_name = ':'.join((
-                    self.modeladmin.admin.name,
+                    self.model_admin.admin.name,
                     '%(app_label)s_%(model_name)s_api-detail'))
 
                 class Meta:
@@ -40,9 +40,9 @@ class IndexAPIView(Admin2APIMixin, APIView):
     registry = None
 
     def get_model_data(self, model):
-        modeladmin = self.registry[model]
+        model_admin = self.registry[model]
         opts = {
-            'current_app': modeladmin.admin.name,
+            'current_app': model_admin.admin.name,
             'app_label': model._meta.app_label,
             'model_name': model._meta.object_name.lower(),
         }
