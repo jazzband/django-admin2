@@ -6,24 +6,28 @@
     <div class="span10">
         <h3>Select {{ model }} to change</h3>
     </div>
-    <div class="span2">
-        {# if has_add_permission #}
-            <a href="{% url view|admin2_urlname:'create' %}">add</a>
-        {# endif #}
-    </div>
 </div>
 
-<hr/>
 
 <div class="row">
     <div class="span12">
-        Action:
-        <select>
-          <option>----------</option>
-          <option>Delete selected {{ model }}{{ object_list|pluralize }}</option>
-        </select>
-        <a class="btn btn-mini" href="TODO">Go</a>
-        TODO of {{ object_list|length }} selected
+        <div class="navbar">
+            <div class="btn-group">
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                    Actions
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a tabindex="-1" href="#">Delete selected {{ model }}{{ object_list|pluralize }}</a></li>
+                </ul>
+            </div>
+            TODO of {{ object_list|length }} selected
+            <div class="pull-right">
+                {# if has_add_permission #}
+                <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model }}</a>
+                {# endif #}
+            </div>
+        </div>
 
         <table class="table table-bordered table-striped">
             <thead>
