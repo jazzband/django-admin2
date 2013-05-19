@@ -62,6 +62,7 @@ Content
 
    contributing
    design
+   themes
    meta
 
 
