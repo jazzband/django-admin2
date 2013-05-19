@@ -1,4 +1,4 @@
-from django.utils import unittest
+from django.test import TestCase
 from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
 
@@ -9,7 +9,7 @@ from djadmin2.models import ModelAdmin2
 from ..models import Post
 
 
-class ViewTest(unittest.TestCase):
+class ViewTest(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
 

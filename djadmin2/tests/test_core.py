@@ -1,7 +1,6 @@
-import unittest
-
 from django.db import models
 from django.core.exceptions import ImproperlyConfigured
+from django.test import TestCase
 
 from ..models import ModelAdmin2
 from ..core import Admin2
@@ -11,7 +10,7 @@ class Thing(models.Model):
     pass
 
 
-class Admin2Test(unittest.TestCase):
+class Admin2Test(TestCase):
     def setUp(self):
         self.admin2 = Admin2()
 
