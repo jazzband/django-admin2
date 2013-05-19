@@ -1,0 +1,9 @@
+{% extends "admin2/bootstrap/base.html" %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+<p>Thank you for spending some quality time with the site today.</p>
+<p><a href="{% url 'admin2:dashboard' %}">Log in again</a></p>
+
+{% endblock content %}

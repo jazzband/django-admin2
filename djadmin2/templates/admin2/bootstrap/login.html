@@ -1,0 +1,12 @@
+{% extends "admin2/bootstrap/base.html" %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="submit"/>
+</form>
+
+{% endblock content %}

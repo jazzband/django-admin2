@@ -1,5 +1,9 @@
+from functools import update_wrapper
+import os
+
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.contrib.admin.sites import AdminSite
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
@@ -8,8 +12,10 @@ from . import apiviews
 from . import models
 from . import views
 
+ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
-class Admin2(object):
+
+class Admin2(AdminSite):
     """
     The base Admin2 object.
     It keeps a registry of all registered Models and collects the urls of their
@@ -19,6 +25,9 @@ class Admin2(object):
     """
     index_view = views.IndexView
     api_index_view = apiviews.IndexAPIView
+
+    login_template = os.path.join(ADMIN2_THEME_DIRECTORY, 'login.html')
+    logout_template = os.path.join(ADMIN2_THEME_DIRECTORY, 'logout.html')
 
     def __init__(self, name='admin2'):
         self.registry = {}
@@ -101,11 +110,33 @@ class Admin2(object):
         }
 
     def get_urls(self):
+        def wrap(view, cacheable=False):
+            def wrapper(*args, **kwargs):
+                return self.admin_view(view, cacheable)(*args, **kwargs)
+            return update_wrapper(wrapper, view)
+
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
+            url(r'^$', wrap(self.index_view.as_view(**self.get_index_kwargs())), name='dashboard'),
             url(r'^api/v0/$',
-            self.api_index_view.as_view(**self.get_api_index_kwargs()), name='api-index'),
+            wrap(self.api_index_view.as_view(**self.get_api_index_kwargs())), name='api-index'),
         )
+
+        # Admin-site-wide views.
+        urlpatterns += patterns('',
+            url(r'^logout/$',
+                wrap(self.logout),
+                name='logout'),
+            url(r'^password_change/$',
+                wrap(self.password_change, cacheable=True),
+                name='password_change'),
+            url(r'^password_change/done/$',
+                wrap(self.password_change_done, cacheable=True),
+                name='password_change_done'),
+            url(r'^jsi18n/$',
+                wrap(self.i18n_javascript, cacheable=True),
+                name='jsi18n'),
+        )
+
         for model, model_admin in self.registry.iteritems():
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(
