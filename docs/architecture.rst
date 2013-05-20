@@ -2,6 +2,8 @@
 Architecture
 ================
 
+.. warning:: This is out of date and will be updated shortly.
+
 Workflow Pieces
 ----------------
 
