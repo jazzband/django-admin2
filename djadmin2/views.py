@@ -125,6 +125,11 @@ class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
     default_template_name = "model_add_form.html"
     permission_type = 'add'
 
+    def get_context_data(self, **kwargs):
+        context = super(ModelAddFormView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()._meta.verbose_name
+        return context
+
     def get_success_url(self):
         view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
         return reverse(view_name, kwargs={'pk': self.object.pk})
