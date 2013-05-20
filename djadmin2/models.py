@@ -14,11 +14,6 @@ from django.db.models import get_models, signals
 from djadmin2 import apiviews
 from djadmin2 import views
 
-try:
-    import floppyforms as forms
-except ImportError:
-    from django import forms
-
 
 class BaseAdmin2(object):
     """
@@ -240,6 +235,7 @@ class ModelAdmin2(BaseAdmin2):
     def api_urls(self):
         return self.get_api_urls(), None, None
 
+
 def create_extra_permissions(app, created_models, verbosity, **kwargs):
     """
     Creates 'view' permissions for all models.
@@ -285,4 +281,4 @@ def create_extra_permissions(app, created_models, verbosity, **kwargs):
 
 
 signals.post_syncdb.connect(create_extra_permissions,
-    dispatch_uid = "django-admin2.djadmin2.models.create_extra_permissions")
+    dispatch_uid="django-admin2.djadmin2.models.create_extra_permissions")
