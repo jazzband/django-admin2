@@ -14,6 +14,12 @@ from django.db.models import get_models, signals
 from djadmin2 import apiviews
 from djadmin2 import views
 
+MODEL_ADMIN_ATTRS = (
+                    'list_display', 'list_display_links', 'list_filter',
+                    'admin', 'has_permission', 'has_add_permission',
+                    'has_edit_permission', 'has_delete_permission',
+                         )
+
 
 class BaseAdmin2(object):
     """
@@ -88,6 +94,7 @@ class ModelAdmin2(BaseAdmin2):
     Warning: This class is targeted for reduction.
                 It's bloated and ugly.
     """
+
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()
@@ -100,6 +107,7 @@ class ModelAdmin2(BaseAdmin2):
     save_on_top = False
     verbose_name = None
     verbose_name_plural = None
+    model_admin_attributes = MODEL_ADMIN_ATTRS
 
     create_form_class = None
     update_form_class = None
@@ -134,7 +142,7 @@ class ModelAdmin2(BaseAdmin2):
             'app_label': self.app_label,
             'model': self.model,
             'model_name': self.model_name,
-            'model_admin': self,
+            'model_admin': ImmutableAdmin(self),
         }
 
     def get_default_api_view_kwargs(self):
@@ -234,6 +242,25 @@ class ModelAdmin2(BaseAdmin2):
     @property
     def api_urls(self):
         return self.get_api_urls(), None, None
+
+
+class ImmutableAdmin(object):
+    """
+       Only __init__ allows setting of attributes
+    """
+
+    def __init__(self, model_admin):
+        """ The __init__ is the only method where the ImmutableModelAdmin allows
+            for setting of values.
+        """
+        for attr_name in model_admin.model_admin_attributes:
+            setattr(self, attr_name, getattr(model_admin, attr_name))
+
+        self.__delattr__ = self._immutable
+        self.__setattr__ = self._immutable
+
+    def _immutable(self, name, value):
+        raise TypeError("Can't modify immutable model admin")
 
 
 def create_extra_permissions(app, created_models, verbosity, **kwargs):
