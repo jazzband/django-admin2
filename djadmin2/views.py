@@ -121,12 +121,23 @@ class ModelEditFormView(AdminModel2Mixin, generic.UpdateView):
 
 class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
     form_class = None
-    success_url = "../"
     default_template_name = "model_add_form.html"
     permission_type = 'add'
 
     def get_success_url(self):
-        view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
+        if '_continue' in self.request.POST:
+            view_name = 'admin2:{}_{}_update'.format(self.app_label,
+                                                     self.model_name)
+            return reverse(view_name, kwargs={'pk': self.object.pk})
+
+        if '_addanother' in self.request.POST:
+            view_name = 'admin2:{}_{}_create'.format(self.app_label,
+                                                     self.model_name)
+            return reverse(view_name)
+
+        # default to detail view
+        view_name = 'admin2:{}_{}_detail'.format(self.app_label,
+                                                 self.model_name)
         return reverse(view_name, kwargs={'pk': self.object.pk})
 
 
