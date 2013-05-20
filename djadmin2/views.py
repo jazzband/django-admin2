@@ -52,24 +52,14 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
         return super(AdminModel2Mixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
-        context.update({
-            'has_add_permission': self.model_admin.has_add_permission(self.request),
-            'has_edit_permission': self.model_admin.has_edit_permission(self.request),
-            'has_delete_permission': self.model_admin.has_delete_permission(self.request),
-        })
-        return context
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
-
-    def get_form_class(self):
-        if self.form_class is not None:
-            return self.form_class
-        return modelform_factory(self.get_model())
+        has_add_permission = self.model_admin.has_add_permission(self.request)
+        has_edit_permission = self.model_admin.has_edit_permission(self.request)
+        has_delete_permission = self.model_admin.has_delete_permission(self.request)
+        return super(AdminModel2Mixin, self).get_context_data(
+            has_add_permission=has_add_permission,
+            has_edit_permission=has_edit_permission,
+            has_delete_permission=has_delete_permission,
+            **kwargs)
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
@@ -78,12 +68,8 @@ class IndexView(Admin2Mixin, generic.TemplateView):
     apps = None
 
     def get_context_data(self, **kwargs):
-        data = super(IndexView, self).get_context_data(**kwargs)
-        data.update({
-            'apps': self.apps,
-            'registry': self.registry,
-        })
-        return data
+        return super(IndexView, self).get_context_data(
+            apps=self.apps, registry=self.registry, **kwargs)
 
 
 class ModelListView(Admin2Mixin, generic.ListView):
@@ -92,10 +78,10 @@ class ModelListView(Admin2Mixin, generic.ListView):
     permission_type = 'view'
 
     def get_context_data(self, **kwargs):
-        context = super(ModelListView, self).get_context_data(**kwargs)
-        context['model'] = self.get_model()._meta.verbose_name
-        context['model_pluralized'] = self.get_model()._meta.verbose_name_plural
-        return context
+        return super(ModelListView, self).get_context_data(
+            model=self.get_model()._meta.verbose_name,
+            model_pluralized=self.get_model()._meta.verbose_name_plural,
+            **kwargs)
 
     def get_success_url(self):
         view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
@@ -114,9 +100,9 @@ class ModelEditFormView(AdminModel2Mixin, generic.UpdateView):
     permission_type = 'change'
 
     def get_context_data(self, **kwargs):
-        context = super(ModelEditFormView, self).get_context_data(**kwargs)
-        context['model'] = self.get_model()._meta.verbose_name
-        return context
+        return super(ModelEditFormView, self).get_context_data(
+            model=self.get_model()._meta.verbose_name,
+            **kwargs)
 
 
 class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
