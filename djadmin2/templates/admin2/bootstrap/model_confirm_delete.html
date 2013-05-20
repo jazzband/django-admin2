@@ -1,10 +1,16 @@
 {% extends "admin2/bootstrap/base.html" %}
 
+{% block title %}Are you sure?{% endblock %}
+
+{% block page_title %}Are you sure?{% endblock %}
+
 {% block content %}
+<p>Are you sure you want to delete the {{ model }} "{{ object }}"? All of the following related items will be deleted:</p>
+
+TODO
 
 <form method="post">
     {% csrf_token %}
-    delete {{ object }}
     {{ form.as_p }}
     <input type="submit"/>
 </form>

@@ -1,3 +1,7 @@
+"""
+WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
+"""
+
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -79,7 +83,6 @@ class Admin2(object):
         Autodiscovers all admin2.py modules for apps in INSTALLED_APPS by
         trying to import them.
         """
-        apps = []
         for app_name in [x for x in settings.INSTALLED_APPS]:
             try:
                 import_module("%s.admin2" % app_name)

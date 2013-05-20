@@ -53,8 +53,9 @@ Content
    :maxdepth: 2
 
    contributing
-   api
    design
+   architecture
+   api
    themes
    meta
 
