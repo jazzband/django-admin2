@@ -17,7 +17,10 @@ Backend Goals
 
 Rather than creating yet another project that skins ``django.contrib.admin``, our goal is to rewrite ``django.contrib.admin`` from the ground up using Class-Based Views, better state management, and attention to all the lessons learned from difficult admin customizations over the years. 
 
-While the internal API for the backend may be drastically different, the end goal is to achieve relative parity with existing functionality in an extendable way.
+While the internal API for the backend may be drastically different, the end goal is to achieve relative parity with existing functionality in an extendable way:
+
+* Relative functional parity with ``django.contrib.admin``. This is our desire to replicate much of the existing functionality, but not have to worry too much about coding ourselves into an overly-architected corner.
+* Extensible presentation and data views in such a way that it does not violate Constraint #4. To cover many cases, we will provide instructions on how to use the REST API to fetch data rather than create overly complex backend code.
 
 Clean code with substantial documentation is also a goal:
 
