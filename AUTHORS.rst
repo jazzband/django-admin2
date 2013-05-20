@@ -15,3 +15,4 @@ Developers
 * Andrew Ingram (@AndrewIngram)
 * Gregor Müllegger (@gregmuellegger)
 * Rivo Laks (@rivol)
+* Chris Lawlor (@chrislawlor)
