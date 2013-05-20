@@ -153,10 +153,10 @@ django-admin2 pull requests should be as small/atomic as possible. Large, wide-s
 #. If you are fixing a view don't '*cleanup*' unrelated views. That cleanup belongs in another pull request.
 #. Changing permissions on a file should be in its own pull request with explicit reasons why.
 
-Follow PEP-8 and keep your code simple!
----------------------------------------
+Best Practices
+--------------
 
-Memorize the Zen of Python::
+Follow PEP-0008 and memorize the Zen of Python::
 
     >>> python -c 'import this'
 
@@ -167,6 +167,11 @@ Furthermore, the pixel shortage is over. We want to see:
 * `package` instead of `pkg`
 * `grid` instead of `g`
 * `my_function_that_does_things` instead of `mftdt`
+
+As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
+
+.. _`Two Scoops of Django`: https://2scoops.org
+
 
 How pull requests are checked, tested, and done
 ===============================================
