@@ -1,8 +1,11 @@
 {% extends "admin2/bootstrap/base.html" %}
 
+{% block title %}Add {{ model }}{% endblock %}
+
+{% block page_title %}Add {{ model }}{% endblock %}
+
 {% block content %}
 
-<h3>Add {{ model|capfirst }}</h3>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
