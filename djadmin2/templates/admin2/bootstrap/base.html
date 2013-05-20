@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>django-admin2</title>
+        <title>{% block title %}Site administration{% endblock %} | django-admin2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -46,6 +46,11 @@
         </div>
 
         <div class="container-fluid">
+            <div class="row">
+                <div class="span10">
+                    <h3>{% block page_title %}Site administration{% endblock %}</h3>
+                </div>
+            </div>
             {% block content %}{% endblock %}
         </div>
 

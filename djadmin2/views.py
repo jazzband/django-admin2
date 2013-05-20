@@ -57,6 +57,8 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
             'has_add_permission': self.model_admin.has_add_permission(self.request),
             'has_edit_permission': self.model_admin.has_edit_permission(self.request),
             'has_delete_permission': self.model_admin.has_delete_permission(self.request),
+            'model': self.get_model()._meta.verbose_name,
+            'model_pluralized': self.get_model()._meta.verbose_name_plural
         })
         return context
 
@@ -87,7 +89,6 @@ class IndexView(Admin2Mixin, generic.TemplateView):
 
 
 class ModelListView(Admin2Mixin, generic.ListView):
-
     default_template_name = "model_list.html"
     permission_type = 'view'
 
@@ -113,17 +114,17 @@ class ModelEditFormView(AdminModel2Mixin, generic.UpdateView):
     default_template_name = "model_edit_form.html"
     permission_type = 'change'
 
-    def get_context_data(self, **kwargs):
-        context = super(ModelEditFormView, self).get_context_data(**kwargs)
-        context['model'] = self.get_model()._meta.verbose_name
-        return context
-
 
 class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
     form_class = None
     success_url = "../"
     default_template_name = "model_add_form.html"
     permission_type = 'add'
+
+    def get_context_data(self, **kwargs):
+        context = super(ModelAddFormView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()._meta.verbose_name
+        return context
 
     def get_success_url(self):
         view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)

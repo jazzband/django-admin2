@@ -1,13 +1,11 @@
 {% extends "admin2/bootstrap/base.html" %}
 {% load admin2_tags %}
 
-{% block content %}
-<div class="row">
-    <div class="span10">
-        <h3>Select {{ model }} to change</h3>
-    </div>
-</div>
+{% block title %}Select {{ model }} to change{% endblock %}
 
+{% block page_title %}Select {{ model }} to change{% endblock %}
+
+{% block content %}
 
 <div class="row">
     <div class="span12">
