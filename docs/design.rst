@@ -7,10 +7,10 @@ Constraints
 
 This section outlines the design constraints that django-admin2 follows:
 
-* There will be nothing imported from ``django.contrib.admin``.
-* The original bootstrap/ theme shall contain no UI enhancements beyond the original ``django.contrib.admin`` UI. (However, future themes can and should be experimental.)
-* External package dependencies are allowed but should be very limited.
-* Building a django-admin2 theme cannot involve learning Python, which explains why we are not using tools like django-crispy-forms. (One of our goals is to make it easier for designers to explore theming django-admin2).
+1. There will be nothing imported from ``django.contrib.admin``.
+2. The original bootstrap/ theme shall contain no UI enhancements beyond the original ``django.contrib.admin`` UI. (However, future themes can and should be experimental.)
+3. External package dependencies are allowed but should be very limited.
+4. Building a django-admin2 theme cannot involve learning Python, which explains why we are not using tools like django-crispy-forms. (One of our goals is to make it easier for designers to explore theming django-admin2).
 
 Backend Goals
 ---------------
@@ -21,9 +21,9 @@ While the internal API for the backend may be drastically different, the end goa
 
 Clean code with substantial documentation is also a goal:
 
-* Create a clearly understandable/testable code base.
-* All classes/methods/functions documented.
-* Provide a wealth of in-line code documentation.
+1. Create a clearly understandable/testable code base.
+2. All classes/methods/functions documented.
+3. Provide a wealth of in-line code documentation.
 
 REST API Goals
 ----------------
@@ -32,9 +32,9 @@ There are a lot of various cases that are hard to handle with pure HTML projects
 
 Goals:
 
-* Provide a extendable self-documenting API (django-rest-framework).
-* Reuse components from the HTML view.
-* Backwards compatibility: Use a easily understood API versioning system so we can expand functionality of the API without breaking existing themes.
+1. Provide a extendable self-documenting API (django-rest-framework).
+2. Reuse components from the HTML view.
+3. Backwards compatibility: Use a easily understood API versioning system so we can expand functionality of the API without breaking existing themes.
 
 UI Goals
 ---------
