@@ -2,7 +2,7 @@
 Contributing
 ============
 
-.. warning:: Before you begin working on your contribution, please read and become familiar with the design_ of ``django-admin2``. The design_ should hopefully make it clear what our constraints and goals are for the project.
+.. warning:: Before you begin working on your contribution, please read and become familiar with the design_ of ``django-admin2``. The design_ document should hopefully make it clear what our constraints and goals are for the project.
 
 .. _design: https://django-admin2.readthedocs.org/en/latest/design.html
 
