@@ -2,6 +2,10 @@
 Contributing
 ============
 
+.. note:: Before you begin your contribution, please read and become familiar with the design_ of ``django-admin2``.
+
+.. _design: https://django-admin2.readthedocs.org/en/latest/design.html
+
 Setup
 =====
 
