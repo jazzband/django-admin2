@@ -51,7 +51,34 @@ class PostCreateViewTest(BaseIntegrationTest):
                                     follow=True)
         self.assertTrue(Post.objects.filter(title="a_post_title").exists())
         post = Post.objects.get(title="a_post_title")
-        self.assertRedirects(response, reverse("admin2:blog_post_detail",
+        self.assertRedirects(response, reverse("admin2:blog_post_index"))
+
+    def test_save_and_add_another_redirects_to_create(self):
+        """
+        Tests that choosing 'Save and add another' from the model create 
+        page redirects the user to the model create page.
+        """
+        post_data = {"title": "a_post_title",
+                     "body": "a_post_body",
+                     "_addanother": ""}
+        self.client.login(username='admin', password='password')
+        response = self.client.post(reverse("admin2:blog_post_create"),
+                                    post_data)
+        post = Post.objects.get(title='a_post_title')
+        self.assertRedirects(response, reverse("admin2:blog_post_create"))
+
+    def test_save_and_continue_editing_redirects_to_update(self):
+        """
+        Tests that choosing "Save and continue editing" redirects 
+        the user to the model update form.
+        """
+        post_data = {"title": "Unique",
+                     "body": "a_post_body",
+                     "_continue": ""}
+        response = self.client.post(reverse("admin2:blog_post_create"),
+                                    post_data)
+        post = Post.objects.get(title="Unique")
+        self.assertRedirects(response, reverse("admin2:blog_post_update",
                                                args=(post.pk, )))
 
 
