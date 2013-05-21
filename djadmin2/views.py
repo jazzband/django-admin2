@@ -9,7 +9,7 @@ from django.views import generic
 
 from braces.views import AccessMixin
 
-from templatetags.admin2_urls import admin2_urlname
+from templatetags.admin2_tags import admin2_urlname
 
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
