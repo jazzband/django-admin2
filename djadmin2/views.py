@@ -123,18 +123,25 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
 
 class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.UpdateView):
     form_class = None
-    default_template_name = "model_edit_form.html"
+    default_template_name = "model_update_form.html"
     permission_type = 'change'
+
+    def get_context_data(self, **kwargs):
+        context = super(ModelEditFormView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()._meta.verbose_name
+        context['action'] = "Change"
+        return context
 
 
 class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.CreateView):
     form_class = None
-    default_template_name = "model_add_form.html"
+    default_template_name = "model_update_form.html"
     permission_type = 'add'
 
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()._meta.verbose_name
+        context['action'] = "Add"
         return context
 
 
