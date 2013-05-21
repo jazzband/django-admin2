@@ -1,8 +1,8 @@
 {% extends "admin2/bootstrap/base.html" %}
 
-{% block title %}Change {{ model }}{% endblock %}
+{% block title %}{{ action }} {{ model }}{% endblock %}
 
-{% block page_title %}Change {{ model }}{% endblock %}
+{% block page_title %}{{ action }} {{ model }}{% endblock %}
 
 {% block content %}
 
@@ -11,8 +11,6 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-
-            {# TODO: combine/refactor this with model_add_form.html #}
 
             <button class="btn btn-small" type="submit" name="_addanother">Save and add another</button>
             <button class="btn btn-small" type="submit" name="_continue">Save and continue editing</button>
