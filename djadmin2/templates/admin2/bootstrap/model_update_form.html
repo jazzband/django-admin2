@@ -1,0 +1,26 @@
+{% extends "admin2/bootstrap/base.html" %}
+
+{% block title %}{{ action }} {{ model }}{% endblock %}
+
+{% block page_title %}{{ action }} {{ model }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="span12">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+			{% for formset in inlines %}
+			{{ formset }}
+			{% endfor %}            
+
+            <button class="btn btn-small" type="submit" name="_addanother">Save and add another</button>
+            <button class="btn btn-small" type="submit" name="_continue">Save and continue editing</button>
+            <button class="btn btn-small btn-success" type="submit" name="_save">Save</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

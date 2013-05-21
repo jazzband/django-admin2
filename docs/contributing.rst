@@ -46,6 +46,8 @@ Tips
 Setting up topic branches and generating pull requests
 ======================================================
 
+.. note:: This is our way of describing our version of git-flow.
+
 While it's handy to provide useful code snippets in an issue, it is better for
 you as a developer to submit pull requests. By submitting pull request your
 contribution to django-admin2 will be recorded by Github. 
@@ -72,7 +74,7 @@ To create a topic branch, its easiest to use the convenient ``-b`` argument to `
 
 You should use a verbose enough name for your branch so it is clear what it is
 about.  Now you can commit your changes and regularly merge in the upstream
-master as described below.
+develop as described below.
 
 When you are ready to generate a pull request, either for preliminary review,
 or for consideration of merging into the project you must first push your local
@@ -84,7 +86,10 @@ Now when you go to your fork on GitHub, you will see this branch listed under
 the "Source" tab where it says "Switch Branches".  Go ahead and select your
 topic branch from this list, and then click the "Pull request" button.
 
-Here you can add a comment about your branch.  If this in response to
+Your pull request should be applied to the **develop** branch of django-admin2.
+Be sure to change from the default of ``master`` to ``develop``.
+
+Next, you can add a comment about your branch.  If this in response to
 a submitted issue, it is good to put a link to that issue in this initial
 comment.  The repo managers will be notified of your pull request and it will
 be reviewed (see below for best practices).  Note that you can continue to add
@@ -101,16 +106,16 @@ Pull upstream changes into your fork regularly
 
 To pull in upstream changes::
 
-    git remote add upstream https://github.com/pydanny/django-admin2.git
-    git fetch upstream
+    git remote add upstream https://github.com/twoscoops/django-admin2.git
+    git fetch upstream develop
 
 Check the log to be sure that you actually want the changes, before merging::
 
-    git log upstream/master
+    git log upstream/develop
 
 Then merge the changes that you fetched::
 
-    git merge upstream/master
+    git merge upstream/develop
 
 For more info, see http://help.github.com/fork-a-repo/
 
@@ -151,10 +156,10 @@ django-admin2 pull requests should be as small/atomic as possible. Large, wide-s
 #. If you are fixing a view don't '*cleanup*' unrelated views. That cleanup belongs in another pull request.
 #. Changing permissions on a file should be in its own pull request with explicit reasons why.
 
-Follow PEP-8 and keep your code simple!
----------------------------------------
+Best Practices
+--------------
 
-Memorize the Zen of Python::
+Follow PEP-0008 and memorize the Zen of Python::
 
     >>> python -c 'import this'
 
@@ -165,6 +170,11 @@ Furthermore, the pixel shortage is over. We want to see:
 * `package` instead of `pkg`
 * `grid` instead of `g`
 * `my_function_that_does_things` instead of `mftdt`
+
+As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
+
+.. _`Two Scoops of Django`: https://2scoops.org
+
 
 How pull requests are checked, tested, and done
 ===============================================
@@ -181,11 +191,11 @@ Then we run the tests::
 
 We finish with a non-fastforward merge (to preserve the branch history) and push to GitHub::
 
-    git checkout master
+    git checkout develop
     git merge --no-ff <branch-name>
-    git push upstream master
+    git push upstream develop
 
 .. _installation: install.html
-.. _GitHub project: https://github.com/pydanny/django-admin2
-.. _issue tracker: https://github.com/pydanny/django-admin2/issues
+.. _GitHub project: https://github.com/twoscoops/django-admin2
+.. _issue tracker: https://github.com/twoscoops/django-admin2/issues
 .. _pydanny: http://pydanny.com
