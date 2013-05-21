@@ -84,7 +84,10 @@ Now when you go to your fork on GitHub, you will see this branch listed under
 the "Source" tab where it says "Switch Branches".  Go ahead and select your
 topic branch from this list, and then click the "Pull request" button.
 
-Here you can add a comment about your branch.  If this in response to
+Your pull request should be applied to the **develop** branch of django-admin2.
+Be sure to change from the default of ``master`` to ``develop``.
+
+Next, you can add a comment about your branch.  If this in response to
 a submitted issue, it is good to put a link to that issue in this initial
 comment.  The repo managers will be notified of your pull request and it will
 be reviewed (see below for best practices).  Note that you can continue to add
@@ -102,15 +105,15 @@ Pull upstream changes into your fork regularly
 To pull in upstream changes::
 
     git remote add upstream https://github.com/pydanny/django-admin2.git
-    git fetch upstream
+    git fetch upstream develop
 
 Check the log to be sure that you actually want the changes, before merging::
 
-    git log upstream/master
+    git log upstream/develop
 
 Then merge the changes that you fetched::
 
-    git merge upstream/master
+    git merge upstream/develop
 
 For more info, see http://help.github.com/fork-a-repo/
 
