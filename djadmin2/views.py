@@ -77,6 +77,20 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
         return modelform_factory(self.get_model())
 
 
+class Admin2ModelFormMixin(object):
+
+    def get_success_url(self):
+        if '_continue' in self.request.POST:
+            view_name = admin2_urlname(self, 'update')
+            return reverse(view_name, kwargs={'pk': self.object.pk})
+
+        if '_addanother' in self.request.POST:
+            return reverse(admin2_urlname(self, 'create'))
+
+        # default to index view
+        return reverse(admin2_urlname(self, 'index'))
+
+
 class IndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "index.html"
     registry = None
@@ -107,14 +121,13 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
     permission_type = 'view'
 
 
-class ModelEditFormView(AdminModel2Mixin, generic.UpdateView):
+class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.UpdateView):
     form_class = None
-    success_url = "../../"
     default_template_name = "model_edit_form.html"
     permission_type = 'change'
 
 
-class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
+class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.CreateView):
     form_class = None
     default_template_name = "model_add_form.html"
     permission_type = 'add'
@@ -123,17 +136,6 @@ class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()._meta.verbose_name
         return context
-
-    def get_success_url(self):
-        if '_continue' in self.request.POST:
-            view_name = admin2_urlname(self, 'update')
-            return reverse(view_name, kwargs={'pk': self.object.pk})
-
-        if '_addanother' in self.request.POST:
-            return reverse(admin2_urlname(self, 'create'))
-
-        # default to index view
-        return reverse(admin2_urlname(self, 'index'))
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):

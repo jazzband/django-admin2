@@ -11,7 +11,12 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit"/>
+
+            {# TODO: combine/refactor this with model_add_form.html #}
+
+            <button class="btn btn-small" type="submit" name="_addanother">Save and add another</button>
+            <button class="btn btn-small" type="submit" name="_continue">Save and continue editing</button>
+            <button class="btn btn-small btn-success" type="submit" name="_save">Save</button>
         </form>
     </div>
 </div>
