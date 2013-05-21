@@ -51,8 +51,7 @@ class PostCreateViewTest(BaseIntegrationTest):
                                     follow=True)
         self.assertTrue(Post.objects.filter(title="a_post_title").exists())
         post = Post.objects.get(title="a_post_title")
-        self.assertRedirects(response, reverse("admin2:blog_post_detail",
-                                               args=(post.pk, )))
+        self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_save_and_add_another_redirects_to_create(self):
         """

@@ -9,6 +9,9 @@ from django.views import generic
 
 from braces.views import AccessMixin
 
+from templatetags.admin2_urls import admin2_urlname
+
+
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
 
 
@@ -97,10 +100,6 @@ class ModelListView(Admin2Mixin, generic.ListView):
         context['model_pluralized'] = self.get_model()._meta.verbose_name_plural
         return context
 
-    def get_success_url(self):
-        view_name = 'admin2:{}_{}_detail'.format(self.app_label, self.model_name)
-        return reverse(view_name, kwargs={'pk': self.object.pk})
-
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
     default_template_name = "model_detail.html"
@@ -126,19 +125,14 @@ class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
 
     def get_success_url(self):
         if '_continue' in self.request.POST:
-            view_name = 'admin2:{}_{}_update'.format(self.app_label,
-                                                     self.model_name)
+            view_name = admin2_urlname(self, 'update')
             return reverse(view_name, kwargs={'pk': self.object.pk})
 
         if '_addanother' in self.request.POST:
-            view_name = 'admin2:{}_{}_create'.format(self.app_label,
-                                                     self.model_name)
-            return reverse(view_name)
+            return reverse(admin2_urlname(self, 'create'))
 
-        # default to detail view
-        view_name = 'admin2:{}_{}_detail'.format(self.app_label,
-                                                 self.model_name)
-        return reverse(view_name, kwargs={'pk': self.object.pk})
+        # default to index view
+        return reverse(admin2_urlname(self, 'index'))
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
