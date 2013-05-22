@@ -10,11 +10,16 @@ from django.test.utils import get_runner
 from django.conf import settings
 
 
-def runtests():
+def runtests(tests=('blog', 'djadmin2',)):
     TestRunner = get_runner(settings)
     test_runner = TestRunner(verbosity=1, interactive=True)
-    failures = test_runner.run_tests(['blog', 'djadmin2'])
+    failures = test_runner.run_tests(tests)
     sys.exit(bool(failures))
 
+
 if __name__ == '__main__':
-    runtests()
+    if len(sys.argv) > 1:
+        tests = sys.argv[1:]
+        runtests(tests)
+    else:
+        runtests()
