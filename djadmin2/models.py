@@ -11,6 +11,8 @@ from django.conf.urls import patterns, url
 from django.contrib.auth import models as auth_app
 from django.db.models import get_models, signals
 
+import extra_views
+
 from djadmin2 import apiviews
 from djadmin2 import views
 
@@ -246,6 +248,23 @@ class ModelAdmin2(BaseAdmin2):
     @property
     def api_urls(self):
         return self.get_api_urls(), None, None
+
+
+
+class Admin2Inline(extra_views.InlineFormSet):
+    """
+    A simple extension of django-extra-view's InlineFormSet that
+    adds some useful functionality.
+    """
+
+    def construct_formset(self):
+        """
+        Overrides construct_formset to attach the model class as
+        an attribute of the returned formset instance.
+        """
+        formset = super(Admin2Inline, self).construct_formset()
+        formset.model = self.inline_model
+        return formset
 
 
 class ImmutableAdmin(object):

@@ -135,7 +135,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
         return context
 
 
-class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.extra_views.CreateWithInlinesView):
+class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
     form_class = None
     default_template_name = "model_update_form.html"
     permission_type = 'add'

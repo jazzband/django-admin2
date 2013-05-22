@@ -5,10 +5,8 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import Group, User
 from rest_framework.relations import PrimaryKeyRelatedField
 
-import extra_views
-
 import djadmin2
-from djadmin2.models import ModelAdmin2
+from djadmin2.models import ModelAdmin2, Admin2Inline
 from djadmin2.apiviews import Admin2APISerializer
 
 
@@ -31,7 +29,7 @@ class UserSerializer(Admin2APISerializer):
         exclude = ('passwords',)
 
 
-class CommentInline(extra_views.InlineFormSet):
+class CommentInline(Admin2Inline):
     model = Comment
 
 
