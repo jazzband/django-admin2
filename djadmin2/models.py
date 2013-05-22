@@ -14,13 +14,8 @@ from django.db.models import get_models, signals
 import extra_views
 
 from djadmin2 import apiviews
+from djadmin2 import constants
 from djadmin2 import views
-
-MODEL_ADMIN_ATTRS = (
-                    'list_display', 'list_display_links', 'list_filter',
-                    'admin', 'has_permission', 'has_add_permission',
-                    'has_edit_permission', 'has_delete_permission',
-                         )
 
 
 class BaseAdmin2(object):
@@ -109,7 +104,7 @@ class ModelAdmin2(BaseAdmin2):
     save_on_top = False
     verbose_name = None
     verbose_name_plural = None
-    model_admin_attributes = MODEL_ADMIN_ATTRS
+    model_admin_attributes = constants.MODEL_ADMIN_ATTRS
 
     create_form_class = None
     update_form_class = None
@@ -248,7 +243,6 @@ class ModelAdmin2(BaseAdmin2):
     @property
     def api_urls(self):
         return self.get_api_urls(), None, None
-
 
 
 class Admin2Inline(extra_views.InlineFormSet):
