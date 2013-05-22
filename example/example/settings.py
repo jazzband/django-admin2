@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django_coverage',
+    'floppyforms',
     'rest_framework',
     'djadmin2',
     'blog',
