@@ -9,7 +9,9 @@ from django.views import generic
 
 from braces.views import AccessMixin
 
-from templatetags.admin2_tags import admin2_urlname
+import extra_views
+
+from .templatetags.admin2_tags import admin2_urlname
 
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
@@ -121,7 +123,7 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
     permission_type = 'view'
 
 
-class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.UpdateView):
+class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
     form_class = None
     default_template_name = "model_update_form.html"
     permission_type = 'change'
@@ -133,7 +135,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.UpdateVi
         return context
 
 
-class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, generic.CreateView):
+class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
     form_class = None
     default_template_name = "model_update_form.html"
     permission_type = 'add'

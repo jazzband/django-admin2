@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
-from ..models import Post
+from ..models import Post, Comment
 
 
 class BaseIntegrationTest(TestCase):
@@ -45,12 +45,21 @@ class PostCreateViewTest(BaseIntegrationTest):
         self.assertEqual(response.status_code, 200)
 
     def test_create_post(self):
+        post_data = {
+            "comment_set-TOTAL_FORMS": u'2',
+            "comment_set-INITIAL_FORMS": u'0',
+            "comment_set-MAX_NUM_FORMS": u'',
+            "comment_set-0-body": u'Comment Body',
+            "title": "a_post_title",
+            "body": "a_post_body",
+        }
+ 
         response = self.client.post(reverse("admin2:blog_post_create"),
-                                    {"title": "a_post_title",
-                                     "body": "a_post_body"},
+                                    post_data,
                                     follow=True)
         self.assertTrue(Post.objects.filter(title="a_post_title").exists())
         post = Post.objects.get(title="a_post_title")
+        comment = Comment.objects.get(body="Comment Body")
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_save_and_add_another_redirects_to_create(self):
@@ -58,9 +67,14 @@ class PostCreateViewTest(BaseIntegrationTest):
         Tests that choosing 'Save and add another' from the model create 
         page redirects the user to the model create page.
         """
-        post_data = {"title": "a_post_title",
-                     "body": "a_post_body",
-                     "_addanother": ""}
+        post_data = {
+            "comment_set-TOTAL_FORMS": u'2',
+            "comment_set-INITIAL_FORMS": u'0',
+            "comment_set-MAX_NUM_FORMS": u'',
+            "title": "a_post_title",
+            "body": "a_post_body",
+            "_addanother": ""
+        }
         self.client.login(username='admin', password='password')
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data)
@@ -72,9 +86,14 @@ class PostCreateViewTest(BaseIntegrationTest):
         Tests that choosing "Save and continue editing" redirects 
         the user to the model update form.
         """
-        post_data = {"title": "Unique",
-                     "body": "a_post_body",
-                     "_continue": ""}
+        post_data = {
+            "comment_set-TOTAL_FORMS": u'2',
+            "comment_set-INITIAL_FORMS": u'0',
+            "comment_set-MAX_NUM_FORMS": u'',
+            "title": "Unique",
+            "body": "a_post_body",
+            "_continue": ""
+        }
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data)
         post = Post.objects.get(title="Unique")
