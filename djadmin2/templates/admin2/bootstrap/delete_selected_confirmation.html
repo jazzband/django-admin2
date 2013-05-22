@@ -1,0 +1,23 @@
+{% extends "admin2/bootstrap/base.html" %}
+
+{% block content %}
+
+<p>Are you sure you want to delete the selected {{ objects_name }}?</p>
+
+<ul>
+    {% for item in queryset %}
+    <li>{{ item }}</li>
+    {% endfor %}
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="confirmed" value="yes" />
+    <input type="hidden" name="action" value="delete_selected" />
+    {% for item in queryset %}
+    <input type="hidden" name="selected_model_id" value="{{ item.id }}" />
+    {% endfor %}
+    <input type="submit"/>
+</form>
+
+{% endblock content %}

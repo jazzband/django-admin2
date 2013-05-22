@@ -5,46 +5,57 @@
 
 {% block page_title %}Select {{ model }} to change{% endblock %}
 
+{% block extrajs %}
+<script src="/static/themes/bootstrap/js/actions.js"></script>
+{% endblock extrajs %}
+
 {% block content %}
 
-<div class="row">
-    <div class="span12">
-        <div class="space-below">
-            <div class="btn-group">
-                <button class="btn dropdown-toggle" data-toggle="dropdown">
-                    Actions
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a tabindex="-1" href="#">Delete selected {{ model }}{{ object_list|pluralize }}</a></li>
-                </ul>
+<div id="model-list" class="row">
+    <form id="model-list-form" class="form-inline" method="post">
+        <div class="span12">
+            <div class="navbar">
+                {% csrf_token %}
+                <select name="action">
+                    {% for action in actions %}
+                    <option value="{{ action.name }}">{{ action.description }}</option>
+                    {% endfor %}
+                </select>
+                <button type="Submit" class="btn">Go</button>
+		<span id="selected-count">0</span> of {{ object_list|length }} selected
+                <div class="pull-right">
+                    {# if has_add_permission #}
+                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model }}</a>
+                    {# endif #}
+                </div>
             </div>
-            <small class="muted">TODO of {{ object_list|length }} selected</small>
-            <div class="pull-right">
-                {# if has_add_permission #}
-                <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model }}</a>
-                {# endif #}
-            </div>
-        </div>
 
-        <table class="table table-bordered table-striped">
-            <thead>
-                <th class="checkbox-column"><input type="checkbox"></th>
-                <th>{{ model|title}}</th>
-            </thead>
-            <tbody>
-                {% for obj in object_list %}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th><input type="checkbox" class="model-select-all"></th>
+                    <th>{{ model|title}}</th>
+                </thead>
+                <tbody>
+                    {% for obj in object_list %}
                     <tr>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" class="model-select" name="selected_model_id" value="{{obj.id}}"></td>
                         <td>
-                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
+                            {{ obj }} <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">detail</a>
+                            {# if has_edit_permission #}
+                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">edit</a>
+                            {# endif #}
+                            {# if has_delete_permission #}
+                            <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">delete</a>
+                            {# endif #}
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p>{{ object_list|length }} {{ model }}{{ object_list|pluralize }}</p>
-    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {{ object_list|length }} {{ model }}{{ object_list|pluralize }}
+        </div>
+    </form>
 </div>
 
 {% endblock content %}
