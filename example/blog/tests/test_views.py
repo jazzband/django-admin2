@@ -30,6 +30,22 @@ class PostListTest(BaseIntegrationTest):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertContains(response, post.title)
 
+    def test_actions_displayed(self):
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertInHTML('<option value="delete_selected">Delete selected items</option>', response.content)
+
+    def test_delete_selected_post(self):
+        post = Post.objects.create(title="a_post_title", body="body")
+        params = {'action': 'delete_selected', 'selected_model_id': str(post.id)}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertInHTML('<p>Are you sure you want to delete the selected post?</p>', response.content)
+
+    def test_delete_selected_post_confirmation(self):
+        post = Post.objects.create(title="a_post_title", body="body")
+        params = {'action': 'delete_selected', 'selected_model_id': str(post.id), 'confirmed': 'yes'}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertRedirects(response, reverse("admin2:blog_post_index"))
+
 
 class PostDetailViewTest(BaseIntegrationTest):
     def test_view_ok(self):

@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 from django.forms.models import modelform_factory
+from django.http import HttpResponseRedirect
 from django.views import generic
 
 from braces.views import AccessMixin
@@ -109,11 +110,31 @@ class ModelListView(Admin2Mixin, generic.ListView):
     default_template_name = "model_list.html"
     permission_type = 'view'
 
+    def post(self, request):
+        # This is where we handle actions
+        action_name = request.POST['action']
+        action_func = self.get_actions()[action_name]['func']
+        selected_model_ids = request.POST.getlist('selected_model_id')
+        queryset = self.model.objects.filter(pk__in=selected_model_ids)
+        response = action_func(request, queryset)
+        if response is None:
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return response
+
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()._meta.verbose_name
         context['model_pluralized'] = self.get_model()._meta.verbose_name_plural
+        context['actions'] = self.get_actions().values()
         return context
+
+    def get_success_url(self):
+        view_name = 'admin2:{}_{}_index'.format(self.app_label, self.model_name)
+        return reverse(view_name)
+
+    def get_actions(self):
+        return self.model_admin.get_actions()
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
