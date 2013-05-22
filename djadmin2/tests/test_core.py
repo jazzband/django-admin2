@@ -32,4 +32,4 @@ class Admin2Test(TestCase):
 
     def test_get_urls(self):
         self.admin2.register(Thing)
-        self.assertEquals(5, len(self.admin2.get_urls()))
+        self.assertEquals(7, len(self.admin2.get_urls()))

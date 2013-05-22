@@ -13,16 +13,16 @@
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
-                    <a class="brand" href="{% url 'admin2:dashboard' %}">Django-Admin2</a>
+                    <a tabindex="1" class="brand" href="{% url 'admin2:dashboard' %}">Django-Admin2</a>
 
                     <ul class="nav pull-right">
-                        <li><a tabindex="-1" href="{% url 'admin2:api-index' %}">{% trans "API" %}</a></li>
+                        <li><a tabindex="2" href="{% url 'admin2:api-index' %}">{% trans "API" %}</a></li>
 
                         {% if docsroot %}
-                            <li><a href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
+                        <li><a tabindex="3" href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
                         {% endif %}
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a tabindex="4" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {% if user.get_full_name %}
                                     {{ user.get_full_name }}
                                 {% else %}
@@ -34,9 +34,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {% if user.has_usable_password %}
-                                    <li><a tabindex="-1" href="TODO">{% trans "Change password" %}</a></li>
+                                <li><a href="{% url 'admin2:password-change' %}">{% trans "Change password" %}</a></li>
                                 {% endif %}
-                                <li><a tabindex="-1" href="TODO">{% trans "Log out" %}</a></li>
+                                {% if user.is_authenticated %}
+                                <li><a href="{% url 'admin2:logout' %}">{% trans "Log out" %}</a></li>
+                                {% endif %}
                             </ul>
                         </li>
                     </ul>

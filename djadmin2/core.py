@@ -4,6 +4,7 @@ WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
 
 from django.conf.urls import patterns, include, url
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
@@ -135,7 +136,21 @@ class Admin2(object):
                 view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
                 name='api-index'
             ),
+
+            url(regex=r'^password_change/$',
+                regex=rlogin_required(views.PasswordChangeView.as_view()),
+                name='password-change'
+                ),
+            url(regex=r'^password_change_done/$',
+                login_required(views.PasswordChangeDoneView.as_view()),
+                name='password-change-done'
+                ),
+            url(regex=r'^logout/$',
+                login_required(views.LogoutView.as_view()),
+                name='logout'
+                ),
         )
+
         for model, model_admin in self.registry.iteritems():
             model_options = utils.model_options(model)
             urlpatterns += patterns('',

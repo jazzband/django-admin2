@@ -1,4 +1,8 @@
-from django.core.urlresolvers import reverse
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import logout
+from django.contrib.auth import get_user_model
+
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
@@ -128,3 +132,38 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             'deletable_objects': collector.nested(_format_callback)
         })
         return context
+
+
+class PasswordChangeView(Admin2Mixin, generic.UpdateView):
+
+    default_template_name = 'auth/password_change_form.html'
+    form_class = PasswordChangeForm
+    model = get_user_model()
+    success_url = reverse_lazy('admin2:password-change-done')
+
+    def get_form_kwargs(self, **kwargs):
+        data = {'user': self.get_object()}
+
+        if self.request.method in ('POST', 'PUT'):
+            data.update({
+                'data': self.request.POST
+            })
+
+        return data
+
+    def get_object(self, **kwargs):
+        return self.request.user
+
+
+class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
+
+    default_template_name = 'auth/password_change_done.html'
+
+
+class LogoutView(Admin2Mixin, generic.TemplateView):
+
+    default_template_name = 'auth/logout.html'
+
+    def get(self, request, *args, **kwargs):
+        return logout(request, template_name=self.get_template_names(),
+                      *args, **kwargs)
