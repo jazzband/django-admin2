@@ -4,6 +4,7 @@ from django.views import generic
 
 import extra_views
 
+from . import permissions
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
@@ -39,7 +40,9 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
 
 class ModelListView(AdminModel2Mixin, generic.ListView):
     default_template_name = "model_list.html"
-    permission_type = 'view'
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelViewPermission)
 
     def post(self, request):
         # This is where we handle actions
@@ -69,13 +72,17 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
     default_template_name = "model_detail.html"
-    permission_type = 'view'
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelViewPermission)
 
 
 class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
     form_class = None
     default_template_name = "model_update_form.html"
-    permission_type = 'change'
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelChangePermission)
 
     def get_context_data(self, **kwargs):
         context = super(ModelEditFormView, self).get_context_data(**kwargs)
@@ -87,7 +94,9 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
 class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
     form_class = None
     default_template_name = "model_update_form.html"
-    permission_type = 'add'
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelAddPermission)
 
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
@@ -99,4 +108,6 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
     success_url = "../../"  # TODO - fix this!
     default_template_name = "model_confirm_delete.html"
-    permission_type = 'delete'
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelDeletePermission)
