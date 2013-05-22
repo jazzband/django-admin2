@@ -1,7 +1,7 @@
 import floppyforms
 from django import forms
 from django.test import TestCase
-from djadmin2.forms import get_floppyform_widget, modelform_factory
+from djadmin2.forms import floppify_widget, floppify_form, modelform_factory
 from ..models import Post
 
 
@@ -16,7 +16,7 @@ class ModelFormFactoryTest(TestCase):
 class GetFloppyformWidgetTest(TestCase):
     def assertExpectWidget(self, instance, new_class_,
         equal_attributes=None):
-        new_instance = get_floppyform_widget(instance)
+        new_instance = floppify_widget(instance)
         self.assertEqual(new_instance.__class__, new_class_)
         if equal_attributes:
             for attribute in equal_attributes:
@@ -38,7 +38,7 @@ class GetFloppyformWidgetTest(TestCase):
         widget = forms.TextInput()
         widget.is_required = True
         widget.attrs = {'placeholder': 'Search ...'}
-        new_widget = get_floppyform_widget(widget)
+        new_widget = floppify_widget(widget)
         self.assertFalse(widget.__dict__ is new_widget.__dict__)
         new_widget.is_required = False
         self.assertEqual(widget.is_required, True)
@@ -177,7 +177,7 @@ class GetFloppyformWidgetTest(TestCase):
 
         check_test = lambda v: False
         widget = forms.widgets.CheckboxInput(check_test=check_test)
-        new_widget = get_floppyform_widget(widget)
+        new_widget = floppify_widget(widget)
         self.assertEqual(widget.check_test, new_widget.check_test)
         self.assertTrue(new_widget.check_test is check_test)
 
@@ -235,7 +235,7 @@ class GetFloppyformWidgetTest(TestCase):
 
         text_input = forms.widgets.TextInput()
         widget = forms.widgets.MultiWidget([text_input])
-        new_widget = get_floppyform_widget(widget)
+        new_widget = floppify_widget(widget)
         self.assertEqual(widget.widgets, new_widget.widgets)
         self.assertTrue(new_widget.widgets[0] is text_input)
 
@@ -247,7 +247,7 @@ class GetFloppyformWidgetTest(TestCase):
 
         widget = forms.widgets.SplitDateTimeWidget(
             date_format='DATE_FORMAT', time_format='TIME_FORMAT')
-        new_widget = get_floppyform_widget(widget)
+        new_widget = floppify_widget(widget)
         self.assertTrue(isinstance(
             new_widget.widgets[0], floppyforms.widgets.DateInput))
         self.assertTrue(isinstance(
@@ -263,7 +263,7 @@ class GetFloppyformWidgetTest(TestCase):
 
         widget = forms.widgets.SplitHiddenDateTimeWidget(
             date_format='DATE_FORMAT', time_format='TIME_FORMAT')
-        new_widget = get_floppyform_widget(widget)
+        new_widget = floppify_widget(widget)
         self.assertTrue(isinstance(
             new_widget.widgets[0], floppyforms.widgets.DateInput))
         self.assertTrue(isinstance(
@@ -286,3 +286,159 @@ class GetFloppyformWidgetTest(TestCase):
             widget,
             floppyforms.widgets.SelectDateWidget,
             ('attrs', 'years', 'required'))
+
+
+class ModelFormTest(TestCase):
+    def test_custom_base_form(self):
+        class MyForm(forms.ModelForm):
+            pass
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        form = form_class()
+        self.assertTrue(isinstance(
+            form.fields['title'].widget,
+            floppyforms.widgets.TextInput))
+
+    def test_declared_fields(self):
+        class MyForm(forms.ModelForm):
+            subtitle = forms.CharField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        self.assertTrue(isinstance(
+            form_class.base_fields['subtitle'].widget,
+            floppyforms.widgets.TextInput))
+        self.assertTrue(isinstance(
+            form_class.declared_fields['subtitle'].widget,
+            floppyforms.widgets.TextInput))
+
+        self.assertTrue(isinstance(
+            form_class.base_fields['title'].widget,
+            floppyforms.widgets.TextInput))
+        # title is not defined in declared fields
+
+    def test_additional_form_fields(self):
+        class MyForm(forms.ModelForm):
+            subtitle = forms.CharField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        form = form_class()
+        self.assertTrue(isinstance(
+            form.fields['subtitle'].widget,
+            floppyforms.widgets.TextInput))
+
+    def test_subclassing_forms(self):
+        class MyForm(forms.ModelForm):
+            subtitle = forms.CharField()
+
+            class Meta:
+                model = Post
+
+        class ChildForm(MyForm):
+            created = forms.DateField()
+
+        form_class = modelform_factory(model=Post, form=ChildForm)
+        form = form_class()
+        self.assertTrue(isinstance(
+            form.fields['title'].widget,
+            floppyforms.widgets.TextInput))
+        self.assertTrue(isinstance(
+            form.fields['subtitle'].widget,
+            floppyforms.widgets.TextInput))
+        self.assertTrue(isinstance(
+            form.fields['created'].widget,
+            floppyforms.widgets.DateInput))
+
+
+class FieldWidgetTest(TestCase):
+    def test_dont_overwrite_none_default_widget(self):
+        # we don't create the floppyform EmailInput for the email field here
+        # since we have overwritten the default widget. However we replace the
+        # django textarea with a floppyforms Textarea
+        email_input = forms.widgets.Textarea()
+
+        class MyForm(forms.ModelForm):
+            email = forms.EmailField(widget=email_input)
+            
+            class Meta:
+                model = Post
+
+        form_class = floppify_form(MyForm)
+        widget = form_class().fields['email'].widget
+        self.assertFalse(isinstance(widget, floppyforms.widgets.EmailInput))
+        self.assertTrue(isinstance(widget, floppyforms.widgets.Textarea))
+
+    def test_float_field(self):
+        class MyForm(forms.ModelForm):
+            float = forms.FloatField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['float'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.NumberInput))
+        self.assertEqual(widget.input_type, 'number')
+
+    def test_decimal_field(self):
+        class MyForm(forms.ModelForm):
+            decimal = forms.DecimalField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['decimal'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.NumberInput))
+        self.assertEqual(widget.input_type, 'number')
+
+    def test_integer_field(self):
+        class MyForm(forms.ModelForm):
+            integer = forms.IntegerField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['integer'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.NumberInput))
+        self.assertEqual(widget.input_type, 'number')
+
+    def test_email_field(self):
+        class MyForm(forms.ModelForm):
+            email = forms.EmailField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['email'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.EmailInput))
+        self.assertEqual(widget.input_type, 'email')
+
+    def test_url_field(self):
+        class MyForm(forms.ModelForm):
+            url = forms.URLField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['url'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.URLInput))
+        self.assertEqual(widget.input_type, 'url')
+
+    def test_slug_field(self):
+        class MyForm(forms.ModelForm):
+            slug = forms.SlugField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['slug'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.SlugInput))
+        self.assertEqual(widget.input_type, 'text')
+
+    def test_ipaddress_field(self):
+        class MyForm(forms.ModelForm):
+            ipaddress = forms.IPAddressField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['ipaddress'].widget
+        self.assertTrue(isinstance(widget, floppyforms.widgets.IPAddressInput))
+        self.assertEqual(widget.input_type, 'text')
+
+    def test_splitdatetime_field(self):
+        class MyForm(forms.ModelForm):
+            splitdatetime = forms.SplitDateTimeField()
+
+        form_class = modelform_factory(model=Post, form=MyForm)
+        widget = form_class().fields['splitdatetime'].widget
+        self.assertTrue(isinstance(
+            widget, floppyforms.widgets.SplitDateTimeWidget))
+        self.assertTrue(isinstance(
+            widget.widgets[0], floppyforms.widgets.DateInput))
+        self.assertTrue(isinstance(
+            widget.widgets[1], floppyforms.widgets.TimeInput))

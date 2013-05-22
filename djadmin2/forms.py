@@ -71,7 +71,7 @@ def _create_multiwidget(widget_class, copy_attributes=(), init_arguments=()):
     def create_new_multiwidget(original):
         multiwidget = create_new_widget(original)
         multiwidget.widgets = [
-            get_floppyform_widget(widget)
+            floppify_widget(widget)
             for widget in multiwidget.widgets]
         return multiwidget
     return create_new_multiwidget
@@ -155,8 +155,27 @@ _django_to_floppyforms_widget = {
             init_arguments=('years', 'required')),
 }
 
+_django_field_to_floppyform_widget = {
+    django.forms.fields.FloatField:
+        _create_widget(floppyforms.widgets.NumberInput),
+    django.forms.fields.DecimalField:
+        _create_widget(floppyforms.widgets.NumberInput),
+    django.forms.fields.IntegerField:
+        _create_widget(floppyforms.widgets.NumberInput),
+    django.forms.fields.EmailField:
+        _create_widget(floppyforms.widgets.EmailInput),
+    django.forms.fields.URLField:
+        _create_widget(floppyforms.widgets.URLInput),
+    django.forms.fields.SlugField:
+        _create_widget(floppyforms.widgets.SlugInput),
+    django.forms.fields.IPAddressField:
+        _create_widget(floppyforms.widgets.IPAddressInput),
+    django.forms.fields.SplitDateTimeField:
+        _create_splitdatetimewidget(floppyforms.widgets.SplitDateTimeWidget),
+}
 
-def get_floppyform_widget(widget):
+
+def floppify_widget(widget, field=None):
     '''
     Get an instance of django.forms.widgets.Widget and return a new widget
     instance but using the corresponding floppyforms widget class.
@@ -164,12 +183,39 @@ def get_floppyform_widget(widget):
     Only original django widgets will be replaced with a floppyforms version.
     The widget will be returned unaltered if it is not known, e.g. if it's a
     custom widget from a third-party app.
+
+    The optional parameter ``field`` can be used to influence the widget
+    creation further. This is useful since floppyforms supports more widgets
+    than django does. For example is django using a ``TextInput`` for a
+    ``EmailField``, but floppyforms has a better suiting widget called
+    ``EmailInput``. If a widget is found specifically for the passed in
+    ``field``, it will take precendence to the first parameter ``widget``
+    which will effectively be ignored.
     '''
-    create_widget_class = _django_to_floppyforms_widget.get(
-        widget.__class__, None)
-    if create_widget_class is not None:
-        return create_widget_class(widget)
+    if field is not None:
+        create_widget = _django_field_to_floppyform_widget.get(
+            field.__class__)
+        if create_widget is not None:
+            # check if the default widget was replaced by a different one, in
+            # that case we cannot create the field specific floppyforms
+            # widget.
+            if field.widget.__class__ is field.__class__.widget:
+                return create_widget(widget)
+    create_widget = _django_to_floppyforms_widget.get(widget.__class__)
+    if create_widget is not None:
+        return create_widget(widget)
     return widget
+
+
+def floppify_form(form_class):
+    '''
+    Take a normal form and return a subclass of that form that replaces all
+    django widgets with the corresponding floppyforms widgets.
+    '''
+    new_form_class = type(form_class.__name__, (form_class,), {})
+    for field in new_form_class.base_fields.values():
+        field.widget = floppify_widget(field.widget, field=field)
+    return new_form_class
 
 
 def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
@@ -181,6 +227,4 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
         exclude=exclude,
         formfield_callback=formfield_callback,
         widgets=widgets)
-    for field in form_class.base_fields.values():
-        field.widget = get_floppyform_widget(field.widget)
-    return form_class
+    return floppify_form(form_class)
