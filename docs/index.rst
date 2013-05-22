@@ -58,6 +58,8 @@ Content
    api
    themes
    meta
+   reference
+   tutorial
 
 
 Indices and tables
