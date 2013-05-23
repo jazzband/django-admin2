@@ -1,9 +1,9 @@
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
 from django.utils.text import capfirst
 
-from django.contrib import messages
-
+from . import utils
 
 def get_description(action):
     if hasattr(action, 'description'):
@@ -24,7 +24,7 @@ def delete_selected(request, queryset):
     # done.  (Hint: I think we can do better.)
 
     model = queryset.model
-    opts = model._meta
+    opts = utils.model_options(model)
     permission_name = '%s.delete.%s' \
             % (opts.app_label, opts.object_name.lower())
     has_permission = request.user.has_perm(permission_name)

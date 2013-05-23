@@ -17,7 +17,8 @@ from djadmin2 import apiviews
 from djadmin2 import constants
 from djadmin2 import views
 from djadmin2 import actions
-from djadmin2.forms import modelform_factory, floppify_form
+from djadmin2 import utils
+from djadmin2.forms import modelform_factory
 
 
 class BaseAdmin2(object):
@@ -64,7 +65,7 @@ class BaseAdmin2(object):
         """
         if not user.is_authenticated() or not user.is_staff:
             return False
-        opts = self.model._meta
+        opts = utils.model_options(self.model)
         full_permission_name = '%s.%s_%s' % (opts.app_label, permission_type, opts.object_name.lower())
         return user.has_perm(full_permission_name, obj)
 

@@ -8,7 +8,7 @@ from django.forms.models import modelform_factory
 from braces.views import AccessMixin
 
 from . import constants
-from .templatetags.admin2_tags import admin2_urlname
+from .utils import admin2_urlname
 
 
 class Admin2Mixin(object):
