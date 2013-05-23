@@ -19,7 +19,6 @@ class ViewTest(TestCase):
 
 
 class IndexAPIViewTest(ViewTest):
-
     def test_response_ok(self):
         request = self.factory.get(reverse('admin2:api-index'))
         view = apiviews.IndexAPIView.as_view(**default.get_api_index_kwargs())
@@ -28,7 +27,6 @@ class IndexAPIViewTest(ViewTest):
 
 
 class ListCreateAPIViewTest(ViewTest):
-
     def test_response_ok(self):
         request = self.factory.get(reverse('admin2:blog_post_api-list'))
         model_admin = self.get_model_admin(Post)
