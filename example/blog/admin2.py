@@ -6,8 +6,13 @@ from django.contrib.auth.models import Group, User
 from rest_framework.relations import PrimaryKeyRelatedField
 
 import djadmin2
+from djadmin2.forms import floppify_form
 from djadmin2.models import ModelAdmin2, Admin2Inline
 from djadmin2.apiviews import Admin2APISerializer
+
+
+UserCreationForm = floppify_form(UserCreationForm)
+UserChangeForm = floppify_form(UserChangeForm)
 
 
 class GroupSerializer(Admin2APISerializer):
