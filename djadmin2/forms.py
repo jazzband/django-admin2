@@ -109,17 +109,14 @@ _django_to_floppyforms_widget = {
     django.forms.widgets.DateInput:
         _create_widget(
             floppyforms.widgets.DateInput,
-            ('input_type',),
             init_arguments=('format',)),
     django.forms.widgets.DateTimeInput:
         _create_widget(
             floppyforms.widgets.DateTimeInput,
-            ('input_type',),
             init_arguments=('format',)),
     django.forms.widgets.TimeInput:
         _create_widget(
             floppyforms.widgets.TimeInput,
-            ('input_type',),
             init_arguments=('format',)),
     django.forms.widgets.CheckboxInput:
         _create_widget(floppyforms.widgets.CheckboxInput, ('check_test',)),

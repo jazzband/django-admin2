@@ -15,7 +15,7 @@ class ModelFormFactoryTest(TestCase):
 
 class GetFloppyformWidgetTest(TestCase):
     def assertExpectWidget(self, instance, new_class_,
-        equal_attributes=None):
+        equal_attributes=None, new_attributes=None):
         new_instance = floppify_widget(instance)
         self.assertEqual(new_instance.__class__, new_class_)
         if equal_attributes:
@@ -33,6 +33,16 @@ class GetFloppyformWidgetTest(TestCase):
                 self.assertEqual(old_attr, new_attr,
                     'Original widget\'s attribute was not copied: %r != %r' %
                     (old_attr, new_attr))
+        if new_attributes:
+            for attribute, value in new_attributes.items():
+                self.assertTrue(
+                    hasattr(new_instance, attribute),
+                    'Cannot check new attribute %r, not available on '
+                    'generated widget %r' % (attribute, new_instance))
+                new_attr = getattr(new_instance, attribute)
+                self.assertEqual(new_attr, value,
+                    'Generated widget\'s attribute is not as expected: '
+                    '%r != %r' % (new_attr, value))
 
     def test_created_widget_doesnt_leak_attributes_into_original_widget(self):
         widget = forms.TextInput()
@@ -70,12 +80,16 @@ class GetFloppyformWidgetTest(TestCase):
     def test_textinput_widget(self):
         self.assertExpectWidget(
             forms.widgets.TextInput(),
-            floppyforms.widgets.TextInput)
+            floppyforms.widgets.TextInput,
+            ['input_type'],
+            {'input_type': 'text'})
 
     def test_passwordinput_widget(self):
         self.assertExpectWidget(
             forms.widgets.PasswordInput(),
-            floppyforms.widgets.PasswordInput)
+            floppyforms.widgets.PasswordInput,
+            ['input_type'],
+            {'input_type': 'password'})
 
     def test_hiddeninput_widget(self):
         self.assertExpectWidget(
@@ -146,7 +160,8 @@ class GetFloppyformWidgetTest(TestCase):
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.DateInput,
-            ['format'])
+            ['format'],
+            {'input_type': 'date'})
 
     def test_datetimeinput_widget(self):
         self.assertExpectWidget(
@@ -157,7 +172,8 @@ class GetFloppyformWidgetTest(TestCase):
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.DateTimeInput,
-            ['format'])
+            ['format'],
+            {'input_type': 'datetime'})
 
     def test_timeinput_widget(self):
         self.assertExpectWidget(
@@ -168,7 +184,8 @@ class GetFloppyformWidgetTest(TestCase):
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.TimeInput,
-            ['format'])
+            ['format'],
+            {'input_type': 'time'})
 
     def test_checkboxinput_widget(self):
         self.assertExpectWidget(

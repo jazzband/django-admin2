@@ -39,6 +39,9 @@ class UserAdminTest(TestCase):
         self.assertTrue(
             isinstance(form.fields['username'].widget,
                        floppyforms.TextInput))
+        self.assertTrue(
+            isinstance(form.fields['date_joined'].widget,
+                       floppyforms.DateTimeInput))
 
         request = self.factory.get(
             reverse('admin2:auth_user_update', args=(self.user.pk,)))
@@ -51,3 +54,6 @@ class UserAdminTest(TestCase):
         self.assertTrue(
             isinstance(form.fields['username'].widget,
                        floppyforms.TextInput))
+        self.assertTrue(
+            isinstance(form.fields['date_joined'].widget,
+                       floppyforms.DateTimeInput))
