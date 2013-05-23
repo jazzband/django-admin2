@@ -134,13 +134,14 @@ class ModelAdmin2(BaseAdmin2):
     def __init__(self, model, admin, **kwargs):
         self.model = model
         self.admin = admin
-        self.app_label = model._meta.app_label
-        self.model_name = model._meta.object_name.lower()
+        model_options = utils.model_options(model)
+        self.app_label = model_options.app_label
+        self.model_name = model_options.object_name.lower()
 
         if self.verbose_name is None:
-            self.verbose_name = self.model._meta.verbose_name
+            self.verbose_name = model_options.verbose_name
         if self.verbose_name_plural is None:
-            self.verbose_name_plural = self.model._meta.verbose_name_plural
+            self.verbose_name_plural = model_options.verbose_name_plural
 
     def get_default_view_kwargs(self):
         return {
@@ -322,7 +323,7 @@ def create_extra_permissions(app, created_models, verbosity, **kwargs):
         ctype = ContentType.objects.get_for_model(klass)
         ctypes.add(ctype)
 
-        opts = klass._meta
+        opts = utils.model_options(klass)
         perm = ('view_%s' % opts.object_name.lower(), u'Can view %s' % opts.verbose_name_raw)
         searched_perms.append((ctype, perm))
 

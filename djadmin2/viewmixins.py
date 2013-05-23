@@ -8,7 +8,7 @@ from django.forms.models import modelform_factory
 from braces.views import AccessMixin
 
 from . import constants
-from .utils import admin2_urlname
+from .utils import admin2_urlname, model_options
 
 
 class Admin2Mixin(object):
@@ -52,12 +52,14 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
 
     def get_context_data(self, **kwargs):
         context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
+        model = self.get_model()
+        model_meta = model_options(model)
         context.update({
             'has_add_permission': self.model_admin.has_add_permission(self.request),
             'has_edit_permission': self.model_admin.has_edit_permission(self.request),
             'has_delete_permission': self.model_admin.has_delete_permission(self.request),
-            'model': self.get_model()._meta.verbose_name,
-            'model_pluralized': self.get_model()._meta.verbose_name_plural
+            'model': model_meta.verbose_name,
+            'model_pluralized': model_meta.verbose_name_plural
         })
         return context
 
