@@ -33,13 +33,15 @@ def delete_selected(request, queryset):
         objects_name = opts.verbose_name
     else:
         objects_name = opts.verbose_name_plural
+    objects_name = unicode(objects_name)
 
     if request.POST.get('confirmed'):
         # The user has confirmed that they want to delete the objects.
         if has_permission:
+            num_objects_deleted = len(queryset)
             queryset.delete()
             message = "Successfully deleted %d %s" % \
-                    (len(queryset), objects_name)
+                    (num_objects_deleted, objects_name)
             messages.add_message(request, messages.INFO, message)
             return None
         else:

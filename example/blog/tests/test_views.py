@@ -130,3 +130,33 @@ class PostDeleteViewTest(BaseIntegrationTest):
                                             args=(post.pk, )))
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
         self.assertFalse(Post.objects.filter(pk=post.pk).exists())
+
+
+class PostDeleteActionTest(BaseIntegrationTest):
+    """
+    Tests the behaviour of the 'Delete selected items' action.
+    """
+    def test_confirmation_page(self):
+        p1 = Post.objects.create(title="A Post Title", body="body")
+        p2 = Post.objects.create(title="A Post Title", body="body")
+        post_data = {
+            'action': 'delete_selected',
+            'selected_model_id': [p1.id, p2.id]
+        }
+        response = self.client.post(reverse("admin2:blog_post_index"),
+                                    post_data)
+        self.assertContains(response, p1.title)
+        self.assertContains(response, p2.title)
+
+    def test_results_page(self):
+        p1 = Post.objects.create(title="A Post Title", body="body")
+        p2 = Post.objects.create(title="A Post Title", body="body")
+        post_data = {
+            'action': 'delete_selected',
+            'selected_model_id': [p1.id, p2.id],
+            'confirmed': 'yes'
+        }
+        response = self.client.post(reverse("admin2:blog_post_index"),
+                                    post_data, follow=True)
+        self.assertContains(response, "Successfully deleted 2 posts")
+
