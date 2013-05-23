@@ -1,5 +1,3 @@
-import os
-
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views import generic

@@ -4,16 +4,18 @@ from django.utils.text import capfirst
 
 from django.contrib import messages
 
+
 def get_description(action):
     if hasattr(action, 'description'):
         return action.description
     else:
         return capfirst(action.__name__.replace('_', ' '))
 
+
 def delete_selected(request, queryset):
     # We check whether the user has permission to delete the objects in the
-    # queryset.  
-    # 
+    # queryset.
+    #
     # TODO: This duplicates some of the permission-checking functionality in
     # BaseAdmin2.  Investigate how to DRY this out.
     #

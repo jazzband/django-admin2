@@ -69,18 +69,18 @@ class PostCreateViewTest(BaseIntegrationTest):
             "title": "a_post_title",
             "body": "a_post_body",
         }
- 
+
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data,
                                     follow=True)
         self.assertTrue(Post.objects.filter(title="a_post_title").exists())
-        post = Post.objects.get(title="a_post_title")
-        comment = Comment.objects.get(body="Comment Body")
+        Post.objects.get(title="a_post_title")
+        Comment.objects.get(body="Comment Body")
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_save_and_add_another_redirects_to_create(self):
         """
-        Tests that choosing 'Save and add another' from the model create 
+        Tests that choosing 'Save and add another' from the model create
         page redirects the user to the model create page.
         """
         post_data = {
@@ -94,12 +94,12 @@ class PostCreateViewTest(BaseIntegrationTest):
         self.client.login(username='admin', password='password')
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data)
-        post = Post.objects.get(title='a_post_title')
+        Post.objects.get(title='a_post_title')
         self.assertRedirects(response, reverse("admin2:blog_post_create"))
 
     def test_save_and_continue_editing_redirects_to_update(self):
         """
-        Tests that choosing "Save and continue editing" redirects 
+        Tests that choosing "Save and continue editing" redirects
         the user to the model update form.
         """
         post_data = {

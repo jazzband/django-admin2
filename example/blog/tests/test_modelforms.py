@@ -358,7 +358,7 @@ class FieldWidgetTest(TestCase):
 
         class MyForm(forms.ModelForm):
             email = forms.EmailField(widget=email_input)
-            
+
             class Meta:
                 model = Post
 

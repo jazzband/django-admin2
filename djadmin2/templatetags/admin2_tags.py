@@ -23,7 +23,7 @@ def model_verbose_name(obj):
 def model_verbose_name_plural(obj):
     """
     Returns the pluralized verbose name of a model instance or class.
-    """    
+    """
     return obj._meta.verbose_name_plural
 
 
