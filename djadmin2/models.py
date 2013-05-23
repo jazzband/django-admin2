@@ -16,6 +16,7 @@ import extra_views
 from djadmin2 import apiviews
 from djadmin2 import constants
 from djadmin2 import views
+from djadmin2 import actions
 
 
 class BaseAdmin2(object):
@@ -124,6 +125,9 @@ class ModelAdmin2(BaseAdmin2):
     # API Views
     api_list_view = apiviews.ListCreateAPIView
     api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
+
+    # Actions
+    actions = [actions.delete_selected]
 
     def __init__(self, model, admin, **kwargs):
         self.model = model
@@ -243,6 +247,19 @@ class ModelAdmin2(BaseAdmin2):
     @property
     def api_urls(self):
         return self.get_api_urls(), None, None
+
+    def get_actions(self):
+        actions_dict = {}
+
+        for cls in type(self).mro()[::-1]:
+            class_actions = getattr(cls, 'actions', [])
+            for action in class_actions:
+                actions_dict[action.__name__] = {
+                        'name': action.__name__,
+                        'description': actions.get_description(action),
+                        'func': action
+                }
+        return actions_dict
 
 
 class Admin2Inline(extra_views.InlineFormSet):
