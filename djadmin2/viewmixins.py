@@ -41,6 +41,16 @@ class PermissionMixin(object):
                 return False
         return True
 
+    def get_context_data(self, **kwargs):
+        context = super(PermissionMixin, self).get_context_data(**kwargs)
+        permission_checker = permissions.TemplatePermissionChecker(
+            self.request,
+            self)
+        context.update({
+            'permissions': permission_checker,
+        })
+        return context
+
 
 class Admin2Mixin(PermissionMixin):
     # are set in the ModelAdmin2 class when creating the view via

@@ -43,3 +43,19 @@ def formset_visible_fieldlist(formset):
     Returns the labels of a formset's visible fields as an array.
     """
     return [f.label for f in formset.forms[0].visible_fields()]
+
+
+@register.filter
+def for_object(callable, obj):
+    """
+    Applies the provided argument ``obj`` to the piped value. Example::
+
+        {{ view.has_permission|for_object:object }}
+
+    Translates roughly into the following python code::
+        
+        context['view'].has_permission(context['object'])
+    """
+    if callable == '':
+        return callable
+    return callable(obj)

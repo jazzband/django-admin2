@@ -14,6 +14,7 @@ interface:
 The permission classes are then just fancy wrappers of these basic checks of
 which it can hold multiple.
 '''
+import re
 
 
 def is_authenticated(request, view, obj=None):
@@ -119,3 +120,62 @@ class ModelChangePermission(AdminPermission):
 
 class ModelDeletePermission(AdminPermission):
     permissions = (model_permission('%(app_label)s.delete_%(model_name)s'),)
+
+
+class TemplatePermission(object):
+    do_not_call_in_templates = True
+
+    def __init__(self, permission_check):
+        self._permission_check = permission_check
+
+    def __nonzero__(self):
+        return self._permission_check()
+
+    def __call__(self, obj=None):
+        return self._permission_check(obj)
+
+    def __unicode__(self):
+        return unicode(bool(self))
+
+
+class TemplatePermissionChecker(object):
+    '''
+    Can be used in the template like::
+
+        {{ permissions.has_view_permission }}
+        {{ permissions.has_add_permission }}
+        {{ permissions.has_change_permission }}
+        {{ permissions.has_delete_permission|for_object:object }}
+
+    The attribute access of ``has_create_permission`` will be done via a
+    dictionary lookup (implemented in ``__getitem__``). This will return a
+    callable that can be passed in an object to check object-level
+    permissions.
+    '''
+    has_named_permission_regex = re.compile('^has_(?P<name>\w+)_permission$')
+
+    view_name_mapping = {
+        'view': 'detail_view',
+        'add': 'create_view',
+        'change': 'update_view',
+        'delete': 'delete_view',
+    }
+
+    def __init__(self, request, view):
+        self.request = request
+        self.view = view
+
+    def get_permission_check(self, view_name):
+        def permission_check(obj=None):
+            return self.view.has_permission(obj, view_name=view_name)
+        return permission_check
+
+    def __getitem__(self, key):
+        match = self.has_named_permission_regex.match(key)
+        if not match:
+            raise KeyError
+        view_name = match.groupdict()['name']
+        if view_name not in self.view_name_mapping:
+            raise KeyError
+        view_name = self.view_name_mapping[view_name]
+        return TemplatePermission(self.get_permission_check(view_name))
