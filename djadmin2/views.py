@@ -1,80 +1,10 @@
-import os
-
 from django.core.urlresolvers import reverse
-from django.conf import settings
-from django.contrib.auth.views import redirect_to_login
-from django.core.exceptions import PermissionDenied
-from django.forms.models import modelform_factory
+from django.http import HttpResponseRedirect
 from django.views import generic
 
-from braces.views import AccessMixin
+import extra_views
 
-from templatetags.admin2_urls import admin2_urlname
-
-
-ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "admin2/bootstrap")
-
-
-class Admin2Mixin(object):
-    model_admin = None
-    model_name = None
-    app_label = None
-
-    def get_template_names(self):
-        return [os.path.join(ADMIN2_THEME_DIRECTORY, self.default_template_name)]
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
-
-    def get_form_class(self):
-        if self.form_class is not None:
-            return self.form_class
-        return modelform_factory(self.get_model())
-
-
-class AdminModel2Mixin(Admin2Mixin, AccessMixin):
-    model_admin = None
-    # Permission type to check for when a request is sent to this view.
-    permission_type = None
-
-    def dispatch(self, request, *args, **kwargs):
-        # Check if user has necessary permissions. If the permission_type isn't specified then check for staff status.
-        has_permission = self.model_admin.has_permission(request, self.permission_type) \
-            if self.permission_type else request.user.is_staff
-        # Raise exception or redirect to login if user doesn't have permissions.
-        if not has_permission:
-            if self.raise_exception:
-                raise PermissionDenied  # return a forbidden response
-            else:
-                return redirect_to_login(request.get_full_path(),
-                    self.get_login_url(), self.get_redirect_field_name())
-
-        return super(AdminModel2Mixin, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
-        context.update({
-            'has_add_permission': self.model_admin.has_add_permission(self.request),
-            'has_edit_permission': self.model_admin.has_edit_permission(self.request),
-            'has_delete_permission': self.model_admin.has_delete_permission(self.request),
-            'model': self.get_model()._meta.verbose_name,
-            'model_pluralized': self.get_model()._meta.verbose_name_plural
-        })
-        return context
-
-    def get_model(self):
-        return self.model
-
-    def get_queryset(self):
-        return self.get_model()._default_manager.all()
-
-    def get_form_class(self):
-        if self.form_class is not None:
-            return self.form_class
-        return modelform_factory(self.get_model())
+from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
@@ -95,11 +25,30 @@ class ModelListView(Admin2Mixin, generic.ListView):
     default_template_name = "model_list.html"
     permission_type = 'view'
 
+    def post(self, request):
+        # This is where we handle actions
+        action_name = request.POST['action']
+        action_func = self.get_actions()[action_name]['func']
+        selected_model_ids = request.POST.getlist('selected_model_id')
+        queryset = self.model.objects.filter(pk__in=selected_model_ids)
+        response = action_func(request, queryset)
+        if response is None:
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return response
+
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
-        context['model'] = self.get_model()._meta.verbose_name
-        context['model_pluralized'] = self.get_model()._meta.verbose_name_plural
+        context['model'] = self.get_model()
+        context['actions'] = self.get_actions().values()
         return context
+
+    def get_success_url(self):
+        view_name = 'admin2:{}_{}_index'.format(self.app_label, self.model_name)
+        return reverse(view_name)
+
+    def get_actions(self):
+        return self.model_admin.get_actions()
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
@@ -107,36 +56,31 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
     permission_type = 'view'
 
 
-class ModelEditFormView(AdminModel2Mixin, generic.UpdateView):
+class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
     form_class = None
-    success_url = "../../"
-    default_template_name = "model_edit_form.html"
+    default_template_name = "model_update_form.html"
     permission_type = 'change'
 
+    def get_context_data(self, **kwargs):
+        context = super(ModelEditFormView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()
+        context['action'] = "Change"
+        return context
 
-class ModelAddFormView(AdminModel2Mixin, generic.CreateView):
+
+class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
     form_class = None
-    default_template_name = "model_add_form.html"
+    default_template_name = "model_update_form.html"
     permission_type = 'add'
 
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
-        context['model'] = self.get_model()._meta.verbose_name
+        context['model'] = self.get_model()
+        context['action'] = "Add"
         return context
-
-    def get_success_url(self):
-        if '_continue' in self.request.POST:
-            view_name = admin2_urlname(self, 'update')
-            return reverse(view_name, kwargs={'pk': self.object.pk})
-
-        if '_addanother' in self.request.POST:
-            return reverse(admin2_urlname(self, 'create'))
-
-        # default to index view
-        return reverse(admin2_urlname(self, 'index'))
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
-    success_url = "../../"
+    success_url = "../../"  # TODO - fix this!
     default_template_name = "model_confirm_delete.html"
     permission_type = 'delete'

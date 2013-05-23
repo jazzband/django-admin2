@@ -11,14 +11,14 @@ from django.conf.urls import patterns, url
 from django.contrib.auth import models as auth_app
 from django.db.models import get_models, signals
 
-from djadmin2 import apiviews
-from djadmin2 import views
+import extra_views
 
-MODEL_ADMIN_ATTRS = (
-                    'list_display', 'list_display_links', 'list_filter',
-                    'admin', 'has_permission', 'has_add_permission',
-                    'has_edit_permission', 'has_delete_permission',
-                         )
+from djadmin2 import apiviews
+from djadmin2 import constants
+from djadmin2 import views
+from djadmin2 import actions
+from djadmin2 import utils
+from djadmin2.forms import modelform_factory
 
 
 class BaseAdmin2(object):
@@ -65,7 +65,7 @@ class BaseAdmin2(object):
         """
         if not user.is_authenticated() or not user.is_staff:
             return False
-        opts = self.model._meta
+        opts = utils.model_options(self.model)
         full_permission_name = '%s.%s_%s' % (opts.app_label, permission_type, opts.object_name.lower())
         return user.has_perm(full_permission_name, obj)
 
@@ -107,10 +107,12 @@ class ModelAdmin2(BaseAdmin2):
     save_on_top = False
     verbose_name = None
     verbose_name_plural = None
-    model_admin_attributes = MODEL_ADMIN_ATTRS
+    model_admin_attributes = constants.MODEL_ADMIN_ATTRS
 
     create_form_class = None
     update_form_class = None
+
+    inlines = []
 
     #  Views
     index_view = views.ModelListView
@@ -126,16 +128,20 @@ class ModelAdmin2(BaseAdmin2):
     api_list_view = apiviews.ListCreateAPIView
     api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
 
+    # Actions
+    actions = [actions.delete_selected]
+
     def __init__(self, model, admin, **kwargs):
         self.model = model
         self.admin = admin
-        self.app_label = model._meta.app_label
-        self.model_name = model._meta.object_name.lower()
+        model_options = utils.model_options(model)
+        self.app_label = model_options.app_label
+        self.model_name = model_options.object_name.lower()
 
         if self.verbose_name is None:
-            self.verbose_name = self.model._meta.verbose_name
+            self.verbose_name = model_options.verbose_name
         if self.verbose_name_plural is None:
-            self.verbose_name_plural = self.model._meta.verbose_name_plural
+            self.verbose_name_plural = model_options.verbose_name_plural
 
     def get_default_view_kwargs(self):
         return {
@@ -161,14 +167,19 @@ class ModelAdmin2(BaseAdmin2):
     def get_create_kwargs(self):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({
+            'inlines': self.inlines,
             'form_class': self.create_form_class if self.create_form_class else self.form_class,
         })
         return kwargs
 
     def get_update_kwargs(self):
         kwargs = self.get_default_view_kwargs()
+        form_class = self.update_form_class if self.update_form_class else self.form_class
+        if form_class is None:
+            form_class = modelform_factory(self.model)
         kwargs.update({
-            'form_class': self.update_form_class if self.update_form_class else self.form_class,
+            'inlines': self.inlines,
+            'form_class': form_class,
         })
         return kwargs
 
@@ -243,6 +254,35 @@ class ModelAdmin2(BaseAdmin2):
     def api_urls(self):
         return self.get_api_urls(), None, None
 
+    def get_actions(self):
+        actions_dict = {}
+
+        for cls in type(self).mro()[::-1]:
+            class_actions = getattr(cls, 'actions', [])
+            for action in class_actions:
+                actions_dict[action.__name__] = {
+                        'name': action.__name__,
+                        'description': actions.get_description(action),
+                        'func': action
+                }
+        return actions_dict
+
+
+class Admin2Inline(extra_views.InlineFormSet):
+    """
+    A simple extension of django-extra-view's InlineFormSet that
+    adds some useful functionality.
+    """
+
+    def construct_formset(self):
+        """
+        Overrides construct_formset to attach the model class as
+        an attribute of the returned formset instance.
+        """
+        formset = super(Admin2Inline, self).construct_formset()
+        formset.model = self.inline_model
+        return formset
+
 
 class ImmutableAdmin(object):
     """
@@ -283,7 +323,7 @@ def create_extra_permissions(app, created_models, verbosity, **kwargs):
         ctype = ContentType.objects.get_for_model(klass)
         ctypes.add(ctype)
 
-        opts = klass._meta
+        opts = utils.model_options(klass)
         perm = ('view_%s' % opts.object_name.lower(), u'Can view %s' % opts.verbose_name_raw)
         searched_perms.append((ctype, perm))
 

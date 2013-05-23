@@ -5,10 +5,14 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import Group, User
 from rest_framework.relations import PrimaryKeyRelatedField
 
-
 import djadmin2
-from djadmin2.models import ModelAdmin2
+from djadmin2.forms import floppify_form
+from djadmin2.models import ModelAdmin2, Admin2Inline
 from djadmin2.apiviews import Admin2APISerializer
+
+
+UserCreationForm = floppify_form(UserCreationForm)
+UserChangeForm = floppify_form(UserChangeForm)
 
 
 class GroupSerializer(Admin2APISerializer):
@@ -30,6 +34,14 @@ class UserSerializer(Admin2APISerializer):
         exclude = ('passwords',)
 
 
+class CommentInline(Admin2Inline):
+    model = Comment
+
+
+class PostAdmin(ModelAdmin2):
+    inlines = [CommentInline]
+
+
 class UserAdmin2(ModelAdmin2):
     create_form_class = UserCreationForm
     update_form_class = UserChangeForm
@@ -38,7 +50,7 @@ class UserAdmin2(ModelAdmin2):
 
 
 #  Register each model with the admin
-djadmin2.default.register(Post)
+djadmin2.default.register(Post, PostAdmin)
 djadmin2.default.register(Comment)
 djadmin2.default.register(User, UserAdmin2)
 djadmin2.default.register(Group, GroupAdmin2)

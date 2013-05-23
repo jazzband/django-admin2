@@ -1,9 +1,12 @@
 from django.utils.encoding import force_str
+
 from rest_framework import fields, generics, serializers
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
-from .views import Admin2Mixin
+
+from . import utils
+from .viewmixins import Admin2Mixin
 
 API_VERSION = '0.1'
 
@@ -41,19 +44,21 @@ class IndexAPIView(Admin2APIMixin, APIView):
 
     def get_model_data(self, model):
         model_admin = self.registry[model]
+        model_options = utils.model_options(model)
         opts = {
             'current_app': model_admin.admin.name,
-            'app_label': model._meta.app_label,
-            'model_name': model._meta.object_name.lower(),
+            'app_label': model_options.app_label,
+            'model_name': model_options.object_name.lower(),
         }
         model_url = reverse(
             '%(current_app)s:%(app_label)s_%(model_name)s_api-list' % opts,
             request=self.request,
             format=self.kwargs.get('format'))
+        model_options = utils.model_options(model)
         return {
             'url': model_url,
-            'verbose_name': force_str(model._meta.verbose_name),
-            'verbose_name_plural': force_str(model._meta.verbose_name_plural),
+            'verbose_name': force_str(model_options.verbose_name),
+            'verbose_name_plural': force_str(model_options.verbose_name_plural),
         }
 
     def get_app_data(self, app_label, models):

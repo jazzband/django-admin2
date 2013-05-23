@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
-from ..models import Post
+from ..models import Post, Comment
 
 
 class BaseIntegrationTest(TestCase):
@@ -30,6 +30,22 @@ class PostListTest(BaseIntegrationTest):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertContains(response, post.title)
 
+    def test_actions_displayed(self):
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertInHTML('<option value="delete_selected">Delete selected items</option>', response.content)
+
+    def test_delete_selected_post(self):
+        post = Post.objects.create(title="a_post_title", body="body")
+        params = {'action': 'delete_selected', 'selected_model_id': str(post.id)}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertInHTML('<p>Are you sure you want to delete the selected post?</p>', response.content)
+
+    def test_delete_selected_post_confirmation(self):
+        post = Post.objects.create(title="a_post_title", body="body")
+        params = {'action': 'delete_selected', 'selected_model_id': str(post.id), 'confirmed': 'yes'}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertRedirects(response, reverse("admin2:blog_post_index"))
+
 
 class PostDetailViewTest(BaseIntegrationTest):
     def test_view_ok(self):
@@ -45,36 +61,55 @@ class PostCreateViewTest(BaseIntegrationTest):
         self.assertEqual(response.status_code, 200)
 
     def test_create_post(self):
+        post_data = {
+            "comment_set-TOTAL_FORMS": u'2',
+            "comment_set-INITIAL_FORMS": u'0',
+            "comment_set-MAX_NUM_FORMS": u'',
+            "comment_set-0-body": u'Comment Body',
+            "title": "a_post_title",
+            "body": "a_post_body",
+        }
+
         response = self.client.post(reverse("admin2:blog_post_create"),
-                                    {"title": "a_post_title",
-                                     "body": "a_post_body"},
+                                    post_data,
                                     follow=True)
         self.assertTrue(Post.objects.filter(title="a_post_title").exists())
-        post = Post.objects.get(title="a_post_title")
+        Post.objects.get(title="a_post_title")
+        Comment.objects.get(body="Comment Body")
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_save_and_add_another_redirects_to_create(self):
         """
-        Tests that choosing 'Save and add another' from the model create 
+        Tests that choosing 'Save and add another' from the model create
         page redirects the user to the model create page.
         """
-        post_data = {"title": "a_post_title",
-                     "body": "a_post_body",
-                     "_addanother": ""}
+        post_data = {
+            "comment_set-TOTAL_FORMS": u'2',
+            "comment_set-INITIAL_FORMS": u'0',
+            "comment_set-MAX_NUM_FORMS": u'',
+            "title": "a_post_title",
+            "body": "a_post_body",
+            "_addanother": ""
+        }
         self.client.login(username='admin', password='password')
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data)
-        post = Post.objects.get(title='a_post_title')
+        Post.objects.get(title='a_post_title')
         self.assertRedirects(response, reverse("admin2:blog_post_create"))
 
     def test_save_and_continue_editing_redirects_to_update(self):
         """
-        Tests that choosing "Save and continue editing" redirects 
+        Tests that choosing "Save and continue editing" redirects
         the user to the model update form.
         """
-        post_data = {"title": "Unique",
-                     "body": "a_post_body",
-                     "_continue": ""}
+        post_data = {
+            "comment_set-TOTAL_FORMS": u'2',
+            "comment_set-INITIAL_FORMS": u'0',
+            "comment_set-MAX_NUM_FORMS": u'',
+            "title": "Unique",
+            "body": "a_post_body",
+            "_continue": ""
+        }
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data)
         post = Post.objects.get(title="Unique")

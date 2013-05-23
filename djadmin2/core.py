@@ -10,6 +10,7 @@ from django.utils.importlib import import_module
 
 from . import apiviews
 from . import models
+from . import utils
 from . import views
 
 
@@ -50,7 +51,7 @@ class Admin2(object):
         self.registry[model] = model_admin(model, admin=self, **kwargs)
 
         # Add the model to the apps registry
-        app_label = model._meta.app_label
+        app_label = utils.model_options(model).app_label
         if app_label in self.apps.keys():
             self.apps[app_label][model] = self.registry[model]
         else:
@@ -69,7 +70,7 @@ class Admin2(object):
 
         # Remove the model from the apps registry
         # Get the app label
-        app_label = model._meta.app_label
+        app_label = utils.model_options(model).app_label
         # Delete the model from it's app registry
         del self.apps[app_label][model]
 
@@ -110,14 +111,15 @@ class Admin2(object):
             self.api_index_view.as_view(**self.get_api_index_kwargs()), name='api-index'),
         )
         for model, model_admin in self.registry.iteritems():
+            model_options = utils.model_options(model)
             urlpatterns += patterns('',
                 url('^{}/{}/'.format(
-                    model._meta.app_label,
-                    model._meta.object_name.lower()),
+                    model_options.app_label,
+                    model_options.object_name.lower()),
                     include(model_admin.urls)),
                 url('^api/v0/{}/{}/'.format(
-                    model._meta.app_label,
-                    model._meta.object_name.lower()),
+                    model_options.app_label,
+                    model_options.object_name.lower()),
                     include(model_admin.api_urls)),
             )
         return urlpatterns

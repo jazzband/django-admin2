@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'django_coverage',
+    'floppyforms',
     'rest_framework',
     'djadmin2',
     'blog',
@@ -172,4 +173,9 @@ INTERNAL_IPS = ('127.0.0.1',)
 MIDDLEWARE_CLASSES += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TEMPLATE_CONTEXT': True,
+}
 ########## END TOOLBAR CONFIGURATION
