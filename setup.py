@@ -91,7 +91,8 @@ setup(
         'django>=1.5.0',
         'django-braces==1.0.0',
         'django-extra-views==0.6.2',
-        'djangorestframework==2.3.3'
+        'djangorestframework==2.3.3',
+        'django-floppyforms==1.1'
         ],
     zip_safe=False,
 )

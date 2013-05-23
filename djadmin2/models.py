@@ -17,6 +17,7 @@ from djadmin2 import apiviews
 from djadmin2 import constants
 from djadmin2 import views
 from djadmin2 import actions
+from djadmin2.forms import modelform_factory, floppify_form
 
 
 class BaseAdmin2(object):
@@ -171,9 +172,12 @@ class ModelAdmin2(BaseAdmin2):
 
     def get_update_kwargs(self):
         kwargs = self.get_default_view_kwargs()
+        form_class = self.update_form_class if self.update_form_class else self.form_class
+        if form_class is None:
+            form_class = modelform_factory(self.model)
         kwargs.update({
             'inlines': self.inlines,
-            'form_class': self.update_form_class if self.update_form_class else self.form_class,
+            'form_class': form_class,
         })
         return kwargs
 
