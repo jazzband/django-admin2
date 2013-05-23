@@ -1,9 +1,9 @@
 {% extends "admin2/bootstrap/base.html" %}
 {% load admin2_tags %}
 
-{% block title %}Select {{ model }} to change{% endblock %}
+{% block title %}Select {{ model|model_verbose_name }} to change{% endblock %}
 
-{% block page_title %}Select {{ model }} to change{% endblock %}
+{% block page_title %}Select {{ model|model_verbose_name }} to change{% endblock %}
 
 {% block extrajs %}
 <script src="/static/themes/bootstrap/js/actions.js"></script>
@@ -25,7 +25,7 @@
 		<span id="selected-count">0</span> of {{ object_list|length }} selected
                 <div class="pull-right">
                     {# if has_add_permission #}
-                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model }}</a>
+                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model|model_verbose_name }}</a>
                     {# endif #}
                 </div>
             </div>
@@ -33,7 +33,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <th><input type="checkbox" class="model-select-all"></th>
-                    <th>{{ model|title}}</th>
+                    <th>{{ model|model_verbose_name|title}}</th>
                 </thead>
                 <tbody>
                     {% for obj in object_list %}

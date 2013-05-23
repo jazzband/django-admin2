@@ -2,9 +2,9 @@
 
 {% load admin2_tags %}
 
-{% block title %}{{ action }} {{ model }}{% endblock %}
+{% block title %}{{ action }} {{ model|model_verbose_name }}{% endblock %}
 
-{% block page_title %}{{ action }} {{ model }}{% endblock %}
+{% block page_title %}{{ action }} {{ model|model_verbose_name }}{% endblock %}
 
 {% block content %}
 

@@ -4,7 +4,6 @@ from django.views import generic
 
 import extra_views
 
-from .utils import model_options
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
@@ -40,9 +39,7 @@ class ModelListView(Admin2Mixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
-        model_meta = model_options(self.get_model())
-        context['model'] = model_meta.verbose_name
-        context['model_pluralized'] = model_meta.verbose_name_plural
+        context['model'] = self.get_model()
         context['actions'] = self.get_actions().values()
         return context
 
@@ -66,8 +63,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
 
     def get_context_data(self, **kwargs):
         context = super(ModelEditFormView, self).get_context_data(**kwargs)
-        model_meta = model_options(self.get_model())
-        context['model'] = model_meta.verbose_name
+        context['model'] = self.get_model()
         context['action'] = "Change"
         return context
 
@@ -79,13 +75,12 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
 
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
-        model_meta = model_options(self.get_model())
-        context['model'] = model_meta.verbose_name
+        context['model'] = self.get_model()
         context['action'] = "Add"
         return context
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
-    success_url = "../../"
+    success_url = "../../"  # TODO - fix this!
     default_template_name = "model_confirm_delete.html"
     permission_type = 'delete'
