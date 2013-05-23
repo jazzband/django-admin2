@@ -142,6 +142,21 @@ For now, we use the Django Test framework (based on unittest).
 
 Also, keep your tests as simple as possible. Complex tests end up requiring their own tests. We would rather see duplicated assertions across test methods then cunning utility methods that magically determine which assertions are needed at a particular stage. Remember: `Explicit is better than implicit`.
 
+You don't need to run the whole test suite during development in order to make
+the test cycles a bit faster. Just pass in the specific tests you want to run
+to ``runtests.py`` as you would do with the ``django-admin.py test`` command.
+Examples::
+
+    # only run the tests from application ``blog``
+    python runtests.py blog
+
+    # only run testcase class ``Admin2Test`` from app ``djadmin2``
+    python runtests.py djadmin2.Admin2Test
+
+    # run all tests from application ``blog`` and the test named
+    # ``test_register`` on the ``djadmin2.Admin2Test`` testcase.
+    python runtests.py djadmin2.Admin2Test.test_register blog
+
 Don't mix code changes with whitespace cleanup
 ----------------------------------------------
 
