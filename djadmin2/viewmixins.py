@@ -11,19 +11,43 @@ from . import constants, permissions
 from .utils import admin2_urlname, model_options
 
 
-class Admin2Mixin(object):
-    # are set in the ModelAdmin2 class when creating the view via
-    # .as_view(...)
-    model_admin = None
-    model_name = None
-    app_label = None
+class PermissionMixin(object):
     permission_classes = (permissions.IsStaffPermission,)
 
     def __init__(self, **kwargs):
         self.permissions = [
             permission_class()
             for permission_class in self.permission_classes]
-        super(Admin2Mixin, self).__init__(**kwargs)
+        super(PermissionMixin, self).__init__(**kwargs)
+
+    def has_permission(self, obj=None, view_name=None):
+        '''
+        Return ``True`` if the permission for this view shall be granted,
+        ``False`` otherwise. Supports object-level permission by passing the
+        related object as first argument.
+
+        You can also check for the permission of a different view in the same
+        ``ModelAdmin2`` by passing in the attribute name which holds the view
+        in the ``ModelAdmin2`` instance.
+        '''
+        if view_name:
+            view_class = getattr(self.model_admin, view_name)
+            view = view_class(
+                request=self.request,
+                **self.model_admin.get_default_view_kwargs())
+            return view.has_permission(obj)
+        for backend in self.permissions:
+            if not backend.has_permission(self.request, self, obj):
+                return False
+        return True
+
+
+class Admin2Mixin(PermissionMixin):
+    # are set in the ModelAdmin2 class when creating the view via
+    # .as_view(...)
+    model_admin = None
+    model_name = None
+    app_label = None
 
     def get_template_names(self):
         return [os.path.join(constants.ADMIN2_THEME_DIRECTORY, self.default_template_name)]
@@ -38,16 +62,6 @@ class Admin2Mixin(object):
         if self.form_class is not None:
             return self.form_class
         return modelform_factory(self.get_model())
-
-    def has_permission(self, obj=None):
-        '''
-        Return ``True`` if the permission shall be granted, ``False``
-        otherwise.
-        '''
-        for backend in self.permissions:
-            if not backend.has_permission(self.request, self, obj):
-                return False
-        return True
 
 
 class AdminModel2Mixin(Admin2Mixin, AccessMixin):
