@@ -6,10 +6,13 @@ This allows it to be built into other forms for easier viewing and browsing.
 
 To create an HTML version of the docs:
 
-* Install Sphinx (using ``sudo pip install Sphinx`` or some other method)
+* Create a virtualenv and activate it.
+
+* Install all dependencies from requirements.txt inot the virtualenv using
+  ``pip install -r requirements.txt`` (this will also install Sphinx).
 
 * In this docs/ directory, type ``make html`` (or ``make.bat html`` on
-  Windows) at a shell prompt.
+  Windows) at a shell prompt while the virtualenv is active.
 
 The documentation in _build/html/index.html can then be viewed in a web browser.
 
