@@ -15,7 +15,7 @@
     <input type="hidden" name="confirmed" value="yes" />
     <input type="hidden" name="action" value="delete_selected" />
     {% for item in queryset %}
-    <input type="hidden" name="selected_model_id" value="{{ item.id }}" />
+    <input type="hidden" name="selected_model_pk" value="{{ item.pk }}" />
     {% endfor %}
     <input type="submit"/>
 </form>

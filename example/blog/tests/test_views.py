@@ -36,13 +36,13 @@ class PostListTest(BaseIntegrationTest):
 
     def test_delete_selected_post(self):
         post = Post.objects.create(title="a_post_title", body="body")
-        params = {'action': 'delete_selected', 'selected_model_id': str(post.id)}
+        params = {'action': 'delete_selected', 'selected_model_pk': str(post.pk)}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         self.assertInHTML('<p>Are you sure you want to delete the selected post?</p>', response.content)
 
     def test_delete_selected_post_confirmation(self):
         post = Post.objects.create(title="a_post_title", body="body")
-        params = {'action': 'delete_selected', 'selected_model_id': str(post.id), 'confirmed': 'yes'}
+        params = {'action': 'delete_selected', 'selected_model_pk': str(post.pk), 'confirmed': 'yes'}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
@@ -141,7 +141,7 @@ class PostDeleteActionTest(BaseIntegrationTest):
         p2 = Post.objects.create(title="A Post Title", body="body")
         post_data = {
             'action': 'delete_selected',
-            'selected_model_id': [p1.id, p2.id]
+            'selected_model_pk': [p1.pk, p2.pk]
         }
         response = self.client.post(reverse("admin2:blog_post_index"),
                                     post_data)
@@ -153,7 +153,7 @@ class PostDeleteActionTest(BaseIntegrationTest):
         p2 = Post.objects.create(title="A Post Title", body="body")
         post_data = {
             'action': 'delete_selected',
-            'selected_model_id': [p1.id, p2.id],
+            'selected_model_pk': [p1.pk, p2.pk],
             'confirmed': 'yes'
         }
         response = self.client.post(reverse("admin2:blog_post_index"),

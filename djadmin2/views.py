@@ -29,8 +29,8 @@ class ModelListView(Admin2Mixin, generic.ListView):
         # This is where we handle actions
         action_name = request.POST['action']
         action_func = self.get_actions()[action_name]['func']
-        selected_model_ids = request.POST.getlist('selected_model_id')
-        queryset = self.model.objects.filter(pk__in=selected_model_ids)
+        selected_model_pks = request.POST.getlist('selected_model_pk')
+        queryset = self.model.objects.filter(pk__in=selected_model_pks)
         response = action_func(request, queryset)
         if response is None:
             return HttpResponseRedirect(self.get_success_url())
