@@ -58,4 +58,3 @@ class UtilsTest(TestCase):
             self.instance._meta.verbose_name_plural,
             utils.model_verbose_name_plural(self.instance)
         )
-
