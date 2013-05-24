@@ -3,6 +3,8 @@ def model_options(model):
     Wrapper for accessing model._meta. If this access point changes in core
     Django, this function allows django-admin2 to address the change with
     what should hopefully be less disruption to the rest of the code base.
+
+    Works on model classes and objects.
     """
     return model._meta
 
