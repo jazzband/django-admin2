@@ -18,18 +18,45 @@ import re
 
 
 def is_authenticated(request, view, obj=None):
+    '''
+    Checks if the current user is authenticated.
+    '''
     return request.user.is_authenticated()
 
 
 def is_staff(request, view, obj=None):
+    '''
+    Checks if the current user is a staff member.
+    '''
     return request.user.is_staff
 
 
 def is_superuser(request, view, obj=None):
+    '''
+    Checks if the current user is a superuser.
+    '''
     return request.user.is_superuser
 
 
 def model_permission(permission):
+    '''
+    This is actually a permission check factory. It means that it will return
+    a function that can then act as a permission check. The returned callable
+    will check if the user has the with ``permission`` provided model
+    permission. You can use ``{app_label}`` and ``{model_name}`` as
+    placeholders in the permission name. They will be replaced with the
+    ``app_label`` and the ``model_name`` (in lowercase) of the model that the
+    current view is operating on.
+
+    Example:
+
+    .. code-block:: python
+
+        check_add_perm = model_permission('{app_label}.add_{model_name}')
+
+        class ModelAddPermission(permissions.BasePermission):
+            permissions = [check_add_perm]
+    '''
     def has_permission(request, view, obj=None):
         model_class = getattr(view, 'model', None)
         queryset = getattr(view, 'queryset', None)
@@ -38,19 +65,17 @@ def model_permission(permission):
             model_class = queryset.model
 
         assert model_class, (
-            'Cannot apply DjangoModelPermissions on a view that does not '
-            'have `.model` or `.queryset` property.')
+            'Cannot apply model permissions on a view that does not '
+            'have a `.model` or `.queryset` property.')
 
-        kwargs = {
-            'app_label': model_class._meta.app_label,
-            'model_name': model_class._meta.module_name
-        }
-        permission_name = permission % kwargs
+        permission_name = permission.format(
+            app_label=model_class._meta.app_label,
+            model_name=model_class._meta.module_name)
         return request.user.has_perm(permission_name, obj)
     return has_permission
 
 
-class AdminPermission(object):
+class BasePermission(object):
     '''
     Provides a base class with a common API. It implements a compatible
     interface to django-rest-framework permission backends.
@@ -79,7 +104,7 @@ class AdminPermission(object):
         return self.has_permission(request, view, obj)
 
 
-class IsStaffPermission(AdminPermission):
+class IsStaffPermission(BasePermission):
     '''
     It ensures that the user is authenticated and is a staff member.
     '''
@@ -88,7 +113,9 @@ class IsStaffPermission(AdminPermission):
         is_staff)
 
 
-class ModelPermission(AdminPermission):
+# TODO: needs documentation
+# TODO: needs integration into the REST API
+class ModelPermission(BasePermission):
     '''
     Checks if the necessary model permissions are set for the accessed object.
     '''
@@ -99,27 +126,39 @@ class ModelPermission(AdminPermission):
         'GET': (),
         'OPTIONS': (),
         'HEAD': (),
-        'POST': (model_permission('%(app_label)s.add_%(model_name)s'),),
-        'PUT': (model_permission('%(app_label)s.change_%(model_name)s'),),
-        'PATCH': (model_permission('%(app_label)s.change_%(model_name)s'),),
-        'DELETE': (model_permission('%(app_label)s.delete_%(model_name)s'),),
+        'POST': (model_permission('{app_label}.add_{model_name}'),),
+        'PUT': (model_permission('{app_label}.change_{model_name}'),),
+        'PATCH': (model_permission('{app_label}.change_{model_name}'),),
+        'DELETE': (model_permission('{app_label}.delete_{model_name}'),),
     }
 
 
-class ModelViewPermission(AdminPermission):
-    permissions = (model_permission('%(app_label)s.view_%(model_name)s'),)
+class ModelViewPermission(BasePermission):
+    '''
+    Checks if the user has the ``<app>.view_<model>`` permission.
+    '''
+    permissions = (model_permission('{app_label}.view_{model_name}'),)
 
 
-class ModelAddPermission(AdminPermission):
-    permissions = (model_permission('%(app_label)s.add_%(model_name)s'),)
+class ModelAddPermission(BasePermission):
+    '''
+    Checks if the user has the ``<app>.add_<model>`` permission.
+    '''
+    permissions = (model_permission('{app_label}.add_{model_name}'),)
 
 
-class ModelChangePermission(AdminPermission):
-    permissions = (model_permission('%(app_label)s.change_%(model_name)s'),)
+class ModelChangePermission(BasePermission):
+    '''
+    Checks if the user has the ``<app>.change_<model>`` permission.
+    '''
+    permissions = (model_permission('{app_label}.change_{model_name}'),)
 
 
-class ModelDeletePermission(AdminPermission):
-    permissions = (model_permission('%(app_label)s.delete_%(model_name)s'),)
+class ModelDeletePermission(BasePermission):
+    '''
+    Checks if the user has the ``<app>.delete_<model>`` permission.
+    '''
+    permissions = (model_permission('{app_label}.delete_{model_name}'),)
 
 
 class TemplatePermission(object):
