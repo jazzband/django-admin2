@@ -4,7 +4,6 @@ WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
 
 from django.conf.urls import patterns, include, url
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
@@ -122,6 +121,7 @@ class Admin2(object):
 
     def get_urls(self):
         urlpatterns = patterns('',
+<<<<<<< HEAD
             url(regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
@@ -149,6 +149,18 @@ class Admin2(object):
                 login_required(views.LogoutView.as_view()),
                 name='logout'
                 ),
+=======
+            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
+            url(r'^api/v0/$',
+            self.api_index_view.as_view(**self.get_api_index_kwargs()), name='api-index'),
+
+            url('^password_change/$', views.PasswordChangeView.as_view(),
+                name='password-change'),
+            url('^password_change_done/$', views.PasswordChangeDoneView.as_view(),
+                name='password-change-done'),
+            url('^logout/$', views.LogoutView.as_view(),
+                name='logout'),
+>>>>>>> use django-braces for login required views
         )
 
         for model, model_admin in self.registry.iteritems():

@@ -2,10 +2,11 @@ import os
 
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 
-from braces.views import AccessMixin
+from braces.views import (AccessMixin,
+                          LoginRequiredMixin as BracesLoginRequiredMixin)
 
 from . import constants, permissions
 from .utils import admin2_urlname, model_options
@@ -60,6 +61,8 @@ class Admin2Mixin(PermissionMixin):
     model_name = None
     app_label = None
 
+    login_url = reverse_lazy('admin2:dashboard')
+
     def get_template_names(self):
         return [os.path.join(constants.ADMIN2_THEME_DIRECTORY, self.default_template_name)]
 
@@ -112,3 +115,8 @@ class Admin2ModelFormMixin(object):
 
         # default to index view
         return reverse(admin2_urlname(self, 'index'))
+
+
+class LoginRequiredMixin(BracesLoginRequiredMixin):
+
+    login_url = reverse_lazy('admin2:dashboard')
