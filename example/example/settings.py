@@ -108,9 +108,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
-
-INSTALLED_APPS = (
+PREREQ_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -118,13 +116,26 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'debug_toolbar',
     'django_coverage',
     'rest_framework',
+)
+
+PROJECT_APPS = (
     'djadmin2',
     'blog',
 )
+
+INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
+
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+COVERAGE_MODULE_EXCLUDES = [
+    'tests$', 'settings$', 'urls$', 'locale$',
+    'migrations', 'fixtures', 'admin$', 'django',
+]
+COVERAGE_MODULE_EXCLUDES += ['^%s$' % app for app in PREREQ_APPS]
+COVERAGE_REPORT_HTML_OUTPUT_DIR = "coverage"
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
