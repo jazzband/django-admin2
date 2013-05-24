@@ -50,7 +50,7 @@ Setting up topic branches and generating pull requests
 
 While it's handy to provide useful code snippets in an issue, it is better for
 you as a developer to submit pull requests. By submitting pull request your
-contribution to django-admin2 will be recorded by Github. 
+contribution to django-admin2 will be recorded by Github.
 
 In git it is best to isolate each topic or feature into a "topic branch".  While
 individual commits allow you control over how small individual changes are made
@@ -102,7 +102,7 @@ add a comment to the discussion section of the pull request.
 Pull upstream changes into your fork regularly
 ==================================================
 
-**django-admin2** is advancing quickly. It is therefore critical that you pull upstream changes from master into your fork on a regular basis. Nothing is worse than putting in a day of hard work into a pull request only to have it rejected because it has diverged too far from master. 
+**django-admin2** is advancing quickly. It is therefore critical that you pull upstream changes from master into your fork on a regular basis. Nothing is worse than putting in a day of hard work into a pull request only to have it rejected because it has diverged too far from master.
 
 To pull in upstream changes::
 
@@ -127,9 +127,11 @@ We want your submission. But we also want to provide a stable experience for our
 Run the tests!
 --------------
 
-Before you submit a pull request, please run the entire django-admin2 test suite via::
+Before you submit a pull request, please run the entire django-admin2 test suite from the example/ directory via::
 
-    python runtests.py
+    python manage.py test
+
+Then open example/coverage/index.html in a web browser.
 
 The first thing the core committers will do is run this command. Any pull request that fails this test suite will be **immediately rejected**.
 
@@ -182,7 +184,7 @@ How pull requests are checked, tested, and done
 First we pull the code into a local branch::
 
     git remote add <submitter-github-name> git@github.com:<submitter-github-name>/django-admin2.git
-    git fetch <submitter-github-name> 
+    git fetch <submitter-github-name>
     git checkout -b <branch-name> <submitter-github-name>/<branch-name>
 
 Then we run the tests::
