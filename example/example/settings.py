@@ -131,9 +131,9 @@ INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 COVERAGE_MODULE_EXCLUDES = [
     'tests$', 'settings$', 'urls$', 'locale$',
-    'migrations', 'fixtures', 'admin$', 'django',
+    'migrations', 'fixtures', 'admin$',
 ]
-COVERAGE_MODULE_EXCLUDES += ['^%s$' % app for app in PREREQ_APPS]
+COVERAGE_MODULE_EXCLUDES += PREREQ_APPS
 COVERAGE_REPORT_HTML_OUTPUT_DIR = "coverage"
 
 
