@@ -1,0 +1,25 @@
+{% extends "admin2/bootstrap/base.html" %}
+
+{% load i18n %}
+{% load admin2_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="span12">
+        {% if form.errors %}
+        <p class="error-note">
+            {% blocktrans count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+        </p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="this_is_the_login_form" value="1" />
+            <input type="hidden" name="next" value="{{ next }}" />
+            <button class="btn btn-small btn-success" type="submit">{% trans "Log in" %}</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

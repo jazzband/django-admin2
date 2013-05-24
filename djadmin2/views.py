@@ -1,7 +1,8 @@
+from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.views import logout
+from django.contrib.auth.views import (logout as auth_logout,
+                                       login as auth_login)
 from django.contrib.auth import get_user_model
-
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
@@ -161,10 +162,22 @@ class PasswordChangeDoneView(Admin2Mixin, LoginRequiredMixin, generic.TemplateVi
     default_template_name = 'auth/password_change_done.html'
 
 
+class LoginView(Admin2Mixin, generic.TemplateView):
+
+    default_template_name = 'auth/login.html'
+    authentication_form = AdminAuthenticationForm
+
+    def dispatch(self, request, *args, **kwargs):
+        return auth_login(request,
+                          authentication_form=self.authentication_form,
+                          template_name=self.get_template_names(),
+                          *args, **kwargs)
+
+
 class LogoutView(Admin2Mixin, LoginRequiredMixin, generic.TemplateView):
 
     default_template_name = 'auth/logout.html'
 
     def get(self, request, *args, **kwargs):
-        return logout(request, template_name=self.get_template_names(),
-                      *args, **kwargs)
+        return auth_logout(request, template_name=self.get_template_names(),
+                           *args, **kwargs)

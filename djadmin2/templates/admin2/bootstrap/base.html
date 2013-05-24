@@ -21,6 +21,8 @@
                         {% if docsroot %}
                         <li><a tabindex="3" href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
                         {% endif %}
+
+                        {% if user.is_authenticated %}
                         <li class="dropdown">
                             <a tabindex="4" href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 {% if user.get_full_name %}
@@ -36,11 +38,10 @@
                                 {% if user.has_usable_password %}
                                 <li><a href="{% url 'admin2:password-change' %}">{% trans "Change password" %}</a></li>
                                 {% endif %}
-                                {% if user.is_authenticated %}
                                 <li><a href="{% url 'admin2:logout' %}">{% trans "Log out" %}</a></li>
-                                {% endif %}
                             </ul>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
