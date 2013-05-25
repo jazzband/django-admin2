@@ -122,4 +122,72 @@ permission checks to the ``permissions`` attribute:
 Permissions in templates
 ------------------------
 
-TODO ...
+There is a ``{{ permissions }}`` variable available in the admin templates to
+provide easy checking if the user has valid permission for a specific view.
+
+You can check for either view, add, change and delete permissions. To do so you
+use the provided ``permissions`` variable as seen below:
+
+.. code-block:: html+django
+
+    {% if permissions.has_change_permission %}
+        <a href="... link to change form ...">Edit {{ object }}</a>
+    {% endif %}
+
+This will check for the particular model that the current view is working with,
+if the user has the permission to access the change view. You can also use some
+    object level permissions if you want to. For this just use the
+``for_object`` filter implemented in the ``admin2_tags`` templatetag library:
+
+.. code-block:: html+django
+
+    {% load admin2_tags %} 
+
+    {% if permissions.has_change_permission|for_object:object %}
+        <a href="... link to change form ...">Edit {{ object }}</a>
+    {% endif %}
+
+.. note::
+   Please be aware, that the :class:`django.contrib.auth.backends.ModelBackend`
+   backend that ships with django and is used by default doesn't support object
+   level permission. So unless you have implemented your own permission backend
+   that supports it, the
+   ``{{ permissions.has_change_permission|for_object:object }}`` will always
+   return ``False`` and though will be useless.
+   
+
+The following permission checks are currently supported:
+
+``has_view_permission``
+    Checks if the user has the permission to access the ``detail_view`` view
+    from the current ``ModelAdmin2`` object.
+    
+``has_add_permission``
+    Checks if the user has the permission to access the ``create_view`` view
+    from the current ``ModelAdmin2`` object.
+
+``has_change_permission``
+    Checks if the user has the permission to access the ``update_view`` view
+    from the current ``ModelAdmin2`` object.
+
+``has_delete_permission``
+    Checks if the user has the permission to access the ``delete_view`` view
+    from the current ``ModelAdmin2`` object.
+
+Checking for permissions on other models
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes you just need to check the permissions for that particular model. In
+that case, you can access its permissions like this:
+
+.. code-block:: html+django
+
+    {% if permissions.blog_post.has_view_permission %}
+        <a href="...">View {{ post }}</a>
+    {% endif %}
+
+So what we actually did here is that we just put the name of the
+``ModelAdmin2`` that is used for the model you want to access between the
+``permissions`` variable and the ``has_view_permission`` permission check. This
+name will be the app label followed by the model name in lowercase with an
+underscore in between for ordinary django models.
