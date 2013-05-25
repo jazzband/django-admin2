@@ -58,6 +58,43 @@ class TemplatePermissionTest(TestCase):
         result = self.render('{{ permissions.has_add_permission }}', context)
         self.assertEqual(result, 'True')
 
+    def test_admin_traversal_by_name(self):
+        post_add_permission = Permission.objects.get(
+            content_type__app_label='blog',
+            content_type__model='post',
+            codename='add_post')
+        self.user.user_permissions.add(post_add_permission)
+
+        model_admin = ModelAdmin2(Post, djadmin2.default)
+        request = self.factory.get(reverse('admin2:blog_post_index'))
+        request.user = self.user
+        view = model_admin.index_view(
+            request=request,
+            model_admin=model_admin)
+        permissions = TemplatePermissionChecker(request, view)
+        context = {
+            'permissions': permissions,
+        }
+
+        result = self.render('{{ permissions.has_add_permission }}', context)
+        self.assertEqual(result, 'True')
+        result = self.render('{{ permissions.blog_post.has_add_permission }}', context)
+        self.assertEqual(result, 'True')
+        result = self.render('{{ permissions.blog_post.has_change_permission }}', context)
+        self.assertEqual(result, 'False')
+        result = self.render('{{ permissions.auth_user.has_delete_permission }}', context)
+        self.assertEqual(result, 'False')
+
+        result = self.render(
+            '{{ permissions.unknown_app.has_add_permission }}',
+            context)
+        self.assertEqual(result, '')
+
+        result = self.render(
+            '{{ permissions.blog_post.has_unvalid_permission }}',
+            context)
+        self.assertEqual(result, '')
+
     def test_object_level_permission(self):
         model_admin = ModelAdmin2(Post, djadmin2.default)
         request = self.factory.get(reverse('admin2:blog_post_index'))

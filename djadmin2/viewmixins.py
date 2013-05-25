@@ -20,22 +20,12 @@ class PermissionMixin(object):
             for permission_class in self.permission_classes]
         super(PermissionMixin, self).__init__(**kwargs)
 
-    def has_permission(self, obj=None, view_name=None):
+    def has_permission(self, obj=None):
         '''
         Return ``True`` if the permission for this view shall be granted,
         ``False`` otherwise. Supports object-level permission by passing the
         related object as first argument.
-
-        You can also check for the permission of a different view in the same
-        ``ModelAdmin2`` by passing in the attribute name which holds the view
-        in the ``ModelAdmin2`` instance.
         '''
-        if view_name:
-            view_class = getattr(self.model_admin, view_name)
-            view = view_class(
-                request=self.request,
-                **self.model_admin.get_default_view_kwargs())
-            return view.has_permission(obj)
         for backend in self.permissions:
             if not backend.has_permission(self.request, self, obj):
                 return False
