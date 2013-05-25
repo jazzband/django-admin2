@@ -53,8 +53,9 @@ class BaseAdmin2(object):
     readonly_fields = ()
     ordering = None
 
-    def __init__(self, model, admin):
+    def __init__(self, name, model, admin):
         super(BaseAdmin2, self).__init__()
+        self.name = name
         self.model = model
         self.admin = admin
 
@@ -131,12 +132,16 @@ class ModelAdmin2(BaseAdmin2):
     # Actions
     actions = [actions.delete_selected]
 
-    def __init__(self, model, admin, **kwargs):
+    def __init__(self, model, admin, name=None, **kwargs):
+        self.name = name
         self.model = model
         self.admin = admin
         model_options = utils.model_options(model)
         self.app_label = model_options.app_label
         self.model_name = model_options.object_name.lower()
+
+        if self.name is None:
+            self.name = '{}_{}'.format(self.app_label, self.model_name)
 
         if self.verbose_name is None:
             self.verbose_name = model_options.verbose_name
@@ -159,7 +164,7 @@ class ModelAdmin2(BaseAdmin2):
         return kwargs
 
     def get_prefixed_view_name(self, view_name):
-        return '{}_{}_{}'.format(self.app_label, self.model_name, view_name)
+        return '{}_{}'.format(self.name, view_name)
 
     def get_index_kwargs(self):
         return self.get_default_view_kwargs()

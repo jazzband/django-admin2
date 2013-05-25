@@ -42,8 +42,6 @@ class Admin2(object):
         instantiation.
 
         If a model is already registered, this will raise ImproperlyConfigured.
-
-
         """
         if model in self.registry:
             raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
@@ -92,6 +90,16 @@ class Admin2(object):
                 if str(e) == "No module named admin2":
                     continue
                 raise e
+
+    def get_admin_by_name(self, name):
+        """
+        Returns the admin instance that was registered with the passed in
+        name.
+        """
+        for object_admin in self.registry.values():
+            if object_admin.name == name:
+                return object_admin
+        raise ValueError(u'No object admin found with name {}'.format(repr(name)))
 
     def get_index_kwargs(self):
         return {
