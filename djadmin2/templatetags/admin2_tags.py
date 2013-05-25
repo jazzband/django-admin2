@@ -26,7 +26,7 @@ def model_verbose_name_plural(obj):
     """
     Returns the pluralized verbose name of a model instance or class.
     """
-    utils.model_verbose_name_plural(obj)
+    return utils.model_verbose_name_plural(obj)
 
 
 @register.filter

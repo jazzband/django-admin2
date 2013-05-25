@@ -1,5 +1,5 @@
 {% extends "admin2/bootstrap/base.html" %}
-{% load admin2_tags %}
+{% load admin2_tags i18n %}
 
 {% block content %}
 
@@ -26,15 +26,14 @@
                         {# if has_add_permission #}
                             <a href="{% url model_admin|admin2_urlname:'create' %}">
                                 <i class="icon-plus"></i>
-
-                                Add
+                                {% trans "Add" %}
                             </a>
                         {# endif #}
                         </td>
                         <td class="text-right">
                             <a href="{{ model_admin.get_index_url }}">
                                 <i class="icon-pencil"></i>
-                                Change
+                                {% trans "Change" %}
                             </a>
                         </td>
                     </tr>
@@ -44,8 +43,8 @@
         {% endfor %}
     </div>
     <div class="span5">
-        <h4>Recent Actions</h4>
-        <h5>My Actions</h5>
+        <h4>{% trans "Recent Actions" %}</h4>
+        <h5>{% trans "My Actions" %}</h5>
         TODO
     </div>
 </div>
