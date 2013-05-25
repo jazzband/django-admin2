@@ -14,14 +14,17 @@
 {% endblock %}
 
 {% block content %}
-<p>{% blocktrans with model_name=model_name object=object %}Are you sure you want to delete the {{ model_name }} "{{ object }}"? All of the following related items will be deleted:{% endblocktrans %}</p>
 
-TODO
+<p>{% blocktrans with model_name=model_name object=object %}Are you sure you want to delete the {{ model_name }} "{{ object }}"? All of the following items will be deleted:{% endblocktrans %}</p>
+
+<ul>
+	{{ deletable_objects|unordered_list }}
+</ul>
 
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit"/>
+    <button class="btn btn-small btn-danger" type="submit">{% trans "Yes, I'm sure" %}</button>
 </form>
 
 {% endblock content %}

@@ -1,13 +1,16 @@
 {% extends "admin2/bootstrap/base.html" %}
 {% load i18n %}
+
+{% block title %}Are you sure?{% endblock %}
+
+{% block page_title %}Are you sure?{% endblock %}
+
 {% block content %}
 
-<p>{% blocktrans with objects_name=objects_name %}Are you sure you want to delete the selected {{ objects_name }}?{% endblocktrans %}</p>
+<p>{% blocktrans with objects_name=objects_name %}Are you sure you want to delete the selected {{ objects_name }}?  All of the following items will be deleted:{% endblocktrans %}</p>
 
 <ul>
-    {% for item in queryset %}
-    <li>{{ item }}</li>
-    {% endfor %}
+    {{ deletable_objects|unordered_list }}
 </ul>
 
 <form method="post">
@@ -15,9 +18,9 @@
     <input type="hidden" name="confirmed" value="yes" />
     <input type="hidden" name="action" value="delete_selected" />
     {% for item in queryset %}
-    <input type="hidden" name="selected_model_pk" value="{{ item.pk }}" />
+        <input type="hidden" name="selected_model_pk" value="{{ item.pk }}" />
     {% endfor %}
-    <input type="submit"/>
+    <button class="btn btn-small btn-danger" type="submit">{% trans "Yes, I'm sure" %}</button>
 </form>
 
 {% endblock content %}
