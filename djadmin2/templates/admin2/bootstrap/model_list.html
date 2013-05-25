@@ -1,9 +1,9 @@
 {% extends "admin2/bootstrap/base.html" %}
-{% load admin2_tags %}
+{% load admin2_tags i18n %}
 
-{% block title %}Select {{ model|model_verbose_name }} to change{% endblock %}
+{% block title %}{% blocktrans with model_verbose_name=model|model_verbose_name %}Select {{ model_verbose_name }} to change{% endblocktrans %}{% endblock %}
 
-{% block page_title %}Select {{ model|model_verbose_name }} to change{% endblock %}
+{% block page_title %}{% blocktrans with model_verbose_name=model|model_verbose_name %}Select {{ model_verbose_name }} to change{% endblocktrans %}{% endblock %}
 
 {% block extrajs %}
 <script src="/static/themes/bootstrap/js/actions.js"></script>
@@ -25,7 +25,7 @@
 		<span id="selected-count">0</span> of {{ object_list|length }} selected
                 <div class="pull-right">
                     {# if has_add_permission #}
-                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> Add {{ model|model_verbose_name }}</a>
+                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>
                     {# endif #}
                 </div>
             </div>
@@ -40,12 +40,13 @@
                     <tr>
                         <td><input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}"></td>
                         <td>
-                            {{ obj }} <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">detail</a>
+                            {{ obj }}
+                            <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% trans "Detail" %}</a>
                             {# if has_edit_permission #}
-                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">edit</a>
+                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% trans "Edit" %}</a>
                             {# endif #}
                             {# if has_delete_permission #}
-                            <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">delete</a>
+                            <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">{% trans "Delete" %}</a>
                             {# endif #}
                         </td>
                     </tr>
@@ -53,7 +54,7 @@
                 </tbody>
             </table>
 
-            {{ object_list|length }} {{ model|model_verbose_name }} 
+            {{ object_list|length }} {{ model|model_verbose_name_plural }} 
         </div>
     </form>
 </div>

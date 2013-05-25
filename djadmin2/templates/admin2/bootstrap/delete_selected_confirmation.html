@@ -1,8 +1,8 @@
 {% extends "admin2/bootstrap/base.html" %}
-
+{% load i18n %}
 {% block content %}
 
-<p>Are you sure you want to delete the selected {{ objects_name }}?</p>
+<p>{% blocktrans with objects_name=objects_name %}Are you sure you want to delete the selected {{ objects_name }}?{% endblocktrans %}</p>
 
 <ul>
     {% for item in queryset %}

@@ -1,11 +1,12 @@
 {% extends "admin2/bootstrap/base.html" %}
+{% load i18n %}
 
-{% block title %}Are you sure?{% endblock %}
+{% block title %}{% trans "Are you sure?" %}{% endblock %}
 
-{% block page_title %}Are you sure?{% endblock %}
+{% block page_title %}{% trans "Are you sure?" %}{% endblock %}
 
 {% block content %}
-<p>Are you sure you want to delete the {{ model }} "{{ object }}"? All of the following related items will be deleted:</p>
+<p>{% blocktrans with model=model object=object %}Are you sure you want to delete the {{ model }} "{{ object }}"? All of the following related items will be deleted:{% endblocktrans %}</p>
 
 TODO
 
