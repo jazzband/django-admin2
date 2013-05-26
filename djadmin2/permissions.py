@@ -192,13 +192,39 @@ class TemplatePermissionChecker(object):
             {{ object_permissions.has_delete_permission }}
         {% endwith %}
 
-    The attribute access of ``has_create_permission`` will be done via a
-    dictionary lookup (implemented in ``__getitem__``). This will return a
-    callable (instance of ``TemplatePermission``, that can take an object to
-    check object-level permissions.
+    And dynamically checking the permissions on a different admin:
 
-    In the future any view assigned to the admin will be possible to check for
-    permissions, like with
+    .. code-block:: html+django
+
+        {% load admin2_tags %}
+        {% for admin in list_of_model_admins %}
+            {% with permissions|for_admin:admin as permissions %}
+                {{ permissions.has_delete_permission }}
+            {% endwith %}
+        {% endfor %}
+
+    If you don't know the permission you want to check at compile time (e.g.
+    you cannot put ``has_add_permission`` in the template because the exact
+    permission name might be passed into the context dynamically) you can bind
+    the view name with the ``for_view`` filter:
+
+    .. code-block:: html+django
+
+        {% load admin2_tags %}
+        {% with "add" as view_name %}
+            {% if permissions|for_view:view_name %}
+                <a href="...">{{ view_name|capfirst }} model</a>
+            {% endif %}
+        {% endwith %}
+
+    The attribute access of ``has_<view name>_permission`` will check for the
+    permissions of the view on the currently bound model admin not with the
+    name ``<view name>``, but with the name that the ``view_name_mapping``
+    returns for it. That step is needed since ``add`` is not the real
+    attribute name in which the ``ModelAddFormView`` on the model admin lives.
+
+    In the future we might get rid of that and this will also make it possible
+    to check for any view assigned to the admin, like
     ``{{ permissions.auth_user.has_change_password_permission }}``. But this
     needs an interface beeing implemented like suggested in:
     https://github.com/twoscoops/django-admin2/issues/142
