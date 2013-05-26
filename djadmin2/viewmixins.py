@@ -11,7 +11,7 @@ from . import constants, permissions
 from .utils import admin2_urlname, model_options
 
 
-class PermissionMixin(object):
+class PermissionMixin(AccessMixin):
     do_not_call_in_templates = True
     permission_classes = (permissions.IsStaffPermission,)
 
@@ -31,6 +31,17 @@ class PermissionMixin(object):
             if not backend.has_permission(self.request, self, obj):
                 return False
         return True
+
+    def dispatch(self, request, *args, **kwargs):
+        # Raise exception or redirect to login if user doesn't have
+        # permissions.
+        if not self.has_permission():
+            if self.raise_exception:
+                raise PermissionDenied  # return a forbidden response
+            else:
+                return redirect_to_login(request.get_full_path(),
+                    self.get_login_url(), self.get_redirect_field_name())
+        return super(PermissionMixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(PermissionMixin, self).get_context_data(**kwargs)
@@ -64,19 +75,8 @@ class Admin2Mixin(PermissionMixin):
         return modelform_factory(self.get_model())
 
 
-class AdminModel2Mixin(Admin2Mixin, AccessMixin):
+class AdminModel2Mixin(Admin2Mixin):
     model_admin = None
-
-    def dispatch(self, request, *args, **kwargs):
-        # Raise exception or redirect to login if user doesn't have
-        # permissions.
-        if not self.has_permission():
-            if self.raise_exception:
-                raise PermissionDenied  # return a forbidden response
-            else:
-                return redirect_to_login(request.get_full_path(),
-                    self.get_login_url(), self.get_redirect_field_name())
-        return super(AdminModel2Mixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
