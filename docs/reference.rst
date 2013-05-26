@@ -37,12 +37,16 @@ Permissions
 ===========
 
 Permissions are handled on a per view basis. So basically each admin view can
-hold its own permission handling. That way you are very flexible in defining
-who is allowed to access your edit view without limitting yourself to simple
-model based permissions (like ``user.has_perm('blog.change_post')``.
+hold its own permissions. That way you are very flexible in defining
+who is allowed to access which view. For example, the edit view might need some
+totally different permission checks then the delete view. However the add view
+has nearly the same requirements as the edit view, you just also need to have
+on extra permission. All those scenarios can be handled very easily in **django-admin2**.
 
-You can attach a permission backend to a view by assigning a list of those to
-the ``permission_classes`` attribute:
+Since the permission handling is centered around the specific views, this is
+the place where you attach the permission checking logic to. You can assign one
+or more permission backends to a view by setting the ``permission_classes``
+attribute:
 
 .. code-block:: python
 
@@ -57,10 +61,12 @@ the ``permission_classes`` attribute:
             permissions.ModelViewPermission)
 
 See the following sections on which permission classes ship with
-django-admin2, ready to use and how you can roll your own.
+**django-admin2**, ready to use and how you can roll your own.
 
-Builtin permission backends
----------------------------
+Builtin permission classes
+--------------------------
+
+You can use the following permission classes directly in you views.
 
 .. autoclass:: djadmin2.permissions.IsStaffPermission
 
@@ -72,61 +78,61 @@ Builtin permission backends
 
 .. autoclass:: djadmin2.permissions.ModelDeletePermission
 
-Writing your own permission backend
------------------------------------
+Writing your own permission class
+---------------------------------
 
-Internally a permission class uses so called *permission checks* to implement
-the real logic of verifying that a user has the correct permissions. A
-permission check has the real simple interface of accepting two position
-arguments and an optional third one.  The first is the current ``request``,
-the second the ``view`` on which the permission check is performed against.
-The third and optional one is an arbitrary that can be passed into the
-permission checking machinery to implement object level permissions. Based on
-these arguments should the permission check than return either ``True`` if the
-permission shall be granted. A returned ``False`` means that the permission
-check failed and access to the user shall be denied.
+If you need it, writing your own permission class is really easy. You just need
+to subclass the :class:`djadmin2.permissions.BasePermission` class and
+overwrite the :meth:`~djadmin2.permissions.BasePermission.has_permission`
+method that implements the desired permission checking. The arguments that the
+method takes are pretty self explanatory:
 
-Here is an example implementation of a custom permission check:
+``request``
+    That is the request object that was sent to the server to access the
+    current page. This will usually have the ``request.user`` attribute which
+    you can use to check for user based permissions.
+
+``view``
+    The ``view`` argument is the instance of the class based view that the user wants
+    to access.
+
+``obj``
+    This argument is optional and will only be given if an object-level
+    permission check is performed. Take this into account if you want to
+    support object-level permissions, or ignore it otherwise.
+
+Based on these arguments should the ``has_permission`` method than return
+either ``True`` if the permission shall be granted or ``False`` if the access
+to the user shall be diened.
+
+Here is an example implementation of a custom permission class:
 
 .. code-block:: python
 
-    def secret_information_check(request, view, obj=None):
+    from djadmin2.permissions import BasePermission
+
+    class HasAccessToSecretInformationPermission(BasePermission):
         '''
         Only allow superusers access to secret information.
         '''
-        if 'secret' in obj.title.lower() and not request.user.is_superuser:
-            return False
-        return True
 
-You can use the following predefined permission checks or built your own:
-
-.. autofunction:: djadmin2.permissions.is_authenticated
-
-.. autofunction:: djadmin2.permissions.is_staff
-
-.. autofunction:: djadmin2.permissions.is_superuser
-
-.. autofunction:: djadmin2.permissions.model_permission
-
-You can now build your own permission class by subclassing
-``djadmin2.permissions.BasePermission`` and assigning a list of those
-permission checks to the ``permissions`` attribute:
-
-.. code-block:: python
-
-    class SecretContentPermission(permissions.BasePermission):
-        permissions = (
-            permissions.is_staff,
-            secret_information_check)
+        def has_permission(self, request, view, obj=None):
+            if obj is not None:
+                if 'secret' in obj.title.lower() and not request.user.is_superuser:
+                    return False
+            return True
 
 Permissions in templates
 ------------------------
 
-There is a ``{{ permissions }}`` variable available in the admin templates to
-provide easy checking if the user has valid permission for a specific view.
+Since the permission handling is designed around views, the permission checks
+in the template will also always access a view and return either ``True`` or
+``False`` if the user has access to the given view. There is a ``{{ permissions
+}}`` variable available in the admin templates to perform these tests against a
+specific view.
 
-You can check for either view, add, change and delete permissions. To do so you
-use the provided ``permissions`` variable as seen below:
+At the moment you can check for view, add, change and delete permissions. To do
+so you use the provided ``permissions`` variable as seen below:
 
 .. code-block:: html+django
 
@@ -134,10 +140,33 @@ use the provided ``permissions`` variable as seen below:
         <a href="... link to change form ...">Edit {{ object }}</a>
     {% endif %}
 
-This will check for the particular model that the current view is working with,
-if the user has the permission to access the change view. You can also use some
-    object level permissions if you want to. For this just use the
-``for_object`` filter implemented in the ``admin2_tags`` templatetag library:
+This permission check will use the ``ModelAdmin2`` instance of the current view
+that was used to render the above template to find the view it should perform
+the permission check against. Since we test the change permission, it will use
+the ``update_view`` to check if the user has the permission to access the
+change page or not. If that's the case, we can safely display the link to
+the change page.
+
+At the moment we can check for the following four basic permissions:
+
+``has_view_permission``
+    This will check the permissions against the current admin's ``detail_view``.
+
+``has_add_permission``
+    This will check the permissions against the current admin's ``create_view``.
+
+``has_change_permission``
+    This will check the permissions against the current admin's ``update_view``.
+
+``has_delete_permission``
+    This will check the permissions against the current admin's ``delete_view``.
+
+Object-level permissions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The permission handling in templates also support checking for object-level
+permissions. To do so, you can use the ``for_object`` filter implemented in the
+``admin2_tags`` templatetag library:
 
 .. code-block:: html+django
 
@@ -148,31 +177,42 @@ if the user has the permission to access the change view. You can also use some
     {% endif %}
 
 .. note::
+
    Please be aware, that the :class:`django.contrib.auth.backends.ModelBackend`
    backend that ships with django and is used by default doesn't support object
    level permission. So unless you have implemented your own permission backend
    that supports it, the
    ``{{ permissions.has_change_permission|for_object:object }}`` will always
    return ``False`` and though will be useless.
-   
 
-The following permission checks are currently supported:
+Sometimes you have the need to perform all the permission checks in a block of
+template code to use one object. In that case you can *bind* an object to the
+permissions variable for easier handling:
 
-``has_view_permission``
-    Checks if the user has the permission to access the ``detail_view`` view
-    from the current ``ModelAdmin2`` object.
-    
-``has_add_permission``
-    Checks if the user has the permission to access the ``create_view`` view
-    from the current ``ModelAdmin2`` object.
+.. code-block:: html+django
 
-``has_change_permission``
-    Checks if the user has the permission to access the ``update_view`` view
-    from the current ``ModelAdmin2`` object.
+    {% load admin2_tags %}
 
-``has_delete_permission``
-    Checks if the user has the permission to access the ``delete_view`` view
-    from the current ``ModelAdmin2`` object.
+    {% with permissions|for_object:object as object_permissions %}
+        {% if object_permissions.has_change_permission %}
+            <a href="... link to change form ...">Edit {{ object }}</a>
+        {% endif %}
+        {% if object_permissions.has_delete_permission %}
+            <a href="... link to delete page ...">Delete {{ object }}</a>
+        {% endif %}
+    {% endwith %}
+
+That also comes in handy if you have a rather generic template that performs
+some permission checks and you want it to use object-level
+permissions as well:
+
+.. code-block:: html+django
+
+    {% load admin2_tags %}
+
+    {% with permissions|for_object:object as object_permissions %}
+        {% include "list_of_model_actions.html" with permissions=object_permissions %}
+    {% endwith %}
 
 Checking for permissions on other models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -188,6 +228,43 @@ that case, you can access its permissions like this:
 
 So what we actually did here is that we just put the name of the
 ``ModelAdmin2`` that is used for the model you want to access between the
-``permissions`` variable and the ``has_view_permission`` permission check. This
-name will be the app label followed by the model name in lowercase with an
-underscore in between for ordinary django models.
+``permissions`` variable and the ``has_view_permission``. This name will be the
+app label followed by the model name in lowercase with an underscore in between
+for ordinary django models. That way you can break free of beeing limitted to
+permission checks for the current ``ModelAdmin2``. But that doesn't help you
+either if you don't know from the beginning on which model admin you want to
+check the permissions. Imagine the admin's index page that should show a list
+of all the available admin pages. To dynamically bind the permissions variable
+to a model admin, you can use the ``for_admin`` filter:
+
+.. code-block:: html+django
+
+    {% load admin2_tags %}
+
+    {% for admin in list_of_model_admins %}
+        {% with permissions|for_admin:admin as permissions %}
+            {% if permissions.has_add_permission %}Add another {{ admin.model_name }}{% endif %}
+        {% endwith %}
+    {% endfor %}
+
+Dynamically check for a specific permission name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Just like you can bind a permission dynamically to a model admin, you can also
+specify the actual permission name on the fly. There is the ``for_view`` filter
+to do so.
+
+.. code-block:: html+django
+
+    {% load admin2_tags %}
+
+    {% with "add" as view_name %}
+        {% if permissions|for_view:view_name %}
+            <a href="...">{{ view_name|capfirst }} model</a>
+        {% endif %}
+    {% endwith %}
+
+That way you can avoid hardcoding the ``has_add_permission`` check and make the
+checking depended on a given template variable. The argument for the
+``for_view`` filter must be one of the four strings: ``view``, ``add``,
+``change`` or ``delete``.
