@@ -15,6 +15,7 @@ The permission classes are then just fancy wrappers of these basic checks of
 which it can hold multiple.
 '''
 import re
+from django.utils import six
 
 
 def is_authenticated(request, view, obj=None):
@@ -229,6 +230,11 @@ class TemplatePermissionChecker(object):
         Return a clone of the permission wrapper with a new model_admin bind
         to it.
         '''
+        if isinstance(admin, six.string_types):
+            try:
+                admin = self._model_admin.admin.get_admin_by_name(admin)
+            except ValueError:
+                return ''
         new_permissions = self.clone()
         new_permissions._model_admin = admin
         return new_permissions

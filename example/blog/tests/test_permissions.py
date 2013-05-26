@@ -136,6 +136,24 @@ class TemplatePermissionTest(TestCase):
             context)
         self.assertEqual(result, 'FalseTrueTrue')
 
+        # giving a string (the name of the admin) also works
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{% with permissions|for_admin:"blog_post" as permissions %}'
+                '{{ permissions.has_add_permission }}'
+            '{% endwith %}',
+            context)
+        self.assertEqual(result, 'True')
+
+        # testing invalid admin names
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{% with permissions|for_admin:"invalid_admin_name" as permissions %}'
+                '{{ permissions.has_add_permission }}'
+            '{% endwith %}',
+            context)
+        self.assertEqual(result, '')
+
     def test_object_level_permission(self):
         model_admin = ModelAdmin2(Post, djadmin2.default)
         request = self.factory.get(reverse('admin2:blog_post_index'))
