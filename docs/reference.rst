@@ -70,6 +70,8 @@ You can use the following permission classes directly in you views.
 
 .. autoclass:: djadmin2.permissions.IsStaffPermission
 
+.. autoclass:: djadmin2.permissions.IsSuperuserPermission
+
 .. autoclass:: djadmin2.permissions.ModelViewPermission
 
 .. autoclass:: djadmin2.permissions.ModelAddPermission

@@ -114,6 +114,16 @@ class IsStaffPermission(BasePermission):
         is_staff)
 
 
+class IsSuperuserPermission(BasePermission):
+    '''
+    It ensures that the user is authenticated and is a superuser. However it
+    does not check if the user is a staff member.
+    '''
+    permissions = (
+        is_authenticated,
+        is_superuser)
+
+
 # TODO: needs documentation
 # TODO: needs integration into the REST API
 class ModelPermission(BasePermission):
