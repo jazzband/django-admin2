@@ -176,7 +176,7 @@ Best Practices
 
 Follow PEP-0008 and memorize the Zen of Python::
 
-    >>> python -c 'import this'
+    >>> import this
 
 Please keep your code as clean and straightforward as possible. When we see more than one or two functions/methods starting with `_my_special_function` or things like `__builtins__.object = str` we start to get worried. Rather than try and figure out your brilliant work we'll just **reject** it and send along a request for simplification.
 
