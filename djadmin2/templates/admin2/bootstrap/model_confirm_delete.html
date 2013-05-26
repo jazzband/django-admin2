@@ -1,12 +1,20 @@
 {% extends "admin2/bootstrap/base.html" %}
-{% load i18n %}
+{% load admin2_tags i18n %}
 
 {% block title %}{% trans "Are you sure?" %}{% endblock %}
 
 {% block page_title %}{% trans "Are you sure?" %}{% endblock %}
 
+{% block breadcrumbs %}
+    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
+    <li><a href="{% url "admin2:app-index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>    
+    <li><a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a> <span class="divider">/</span></li>
+    <li><a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a> <span class="divider">/</span></li>         
+    <li class="active">{% trans "Delete" %}</li>
+{% endblock %}
+
 {% block content %}
-<p>{% blocktrans with model=model object=object %}Are you sure you want to delete the {{ model }} "{{ object }}"? All of the following related items will be deleted:{% endblocktrans %}</p>
+<p>{% blocktrans with model_name=model_name object=object %}Are you sure you want to delete the {{ model_name }} "{{ object }}"? All of the following related items will be deleted:{% endblocktrans %}</p>
 
 TODO
 

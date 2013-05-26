@@ -1,8 +1,17 @@
 {% extends "admin2/bootstrap/base.html" %}
 
+{% load admin2_tags %}
+
 {% block title %}{{ object }}{% endblock %}
 
 {% block page_title %}{{ object }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
+    <li><a href="{% url "admin2:app-index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
+    <li><a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a> <span class="divider">/</span></li>
+    <li class="active">{{ object }}</li>         
+{% endblock %}
 
 {% block content %}
 

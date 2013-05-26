@@ -35,6 +35,18 @@ class UtilsTest(TestCase):
             utils.admin2_urlname(IndexView, "index")
         )
 
+    def test_model_app_label_as_model_class(self):
+        self.assertEquals(
+            UtilsTestModel._meta.app_label,
+            utils.model_app_label(UtilsTestModel)
+        )
+
+    def test_model_app_label_as_model_instance(self):
+        self.assertEquals(
+            self.instance._meta.app_label,
+            utils.model_app_label(UtilsTestModel)
+        )
+
     def test_model_verbose_name_as_model_class(self):
         self.assertEquals(
             UtilsTestModel._meta.verbose_name,

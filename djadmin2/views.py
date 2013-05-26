@@ -16,12 +16,28 @@ class IndexView(Admin2Mixin, generic.TemplateView):
         data = super(IndexView, self).get_context_data(**kwargs)
         data.update({
             'apps': self.apps,
-            'registry': self.registry,
         })
         return data
 
 
-class ModelListView(Admin2Mixin, generic.ListView):
+class AppIndexView(Admin2Mixin, generic.TemplateView):
+    default_template_name = "app_index.html"
+    registry = None
+    apps = None
+
+    def get_context_data(self, **kwargs):
+        data = super(AppIndexView, self).get_context_data(**kwargs)
+        app_label = self.kwargs['app_label']
+        registry = self.apps[app_label]
+
+        data.update({
+            'app_label': app_label,
+            'registry': registry,
+        })
+        return data
+
+
+class ModelListView(AdminModel2Mixin, generic.ListView):
     default_template_name = "model_list.html"
     permission_type = 'view'
 

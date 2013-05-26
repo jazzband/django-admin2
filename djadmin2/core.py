@@ -23,6 +23,7 @@ class Admin2(object):
     It also provides an index view that serves as an entry point to the admin site.
     """
     index_view = views.IndexView
+    app_index_view = views.AppIndexView
     api_index_view = apiviews.IndexAPIView
 
     def __init__(self, name='admin2'):
@@ -98,6 +99,12 @@ class Admin2(object):
             'apps': self.apps,
         }
 
+    def get_app_index_kwargs(self):
+        return {
+            'registry': self.registry,
+            'apps': self.apps,
+        }
+
     def get_api_index_kwargs(self):
         return {
             'registry': self.registry,
@@ -106,9 +113,20 @@ class Admin2(object):
 
     def get_urls(self):
         urlpatterns = patterns('',
-            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
-            url(r'^api/v0/$',
-            self.api_index_view.as_view(**self.get_api_index_kwargs()), name='api-index'),
+            url(regex=r'^$',
+                view=self.index_view.as_view(**self.get_index_kwargs()),
+                name='dashboard'
+            ),
+            url(
+                regex=r'^(?P<app_label>\w+)/$',
+                view=self.app_index_view.as_view(**self.get_app_index_kwargs()),
+                name='app-index'
+            ),
+            url(
+                regex=r'^api/v0/$',
+                view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
+                name='api-index'
+            ),
         )
         for model, model_admin in self.registry.iteritems():
             model_options = utils.model_options(model)

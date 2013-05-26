@@ -1,13 +1,19 @@
 {% extends "admin2/bootstrap/base.html" %}
 {% load admin2_tags i18n %}
 
-{% block title %}{% blocktrans with model_verbose_name=model|model_verbose_name %}Select {{ model_verbose_name }} to change{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with model_name=model_name %}Select {{ model_name }} to change{% endblocktrans %}{% endblock %}
 
-{% block page_title %}{% blocktrans with model_verbose_name=model|model_verbose_name %}Select {{ model_verbose_name }} to change{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans with model_name=model_name %}Select {{ model_name }} to change{% endblocktrans %}{% endblock %}
 
 {% block extrajs %}
 <script src="/static/themes/bootstrap/js/actions.js"></script>
 {% endblock extrajs %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
+    <li><a href="{% url "admin2:app-index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
+    <li class="active">{{ model_name_pluralized|title }}</li>     
+{% endblock %}
 
 {% block content %}
 
@@ -25,7 +31,7 @@
 		<span id="selected-count">0</span> of {{ object_list|length }} selected
                 <div class="pull-right">
                     {# if has_add_permission #}
-                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>
+                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_name=model_name %}Add {{ model_name }}{% endblocktrans %}</a>
                     {# endif #}
                 </div>
             </div>
@@ -33,7 +39,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <th><input type="checkbox" class="model-select-all"></th>
-                    <th>{{ model|model_verbose_name|title}}</th>
+                    <th>{{ model_name }}</th>
                 </thead>
                 <tbody>
                     {% for obj in object_list %}
@@ -54,7 +60,7 @@
                 </tbody>
             </table>
 
-            {{ object_list|length }} {{ model|model_verbose_name_plural }} 
+            {{ object_list|length }} {{ model_name_pluralized }} 
         </div>
     </form>
 </div>

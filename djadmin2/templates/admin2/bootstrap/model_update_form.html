@@ -2,9 +2,23 @@
 
 {% load admin2_tags i18n %}
 
-{% block title %}{% blocktrans with action=action model_verbose_name=model|model_verbose_name %}{{ action }} {{ model_verbose_name }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock %}
 
-{% block page_title %}{% blocktrans with action=action model_verbose_name=model|model_verbose_name %}{{ action }} {{ model_verbose_name }}{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock %}
+
+{% block breadcrumbs %}
+    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
+    <li><a href="{% url "admin2:app-index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
+    <li><a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a> <span class="divider">/</span></li>
+    {% if action == 'Add' %}
+	<li class="active">{{ action }}</li>
+    {% else %}
+    <li><a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a> <span class="divider">/</span></li>
+    <li class="active">{% trans 'Change' %}</li>     
+    {% endif %}
+
+{% endblock %}
+
 
 {% block content %}
 

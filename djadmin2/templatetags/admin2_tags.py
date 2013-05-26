@@ -14,6 +14,14 @@ def admin2_urlname(view, action):
 
 
 @register.filter
+def model_app_label(obj):
+    """
+    Returns the app label of a model instance or class.
+    """
+    return utils.model_app_label(obj)
+
+
+@register.filter
 def model_verbose_name(obj):
     """
     Returns the verbose name of a model instance or class.

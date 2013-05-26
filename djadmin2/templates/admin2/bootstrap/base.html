@@ -44,6 +44,12 @@
             </div>
         </div>
 
+        <ul class="breadcrumb">
+            {% block breadcrumbs %}
+            <li class="active">Home</li>
+            {% endblock %}
+        </ul>
+
         {% if messages %}
         <ul class="messages">
             {% for message in messages %}

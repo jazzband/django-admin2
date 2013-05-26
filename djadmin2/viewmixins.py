@@ -58,8 +58,9 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
             'has_add_permission': self.model_admin.has_add_permission(self.request),
             'has_edit_permission': self.model_admin.has_edit_permission(self.request),
             'has_delete_permission': self.model_admin.has_delete_permission(self.request),
-            'model': model_meta.verbose_name,
-            'model_pluralized': model_meta.verbose_name_plural
+            'app_label': model_meta.app_label,
+            'model_name': model_meta.verbose_name,
+            'model_name_pluralized': model_meta.verbose_name_plural
         })
         return context
 
