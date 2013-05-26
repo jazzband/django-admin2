@@ -161,43 +161,35 @@ class ModelDeletePermission(BasePermission):
     permissions = (model_permission('{app_label}.delete_{model_name}'),)
 
 
-class TemplatePermission(object):
-    '''
-    A small wrapper around the permission check of a specific view. This is
-    used in the template since we don't know if the permission will be used
-    as a boolean expression or if the user will append a ``for_object`` filter
-    to test for object level permission.
-    '''
-    do_not_call_in_templates = True
-
-    def __init__(self, view):
-        self._view = view
-
-    def __nonzero__(self):
-        return self._view.has_permission()
-
-    def __call__(self, obj=None):
-        return self._view.has_permission(obj)
-
-    def __unicode__(self):
-        return unicode(bool(self))
-
-
 class TemplatePermissionChecker(object):
     '''
-    Can be used in the template like::
+    Can be used in the template like:
+
+    .. code-block:: html+django
 
         {{ permissions.has_view_permission }}
         {{ permissions.has_add_permission }}
         {{ permissions.has_change_permission }}
-        {{ permissions.has_delete_permission|for_object:object }}
+        {{ permissions.has_delete_permission }}
         {{ permissions.blog_post.has_view_permission }}
         {{ permissions.blog_comment.has_add_permission }}
 
-    So in general::
+    So in general:
+
+    .. code-block:: html+django
 
         {{ permissions.has_<view_name>_permission }}
         {{ permissions.<object admin name>.has_<view name>_permission }}
+
+    And using object-level permissions:
+
+    .. code-block:: html+django
+
+        {% load admin2_tags %}
+        {{ permissions.has_delete_permission|for_object:object }}
+        {% with permissions|for_object:object as object_permissions %}
+            {{ object_permissions.has_delete_permission }}
+        {% endwith %}
 
     The attribute access of ``has_create_permission`` will be done via a
     dictionary lookup (implemented in ``__getitem__``). This will return a
@@ -210,7 +202,7 @@ class TemplatePermissionChecker(object):
     needs an interface beeing implemented like suggested in:
     https://github.com/twoscoops/django-admin2/issues/142
     '''
-    has_named_permission_regex = re.compile('^has_(?P<name>\w+)_permission$')
+    _has_named_permission_regex = re.compile('^has_(?P<name>\w+)_permission$')
 
     view_name_mapping = {
         'view': 'detail_view',
@@ -219,38 +211,79 @@ class TemplatePermissionChecker(object):
         'delete': 'delete_view',
     }
 
-    def __init__(self, request, view, model_admin=None):
-        self.request = request
-        self.view = view
-        self.model_admin = model_admin
+    def __init__(self, request, model_admin, view=None, obj=None):
+        self._request = request
+        self._model_admin = model_admin
+        self._view = view
+        self._obj = obj
 
-    def get_template_permission_object(self, view_name):
-        if self.model_admin is None:
-            model_admin = self.view.model_admin
-        else:
-            model_admin = self.model_admin
+    def clone(self):
+        return self.__class__(
+            request=self._request,
+            model_admin=self._model_admin,
+            view=self._view,
+            obj=self._obj)
 
+    def bind_admin(self, admin):
+        '''
+        Return a clone of the permission wrapper with a new model_admin bind
+        to it.
+        '''
+        new_permissions = self.clone()
+        new_permissions._model_admin = admin
+        return new_permissions
+
+    def bind_object(self, obj):
+        '''
+        Return a clone of the permission wrapper with a new object bind
+        to it for object-level permissions.
+        '''
+        new_permissions = self.clone()
+        new_permissions._obj = obj
+        return new_permissions
+
+    def get_view_by_name(self, view_name):
+        view_name = self.view_name_mapping[view_name]
+        model_admin = self._model_admin
         view_class = getattr(model_admin, view_name)
         view = view_class(
-            request=self.request,
+            request=self._request,
             **model_admin.get_default_view_kwargs())
-        return TemplatePermission(view)
+        return view
+
+    #########################################
+    # interface exposed to the template users
 
     def __getitem__(self, key):
-        match = self.has_named_permission_regex.match(key)
+        match = self._has_named_permission_regex.match(key)
         if match:
             # the key was a has_*_permission, so get the *has permission
             # wrapper*
             view_name = match.groupdict()['name']
             if view_name not in self.view_name_mapping:
                 raise KeyError
-            view_name = self.view_name_mapping[view_name]
-            return self.get_template_permission_object(view_name)
+            view = self.get_view_by_name(view_name)
+            return self.bind_view(view)
         # the name might be a named object admin. So get that one and try to
         # check the permission there for further traversal
         try:
-            admin_site = self.view.model_admin.admin
+            admin_site = self._model_admin.admin
             model_admin = admin_site.get_admin_by_name(key)
         except ValueError:
             raise KeyError
-        return self.__class__(self.request, self.view, model_admin)
+        return self.bind_admin(model_admin)
+
+    def __nonzero__(self):
+        # if no view is bound we will return false, since we don't know which
+        # permission to check we stay save in disallowing the access
+        if self._view is None:
+            return False
+        if self._obj is None:
+            return self._view.has_permission()
+        else:
+            return self._view.has_permission(self._obj)
+
+    def __unicode__(self):
+        if self._view is None:
+            return ''
+        return unicode(bool(self))

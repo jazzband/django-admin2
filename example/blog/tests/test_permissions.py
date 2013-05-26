@@ -29,10 +29,7 @@ class TemplatePermissionTest(TestCase):
         model_admin = ModelAdmin2(Post, djadmin2.default)
         request = self.factory.get(reverse('admin2:blog_post_index'))
         request.user = self.user
-        view = model_admin.index_view(
-            request=request,
-            model_admin=model_admin)
-        permissions = TemplatePermissionChecker(request, view)
+        permissions = TemplatePermissionChecker(request, model_admin)
         context = {
             'permissions': permissions,
         }
@@ -54,7 +51,6 @@ class TemplatePermissionTest(TestCase):
         if hasattr(self.user, '_perm_cache'):
             del self.user._perm_cache
 
-        permissions['has_add_permission']()
         result = self.render('{{ permissions.has_add_permission }}', context)
         self.assertEqual(result, 'True')
 
@@ -68,10 +64,7 @@ class TemplatePermissionTest(TestCase):
         model_admin = ModelAdmin2(Post, djadmin2.default)
         request = self.factory.get(reverse('admin2:blog_post_index'))
         request.user = self.user
-        view = model_admin.index_view(
-            request=request,
-            model_admin=model_admin)
-        permissions = TemplatePermissionChecker(request, view)
+        permissions = TemplatePermissionChecker(request, model_admin)
         context = {
             'permissions': permissions,
         }
@@ -95,14 +88,59 @@ class TemplatePermissionTest(TestCase):
             context)
         self.assertEqual(result, '')
 
+    def test_admin_binding(self):
+        user_admin = djadmin2.default.get_admin_by_name('auth_user')
+        post_admin = djadmin2.default.get_admin_by_name('blog_post')
+        request = self.factory.get(reverse('admin2:auth_user_index'))
+        request.user = self.user
+        permissions = TemplatePermissionChecker(request, user_admin)
+
+        post = Post.objects.create(title='Hello', body='world')
+        context = {
+            'post': post,
+            'post_admin': post_admin,
+            'permissions': permissions,
+        }
+
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{{ permissions|for_admin:post_admin }}',
+            context)
+        self.assertEqual(result, '')
+
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{{ permissions.has_add_permission }}'
+            '{% with permissions|for_admin:post_admin as permissions %}'
+                '{{ permissions.has_add_permission }}'
+            '{% endwith %}',
+            context)
+        self.assertEqual(result, 'FalseFalse')
+
+        post_add_permission = Permission.objects.get(
+            content_type__app_label='blog',
+            content_type__model='post',
+            codename='add_post')
+        self.user.user_permissions.add(post_add_permission)
+        # invalidate the users permission cache
+        if hasattr(self.user, '_perm_cache'):
+            del self.user._perm_cache
+
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{{ permissions.has_add_permission }}'
+            '{% with permissions|for_admin:post_admin as permissions %}'
+                '{{ permissions.has_add_permission }}'
+            '{% endwith %}'
+            '{{ permissions.blog_post.has_add_permission }}',
+            context)
+        self.assertEqual(result, 'FalseTrueTrue')
+
     def test_object_level_permission(self):
         model_admin = ModelAdmin2(Post, djadmin2.default)
         request = self.factory.get(reverse('admin2:blog_post_index'))
         request.user = self.user
-        view = model_admin.index_view(
-            request=request,
-            model_admin=model_admin)
-        permissions = TemplatePermissionChecker(request, view)
+        permissions = TemplatePermissionChecker(request, model_admin)
 
         post = Post.objects.create(title='Hello', body='world')
         context = {
@@ -133,9 +171,19 @@ class TemplatePermissionTest(TestCase):
 
         # object level permission are not supported by default. So this will
         # return ``False``.
-        permissions['has_add_permission']()
         result = self.render(
             '{% load admin2_tags %}'
+            '{{ permissions.has_add_permission }}'
             '{{ permissions.has_add_permission|for_object:post }}',
             context)
-        self.assertEqual(result, 'False')
+        self.assertEqual(result, 'TrueFalse')
+
+        # binding an object and then checking for a specific view also works
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{{ permissions.has_add_permission }}'
+            '{% with permissions|for_object:post as permissions %}'
+                '{{ permissions.has_add_permission }}'
+            '{% endwith %}',
+            context)
+        self.assertEqual(result, 'TrueFalse')

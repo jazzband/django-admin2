@@ -34,8 +34,7 @@ class PermissionMixin(object):
     def get_context_data(self, **kwargs):
         context = super(PermissionMixin, self).get_context_data(**kwargs)
         permission_checker = permissions.TemplatePermissionChecker(
-            self.request,
-            self)
+            self.request, self.model_admin)
         context.update({
             'permissions': permission_checker,
         })

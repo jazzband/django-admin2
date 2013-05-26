@@ -46,16 +46,26 @@ def formset_visible_fieldlist(formset):
 
 
 @register.filter
-def for_object(callable, obj):
+def for_object(permissions, obj):
     """
-    Applies the provided argument ``obj`` to the piped value. Example::
-
-        {{ view.has_permission|for_object:object }}
-
-    Translates roughly into the following python code::
-        
-        context['view'].has_permission(context['object'])
+    Only useful in the permission handling. This filter binds a new object to
+    the permission handler to check for object-level permissions.
     """
-    if callable == '':
-        return callable
-    return callable(obj)
+    # some permission check has failed earlier, so we don't bother trying to
+    # bind a new object to it.
+    if permissions == '':
+        return permissions
+    return permissions.bind_object(obj)
+
+
+@register.filter
+def for_admin(permissions, admin):
+    """
+    Only useful in the permission handling. This filter binds a new admin to
+    the permission handler to allow checking views of an arbitrary admin.
+    """
+    # some permission check has failed earlier, so we don't bother trying to
+    # bind a new admin to it.
+    if permissions == '':
+        return permissions
+    return permissions.bind_admin(admin)
