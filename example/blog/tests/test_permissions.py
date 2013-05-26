@@ -154,6 +154,86 @@ class TemplatePermissionTest(TestCase):
             context)
         self.assertEqual(result, '')
 
+    def test_view_binding(self):
+        user_admin = djadmin2.default.get_admin_by_name('auth_user')
+        post_admin = djadmin2.default.get_admin_by_name('blog_post')
+        request = self.factory.get(reverse('admin2:auth_user_index'))
+        request.user = self.user
+        permissions = TemplatePermissionChecker(request, user_admin)
+
+        context = {
+            'post_admin': post_admin,
+            'post_add_view': post_admin.create_view,
+            'permissions': permissions,
+        }
+
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{{ permissions|for_view:"add" }}',
+            context)
+        self.assertEqual(result, 'False')
+
+        # view classes are not supported yet
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{{ permissions|for_view:post_add_view }}',
+            context)
+        self.assertEqual(result, '')
+
+        result = self.render(
+            '{% load admin2_tags %}'
+            # user add permission
+            '{{ permissions.has_add_permission }}'
+            '{% with permissions|for_admin:"blog_post"|for_view:"add" as post_add_perm %}'
+                # post add permission
+                '{{ post_add_perm }}'
+            '{% endwith %}',
+            context)
+        self.assertEqual(result, 'FalseFalse')
+
+        post_add_permission = Permission.objects.get(
+            content_type__app_label='blog',
+            content_type__model='post',
+            codename='add_post')
+        self.user.user_permissions.add(post_add_permission)
+        user_change_permission = Permission.objects.get(
+            content_type__app_label='auth',
+            content_type__model='user',
+            codename='change_user')
+        self.user.user_permissions.add(user_change_permission)
+
+        # invalidate the users permission cache
+        if hasattr(self.user, '_perm_cache'):
+            del self.user._perm_cache
+
+        result = self.render(
+            '{% load admin2_tags %}'
+            # user add permission
+            '{{ permissions.has_add_permission }}'
+            '{% with permissions|for_admin:"blog_post"|for_view:"add" as post_add_perm %}'
+                # post add permission
+                '{{ post_add_perm }}'
+            '{% endwith %}'
+            # user change permission
+            '{{ permissions|for_view:"change" }}',
+            context)
+        self.assertEqual(result, 'FalseTrueTrue')
+
+        # giving a string (the name of the view) also works
+        result = self.render(
+            '{% load admin2_tags %}'
+            '{% with permissions|for_view:"change" as user_change_perm %}'
+                '1{{ user_change_perm }}'
+                '2{{ user_change_perm|for_view:"add" }}'
+                # this shouldn't return True or False but '' since the
+                # previously bound change view doesn't belong to the newly
+                # bound blog_post admin
+                '3{{ user_change_perm|for_admin:"blog_post" }}'
+                '4{{ user_change_perm|for_admin:"blog_post"|for_view:"add" }}'
+            '{% endwith %}',
+            context)
+        self.assertEqual(result, '1True2False34True')
+
     def test_object_level_permission(self):
         model_admin = ModelAdmin2(Post, djadmin2.default)
         request = self.factory.get(reverse('admin2:blog_post_index'))

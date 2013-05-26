@@ -236,7 +236,31 @@ class TemplatePermissionChecker(object):
             except ValueError:
                 return ''
         new_permissions = self.clone()
+        new_permissions._view = None
         new_permissions._model_admin = admin
+        return new_permissions
+
+    def bind_view(self, view):
+        '''
+        Return a clone of the permission wrapper with a new view bind to it.
+        '''
+        if isinstance(view, six.string_types):
+            if view not in self.view_name_mapping:
+                return ''
+            view_name = self.view_name_mapping[view]
+            view = getattr(self._model_admin, view_name)
+        # we don't support binding view classes yet, only the name of views
+        # are processed. We have the problem with view classes that we cannot
+        # tell which model admin it was attached to.
+        else:
+            return ''
+        # if view is a class and not instantiated yet, do it!
+        if isinstance(view, type):
+            view = view(
+                request=self._request,
+                **self._model_admin.get_default_view_kwargs())
+        new_permissions = self.clone()
+        new_permissions._view = view
         return new_permissions
 
     def bind_object(self, obj):
@@ -248,30 +272,17 @@ class TemplatePermissionChecker(object):
         new_permissions._obj = obj
         return new_permissions
 
-    def get_view_by_name(self, view_name):
-        view_name = self.view_name_mapping[view_name]
-        model_admin = self._model_admin
-        view_class = getattr(model_admin, view_name)
-        view = view_class(
-            request=self._request,
-            **model_admin.get_default_view_kwargs())
-        return view
-
     #########################################
     # interface exposed to the template users
 
     def __getitem__(self, key):
         match = self._has_named_permission_regex.match(key)
         if match:
-            # the key was a has_*_permission, so get the *has permission
-            # wrapper*
+            # the key was a has_*_permission, so bind the correspodning view
             view_name = match.groupdict()['name']
-            if view_name not in self.view_name_mapping:
-                raise KeyError
-            view = self.get_view_by_name(view_name)
-            return self.bind_view(view)
-        # the name might be a named object admin. So get that one and try to
-        # check the permission there for further traversal
+            return self.bind_view(view_name)
+        # the name might be a named object admin. So get that one and bind it
+        # to the permission checking
         try:
             admin_site = self._model_admin.admin
             model_admin = admin_site.get_admin_by_name(key)

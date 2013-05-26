@@ -12,6 +12,7 @@ from .utils import admin2_urlname, model_options
 
 
 class PermissionMixin(object):
+    do_not_call_in_templates = True
     permission_classes = (permissions.IsStaffPermission,)
 
     def __init__(self, **kwargs):
