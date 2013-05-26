@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser, User
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -34,9 +35,9 @@ class IndexAPIViewTest(APITestCase):
 
     def test_view_permission(self):
         request = self.factory.get(reverse('admin2:api-index'))
+        request.user = AnonymousUser()
         view = apiviews.IndexAPIView.as_view(**default.get_api_index_kwargs())
-        response = view(request)
-        self.assertEqual(response.status_code, 403)
+        self.assertRaises(PermissionDenied, view, request)
 
 class ListCreateAPIViewTest(APITestCase):
     def test_response_ok(self):
@@ -50,11 +51,11 @@ class ListCreateAPIViewTest(APITestCase):
 
     def test_view_permission(self):
         request = self.factory.get(reverse('admin2:blog_post_api-list'))
+        request.user = AnonymousUser()
         model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
             **model_admin.get_api_list_kwargs())
-        response = view(request)
-        self.assertEqual(response.status_code, 403)
+        self.assertRaises(PermissionDenied, view, request)
 
     def test_list_includes_unicode_field(self):
         Post.objects.create(title='Foo', body='Bar')
@@ -107,8 +108,8 @@ class RetrieveUpdateDestroyAPIViewTest(APITestCase):
         request = self.factory.get(
             reverse('admin2:blog_post_api-detail',
             kwargs={'pk': post.pk}))
+        request.user = AnonymousUser()
         model_admin = self.get_model_admin(Post)
         view = apiviews.RetrieveUpdateDestroyAPIView.as_view(
             **model_admin.get_api_detail_kwargs())
-        response = view(request, pk=post.pk)
-        self.assertEqual(response.status_code, 403)
+        self.assertRaises(PermissionDenied, view, request, pk=post.pk)

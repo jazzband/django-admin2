@@ -19,6 +19,8 @@ class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
 
 
 class Admin2APIMixin(Admin2Mixin):
+    raise_exception = True
+
     def get_serializer_class(self):
         if self.serializer_class is None:
             model_class = self.get_model()
