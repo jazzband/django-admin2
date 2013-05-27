@@ -17,3 +17,4 @@ Developers
 * Rivo Laks (@rivol)
 * Chris Lawlor (@chrislawlor)
 * Ben Tappin <ben@mrben.co.uk>
+* Allison Kapture (*akapture)
