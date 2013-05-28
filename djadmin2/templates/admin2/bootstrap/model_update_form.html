@@ -8,13 +8,13 @@
 
 {% block breadcrumbs %}
     <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
-    <li><a href="{% url "admin2:app-index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
+    <li><a href="{% url "admin2:app_index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
     <li><a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a> <span class="divider">/</span></li>
     {% if action == 'Add' %}
 	<li class="active">{{ action }}</li>
     {% else %}
     <li><a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a> <span class="divider">/</span></li>
-    <li class="active">{% trans 'Change' %}</li>     
+    <li class="active">{% trans 'Change' %}</li>
     {% endif %}
 
 {% endblock %}
@@ -51,7 +51,7 @@
 							{% endif %}
 							{{ field }}
 						</td>
-						{% endfor %}            
+						{% endfor %}
 					</tr>
 					{% endfor %}
 				</tbody>

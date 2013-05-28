@@ -120,7 +120,7 @@ class Admin2(object):
             url(
                 regex=r'^(?P<app_label>\w+)/$',
                 view=self.app_index_view.as_view(**self.get_app_index_kwargs()),
-                name='app-index'
+                name='app_index'
             ),
             url(
                 regex=r'^api/v0/$',
