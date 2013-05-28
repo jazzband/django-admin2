@@ -28,3 +28,10 @@ def model_verbose_name_plural(obj):
     Returns the pluralized verbose name of a model instance or class.
     """
     return model_options(obj).verbose_name_plural
+
+
+def model_app_label(obj):
+    """
+    Returns the app label of a model instance or class.
+    """
+    return model_options(obj).app_label    
