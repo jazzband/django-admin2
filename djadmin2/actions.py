@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
+from django.utils.encoding import force_text
 from django.utils.text import capfirst
 
 from . import utils
@@ -51,9 +52,19 @@ def delete_selected(request, queryset):
         # render a template asking for their confirmation.
         if has_permission:
             template = 'admin2/bootstrap/delete_selected_confirmation.html'
+
+            def _format_callback(obj):
+                opts = utils.model_options(obj)
+                return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
+                                   force_text(obj))
+
+            collector = utils.NestedObjects(using=None)
+            collector.collect(queryset)
+
             context = {
                 'queryset': queryset,
-                'objects_name': objects_name
+                'objects_name': objects_name,
+                'deletable_objects': collector.nested(_format_callback),
             }
             return TemplateResponse(request, template, context)
         else:

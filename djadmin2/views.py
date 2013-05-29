@@ -1,10 +1,12 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.utils.encoding import force_text
+from django.utils.text import capfirst
 from django.views import generic
 
 import extra_views
 
-from . import permissions
+from . import permissions, utils
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
@@ -111,3 +113,18 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
     permission_classes = (
         permissions.IsStaffPermission,
         permissions.ModelDeletePermission)
+
+    def get_context_data(self, **kwargs):
+        context = super(ModelDeleteView, self).get_context_data(**kwargs)
+
+        def _format_callback(obj):
+            opts = utils.model_options(obj)
+            return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
+                               force_text(obj))
+
+        collector = utils.NestedObjects(using=None)
+        collector.collect([self.get_object()])
+        context.update({
+            'deletable_objects': collector.nested(_format_callback)
+        })
+        return context
