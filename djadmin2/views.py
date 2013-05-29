@@ -6,8 +6,7 @@ from django.views import generic
 
 import extra_views
 
-from . import permissions
-from .utils import NestedObjects
+from . import permissions, utils
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
@@ -119,11 +118,11 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         context = super(ModelDeleteView, self).get_context_data(**kwargs)
 
         def _format_callback(obj):
-            opts = obj._meta
+            opts = utils.model_options(obj)
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                force_text(obj))
 
-        collector = NestedObjects(using=None)
+        collector = utils.NestedObjects(using=None)
         collector.collect([self.get_object()])
         context.update({
             'deletable_objects': collector.nested(_format_callback)
