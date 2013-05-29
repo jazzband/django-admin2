@@ -27,8 +27,8 @@ class PermissionMixin(AccessMixin):
         ``False`` otherwise. Supports object-level permission by passing the
         related object as first argument.
         '''
-        for backend in self.permissions:
-            if not backend.has_permission(self.request, self, obj):
+        for permission in self.permissions:
+            if not permission.has_permission(self.request, self, obj):
                 return False
         return True
 
