@@ -6,6 +6,8 @@ synonymous with the django.contrib.admin.sites model.
 
 """
 
+import logging
+
 from django.core.urlresolvers import reverse
 from django.conf.urls import patterns, url
 from django.contrib.auth import models as auth_app
@@ -19,6 +21,8 @@ from djadmin2 import views
 from djadmin2 import actions
 from djadmin2 import utils
 from djadmin2.forms import modelform_factory
+
+logger = logging.getLogger(__name__)
 
 
 class BaseAdmin2(object):
@@ -319,7 +323,7 @@ def create_extra_permissions(app, created_models, verbosity, **kwargs):
     auth_app.Permission.objects.bulk_create(perms)
     if verbosity >= 2:
         for perm in perms:
-            print "Adding permission '%s'" % perm
+            logger.debug("Adding permission '%s'" % perm)
 
 
 signals.post_syncdb.connect(create_extra_permissions,
