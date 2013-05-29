@@ -54,7 +54,7 @@ def delete_selected(request, queryset):
             template = 'admin2/bootstrap/delete_selected_confirmation.html'
 
             def _format_callback(obj):
-                opts = obj._meta
+                opts = utils.model_options(obj)
                 return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                    force_text(obj))
 
