@@ -53,40 +53,11 @@ class BaseAdmin2(object):
     readonly_fields = ()
     ordering = None
 
-    def __init__(self, model, admin):
+    def __init__(self, name, model, admin):
         super(BaseAdmin2, self).__init__()
+        self.name = name
         self.model = model
         self.admin = admin
-
-    def _user_has_permission(self, user, permission_type, obj=None):
-        """ Generic method for checking whether the user has permission of specified type for the model.
-        Type can be one of view, add, change, delete.
-        You can also specify instance of the model for object-specific permission check.
-        """
-        if not user.is_authenticated() or not user.is_staff:
-            return False
-        opts = utils.model_options(self.model)
-        full_permission_name = '%s.%s_%s' % (opts.app_label, permission_type, opts.object_name.lower())
-        return user.has_perm(full_permission_name, obj)
-
-    def has_permission(self, request, permission_type, obj=None):
-        return self._user_has_permission(request.user, permission_type, obj)
-
-    def has_view_permission(self, request, obj=None):
-        """ Can view this object """
-        return self.has_permission(request, 'view', obj)
-
-    def has_edit_permission(self, request, obj=None):
-        """ Can edit this object """
-        return self.has_permission(request, 'change', obj)
-
-    def has_add_permission(self, request, obj=None):
-        """ Can add this object """
-        return self.has_permission(request, 'add', obj)
-
-    def has_delete_permission(self, request, obj=None):
-        """ Can delete this object """
-        return self.has_permission(request, 'delete', obj)
 
 
 class ModelAdmin2(BaseAdmin2):
@@ -131,12 +102,16 @@ class ModelAdmin2(BaseAdmin2):
     # Actions
     actions = [actions.delete_selected]
 
-    def __init__(self, model, admin, **kwargs):
+    def __init__(self, model, admin, name=None, **kwargs):
+        self.name = name
         self.model = model
         self.admin = admin
         model_options = utils.model_options(model)
         self.app_label = model_options.app_label
         self.model_name = model_options.object_name.lower()
+
+        if self.name is None:
+            self.name = '{}_{}'.format(self.app_label, self.model_name)
 
         if self.verbose_name is None:
             self.verbose_name = model_options.verbose_name
@@ -159,7 +134,7 @@ class ModelAdmin2(BaseAdmin2):
         return kwargs
 
     def get_prefixed_view_name(self, view_name):
-        return '{}_{}_{}'.format(self.app_label, self.model_name, view_name)
+        return '{}_{}'.format(self.name, view_name)
 
     def get_index_kwargs(self):
         return self.get_default_view_kwargs()

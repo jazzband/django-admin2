@@ -7,11 +7,55 @@ from django.forms.models import modelform_factory
 
 from braces.views import AccessMixin
 
-from . import constants
+from . import constants, permissions
 from .utils import admin2_urlname, model_options
 
 
-class Admin2Mixin(object):
+class PermissionMixin(AccessMixin):
+    do_not_call_in_templates = True
+    permission_classes = (permissions.IsStaffPermission,)
+
+    def __init__(self, **kwargs):
+        self.permissions = [
+            permission_class()
+            for permission_class in self.permission_classes]
+        super(PermissionMixin, self).__init__(**kwargs)
+
+    def has_permission(self, obj=None):
+        '''
+        Return ``True`` if the permission for this view shall be granted,
+        ``False`` otherwise. Supports object-level permission by passing the
+        related object as first argument.
+        '''
+        for permission in self.permissions:
+            if not permission.has_permission(self.request, self, obj):
+                return False
+        return True
+
+    def dispatch(self, request, *args, **kwargs):
+        # Raise exception or redirect to login if user doesn't have
+        # permissions.
+        if not self.has_permission():
+            if self.raise_exception:
+                raise PermissionDenied  # return a forbidden response
+            else:
+                return redirect_to_login(request.get_full_path(),
+                    self.get_login_url(), self.get_redirect_field_name())
+        return super(PermissionMixin, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(PermissionMixin, self).get_context_data(**kwargs)
+        permission_checker = permissions.TemplatePermissionChecker(
+            self.request, self.model_admin)
+        context.update({
+            'permissions': permission_checker,
+        })
+        return context
+
+
+class Admin2Mixin(PermissionMixin):
+    # are set in the ModelAdmin2 class when creating the view via
+    # .as_view(...)
     model_admin = None
     model_name = None
     app_label = None
@@ -31,33 +75,14 @@ class Admin2Mixin(object):
         return modelform_factory(self.get_model())
 
 
-class AdminModel2Mixin(Admin2Mixin, AccessMixin):
+class AdminModel2Mixin(Admin2Mixin):
     model_admin = None
-    # Permission type to check for when a request is sent to this view.
-    permission_type = None
-
-    def dispatch(self, request, *args, **kwargs):
-        # Check if user has necessary permissions. If the permission_type isn't specified then check for staff status.
-        has_permission = self.model_admin.has_permission(request, self.permission_type) \
-            if self.permission_type else request.user.is_staff
-        # Raise exception or redirect to login if user doesn't have permissions.
-        if not has_permission:
-            if self.raise_exception:
-                raise PermissionDenied  # return a forbidden response
-            else:
-                return redirect_to_login(request.get_full_path(),
-                    self.get_login_url(), self.get_redirect_field_name())
-
-        return super(AdminModel2Mixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
         model = self.get_model()
         model_meta = model_options(model)
         context.update({
-            'has_add_permission': self.model_admin.has_add_permission(self.request),
-            'has_edit_permission': self.model_admin.has_edit_permission(self.request),
-            'has_delete_permission': self.model_admin.has_delete_permission(self.request),
             'app_label': model_meta.app_label,
             'model_name': model_meta.verbose_name,
             'model_name_pluralized': model_meta.verbose_name_plural
@@ -77,7 +102,6 @@ class AdminModel2Mixin(Admin2Mixin, AccessMixin):
 
 
 class Admin2ModelFormMixin(object):
-
     def get_success_url(self):
         if '_continue' in self.request.POST:
             view_name = admin2_urlname(self, 'update')

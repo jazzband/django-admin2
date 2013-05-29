@@ -30,9 +30,9 @@
                 <button type="Submit" class="btn">Go</button>
 		<span id="selected-count">0</span> of {{ object_list|length }} selected
                 <div class="pull-right">
-                    {# if has_add_permission #}
-                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_name=model_name %}Add {{ model_name }}{% endblocktrans %}</a>
-                    {# endif #}
+                    {% if permissions.has_add_permission %}
+                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -47,13 +47,15 @@
                         <td><input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}"></td>
                         <td>
                             {{ obj }}
+                            {% if permissions.has_view_permission %}
                             <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% trans "Detail" %}</a>
-                            {# if has_edit_permission #}
+                            {% endif %}
+                            {% if permissions.has_change_permission %}
                             <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% trans "Edit" %}</a>
-                            {# endif #}
-                            {# if has_delete_permission #}
+                            {% endif %}
+                            {% if permissions.has_delete_permission %}
                             <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">{% trans "Delete" %}</a>
-                            {# endif #}
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

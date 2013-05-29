@@ -43,3 +43,43 @@ def formset_visible_fieldlist(formset):
     Returns the labels of a formset's visible fields as an array.
     """
     return [f.label for f in formset.forms[0].visible_fields()]
+
+
+@register.filter
+def for_admin(permissions, admin):
+    """
+    Only useful in the permission handling. This filter binds a new admin to
+    the permission handler to allow checking views of an arbitrary admin.
+    """
+    # some permission check has failed earlier, so we don't bother trying to
+    # bind a new admin to it.
+    if permissions == '':
+        return permissions
+    return permissions.bind_admin(admin)
+
+
+@register.filter
+def for_view(permissions, view):
+    """
+    Only useful in the permission handling. This filter binds a new view to
+    the permission handler to check for view names that are not known during
+    template compile time.
+    """
+    # some permission check has failed earlier, so we don't bother trying to
+    # bind a new admin to it.
+    if permissions == '':
+        return permissions
+    return permissions.bind_view(view)
+
+
+@register.filter
+def for_object(permissions, obj):
+    """
+    Only useful in the permission handling. This filter binds a new object to
+    the permission handler to check for object-level permissions.
+    """
+    # some permission check has failed earlier, so we don't bother trying to
+    # bind a new object to it.
+    if permissions == '':
+        return permissions
+    return permissions.bind_object(obj)
