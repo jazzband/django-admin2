@@ -40,9 +40,13 @@ def model_app_label(obj):
     return model_options(obj).app_label    
 
 
-# Taken from the Django core.
-# https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L144
 class NestedObjects(Collector):
+    """
+    This is adopted from the Django core. django-admin2 mandates that code
+    doesn't depend on imports from django.contrib.admin.
+
+    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L144
+    """
     def __init__(self, *args, **kwargs):
         super(NestedObjects, self).__init__(*args, **kwargs)
         self.edges = {} # {from_instance: [to_instances]}

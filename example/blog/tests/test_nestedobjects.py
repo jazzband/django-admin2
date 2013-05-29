@@ -6,11 +6,14 @@ from djadmin2.utils import NestedObjects
 from ..models import Count, Event, EventGuide, Guest, Location
 
 
-# Largely taken from the Django core.
-# https://github.com/django/django/blob/1.5.1/tests/regressiontests/admin_util/tests.py
 class NestedObjectsTests(TestCase):
     """
     Tests for ``NestedObject`` utility collection.
+
+    This is adopted from the Django core. django-admin2 mandates that code
+    doesn't depend on imports from django.contrib.admin.
+
+    https://github.com/django/django/blob/1.5.1/tests/regressiontests/admin_util/tests.py
     """
     def setUp(self):
         self.n = NestedObjects(using=DEFAULT_DB_ALIAS)
