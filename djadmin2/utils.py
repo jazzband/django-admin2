@@ -1,3 +1,4 @@
+from django.db.models import ProtectedError
 from django.db.models.deletion import Collector
 
 
@@ -37,7 +38,7 @@ def model_app_label(obj):
     """
     Returns the app label of a model instance or class.
     """
-    return model_options(obj).app_label    
+    return model_options(obj).app_label
 
 
 class NestedObjects(Collector):
@@ -49,7 +50,7 @@ class NestedObjects(Collector):
     """
     def __init__(self, *args, **kwargs):
         super(NestedObjects, self).__init__(*args, **kwargs)
-        self.edges = {} # {from_instance: [to_instances]}
+        self.edges = {}  # {from_instance: [to_instances]}
         self.protected = set()
 
     def add_edge(self, source, target):
@@ -64,7 +65,7 @@ class NestedObjects(Collector):
         try:
             return super(NestedObjects, self).collect(
                 objs, source_attr=source_attr, **kwargs)
-        except models.ProtectedError as e:
+        except ProtectedError as e:
             self.protected.update(e.protected_objects)
 
     def related_objects(self, related, objs):

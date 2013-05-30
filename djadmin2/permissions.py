@@ -83,7 +83,7 @@ class BasePermission(object):
     '''
     permissions = []
     permissions_for_method = {}
-    
+
     def get_permission_checks(self, request, view):
         permission_checks = []
         permission_checks.extend(self.permissions)

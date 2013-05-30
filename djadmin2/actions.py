@@ -6,6 +6,7 @@ from django.utils.text import capfirst
 
 from . import utils
 
+
 def get_description(action):
     if hasattr(action, 'description'):
         return action.description
