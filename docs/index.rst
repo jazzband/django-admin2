@@ -24,13 +24,14 @@ Our goal is to make this API work:
 
 .. code-block:: python
 
+  # myapp/admin2.py
   # Import your custom models
   from .models import Post, Comment
   from django.contrib.auth.forms import UserCreationForm, UserChangeForm
   from django.contrib.auth.models import User
 
   import djadmin2
-  from djadmin2.models import ModelAdmin2
+  from djadmin2.admins import ModelAdmin2
 
 
   class UserAdmin2(ModelAdmin2):
@@ -44,7 +45,7 @@ Our goal is to make this API work:
   djadmin2.default.register(User, UserAdmin2)
 
 
-.. _GitHub: https://github.com/pydanny/django-admin2
+.. _GitHub: https://github.com/twoscoops/django-admin2
 
 Content
 -------

@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 
-from ..models import ModelAdmin2
+from ..admins import ModelAdmin2
 from ..core import Admin2
 
 

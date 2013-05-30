@@ -7,7 +7,7 @@ from rest_framework.relations import PrimaryKeyRelatedField
 
 import djadmin2
 from djadmin2.forms import floppify_form
-from djadmin2.models import ModelAdmin2, Admin2Inline
+from djadmin2.admins import ModelAdmin2, Admin2Inline
 from djadmin2.apiviews import Admin2APISerializer
 
 

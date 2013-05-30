@@ -1,8 +1,10 @@
-import floppyforms
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
+
+import floppyforms
+
 import djadmin2
 from blog.admin2 import UserAdmin2
 

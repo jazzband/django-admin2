@@ -9,7 +9,7 @@ from django.utils.importlib import import_module
 
 
 from . import apiviews
-from . import models
+from . import types
 from . import utils
 from . import views
 
@@ -46,7 +46,7 @@ class Admin2(object):
         if model in self.registry:
             raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
         if not model_admin:
-            model_admin = models.ModelAdmin2
+            model_admin = types.ModelAdmin2
         self.registry[model] = model_admin(model, admin=self, **kwargs)
 
         # Add the model to the apps registry

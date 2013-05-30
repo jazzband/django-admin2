@@ -8,7 +8,7 @@ from django.utils import simplejson as json
 
 from djadmin2 import apiviews
 from djadmin2 import default
-from djadmin2.models import ModelAdmin2
+from djadmin2.admins import ModelAdmin2
 from ..models import Post
 
 
