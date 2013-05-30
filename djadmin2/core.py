@@ -121,11 +121,22 @@ class Admin2(object):
 
     def get_urls(self):
         urlpatterns = patterns('',
-<<<<<<< HEAD
             url(regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
             ),
+            url(regex='^password_change/$',
+                view=views.PasswordChangeView.as_view(),
+                name='password-change'
+                ),
+            url(regex='^password_change_done/$',
+                view=views.PasswordChangeDoneView.as_view(),
+                name='password-change-done'
+                ),
+            url(regex='^logout/$',
+                view=views.LogoutView.as_view(),
+                name='logout'
+                ),
             url(
                 regex=r'^(?P<app_label>\w+)/$',
                 view=self.app_index_view.as_view(**self.get_app_index_kwargs()),
@@ -136,31 +147,6 @@ class Admin2(object):
                 view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
                 name='api-index'
             ),
-
-            url(regex=r'^password_change/$',
-                regex=rlogin_required(views.PasswordChangeView.as_view()),
-                name='password-change'
-                ),
-            url(regex=r'^password_change_done/$',
-                login_required(views.PasswordChangeDoneView.as_view()),
-                name='password-change-done'
-                ),
-            url(regex=r'^logout/$',
-                login_required(views.LogoutView.as_view()),
-                name='logout'
-                ),
-=======
-            url(r'^$', self.index_view.as_view(**self.get_index_kwargs()), name='dashboard'),
-            url(r'^api/v0/$',
-            self.api_index_view.as_view(**self.get_api_index_kwargs()), name='api-index'),
-
-            url('^password_change/$', views.PasswordChangeView.as_view(),
-                name='password-change'),
-            url('^password_change_done/$', views.PasswordChangeDoneView.as_view(),
-                name='password-change-done'),
-            url('^logout/$', views.LogoutView.as_view(),
-                name='logout'),
->>>>>>> use django-braces for login required views
         )
 
         for model, model_admin in self.registry.iteritems():

@@ -5,8 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect
-from braces.views import (AccessMixin,
-                          LoginRequiredMixin as BracesLoginRequiredMixin)
+from braces.views import (AccessMixin)
 
 from . import constants, permissions
 from .utils import admin2_urlname, model_options
@@ -77,13 +76,13 @@ class Admin2Mixin(PermissionMixin):
             return self.form_class
         return modelform_factory(self.get_model())
 
-    def has_permission(self, request):
+    def is_user(self, request):
         return hasattr(request, 'user') and not (request.user.is_active and
                                                  request.user.is_staff)
 
     def dispatch(self, request, *args, **kwargs):
 
-        if self.has_permission(request):
+        if self.is_user(request):
             from .views import LoginView
 
             if request.path == reverse('admin2:logout'):
@@ -138,6 +137,6 @@ class Admin2ModelFormMixin(object):
         return reverse(admin2_urlname(self, 'index'))
 
 
-class LoginRequiredMixin(BracesLoginRequiredMixin):
+class LoginRequiredMixin(PermissionMixin):
 
     login_url = reverse_lazy('admin2:dashboard')
