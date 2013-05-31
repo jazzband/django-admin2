@@ -1,4 +1,10 @@
-from django.core.urlresolvers import reverse
+from django.contrib.admin.forms import AdminAuthenticationForm
+from django.contrib.auth.forms import (PasswordChangeForm,
+                                       AdminPasswordChangeForm)
+from django.contrib.auth.views import (logout as auth_logout,
+                                       login as auth_login)
+from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
@@ -128,3 +134,53 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             'deletable_objects': collector.nested(_format_callback)
         })
         return context
+
+
+class PasswordChangeView(Admin2Mixin, generic.UpdateView):
+
+    default_template_name = 'auth/password_change_form.html'
+    form_class = AdminPasswordChangeForm
+    admin_form_class = PasswordChangeForm
+    model = get_user_model()
+    success_url = reverse_lazy('admin2:password_change_done')
+
+    def get_form_kwargs(self, **kwargs):
+        data = {'user': self.get_object()}
+
+        if self.request.method in ('POST', 'PUT'):
+            data.update({
+                'data': self.request.POST
+            })
+
+        return data
+
+    def get_form_class(self):
+        if self.request.user == self.get_object():
+            return self.admin_form_class
+        return super(PasswordChangeView, self).get_form_class()
+
+
+class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
+
+    default_template_name = 'auth/password_change_done.html'
+
+
+class LoginView(Admin2Mixin, generic.TemplateView):
+
+    default_template_name = 'auth/login.html'
+    authentication_form = AdminAuthenticationForm
+
+    def dispatch(self, request, *args, **kwargs):
+        return auth_login(request,
+                          authentication_form=self.authentication_form,
+                          template_name=self.get_template_names(),
+                          *args, **kwargs)
+
+
+class LogoutView(Admin2Mixin, generic.TemplateView):
+
+    default_template_name = 'auth/logout.html'
+
+    def get(self, request, *args, **kwargs):
+        return auth_logout(request, template_name=self.get_template_names(),
+                           *args, **kwargs)
