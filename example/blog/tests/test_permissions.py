@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 
 import djadmin2
-from djadmin2.admins import ModelAdmin2
+from djadmin2 import ModelAdmin2
 from djadmin2.permissions import TemplatePermissionChecker
 
 from blog.models import Post

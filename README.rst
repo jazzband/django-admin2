@@ -58,10 +58,9 @@ Our goal is to make this API work:
   from django.contrib.auth.models import User
 
   import djadmin2
-  from djadmin2.admins import ModelAdmin2
 
 
-  class UserAdmin2(ModelAdmin2):
+  class UserAdmin2(djadmin2.ModelAdmin2):
       create_form_class = UserCreationForm
       update_form_class = UserChangeForm
 

@@ -7,7 +7,6 @@ from rest_framework.relations import PrimaryKeyRelatedField
 
 import djadmin2
 from djadmin2.forms import floppify_form
-from djadmin2.admins import ModelAdmin2, Admin2Inline
 from djadmin2.apiviews import Admin2APISerializer
 
 
@@ -22,7 +21,7 @@ class GroupSerializer(Admin2APISerializer):
         model = Group
 
 
-class GroupAdmin2(ModelAdmin2):
+class GroupAdmin2(djadmin2.ModelAdmin2):
     api_serializer_class = GroupSerializer
 
 
@@ -34,15 +33,15 @@ class UserSerializer(Admin2APISerializer):
         exclude = ('passwords',)
 
 
-class CommentInline(Admin2Inline):
+class CommentInline(djadmin2.Admin2Inline):
     model = Comment
 
 
-class PostAdmin(ModelAdmin2):
+class PostAdmin(djadmin2.ModelAdmin2):
     inlines = [CommentInline]
 
 
-class UserAdmin2(ModelAdmin2):
+class UserAdmin2(djadmin2.ModelAdmin2):
     create_form_class = UserCreationForm
     update_form_class = UserChangeForm
 
