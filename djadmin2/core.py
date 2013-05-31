@@ -145,7 +145,7 @@ class Admin2(object):
             url(
                 regex=r'^api/v0/$',
                 view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
-                name='api-index'
+                name='api_index'
             ),
         )
 

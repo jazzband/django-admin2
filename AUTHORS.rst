@@ -18,3 +18,4 @@ Developers
 * Chris Lawlor (@chrislawlor)
 * Ben Tappin <ben@mrben.co.uk>
 * Allison Kapture (@akapture)
+* Roman Gladkov (@d1ffuz0r / d1fffuz0r@gmail.com)
