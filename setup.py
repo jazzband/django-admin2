@@ -67,7 +67,7 @@ setup(
     description="An introspective interface for Django's ORM.",
     long_description=LONG_DESCRIPTION,
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Framework :: Django",
         "License :: OSI Approved :: BSD License",
