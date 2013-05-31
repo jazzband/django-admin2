@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
+from django.utils.translation import ugettext_lazy, ugettext as _
 
 from . import utils
 
@@ -54,7 +55,7 @@ class BaseListAction(object):
 
 class DeleteSelectedAction(BaseListAction):
 
-    description = "Delete selected items"
+    description = ugettext_lazy("Delete selected items")
 
     def get_response(self):
         if self.request.POST.get('confirmed'):
@@ -62,8 +63,8 @@ class DeleteSelectedAction(BaseListAction):
             if self.has_permission:
                 num_objects_deleted = len(self.queryset)
                 self.queryset.delete()
-                message = "Successfully deleted %d %s" % \
-                        (num_objects_deleted, self.objects_name)
+                message = _("Successfully deleted %d %s" % \
+                        (num_objects_deleted, self.objects_name))
                 messages.add_message(self.request, messages.INFO, message)
                 return None
             else:
@@ -89,7 +90,7 @@ class DeleteSelectedAction(BaseListAction):
                 }
                 return TemplateResponse(self.request, template, context)
             else:
-                message = "Permission to delete %s denied" % self.objects_name
+                message = _("Permission to delete %s denied" % self.objects_name)
                 messages.add_message(self.request, messages.INFO, message)
                 return None
 

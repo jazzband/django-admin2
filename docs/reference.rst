@@ -15,6 +15,7 @@ The documentation works off a simple set of models, as listed below.
 
 .. code-block:: python
 
+    # blog/models.py
     from django.db import models
 
 
@@ -32,6 +33,34 @@ The documentation works off a simple set of models, as listed below.
 
         def __unicode__(self):
             return self.body
+
+Actions
+=======
+
+Actions are defined to work on a single view type. Currently, actions are only implemented against the ``ModelListView``. This view contains the default ``DeleteSelectedAction`` method, which in end functionality mirrors ``django.contrib.admin.delete_selected``.
+
+However, under the hood, django-admin2's  actions work very differently. Instead of functions with assigned attributes, they are full fledged objects. Which means you can more easily extend them to suit your needs.
+
+Writing List Actions
+-----------------------
+
+Using our sample models, let's pretend we wrote a blog article about Django and our mother put in a whole bunch of embarressing comments. Rather than cherry-pick the comments, we want to delete the whole batch. 
+
+In our blog/admin.py module we write:
+
+.. code-block:: python
+
+    import djadmin2
+
+    from .models import Post, Comment
+
+    class DeleteAllComments(BaseListAction):
+        description = ugettext_lazy("Delete selected items")
+
+    djadmin2.default.register(Post, PostAdmin)
+    djadmin2.default.register(Comment)
+
+TODO - FINISH AFTER CHECKING THE MODEL CONTROL BUG!!!
 
 Permissions
 ===========

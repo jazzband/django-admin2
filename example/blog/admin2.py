@@ -1,13 +1,15 @@
 
 # Import your custom models
-from .models import Post, Comment
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import Group, User
+
 from rest_framework.relations import PrimaryKeyRelatedField
 
 import djadmin2
 from djadmin2.forms import floppify_form
 from djadmin2.apiviews import Admin2APISerializer
+
+from .models import Post, Comment
 
 
 UserCreationForm = floppify_form(UserCreationForm)

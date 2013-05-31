@@ -52,18 +52,6 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         permissions.IsStaffPermission,
         permissions.ModelViewPermission)
 
-    # def post(self, request):
-    #     # This is where we handle actions
-    #     action_name = request.POST['action']
-    #     action_func = self.get_actions()[action_name]['func']
-    #     selected_model_pks = request.POST.getlist('selected_model_pk')
-    #     queryset = self.model.objects.filter(pk__in=selected_model_pks)
-    #     response = action_func(request, queryset)
-    #     if response is None:
-    #         return HttpResponseRedirect(self.get_success_url())
-    #     else:
-    #         return response
-
     def post(self, request):
         action_name = request.POST['action']
         action_class = self.get_actions()[action_name]['action_class']
