@@ -10,14 +10,13 @@ from blog.admin2 import UserAdmin2
 
 
 class UserAdminTest(TestCase):
-
     def setUp(self):
         self.factory = RequestFactory()
         self.user = User(
             username='admin',
             is_staff=True,
             is_superuser=True)
-        self.user.set_password("password")
+        self.user.set_password('admin')
         self.user.save()
 
     def test_create_form_uses_floppyform_widgets(self):
@@ -45,6 +44,7 @@ class UserAdminTest(TestCase):
         self.assertTrue(
             isinstance(form.fields['date_joined'].widget,
                        floppyforms.DateTimeInput))
+
         request = self.factory.get(
             reverse('admin2:auth_user_update', args=(self.user.pk,)))
         request.user = self.user
