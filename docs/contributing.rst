@@ -196,19 +196,18 @@ How pull requests are checked, tested, and done
 
 First we pull the code into a local branch::
 
-    git remote add <submitter-github-name> git@github.com:<submitter-github-name>/django-admin2.git
-    git fetch <submitter-github-name> 
-    git checkout -b <branch-name> <submitter-github-name>/<branch-name>
+    git checkout -b <branch-name> <submitter-github-name
+    git pull git://github.com/<submitter-github-name/django-twoscoops-project.git develop
 
 Then we run the tests::
 
     ./runtests.py
 
-We finish with a non-fastforward merge (to preserve the branch history) and push to GitHub::
+We finish with a merge and push to GitHub::
 
     git checkout develop
-    git merge --no-ff <branch-name>
-    git push upstream develop
+    git merge <branch-name>
+    git push origin develop
 
 .. _installation: install.html
 .. _GitHub project: https://github.com/twoscoops/django-admin2
