@@ -36,7 +36,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {% if user.has_usable_password %}
-                                <li><a href="{% url 'admin2:password-change' %}">{% trans "Change password" %}</a></li>
+                                <li><a href="{% url 'admin2:password-change' user.id %}">{% trans "Change password" %}</a></li>
                                 {% endif %}
                                 <li><a href="{% url 'admin2:logout' %}">{% trans "Log out" %}</a></li>
                             </ul>

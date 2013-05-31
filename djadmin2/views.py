@@ -1,5 +1,6 @@
 from django.contrib.admin.forms import AdminAuthenticationForm
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import (PasswordChangeForm,
+                                       AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
 from django.contrib.auth import get_user_model
@@ -139,7 +140,8 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
 class PasswordChangeView(Admin2Mixin, LoginRequiredMixin, generic.UpdateView):
 
     default_template_name = 'auth/password_change_form.html'
-    form_class = PasswordChangeForm
+    form_class = AdminPasswordChangeForm
+    admin_form_class = PasswordChangeForm
     model = get_user_model()
     success_url = reverse_lazy('admin2:password-change-done')
 
@@ -153,8 +155,10 @@ class PasswordChangeView(Admin2Mixin, LoginRequiredMixin, generic.UpdateView):
 
         return data
 
-    def get_object(self, **kwargs):
-        return self.request.user
+    def get_form_class(self):
+        if self.request.user == self.get_object():
+            return self.admin_form_class
+        return super(PasswordChangeView, self).get_form_class()
 
 
 class PasswordChangeDoneView(Admin2Mixin, LoginRequiredMixin, generic.TemplateView):

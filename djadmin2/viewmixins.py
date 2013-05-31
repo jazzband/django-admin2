@@ -5,7 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect
-from braces.views import (AccessMixin)
+from braces.views import AccessMixin
 
 from . import constants, permissions
 from .utils import admin2_urlname, model_options
