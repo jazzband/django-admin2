@@ -13,8 +13,7 @@ from django.views import generic
 import extra_views
 
 from . import permissions, utils
-from .viewmixins import (Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin,
-                         LoginRequiredMixin)
+from .viewmixins import (Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin)
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
@@ -137,7 +136,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return context
 
 
-class PasswordChangeView(Admin2Mixin, LoginRequiredMixin, generic.UpdateView):
+class PasswordChangeView(Admin2Mixin, generic.UpdateView):
 
     default_template_name = 'auth/password_change_form.html'
     form_class = AdminPasswordChangeForm
@@ -161,7 +160,7 @@ class PasswordChangeView(Admin2Mixin, LoginRequiredMixin, generic.UpdateView):
         return super(PasswordChangeView, self).get_form_class()
 
 
-class PasswordChangeDoneView(Admin2Mixin, LoginRequiredMixin, generic.TemplateView):
+class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 
     default_template_name = 'auth/password_change_done.html'
 
@@ -178,7 +177,7 @@ class LoginView(Admin2Mixin, generic.TemplateView):
                           *args, **kwargs)
 
 
-class LogoutView(Admin2Mixin, LoginRequiredMixin, generic.TemplateView):
+class LogoutView(Admin2Mixin, generic.TemplateView):
 
     default_template_name = 'auth/logout.html'
 

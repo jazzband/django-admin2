@@ -14,6 +14,7 @@ from .utils import admin2_urlname, model_options
 class PermissionMixin(AccessMixin):
     do_not_call_in_templates = True
     permission_classes = (permissions.IsStaffPermission,)
+    login_url = reverse_lazy('admin2:dashboard')
 
     def __init__(self, **kwargs):
         self.permissions = [
@@ -135,8 +136,3 @@ class Admin2ModelFormMixin(object):
 
         # default to index view
         return reverse(admin2_urlname(self, 'index'))
-
-
-class LoginRequiredMixin(PermissionMixin):
-
-    login_url = reverse_lazy('admin2:dashboard')
