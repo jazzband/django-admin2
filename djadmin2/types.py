@@ -3,8 +3,6 @@ import logging
 
 from django.core.urlresolvers import reverse
 from django.conf.urls import patterns, url
-from django.contrib.auth import models as auth_app
-from django.db.models import get_models, signals
 
 import extra_views
 
@@ -15,7 +13,8 @@ from . import actions
 from . import utils
 from .forms import modelform_factory
 
-logger = logging.getLogger(__name__)
+
+logger = logging.getLogger('djadmin2')
 
 
 class ModelAdmin2(object):
@@ -241,57 +240,6 @@ class Admin2Inline(extra_views.InlineFormSet):
         return formset
 
 
-def create_extra_permissions(app, created_models, verbosity, **kwargs):
-    """
-    Creates 'view' permissions for all models.
-    django.contrib.auth only creates add, change and delete permissions. Since we also support read-only views, we need
-    to add our own extra permission.
-    Copied from django.contrib.auth.management.create_permissions
-
-    # TODO - determine if this is deprecated by the new permissions.py module
-    """
-    # Is there any reason for doing this import here?
-    from django.contrib.contenttypes.models import ContentType
-
-    app_models = get_models(app)
-
-    # This will hold the permissions we're looking for as
-    # (content_type, (codename, name))
-    searched_perms = list()
-    # The codenames and ctypes that should exist.
-    ctypes = set()
-    for klass in app_models:
-        ctype = ContentType.objects.get_for_model(klass)
-        ctypes.add(ctype)
-
-        opts = utils.model_options(klass)
-        perm = ('view_%s' % opts.object_name.lower(), u'Can view %s' % opts.verbose_name_raw)
-        searched_perms.append((ctype, perm))
-
-    # Find all the Permissions that have a content_type for a model we're
-    # looking for.  We don't need to check for codenames since we already have
-    # a list of the ones we're going to create.
-    all_perms = set(auth_app.Permission.objects.filter(
-        content_type__in=ctypes,
-    ).values_list(
-        "content_type", "codename"
-    ))
-
-    perms = [
-        auth_app.Permission(codename=codename, name=name, content_type=ctype)
-        for ctype, (codename, name) in searched_perms
-        if (ctype.pk, codename) not in all_perms
-    ]
-    auth_app.Permission.objects.bulk_create(perms)
-    if verbosity >= 2:
-        for perm in perms:
-            logger.debug("Adding permission '%s'" % perm)
-
-
-signals.post_syncdb.connect(create_extra_permissions,
-    dispatch_uid="django-admin2.djadmin2.models.create_extra_permissions")
-
-
 def immutable_admin_factory(model_admin):
     """ Provide an ImmutableAdmin to make it harder for developers to dig themselves into holes.
         See https://github.com/twoscoops/django-admin2/issues/99
@@ -302,4 +250,3 @@ def immutable_admin_factory(model_admin):
     """
     ImmutableAdmin = namedtuple("ImmutableAdmin", model_admin.model_admin_attributes, verbose=False)
     return ImmutableAdmin(*[getattr(model_admin, x) for x in model_admin.model_admin_attributes])
-
