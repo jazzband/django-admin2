@@ -11,10 +11,13 @@ Requirements
 =============
 
 * Django 1.5+
-* Python 2.7+ (Python 3.3+ support is pending)
+* Python 2.7+ or Python 3.3+
 * django-braces
+* django-extra-views
+* django-floppyforms
 * django-rest-framework
 * Sphinx (for documentation)
+
 
 
 Basic API

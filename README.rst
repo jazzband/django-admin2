@@ -22,26 +22,21 @@ Features (current)
 * Built-in RESTFUL API powered by ``django-rest-framework``.
 * Default theme built on Twitter Bootstrap that is just starting to act like the current Django admin.
 * Easy to implement theme system.
-* Basic permission controls.
+* Permission controls
+* Custom actions
+* Add/Change form inlines
+* i18n
 
-Features (Planned)
-====================
-
-* Much improved documentation including tutorials and reference guides.
-
-  * Extending existing views
-  * Interacting with the basic Admin2 object.
-
-* Improved permission controls
 
 Requirements
 =============
 
 * Django 1.5+
-* Python 2.7+ (Python 3.3+ support is pending)
+* Python 2.7+ or Python 3.3+
 * django-braces
-* django-rest-framework
+* django-extra-views
 * django-floppyforms
+* django-rest-framework
 * Sphinx (for documentation)
 
 Basic Pattern
@@ -86,8 +81,45 @@ If you create a new theme, please define it thus:
 
     ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
 
-REST API
-==========
 
-We plan to expose a REST API using Django Rest Framework. From this, you can define new themes powered by the client framework of your choice.
+History
+=========
 
+0.3.0 (2013-05-31)
+
+  * HTML5 forms via floppyforms.
+  * Many API improvements.
+  * Added Breadcrumbs.
+  * Added Login, Logout, ChangePassword views.
+  * Added Actions.
+  * Added support for inlines.
+  * Added view based permission controls
+  * Implement delete confirmations for child models.
+  * Testrunner now can run on a specific test set or module.
+  * Internal code refactoring to follow standards.
+  * Moved to git-flow for accepting pull requests.
+  * Model create/update pages now have save options.
+  * Added i18n to all templates, much of internal code.
+  * All print statements replaced with proper logging.
+  * Design goals specified in the documentation.
+
+0.2.0 (2013-05-19)
+
+  * Birth! (Working Prototype)
+  * Easy-to-extend API that follows similar patterns to django.contrib.admin.
+  * Built-in RESTFUL API powered by django-rest-framework.
+  * Default theme built on Twitter Bootstrap.
+  * Easy to implement theme system.
+  * Basic permission controls.
+  * Testrunner
+  * Documentation
+
+0.1.1 (2013-05-17)
+
+  * Code adoption from django-mongonaut.
+  * Preperation for Django Circus sprints.
+
+0.1 (2013-05-13)
+
+  * Discussion with Russell Keith-Magee.
+  * Inception.
