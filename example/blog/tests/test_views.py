@@ -160,3 +160,72 @@ class PostDeleteActionTest(BaseIntegrationTest):
                                     post_data, follow=True)
         self.assertContains(response, "Successfully deleted 2 posts")
 
+
+class TestAuthViews(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = get_user_model()(username='user', is_staff=True,
+                                     is_superuser=True)
+        self.user.set_password("password")
+        self.user.save()
+
+    def test_login_required_redirect_to_index(self):
+        index_path = reverse('admin2:dashboard') + '?next=/admin2/blog/post/'
+        target_path = reverse('admin2:blog_post_index')
+        self.assertRedirects(self.client.get(target_path), index_path)
+
+    def test_login_required_logined_successful(self):
+        index_path = reverse('admin2:dashboard')
+        self.client.login(username=self.user.username,
+                          password='password')
+        self.assertContains(self.client.get(index_path),
+                            reverse('admin2:blog_post_index'))
+
+    def test_change_password_for_myself(self):
+        self.client.login(username=self.user.username,
+                          password='password')
+        request = self.client.post(reverse('admin2:password-change',
+                                           kwargs={'pk': self.user.pk}),
+                                   {'old_password': 'password',
+                                    'new_password1': 'user',
+                                    'new_password2': 'user'})
+        self.assertRedirects(request, reverse('admin2:password-change-done'))
+        self.client.logout()
+
+        self.assertFalse(self.client.login(username=self.user.username,
+                                           password='password'))
+        self.assertTrue(self.client.login(username=self.user.username,
+                                          password='user'))
+
+    def test_change_password(self):
+        self.client.login(username=self.user.username,
+                          password='password')
+
+        new_user = get_user_model()(username='new_user')
+        new_user.set_password("new_user")
+        new_user.save()
+
+        request = self.client.post(reverse('admin2:password-change',
+                                           kwargs={'pk': new_user.pk}),
+                                   {'old_password': 'new_user',
+                                    'password1': 'new_user_password',
+                                    'password2': 'new_user_password'})
+        self.assertRedirects(request, reverse('admin2:password-change-done'))
+        self.client.logout()
+
+        self.assertFalse(self.client.login(username=new_user.username,
+                                           password='new_user'))
+        self.assertTrue(self.client.login(username=new_user.username,
+                                          password='new_user_password'))
+
+    def test_logout(self):
+        self.client.login(username=self.user.username,
+                          password='password')
+        logout_path = reverse('admin2:logout')
+        request = self.client.get(logout_path)
+        self.assertContains(request, 'Log in again')
+
+        index_path = reverse('admin2:dashboard') + '?next=/admin2/blog/post/'
+        target_path = reverse('admin2:blog_post_index')
+        self.assertRedirects(self.client.get(target_path), index_path)

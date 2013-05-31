@@ -1,8 +1,7 @@
 from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from django.test.client import Client
+from django.test.client import RequestFactory
 
 import floppyforms
 
@@ -11,10 +10,13 @@ from blog.admin2 import UserAdmin2
 
 
 class UserAdminTest(TestCase):
+
     def setUp(self):
-        self.client = Client()
-        self.user = get_user_model()(username='user', is_staff=True,
-                                     is_superuser=True)
+        self.factory = RequestFactory()
+        self.user = User(
+            username='admin',
+            is_staff=True,
+            is_superuser=True)
         self.user.set_password("password")
         self.user.save()
 
@@ -24,7 +26,7 @@ class UserAdminTest(TestCase):
             isinstance(form.fields['username'].widget,
                        floppyforms.TextInput))
 
-        request = self.client.get(reverse('admin2:auth_user_create'))
+        request = self.factory.get(reverse('admin2:auth_user_create'))
         request.user = self.user
         model_admin = UserAdmin2(User, djadmin2.default)
         view = model_admin.create_view.as_view(
@@ -43,8 +45,7 @@ class UserAdminTest(TestCase):
         self.assertTrue(
             isinstance(form.fields['date_joined'].widget,
                        floppyforms.DateTimeInput))
-
-        request = self.client.get(
+        request = self.factory.get(
             reverse('admin2:auth_user_update', args=(self.user.pk,)))
         request.user = self.user
         model_admin = UserAdmin2(User, djadmin2.default)
@@ -58,7 +59,3 @@ class UserAdminTest(TestCase):
         self.assertTrue(
             isinstance(form.fields['date_joined'].widget,
                        floppyforms.DateTimeInput))
-
-    def test_login_required(self):
-        index_path = reverse('admin2:blog_post_index')
-        self.assertRedirects(self.client.get(index_path), reverse('admin2:dashboard'))

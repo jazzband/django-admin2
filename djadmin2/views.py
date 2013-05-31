@@ -13,7 +13,7 @@ from django.views import generic
 import extra_views
 
 from . import permissions, utils
-from .viewmixins import (Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin)
+from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
