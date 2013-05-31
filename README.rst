@@ -15,8 +15,8 @@ Contributing
 
 Yes please! Please read our formal contributing document at: https://django-admin2.readthedocs.org/en/latest/contributing.html
 
-Features (current)
-====================
+Features
+========
 
 * Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
 * Built-in RESTFUL API powered by ``django-rest-framework``.
