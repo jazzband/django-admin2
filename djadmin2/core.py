@@ -125,6 +125,18 @@ class Admin2(object):
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
             ),
+            url(regex='^auth/user/(?P<pk>\d+)/update/password/$',
+                view=views.PasswordChangeView.as_view(),
+                name='password_change'
+                ),
+            url(regex='^password_change_done/$',
+                view=views.PasswordChangeDoneView.as_view(),
+                name='password_change_done'
+                ),
+            url(regex='^logout/$',
+                view=views.LogoutView.as_view(),
+                name='logout'
+                ),
             url(
                 regex=r'^(?P<app_label>\w+)/$',
                 view=self.app_index_view.as_view(**self.get_app_index_kwargs()),
@@ -136,6 +148,7 @@ class Admin2(object):
                 name='api-index'
             ),
         )
+
         for model, model_admin in self.registry.iteritems():
             model_options = utils.model_options(model)
             urlpatterns += patterns('',
