@@ -22,7 +22,7 @@
 
 {% block content %}
 
-<div class="row">
+<div class="row-fluid">
     <div class="span12">
         <form method="post">
             {% csrf_token %}
@@ -58,9 +58,14 @@
 			</table>
 			{% endfor %}
 
-            <button class="btn btn-small" type="submit" name="_addanother">{% trans "Save and add another" %}</button>
-            <button class="btn btn-small" type="submit" name="_continue">{% trans "Save and continue editing" %}</button>
-            <button class="btn btn-small btn-success" type="submit" name="_save">{% trans "Save" %}</button>
+            <hr/>
+            <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
+
+            <div class="pull-right">
+                <button class="btn btn-small" type="submit" name="_addanother">{% trans "Save and add another" %}</button>
+                <button class="btn btn-small" type="submit" name="_continue">{% trans "Save and continue editing" %}</button>
+                <button class="btn btn-small btn-success" type="submit" name="_save">{% trans "Save" %}</button>
+            </div>
         </form>
     </div>
 </div>
