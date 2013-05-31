@@ -285,3 +285,11 @@ class TemplatePermissionTest(TestCase):
             '{% endwith %}',
             context)
         self.assertEqual(result, 'TrueFalse')
+
+
+class ViewPermissionTest(TestCase):
+    def test_view_permission_was_created(self):
+        permissions = Permission.objects.filter(
+            content_type__app_label='blog',
+            content_type__model='post')
+        self.assertEqual(len(permissions.filter(codename='view_post')), 1)

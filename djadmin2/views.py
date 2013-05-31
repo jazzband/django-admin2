@@ -75,7 +75,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return reverse(view_name)
 
     def get_actions(self):
-        return self.model_admin.get_actions()
+        return self.model_admin.get_list_actions()
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
