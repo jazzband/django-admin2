@@ -93,4 +93,3 @@ class DeleteSelectedAction(BaseListAction):
                 message = _("Permission to delete %s denied" % self.objects_name)
                 messages.add_message(self.request, messages.INFO, message)
                 return None
-
