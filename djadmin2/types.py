@@ -45,7 +45,7 @@ class ModelAdmin2(object):
     list_fields = []
 
     #This shows up on the DocumentListView of the Posts
-    list_actions = []
+    list_actions = [actions.delete_selected]
 
     # This shows up in the DocumentDetailView of the Posts.
     document_actions = []
@@ -83,9 +83,6 @@ class ModelAdmin2(object):
     # API Views
     api_list_view = apiviews.ListCreateAPIView
     api_detail_view = apiviews.RetrieveUpdateDestroyAPIView
-
-    # Actions
-    actions = [actions.delete_selected]
 
     def __init__(self, model, admin, name=None, **kwargs):
         self.name = name
@@ -214,11 +211,11 @@ class ModelAdmin2(object):
     def api_urls(self):
         return self.get_api_urls(), None, None
 
-    def get_actions(self):
+    def get_list_actions(self):
         actions_dict = {}
 
         for cls in type(self).mro()[::-1]:
-            class_actions = getattr(cls, 'actions', [])
+            class_actions = getattr(cls, 'list_actions', [])
             for action in class_actions:
                 actions_dict[action.__name__] = {
                         'name': action.__name__,
