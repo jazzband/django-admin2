@@ -14,7 +14,7 @@ def get_description(action):
         return capfirst(action.__name__.replace('_', ' '))
 
 
-def delete_selected(request, queryset):
+class BaseListAction(object):
     # We check whether the user has permission to delete the objects in the
     # queryset.
     #
@@ -25,52 +25,71 @@ def delete_selected(request, queryset):
     # `get_deleted_objects` in contrib.admin.util for how this is currently
     # done.  (Hint: I think we can do better.)
 
-    model = queryset.model
-    opts = utils.model_options(model)
-    permission_name = '%s.delete.%s' \
-            % (opts.app_label, opts.object_name.lower())
-    has_permission = request.user.has_perm(permission_name)
-
-    if len(queryset) == 1:
-        objects_name = opts.verbose_name
-    else:
-        objects_name = opts.verbose_name_plural
-    objects_name = unicode(objects_name)
-
-    if request.POST.get('confirmed'):
-        # The user has confirmed that they want to delete the objects.
-        if has_permission:
-            num_objects_deleted = len(queryset)
-            queryset.delete()
-            message = "Successfully deleted %d %s" % \
-                    (num_objects_deleted, objects_name)
-            messages.add_message(request, messages.INFO, message)
-            return None
+    def __init__(self, request, queryset):
+        self.request = request
+        self.queryset = queryset
+        self.model = queryset.model
+        self.options = utils.model_options(self.model)
+        self.permission_name = '%s.delete.%s' \
+                % (self.options.app_label, self.options.object_name.lower())
+        self.has_permission = request.user.has_perm(self.permission_name)
+        if queryset.count() == 1:
+            objects_name = self.options.verbose_name
         else:
-            raise PermissionDenied
-    else:
-        # The user has not confirmed that they want to delete the objects, so
-        # render a template asking for their confirmation.
-        if has_permission:
-            template = 'admin2/bootstrap/delete_selected_confirmation.html'
+            objects_name = self.options.verbose_name_plural
+        self.objects_name = unicode(objects_name)
 
-            def _format_callback(obj):
-                opts = utils.model_options(obj)
-                return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
-                                   force_text(obj))
+    def description(self):
+        return NotImplemented
 
-            collector = utils.NestedObjects(using=None)
-            collector.collect(queryset)
+    def get_response(self):
+        return NotImplemented
 
-            context = {
-                'queryset': queryset,
-                'objects_name': objects_name,
-                'deletable_objects': collector.nested(_format_callback),
-            }
-            return TemplateResponse(request, template, context)
+    def get_template(self):
+        return NotImplemented
+
+    def __call__(self):
+        return self.get_response()
+
+
+class DeleteSelectedAction(BaseListAction):
+
+    description = "Delete selected items"
+
+    def get_response(self):
+        if self.request.POST.get('confirmed'):
+            # The user has confirmed that they want to delete the objects.
+            if self.has_permission:
+                num_objects_deleted = len(self.queryset)
+                self.queryset.delete()
+                message = "Successfully deleted %d %s" % \
+                        (num_objects_deleted, self.objects_name)
+                messages.add_message(self.request, messages.INFO, message)
+                return None
+            else:
+                raise PermissionDenied
         else:
-            message = "Permission to delete %s denied" % objects_name
-            messages.add_message(request, messages.INFO, message)
-            return None
+            # The user has not confirmed that they want to delete the objects, so
+            # render a template asking for their confirmation.
+            if self.has_permission:
+                template = 'admin2/bootstrap/actions/delete_selected_confirmation.html'
 
-delete_selected.description = "Delete selected items"
+                def _format_callback(obj):
+                    opts = utils.model_options(obj)
+                    return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
+                                       force_text(obj))
+
+                collector = utils.NestedObjects(using=None)
+                collector.collect(self.queryset)
+
+                context = {
+                    'queryset': self.queryset,
+                    'objects_name': self.objects_name,
+                    'deletable_objects': collector.nested(_format_callback),
+                }
+                return TemplateResponse(self.request, template, context)
+            else:
+                message = "Permission to delete %s denied" % self.objects_name
+                messages.add_message(self.request, messages.INFO, message)
+                return None
+

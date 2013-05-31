@@ -45,7 +45,7 @@ class ModelAdmin2(object):
     list_fields = []
 
     #This shows up on the DocumentListView of the Posts
-    list_actions = [actions.delete_selected]
+    list_actions = [actions.DeleteSelectedAction]
 
     # This shows up in the DocumentDetailView of the Posts.
     document_actions = []
@@ -220,7 +220,7 @@ class ModelAdmin2(object):
                 actions_dict[action.__name__] = {
                         'name': action.__name__,
                         'description': actions.get_description(action),
-                        'func': action
+                        'action_class': action
                 }
         return actions_dict
 

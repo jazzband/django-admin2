@@ -16,7 +16,7 @@
 <form method="post">
     {% csrf_token %}
     <input type="hidden" name="confirmed" value="yes" />
-    <input type="hidden" name="action" value="delete_selected" />
+    <input type="hidden" name="action" value="DeleteSelectedAction" />
     {% for item in queryset %}
         <input type="hidden" name="selected_model_pk" value="{{ item.pk }}" />
     {% endfor %}
