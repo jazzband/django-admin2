@@ -14,8 +14,16 @@ interface:
 The permission classes are then just fancy wrappers of these basic checks of
 which it can hold multiple.
 '''
+import logging
 import re
+from django.contrib.auth import models as auth_models
+from django.contrib.contenttypes import models as contenttypes_models
+from django.db.models import get_models
 from django.utils import six
+from . import utils
+
+
+logger = logging.getLogger('djadmin2')
 
 
 def is_authenticated(request, view, obj=None):
@@ -340,3 +348,50 @@ class TemplatePermissionChecker(object):
         if self._view is None:
             return ''
         return unicode(bool(self))
+
+
+def create_view_permissions(app, created_models, verbosity, **kwargs):
+    """
+    Create 'view' permissions for all models.
+
+    ``django.contrib.auth`` only creates add, change and delete permissions.
+    Since we want to support read-only views, we need to add our own
+    permission.
+
+    Copied from ``django.contrib.auth.management.create_permissions``.
+    """
+    # Is there any reason for doing this import here?
+
+    app_models = get_models(app)
+
+    # This will hold the permissions we're looking for as
+    # (content_type, (codename, name))
+    searched_perms = list()
+    # The codenames and ctypes that should exist.
+    ctypes = set()
+    for klass in app_models:
+        ctype = contenttypes_models.ContentType.objects.get_for_model(klass)
+        ctypes.add(ctype)
+
+        opts = utils.model_options(klass)
+        perm = ('view_%s' % opts.object_name.lower(), u'Can view %s' % opts.verbose_name_raw)
+        searched_perms.append((ctype, perm))
+
+    # Find all the Permissions that have a content_type for a model we're
+    # looking for.  We don't need to check for codenames since we already have
+    # a list of the ones we're going to create.
+    all_perms = set(auth_models.Permission.objects.filter(
+        content_type__in=ctypes,
+    ).values_list(
+        "content_type", "codename"
+    ))
+
+    perms = [
+        auth_models.Permission(codename=codename, name=name, content_type=ctype)
+        for ctype, (codename, name) in searched_perms
+        if (ctype.pk, codename) not in all_perms
+    ]
+    auth_models.Permission.objects.bulk_create(perms)
+    if verbosity >= 2:
+        for perm in perms:
+            logger.info("Adding permission '%s'" % perm)
