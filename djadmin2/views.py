@@ -1,4 +1,3 @@
-from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
@@ -13,6 +12,7 @@ from django.views import generic
 import extra_views
 
 from . import permissions, utils
+from .forms import AdminAuthenticationForm
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 

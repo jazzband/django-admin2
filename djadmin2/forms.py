@@ -1,9 +1,14 @@
-import floppyforms
+from __future__ import unicode_literals
 from copy import deepcopy
 
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
 import django.forms
 import django.forms.models
 import django.forms.extras.widgets
+from django.utils.translation import ugettext_lazy
+
+import floppyforms
 
 
 _WIDGET_COMMON_ATTRIBUTES = (
@@ -225,3 +230,34 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
         formfield_callback=formfield_callback,
         widgets=widgets)
     return floppify_form(form_class)
+
+
+ERROR_MESSAGE = ugettext_lazy("Please enter the correct %(username)s and password "
+        "for a staff account. Note that both fields may be case-sensitive.")
+
+
+class AdminAuthenticationForm(AuthenticationForm):
+    """
+    A custom authentication form used in the admin app.
+    Liberally copied from django.contrib.admin.forms.AdminAuthenticationForm
+
+    """
+    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput, initial=1,
+        error_messages={'required': ugettext_lazy("Please log in again, because your session has expired.")})
+
+    def clean(self):
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        message = ERROR_MESSAGE
+
+        if username and password:
+            self.user_cache = authenticate(username=username, password=password)
+            if self.user_cache is None:
+                raise floppyforms.ValidationError(message % {
+                    'username': self.username_field.verbose_name
+                })
+            elif not self.user_cache.is_active or not self.user_cache.is_staff:
+                raise floppyforms.ValidationError(message % {
+                    'username': self.username_field.verbose_name
+                })
+        return self.cleaned_data
