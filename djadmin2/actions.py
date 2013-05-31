@@ -3,6 +3,8 @@ from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 
 from . import utils
 
@@ -42,7 +44,7 @@ def delete_selected(request, queryset):
         if has_permission:
             num_objects_deleted = len(queryset)
             queryset.delete()
-            message = "Successfully deleted %d %s" % \
+            message = _("Successfully deleted %d %s") % \
                     (num_objects_deleted, objects_name)
             messages.add_message(request, messages.INFO, message)
             return None
@@ -69,8 +71,8 @@ def delete_selected(request, queryset):
             }
             return TemplateResponse(request, template, context)
         else:
-            message = "Permission to delete %s denied" % objects_name
+            message = _("Permission to delete %s denied") % objects_name
             messages.add_message(request, messages.INFO, message)
             return None
 
-delete_selected.description = "Delete selected items"
+delete_selected.description = ugettext_lazy("Delete selected items")
