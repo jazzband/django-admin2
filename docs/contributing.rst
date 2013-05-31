@@ -182,8 +182,8 @@ Please keep your code as clean and straightforward as possible. When we see more
 
 Furthermore, the pixel shortage is over. We want to see:
 
-* `package` instead of `pkg`
-* `grid` instead of `g`
+* `options` instead of `opts`
+* `model_name` instead of `model`
 * `my_function_that_does_things` instead of `mftdt`
 
 As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
