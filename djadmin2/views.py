@@ -142,7 +142,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
     form_class = AdminPasswordChangeForm
     admin_form_class = PasswordChangeForm
     model = get_user_model()
-    success_url = reverse_lazy('admin2:password-change-done')
+    success_url = reverse_lazy('admin2:password_change_done')
 
     def get_form_kwargs(self, **kwargs):
         data = {'user': self.get_object()}

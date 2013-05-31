@@ -127,11 +127,11 @@ class Admin2(object):
             ),
             url(regex='^auth/user/(?P<pk>\d+)/update/password/$',
                 view=views.PasswordChangeView.as_view(),
-                name='password-change'
+                name='password_change'
                 ),
             url(regex='^password_change_done/$',
                 view=views.PasswordChangeDoneView.as_view(),
-                name='password-change-done'
+                name='password_change_done'
                 ),
             url(regex='^logout/$',
                 view=views.LogoutView.as_view(),
