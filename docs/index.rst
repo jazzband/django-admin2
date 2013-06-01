@@ -61,9 +61,23 @@ Content
    api
    themes
    meta
-   reference
    tutorial
 
+Reference
+-----------
+
+This is where the developer API is in the process of being documented. 
+
+.. note:: For developers of django-admin2 
+
+    All functionality listed here must not only be listed, but also demonstrated with simple but functional code examples. 
+
+.. toctree::
+   :maxdepth: 2
+
+   ref/actions
+   ref/forms
+   ref/permissions
 
 Indices and tables
 ==================

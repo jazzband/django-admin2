@@ -2,7 +2,9 @@ from __future__ import unicode_literals
 from copy import deepcopy
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import (
+        AuthenticationForm, UserCreationForm, UserChangeForm
+    )
 import django.forms
 import django.forms.models
 import django.forms.extras.widgets
@@ -261,3 +263,7 @@ class AdminAuthenticationForm(AuthenticationForm):
                     'username': self.username_field.verbose_name
                 })
         return self.cleaned_data
+
+
+UserCreationForm = floppify_form(UserCreationForm)
+UserChangeForm = floppify_form(UserChangeForm)
