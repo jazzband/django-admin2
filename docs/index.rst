@@ -66,11 +66,10 @@ Content
 Reference
 -----------
 
-This is where the developer API is in the process of being documented. 
+Most of django-admin2 is designed to be extensible, which means with a little bit of Python code you can do amazing things. You can easily create custom actions, implement alternative forms, set permissions per view, add new views, and even trivially replace the base views with those of your own design. Combined with the REST API, django-admin2 provides a wealth of customization options.
 
-.. note:: For developers of django-admin2 
+One of the core design goals of django-admin2 is to embrace object-oriented design, making it easy to take one of the built-in classes and extend it to suit your needs. 
 
-    All functionality listed here must not only be listed, but also demonstrated with simple but functional code examples. 
 
 .. toctree::
    :maxdepth: 2
@@ -78,6 +77,7 @@ This is where the developer API is in the process of being documented.
    ref/actions
    ref/forms
    ref/permissions
+   ref/views
 
 Indices and tables
 ==================
