@@ -51,8 +51,12 @@ In our blog/admin.py module we write:
 
     from .models import Post, Comment
 
-    class DeleteAllComments(BaseListAction):
-        description = ugettext_lazy("Delete selected items")
+    class DeleteAllComments(djadmin2.actions.BaseListAction):
+        description = "Delete selected items"
+        template = "blog/actions/delete_all_comments_confirmation.html
+
+    class PostAdmin(djadmin2.ModelAdmin2):
+        actions = [DeleteAllComments]
 
     djadmin2.default.register(Post, PostAdmin)
     djadmin2.default.register(Comment)

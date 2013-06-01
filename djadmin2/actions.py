@@ -58,6 +58,9 @@ class DeleteSelectedAction(BaseListAction):
 
     description = ugettext_lazy("Delete selected items")
 
+    # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
+    template = "admin2/bootstrap/actions/delete_selected_confirmation.html"
+
     def get_response(self):
         if self.request.POST.get('confirmed'):
             # The user has confirmed that they want to delete the objects.
@@ -74,7 +77,6 @@ class DeleteSelectedAction(BaseListAction):
             # The user has not confirmed that they want to delete the objects, so
             # render a template asking for their confirmation.
             if self.has_permission:
-                template = 'admin2/bootstrap/actions/delete_selected_confirmation.html'
 
                 def _format_callback(obj):
                     opts = utils.model_options(obj)
@@ -89,7 +91,7 @@ class DeleteSelectedAction(BaseListAction):
                     'objects_name': self.objects_name,
                     'deletable_objects': collector.nested(_format_callback),
                 }
-                return TemplateResponse(self.request, template, context)
+                return TemplateResponse(self.request, self.template, context)
             else:
                 message = _("Permission to delete %s denied" % self.objects_name)
                 messages.add_message(self.request, messages.INFO, message)
