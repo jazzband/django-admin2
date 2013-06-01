@@ -1,4 +1,5 @@
 /* Fixes a Bootstrap 2.3 bug. This can be removed when upgrading to Bootstrap v3. */
+
 .text-right
 {
     text-align: right !important;
@@ -13,6 +14,8 @@
 {
     text-align: left !important;
 }
+
+/* Custom CSS classes go below this point */
 
 .checkbox-column {
     width: 16px;
