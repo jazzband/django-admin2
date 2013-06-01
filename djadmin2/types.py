@@ -193,12 +193,12 @@ class ModelAdmin2(object):
             url(
                 regex=r'^$',
                 view=self.api_list_view.as_view(**self.get_api_list_kwargs()),
-                name=self.get_prefixed_view_name('api-list'),
+                name=self.get_prefixed_view_name('api_list'),
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
                 view=self.api_detail_view.as_view(**self.get_api_detail_kwargs()),
-                name=self.get_prefixed_view_name('api-detail'),
+                name=self.get_prefixed_view_name('api_detail'),
             ),
         )
 

@@ -12,7 +12,7 @@ API_VERSION = '0.1'
 
 
 class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
-    _default_view_name = 'admin2:%(app_label)s_%(model_name)s_api-detail'
+    _default_view_name = 'admin2:%(app_label)s_%(model_name)s_api_detail'
 
     pk = fields.Field(source='pk')
     __str__ = fields.Field(source='__unicode__')
@@ -31,7 +31,7 @@ class Admin2APIMixin(Admin2Mixin):
                 # Admin2APISerializer base class
                 _default_view_name = ':'.join((
                     self.model_admin.admin.name,
-                    '%(app_label)s_%(model_name)s_api-detail'))
+                    '%(app_label)s_%(model_name)s_api_detail'))
 
                 class Meta:
                     model = model_class
@@ -53,7 +53,7 @@ class IndexAPIView(Admin2APIMixin, APIView):
             'model_name': model_options.object_name.lower(),
         }
         model_url = reverse(
-            '%(current_app)s:%(app_label)s_%(model_name)s_api-list' % opts,
+            '%(current_app)s:%(app_label)s_%(model_name)s_api_list' % opts,
             request=self.request,
             format=self.kwargs.get('format'))
         model_options = utils.model_options(model)

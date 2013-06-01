@@ -42,7 +42,7 @@ class IndexAPIViewTest(APITestCase):
 
 class ListCreateAPIViewTest(APITestCase):
     def test_response_ok(self):
-        request = self.factory.get(reverse('admin2:blog_post_api-list'))
+        request = self.factory.get(reverse('admin2:blog_post_api_list'))
         request.user = self.user
         model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
@@ -51,7 +51,7 @@ class ListCreateAPIViewTest(APITestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_view_permission(self):
-        request = self.factory.get(reverse('admin2:blog_post_api-list'))
+        request = self.factory.get(reverse('admin2:blog_post_api_list'))
         request.user = AnonymousUser()
         model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
@@ -60,7 +60,7 @@ class ListCreateAPIViewTest(APITestCase):
 
     def test_list_includes_unicode_field(self):
         Post.objects.create(title='Foo', body='Bar')
-        request = self.factory.get(reverse('admin2:blog_post_api-list'))
+        request = self.factory.get(reverse('admin2:blog_post_api_list'))
         request.user = self.user
         model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
@@ -72,7 +72,7 @@ class ListCreateAPIViewTest(APITestCase):
         self.assertIn('"__str__": "Foo"', response.content)
 
     def test_pagination(self):
-        request = self.factory.get(reverse('admin2:blog_post_api-list'))
+        request = self.factory.get(reverse('admin2:blog_post_api_list'))
         request.user = self.user
         model_admin = self.get_model_admin(Post)
         view = apiviews.ListCreateAPIView.as_view(
@@ -95,7 +95,7 @@ class RetrieveUpdateDestroyAPIViewTest(APITestCase):
     def test_response_ok(self):
         post = Post.objects.create(title='Foo', body='Bar')
         request = self.factory.get(
-            reverse('admin2:blog_post_api-detail',
+            reverse('admin2:blog_post_api_detail',
             kwargs={'pk': post.pk}))
         request.user = self.user
         model_admin = self.get_model_admin(Post)
@@ -107,7 +107,7 @@ class RetrieveUpdateDestroyAPIViewTest(APITestCase):
     def test_view_permission(self):
         post = Post.objects.create(title='Foo', body='Bar')
         request = self.factory.get(
-            reverse('admin2:blog_post_api-detail',
+            reverse('admin2:blog_post_api_detail',
             kwargs={'pk': post.pk}))
         request.user = AnonymousUser()
         model_admin = self.get_model_admin(Post)
