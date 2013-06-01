@@ -59,7 +59,9 @@
 			{% endfor %}
 
             <hr/>
+            {% if object %}
             <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
+            {% endif %}
 
             <div class="pull-right">
                 <button class="btn btn-small" type="submit" name="_addanother">{% trans "Save and add another" %}</button>
