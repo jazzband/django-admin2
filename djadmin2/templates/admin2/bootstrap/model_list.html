@@ -19,16 +19,22 @@
 
 <div id="model-list" class="row">
     <form id="model-list-form" class="form-inline" method="post">
+    	{% csrf_token %}
         <div class="span12">
             <div class="navbar">
-                {% csrf_token %}
-                <select name="action">
-                    {% for action in actions %}
-                    <option value="{{ action.name }}">{{ action.description }}</option>
-                    {% endfor %}
-                </select>
-                <button type="Submit" class="btn">Go</button>
-		<span id="selected-count">0</span> of {{ object_list|length }} selected
+				<div class="btn-group">
+            	    <button class="btn dropdown-toggle" data-toggle="dropdown">
+            	        Actions
+            	        <span class="caret"></span>
+            	    </button>
+            	    <ul class="dropdown-menu">
+                    	{% for action in actions %}
+							<li><a tabindex="-1" href="#" data-name="action" data-value="{{ action.name }}">{{ action.description }}</a></li>
+                    	{% endfor %}
+            	    </ul>
+            	</div>
+				<input type="hidden" name="action" value="" />
+            	<small class="muted"><span id="selected-count">0</span> of {{ object_list|length }} selected</small>
                 <div class="pull-right">
                     {% if permissions.has_add_permission %}
                     <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>
@@ -39,7 +45,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <th class="checkbox-column"><input type="checkbox" class="model-select-all"></th>
-                    <th>{{ model_name }}</th>
+                    <th>{{ model_name|capfirst }}</th>
                 </thead>
                 <tbody>
                     {% for obj in object_list %}
