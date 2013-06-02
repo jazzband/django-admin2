@@ -46,15 +46,14 @@
                     <tr>
                         <td><input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}"></td>
                         <td>
-                            {{ obj }}
-                            {% if permissions.has_view_permission %}
-                            <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% trans "Detail" %}</a>
-                            {% endif %}
                             {% if permissions.has_change_permission %}
-                            <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% trans "Edit" %}</a>
-                            {% endif %}
-                            {% if permissions.has_delete_permission %}
-                            <a href="{% url view|admin2_urlname:'delete' pk=obj.pk %}">{% trans "Delete" %}</a>
+								<a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
+							{% else %}
+                            	{% if permissions.has_view_permission %}
+                            		<a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{{ obj }}</a>
+								{% else %}
+									{{ obj }}
+                            	{% endif %}
                             {% endif %}
                         </td>
                     </tr>
