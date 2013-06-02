@@ -32,7 +32,7 @@ class PostListTest(BaseIntegrationTest):
 
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
-        self.assertInHTML('<option value="DeleteSelectedAction">Delete selected items</option>', response.content)
+        self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', response.content)
 
     def test_delete_selected_post(self):
         post = Post.objects.create(title="a_post_title", body="body")
