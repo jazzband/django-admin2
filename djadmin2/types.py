@@ -9,7 +9,7 @@ from django.db.models import get_models, signals
 import extra_views
 
 from . import apiviews
-from . import constants
+from . import settings
 from . import views
 from . import actions
 from . import utils
@@ -36,7 +36,7 @@ class ModelAdmin2(object):
     save_on_top = False
     verbose_name = None
     verbose_name_plural = None
-    model_admin_attributes = constants.MODEL_ADMIN_ATTRS
+    model_admin_attributes = settings.MODEL_ADMIN_ATTRS
 
     search_fields = []
 
