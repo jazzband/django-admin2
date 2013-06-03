@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>{% block title %}Site administration{% endblock %} | django-admin2</title>
+        <title>{% block title %}Site administration{% endblock title %} | django-admin2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -50,7 +50,7 @@
         <ul class="breadcrumb">
             {% block breadcrumbs %}
             <li class="active">Home</li>
-            {% endblock %}
+            {% endblock breadcrumbs %}
         </ul>
 
         {% if messages %}
@@ -64,15 +64,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="span10">
-                    <h3>{% block page_title %}{% trans "Site administration" %}{% endblock %}</h3>
+                    <h3>{% block page_title %}{% trans "Site administration" %}{% endblock page_title %}</h3>
                 </div>
             </div>
-            {% block content %}{% endblock %}
+            {% block content %}{% endblock content %}
         </div>
 
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="{{ STATIC_URL }}themes/bootstrap/js/bootstrap.min.js"></script>
-        {% block extrajs %}{% endblock %}
+        {% block extrajs %}{% endblock extrajs %}
 
     </body>
 </html>
