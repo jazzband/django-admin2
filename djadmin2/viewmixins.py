@@ -7,7 +7,7 @@ from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect
 from braces.views import AccessMixin
 
-from . import constants, permissions
+from . import settings, permissions
 from .utils import admin2_urlname, model_options
 
 
@@ -64,7 +64,7 @@ class Admin2Mixin(PermissionMixin):
     index_path = reverse_lazy('admin2:dashboard')
 
     def get_template_names(self):
-        return [os.path.join(constants.ADMIN2_THEME_DIRECTORY, self.default_template_name)]
+        return [os.path.join(settings.ADMIN2_THEME_DIRECTORY, self.default_template_name)]
 
     def get_model(self):
         return self.model
