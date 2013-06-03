@@ -2,9 +2,9 @@
 
 {% load admin2_tags i18n %}
 
-{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock %}
+{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock title %}
 
-{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock %}
+{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
 
 {% block breadcrumbs %}
     <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
@@ -17,7 +17,7 @@
     <li class="active">{% trans 'Change' %}</li>
     {% endif %}
 
-{% endblock %}
+{% endblock breadcrumbs %}
 
 
 {% block content %}
