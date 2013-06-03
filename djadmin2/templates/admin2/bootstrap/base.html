@@ -6,8 +6,10 @@
         <title>{% block title %}Site administration{% endblock %} | django-admin2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
+        {% block css %}
         <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+        {% endblock css %}
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-static-top">
@@ -50,7 +52,7 @@
         <ul class="breadcrumb">
             {% block breadcrumbs %}
             <li class="active">Home</li>
-            {% endblock %}
+            {% endblock breadcrumbs %}
         </ul>
 
         {% if messages %}
@@ -64,15 +66,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="span10">
-                    <h3>{% block page_title %}{% trans "Site administration" %}{% endblock %}</h3>
+                    <h3>{% block page_title %}{% trans "Site administration" %}{% endblock page_title %}</h3>
                 </div>
             </div>
-            {% block content %}{% endblock %}
+            {% block content %}{% endblock content %}
         </div>
 
+        {% block javascript %}
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="{{ STATIC_URL }}themes/bootstrap/js/bootstrap.min.js"></script>
-        {% block extrajs %}{% endblock %}
+        {% endblock javascript %}
 
     </body>
 </html>
