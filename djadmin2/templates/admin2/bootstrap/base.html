@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>{% block title %}Site administration{% endblock %} | django-admin2</title>
+        <title>{% block title %}Site administration{% endblock title %} | django-admin2</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         {% block css %}
@@ -76,6 +76,5 @@
         <script src="http://code.jquery.com/jquery.js"></script>
         <script src="{{ STATIC_URL }}themes/bootstrap/js/bootstrap.min.js"></script>
         {% endblock javascript %}
-
     </body>
 </html>
