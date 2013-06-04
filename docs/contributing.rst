@@ -42,7 +42,7 @@ Tips
 #. **starter** labeled issues are deemed to be good low-hanging fruit for newcomers to the project, Django, or even Python.
 #. **doc** labeled issues must only touch content in the docs folder.
 #. Since this project will live on inheritance, all views are Class-Based.
-#. Familiarize yourself with the project design_.
+#. Familiarize yourself with the project design_ document.
 
 Setting up topic branches and generating pull requests
 ======================================================
