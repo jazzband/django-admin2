@@ -46,13 +46,10 @@ class BaseListAction(object):
         return None
 
     def description(self):
-        return NotImplemented
+        raise NotImplementedError("List action classes require a description attribute.")
 
     def get_response(self):
-        return NotImplemented
-
-    def get_template(self):
-        return NotImplemented
+        raise NotImplementedError("List action classes require a get_response method that returns either a None or HTTP response object.")
 
     def __call__(self):
         if self.permission_name and not self.request.user.has_perm(self.permission_name):
@@ -72,15 +69,15 @@ class DeleteSelectedAction(BaseListAction):
 
     description = ugettext_lazy("Delete selected items")
 
-    # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
-    template = "admin2/bootstrap/actions/delete_selected_confirmation.html"
-
     @property
     def permission_name(self):
         return '%s.delete.%s' \
                 % (self.options.app_label, self.options.object_name.lower())
 
     def get_response(self):
+        # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
+        template = "admin2/bootstrap/actions/delete_selected_confirmation.html"
+
         if self.request.POST.get('confirmed'):
             # The user has confirmed that they want to delete the objects.
             num_objects_deleted = len(self.queryset)
@@ -92,7 +89,6 @@ class DeleteSelectedAction(BaseListAction):
         else:
             # The user has not confirmed that they want to delete the objects, so
             # render a template asking for their confirmation.
-
             def _format_callback(obj):
                 opts = utils.model_options(obj)
                 return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
@@ -106,4 +102,4 @@ class DeleteSelectedAction(BaseListAction):
                 'objects_name': self.objects_name,
                 'deletable_objects': collector.nested(_format_callback),
             }
-            return TemplateResponse(self.request, self.template, context)
+            return TemplateResponse(self.request, template, context)
