@@ -51,6 +51,26 @@ class BaseListAction(object):
     def get_response(self):
         raise NotImplementedError("List action classes require a get_response method that returns either a None or HTTP response object.")
 
+    @property
+    def template_for_display_nested_response(self):
+        raise NotImplementedError("List actions classes using display_nested_response require a template")
+
+    def display_nested_response(self):
+        def _format_callback(obj):
+            opts = utils.model_options(obj)
+            return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
+                               force_text(obj))
+
+        collector = utils.NestedObjects(using=None)
+        collector.collect(self.queryset)
+
+        context = {
+            'queryset': self.queryset,
+            'objects_name': self.objects_name,
+            'deletable_objects': collector.nested(_format_callback),
+        }
+        return TemplateResponse(self.request, self.template_for_display_nested_response, context)
+
     def __call__(self):
         if self.permission_name and not self.request.user.has_perm(self.permission_name):
             message = _("Permission to '%s' denied" % force_text(self.description))
@@ -75,8 +95,6 @@ class DeleteSelectedAction(BaseListAction):
                 % (self.options.app_label, self.options.object_name.lower())
 
     def get_response(self):
-        # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
-        template = "admin2/bootstrap/actions/delete_selected_confirmation.html"
 
         if self.request.POST.get('confirmed'):
             # The user has confirmed that they want to delete the objects.
@@ -89,17 +107,11 @@ class DeleteSelectedAction(BaseListAction):
         else:
             # The user has not confirmed that they want to delete the objects, so
             # render a template asking for their confirmation.
-            def _format_callback(obj):
-                opts = utils.model_options(obj)
-                return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
-                                   force_text(obj))
+            return self.display_nested_response()
 
-            collector = utils.NestedObjects(using=None)
-            collector.collect(self.queryset)
+    @property
+    def template_for_display_nested_response(self):
+        # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
+        return "admin2/bootstrap/actions/delete_selected_confirmation.html"
 
-            context = {
-                'queryset': self.queryset,
-                'objects_name': self.objects_name,
-                'deletable_objects': collector.nested(_format_callback),
-            }
-            return TemplateResponse(self.request, template, context)
+
