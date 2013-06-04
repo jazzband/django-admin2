@@ -32,9 +32,6 @@ class BaseListAction(object):
         self.queryset = queryset
         self.model = queryset.model
         self.options = utils.model_options(self.model)
-        self.permission_name = '%s.delete.%s' \
-                % (self.options.app_label, self.options.object_name.lower())
-        self.has_permission = request.user.has_perm(self.permission_name)
 
         self.item_count = len(queryset)
 
@@ -43,6 +40,10 @@ class BaseListAction(object):
         else:
             objects_name = self.options.verbose_name_plural
         self.objects_name = unicode(objects_name)
+
+    @property
+    def permission_name(self):
+        return NotImplemented
 
     def description(self):
         return NotImplemented
@@ -54,6 +55,11 @@ class BaseListAction(object):
         return NotImplemented
 
     def __call__(self):
+        if not self.request.user.has_perm(self.permission_name):
+            message = _("Permission to '%s' denied" % force_text(self.description))
+            messages.add_message(self.request, messages.INFO, message)
+            return None
+
         if self.item_count > 0:
             return self.get_response()
         else:
@@ -72,35 +78,27 @@ class DeleteSelectedAction(BaseListAction):
     def get_response(self):
         if self.request.POST.get('confirmed'):
             # The user has confirmed that they want to delete the objects.
-            if self.has_permission:
-                num_objects_deleted = len(self.queryset)
-                self.queryset.delete()
-                message = _("Successfully deleted %d %s" % \
-                        (num_objects_deleted, self.objects_name))
-                messages.add_message(self.request, messages.INFO, message)
-                return None
-            else:
-                raise PermissionDenied
+            num_objects_deleted = len(self.queryset)
+            self.queryset.delete()
+            message = _("Successfully deleted %d %s" % \
+                    (num_objects_deleted, self.objects_name))
+            messages.add_message(self.request, messages.INFO, message)
+            return None
         else:
             # The user has not confirmed that they want to delete the objects, so
             # render a template asking for their confirmation.
-            if self.has_permission:
 
-                def _format_callback(obj):
-                    opts = utils.model_options(obj)
-                    return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
-                                       force_text(obj))
+            def _format_callback(obj):
+                opts = utils.model_options(obj)
+                return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
+                                   force_text(obj))
 
-                collector = utils.NestedObjects(using=None)
-                collector.collect(self.queryset)
+            collector = utils.NestedObjects(using=None)
+            collector.collect(self.queryset)
 
-                context = {
-                    'queryset': self.queryset,
-                    'objects_name': self.objects_name,
-                    'deletable_objects': collector.nested(_format_callback),
-                }
-                return TemplateResponse(self.request, self.template, context)
-            else:
-                message = _("Permission to delete %s denied" % self.objects_name)
-                messages.add_message(self.request, messages.INFO, message)
-                return None
+            context = {
+                'queryset': self.queryset,
+                'objects_name': self.objects_name,
+                'deletable_objects': collector.nested(_format_callback),
+            }
+            return TemplateResponse(self.request, self.template, context)
