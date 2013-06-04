@@ -220,7 +220,7 @@ class ModelAdmin2(object):
                 actions_dict[action.__name__] = {
                         'name': action.__name__,
                         'description': actions.get_description(action),
-                        'action_class': action
+                        'action_callable': action
                 }
         return actions_dict
 

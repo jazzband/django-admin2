@@ -54,10 +54,17 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
     def post(self, request):
         action_name = request.POST['action']
-        action_class = self.get_actions()[action_name]['action_class']
+        action_callable = self.get_actions()[action_name]['action_callable']
         selected_model_pks = request.POST.getlist('selected_model_pk')
         queryset = self.model.objects.filter(pk__in=selected_model_pks)
-        response = action_class(request, queryset)()
+
+        #  If action_callable is a class subclassing from actions.BaseListAction
+        #       then we generate the callable object.
+        if hasattr(action_callable, "render_or_none"):
+            response = action_callable(request, queryset)()
+        else:
+            # generate the reponse if a function.
+            response = action_callable(request, queryset)
         if response is None:
             return HttpResponseRedirect(self.get_success_url())
         else:

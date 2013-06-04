@@ -17,15 +17,6 @@ def get_description(action):
 
 
 class BaseListAction(object):
-    # We check whether the user has permission to delete the objects in the
-    # queryset.
-    #
-    # TODO: This duplicates some of the permission-checking functionality in
-    # BaseAdmin2.  Investigate how to DRY this out.
-    #
-    # TODO: Check that user has permission to delete all related obejcts.  See
-    # `get_deleted_objects` in contrib.admin.util for how this is currently
-    # done.  (Hint: I think we can do better.)
 
     def __init__(self, request, queryset):
         self.request = request
@@ -48,8 +39,8 @@ class BaseListAction(object):
     def description(self):
         raise NotImplementedError("List action classes require a description attribute.")
 
-    def get_response(self):
-        raise NotImplementedError("List action classes require a get_response method that returns either a None or HTTP response object.")
+    def render_or_none(self):
+        raise NotImplementedError("List action classes require a render_or_none method that returns either a None or HTTP response object.")
 
     @property
     def template_for_display_nested_response(self):
@@ -72,13 +63,15 @@ class BaseListAction(object):
         return TemplateResponse(self.request, self.template_for_display_nested_response, context)
 
     def __call__(self):
+        # We check whether the user has permission to delete the objects in the
+        # queryset.
         if self.permission_name and not self.request.user.has_perm(self.permission_name):
             message = _("Permission to '%s' denied" % force_text(self.description))
             messages.add_message(self.request, messages.INFO, message)
             return None
 
         if self.item_count > 0:
-            return self.get_response()
+            return self.render_or_none()
         else:
             message = _("Items must be selected in order to perform actions on them. No items have been changed.")
             messages.add_message(self.request, messages.INFO, message)
@@ -86,6 +79,9 @@ class BaseListAction(object):
 
 
 class DeleteSelectedAction(BaseListAction):
+    # TODO: Check that user has permission to delete all related obejcts.  See
+    # `get_deleted_objects` in contrib.admin.util for how this is currently
+    # done.  (Hint: I think we can do better.)
 
     description = ugettext_lazy("Delete selected items")
 
@@ -94,7 +90,7 @@ class DeleteSelectedAction(BaseListAction):
         return '%s.delete.%s' \
                 % (self.options.app_label, self.options.object_name.lower())
 
-    def get_response(self):
+    def render_or_none(self):
 
         if self.request.POST.get('confirmed'):
             # The user has confirmed that they want to delete the objects.
