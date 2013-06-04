@@ -35,7 +35,12 @@ class BaseListAction(object):
         self.permission_name = '%s.delete.%s' \
                 % (self.options.app_label, self.options.object_name.lower())
         self.has_permission = request.user.has_perm(self.permission_name)
-        if queryset.count() == 1:
+
+        self.item_count = queryset.count()
+
+        if self.item_count == 0:
+            objects_name = self.options.verbose_name
+        elif self.item_count == 1:
             objects_name = self.options.verbose_name
         else:
             objects_name = self.options.verbose_name_plural
@@ -51,7 +56,12 @@ class BaseListAction(object):
         return NotImplemented
 
     def __call__(self):
-        return self.get_response()
+        if self.item_count > 0:
+            return self.get_response()
+        else:
+            message = _("Items must be selected in order to perform actions on them. No items have been changed.")
+            messages.add_message(self.request, messages.INFO, message)
+            return None
 
 
 class DeleteSelectedAction(BaseListAction):
