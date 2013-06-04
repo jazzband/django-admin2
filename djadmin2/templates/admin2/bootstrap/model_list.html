@@ -45,23 +45,31 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <th class="checkbox-column"><input type="checkbox" class="model-select-all"></th>
-                    <th>{{ model_name|capfirst }}</th>
+                    {% for attr in view.model_admin.list_display %}
+                        {% if forloop.first and attr == "__str__" %}
+                            <th>{{ model_name|capfirst }}</th>
+                        {% else %}
+                            <th>{{ attr }}</th>
+                        {% endif%}
+                    {% endfor %}
                 </thead>
                 <tbody>
                     {% for obj in object_list %}
                     <tr>
                         <td><input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}"></td>
-                        <td>
-                            {% if permissions.has_change_permission %}
-								<a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj }}</a>
-							{% else %}
-                            	{% if permissions.has_view_permission %}
-                            		<a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{{ obj }}</a>
-								{% else %}
-									{{ obj }}
-                            	{% endif %}
-                            {% endif %}
-                        </td>
+                        {% for attr in view.model_admin.list_display %}
+                            <td>
+                                {% if permissions.has_change_permission %}
+    								<a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% get_attr obj attr %}</a>
+    							{% else %}
+                                	{% if permissions.has_view_permission %}
+                                		<a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% get_attr obj attr %}</a>
+    								{% else %}
+    									{% get_attr obj attr %}
+                                	{% endif %}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
                     </tr>
                     {% endfor %}
                 </tbody>
