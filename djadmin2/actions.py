@@ -40,13 +40,21 @@ class BaseListAction(object):
         raise NotImplementedError("List action classes require a description attribute.")
 
     def render_or_none(self):
+        """ Returns either:
+                Http response (anything)
+                None object (shows the list)
+        """
         raise NotImplementedError("List action classes require a render_or_none method that returns either a None or HTTP response object.")
 
     @property
     def template_for_display_nested_response(self):
+        """ This is a required attribute for when using the `display_nested_response` method. """
         raise NotImplementedError("List actions classes using display_nested_response require a template")
 
     def display_nested_response(self):
+        """ Utility method when you want to display nested objects
+            (such as during a bulk update/delete
+        """
         def _format_callback(obj):
             opts = utils.model_options(obj)
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
