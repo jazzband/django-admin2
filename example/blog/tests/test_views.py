@@ -47,10 +47,10 @@ class PostListTest(BaseIntegrationTest):
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_delete_selected_post_none_selected(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        Post.objects.create(title="a_post_title", body="body")
         params = {'action': 'DeleteSelectedAction'}
-        response = self.client.post(reverse("admin2:blog_post_index"), params)
-        self.assertInHTML("Items must be selected in order to perform actions on them. No items have been changed.")
+        response = self.client.post(reverse("admin2:blog_post_index"), params, follow=True)
+        self.assertContains(response, "Items must be selected in order to perform actions on them. No items have been changed.")
 
 
 class PostDetailViewTest(BaseIntegrationTest):
@@ -164,7 +164,7 @@ class PostDeleteActionTest(BaseIntegrationTest):
         }
         response = self.client.post(reverse("admin2:blog_post_index"),
                                     post_data, follow=True)
-        self.assertContains(response, "Successfully deleted 2 posts")
+        self.assertContains(response, "Successfully deleted 2 post")
 
 
 class TestAuthViews(TestCase):

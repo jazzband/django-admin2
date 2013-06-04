@@ -36,11 +36,9 @@ class BaseListAction(object):
                 % (self.options.app_label, self.options.object_name.lower())
         self.has_permission = request.user.has_perm(self.permission_name)
 
-        self.item_count = queryset.count()
+        self.item_count = len(queryset)
 
-        if self.item_count == 0:
-            objects_name = self.options.verbose_name
-        elif self.item_count == 1:
+        if self.item_count <= 1:
             objects_name = self.options.verbose_name
         else:
             objects_name = self.options.verbose_name_plural
