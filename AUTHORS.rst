@@ -3,7 +3,7 @@ CONTRIBUTORS
 Project Lead
 ===============
 
-* Daniel Greenfeld <pydanny@gmail.com>
+* Daniel Greenfeld (@pydanny / <pydanny@gmail.com>)
 
 Developers
 =============
@@ -20,3 +20,4 @@ Developers
 * Allison Kapture (@akapture)
 * Roman Gladkov (@d1ffuz0r / d1fffuz0r@gmail.com)
 * Pau Rosello Van Schoor (@paurosello)
+* Wade Austin (@waustin)
