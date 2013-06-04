@@ -46,6 +46,12 @@ class PostListTest(BaseIntegrationTest):
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
+    def test_delete_selected_post_none_selected(self):
+        post = Post.objects.create(title="a_post_title", body="body")
+        params = {'action': 'DeleteSelectedAction'}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertInHTML("Items must be selected in order to perform actions on them. No items have been changed.")
+
 
 class PostDetailViewTest(BaseIntegrationTest):
     def test_view_ok(self):
