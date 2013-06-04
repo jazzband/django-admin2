@@ -43,7 +43,7 @@ class BaseListAction(object):
 
     @property
     def permission_name(self):
-        return NotImplemented
+        return None
 
     def description(self):
         return NotImplemented
@@ -55,7 +55,7 @@ class BaseListAction(object):
         return NotImplemented
 
     def __call__(self):
-        if not self.request.user.has_perm(self.permission_name):
+        if self.permission_name and not self.request.user.has_perm(self.permission_name):
             message = _("Permission to '%s' denied" % force_text(self.description))
             messages.add_message(self.request, messages.INFO, message)
             return None
@@ -74,6 +74,11 @@ class DeleteSelectedAction(BaseListAction):
 
     # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
     template = "admin2/bootstrap/actions/delete_selected_confirmation.html"
+
+    @property
+    def permission_name(self):
+        return '%s.delete.%s' \
+                % (self.options.app_label, self.options.object_name.lower())
 
     def get_response(self):
         if self.request.POST.get('confirmed'):
