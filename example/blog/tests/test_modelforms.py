@@ -201,38 +201,70 @@ class GetFloppyformWidgetTest(TestCase):
         self.assertTrue(new_widget.check_test is check_test)
 
     def test_select_widget(self):
+        choices = (
+            ('draft', 'Draft'),
+            ('public', 'Public'),
+        )
+
         self.assertExpectWidget(
             forms.widgets.Select(),
             floppyforms.widgets.Select)
 
-        widget = forms.widgets.Select()
+        widget = forms.widgets.Select(choices=choices)
         widget.allow_multiple_selected = True
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.Select,
-            ('allow_multiple_selected',))
+            ('choices', 'allow_multiple_selected',))
 
     def test_nullbooleanselect_widget(self):
         self.assertExpectWidget(
             forms.widgets.NullBooleanSelect(),
-            floppyforms.widgets.NullBooleanSelect)
+            floppyforms.widgets.NullBooleanSelect,
+            ('choices', 'allow_multiple_selected',))
+        
+        widget = forms.widgets.NullBooleanSelect()
+        widget.choices = list(widget.choices)
+
+        value, label = widget.choices[0]
+        widget.choices[0] = value, 'Maybe'
+
+        self.assertExpectWidget(
+            widget,
+            floppyforms.widgets.NullBooleanSelect,
+            ('choices', 'allow_multiple_selected',))
 
     def test_selectmultiple_widget(self):
+        choices = (
+            ('draft', 'Draft'),
+            ('public', 'Public'),
+        )
+
         self.assertExpectWidget(
             forms.widgets.SelectMultiple(),
             floppyforms.widgets.SelectMultiple)
 
-        widget = forms.widgets.SelectMultiple()
+        widget = forms.widgets.SelectMultiple(choices=choices)
         widget.allow_multiple_selected = False
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.SelectMultiple,
-            ('allow_multiple_selected',))
+            ('choices', 'allow_multiple_selected',))
 
     def test_radioselect_widget(self):
+        choices = (
+            ('draft', 'Draft'),
+            ('public', 'Public'),
+        )
+
         self.assertExpectWidget(
             forms.widgets.RadioSelect(),
             floppyforms.widgets.RadioSelect)
+
+        self.assertExpectWidget(
+            forms.widgets.RadioSelect(choices=choices),
+            floppyforms.widgets.RadioSelect,
+            ('choices', 'allow_multiple_selected',))
 
         widget = forms.widgets.RadioSelect(renderer='custom renderer')
         # don't overwrite widget with floppyform widget if a custom renderer
@@ -243,9 +275,19 @@ class GetFloppyformWidgetTest(TestCase):
             forms.widgets.RadioSelect)
 
     def test_checkboxselectmultiple_widget(self):
+        choices = (
+            ('draft', 'Draft'),
+            ('public', 'Public'),
+        )
+
         self.assertExpectWidget(
             forms.widgets.CheckboxSelectMultiple(),
             floppyforms.widgets.CheckboxSelectMultiple)
+
+        self.assertExpectWidget(
+            forms.widgets.CheckboxSelectMultiple(choices=choices),
+            floppyforms.widgets.CheckboxSelectMultiple,
+            ('choices', 'allow_multiple_selected',))
 
     def test_multi_widget(self):
         self.assertExpectWidget(

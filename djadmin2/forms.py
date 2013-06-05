@@ -56,7 +56,7 @@ def _create_radioselect(original):
         return original
     create_new_widget = _create_widget(
         floppyforms.widgets.RadioSelect,
-        ('allow_multiple_selected',))
+        ('choices', 'allow_multiple_selected',))
     return create_new_widget(original)
 
 
@@ -130,19 +130,21 @@ _django_to_floppyforms_widget = {
     django.forms.widgets.Select:
         _create_widget(
             floppyforms.widgets.Select,
-            ('allow_multiple_selected',)),
+            ('choices', 'allow_multiple_selected',)),
     django.forms.widgets.NullBooleanSelect:
         _create_widget(
             floppyforms.widgets.NullBooleanSelect,
-            ('allow_multiple_selected',)),
+            ('choices', 'allow_multiple_selected',)),
     django.forms.widgets.SelectMultiple:
         _create_widget(
             floppyforms.widgets.SelectMultiple,
-            ('allow_multiple_selected',)),
+            ('choices', 'allow_multiple_selected',)),
     django.forms.widgets.RadioSelect:
         _create_radioselect,
     django.forms.widgets.CheckboxSelectMultiple:
-        _create_widget(floppyforms.widgets.CheckboxSelectMultiple),
+        _create_widget(
+            floppyforms.widgets.CheckboxSelectMultiple,
+            ('choices', 'allow_multiple_selected',)),
     django.forms.widgets.MultiWidget:
         _create_widget(
             floppyforms.widgets.MultiWidget,
