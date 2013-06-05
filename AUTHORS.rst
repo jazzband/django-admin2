@@ -21,3 +21,4 @@ Developers
 * Roman Gladkov (@d1ffuz0r / d1fffuz0r@gmail.com)
 * Pau Rosello Van Schoor (@paurosello)
 * Wade Austin (@waustin)
+* the5fire (@the5fire)
