@@ -3,7 +3,6 @@ import djadmin2
 from .models import Poll, Choice
 
 
-# class ChoiceInline(admin.StackedInline):
 class ChoiceInline(djadmin2.Admin2Inline):
     model = Choice
     extra = 3
@@ -16,7 +15,9 @@ class PollAdmin(djadmin2.ModelAdmin2):
     ]
     inlines = [ChoiceInline]
     list_display = ('question', 'pub_date', 'was_published_recently')
+    list_filter = ['pub_date']
+    search_fields = ['question']
+    date_hierarchy = 'pub_date'
 
 
 djadmin2.default.register(Poll, PollAdmin)
-djadmin2.default.register(Choice)
