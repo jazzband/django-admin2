@@ -2,3 +2,4 @@ include README.rst
 include LICENSE
 include AUTHORS.rst
 include MANIFEST.in
+recursive-include djadmin2 *.html *.css *.js
