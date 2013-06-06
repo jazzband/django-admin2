@@ -131,3 +131,32 @@ class PollDeleteViewTest(BaseIntegrationTest):
                                             args=(poll.pk, )))
         self.assertRedirects(response, reverse("admin2:polls_poll_index"))
         self.assertFalse(Poll.objects.filter(pk=poll.pk).exists())
+
+
+class PollDeleteActionTest(BaseIntegrationTest):
+    """
+    Tests the behaviour of the 'Delete selected items' action.
+    """
+    def test_confirmation_page(self):
+        p1 = Poll.objects.create(question="some question", pub_date=timezone.now())
+        p2 = Poll.objects.create(question="some question", pub_date=timezone.now())
+        params = {
+            'action': 'DeleteSelectedAction',
+            'selected_model_pk': [p1.pk, p2.pk]
+        }
+        response = self.client.post(reverse("admin2:polls_poll_index"),
+                                    params)
+        self.assertContains(response, p1.question)
+        self.assertContains(response, p2.question)
+
+    def test_results_page(self):
+        p1 = Poll.objects.create(question="some question", pub_date=timezone.now())
+        p2 = Poll.objects.create(question="some question", pub_date=timezone.now())
+        params = {
+            'action': 'DeleteSelectedAction',
+            'selected_model_pk': [p1.pk, p2.pk],
+            'confirmed': 'yes'
+        }
+        response = self.client.post(reverse("admin2:polls_poll_index"),
+                                    params, follow=True)
+        self.assertContains(response, "Successfully deleted 2 polls")
