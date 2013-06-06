@@ -59,3 +59,60 @@ class PollDetailViewTest(BaseIntegrationTest):
         poll = Poll.objects.create(question="some question", pub_date=timezone.now())
         response = self.client.get(reverse("admin2:polls_poll_detail", args=(poll.pk, )))
         self.assertContains(response, poll.question)
+
+
+class PollCreateViewTest(BaseIntegrationTest):
+    def test_view_ok(self):
+        response = self.client.get(reverse("admin2:polls_poll_create"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_poll(self):
+        params = {
+            "question": "some question",
+            "pub_date": "2012-01-01",
+            "choice_set-TOTAL_FORMS": u'0',
+            "choice_set-INITIAL_FORMS": u'0',
+            "choice_set-MAX_NUM_FORMS": u'',
+        }
+        response = self.client.post(reverse("admin2:polls_poll_create"),
+                                    params,
+                                    follow=True)
+        self.assertTrue(Poll.objects.filter(question="some question").exists())
+        self.assertRedirects(response, reverse("admin2:polls_poll_index"))
+
+    def test_save_and_add_another_redirects_to_create(self):
+        """
+        Tests that choosing 'Save and add another' from the model create
+        page redirects the user to the model create page.
+        """
+        params = {
+            "question": "some question",
+            "pub_date": "2012-01-01",
+            "choice_set-TOTAL_FORMS": u'0',
+            "choice_set-INITIAL_FORMS": u'0',
+            "choice_set-MAX_NUM_FORMS": u'',
+            "_addanother": ""
+        }
+        response = self.client.post(reverse("admin2:polls_poll_create"),
+                                    params)
+        self.assertTrue(Poll.objects.filter(question="some question").exists())
+        self.assertRedirects(response, reverse("admin2:polls_poll_create"))
+
+    def test_save_and_continue_editing_redirects_to_update(self):
+        """
+        Tests that choosing "Save and continue editing" redirects
+        the user to the model update form.
+        """
+        params = {
+            "question": "some question",
+            "pub_date": "2012-01-01",
+            "choice_set-TOTAL_FORMS": u'0',
+            "choice_set-INITIAL_FORMS": u'0',
+            "choice_set-MAX_NUM_FORMS": u'',
+            "_continue": ""
+        }
+        response = self.client.post(reverse("admin2:polls_poll_create"),
+                                    params)
+        poll = Poll.objects.get(question="some question")
+        self.assertRedirects(response, reverse("admin2:polls_poll_update",
+                                               args=(poll.pk, )))
