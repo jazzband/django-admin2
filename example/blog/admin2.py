@@ -35,6 +35,7 @@ class CommentInline(djadmin2.Admin2Inline):
 
 class PostAdmin(djadmin2.ModelAdmin2):
     inlines = [CommentInline]
+    search_fields = ('title', 'body')
 
 
 class UserAdmin2(djadmin2.ModelAdmin2):
