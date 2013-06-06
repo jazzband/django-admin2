@@ -52,3 +52,10 @@ class PollListTest(BaseIntegrationTest):
         params = {'action': 'DeleteSelectedAction'}
         response = self.client.post(reverse("admin2:polls_poll_index"), params, follow=True)
         self.assertContains(response, "Items must be selected in order to perform actions on them. No items have been changed.")
+
+
+class PollDetailViewTest(BaseIntegrationTest):
+    def test_view_ok(self):
+        poll = Poll.objects.create(question="some question", pub_date=timezone.now())
+        response = self.client.get(reverse("admin2:polls_poll_detail", args=(poll.pk, )))
+        self.assertContains(response, poll.question)
