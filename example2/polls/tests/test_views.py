@@ -116,3 +116,18 @@ class PollCreateViewTest(BaseIntegrationTest):
         poll = Poll.objects.get(question="some question")
         self.assertRedirects(response, reverse("admin2:polls_poll_update",
                                                args=(poll.pk, )))
+
+
+class PollDeleteViewTest(BaseIntegrationTest):
+    def test_view_ok(self):
+        poll = Poll.objects.create(question="some question", pub_date=timezone.now())
+        response = self.client.get(reverse("admin2:polls_poll_delete",
+                                           args=(poll.pk, )))
+        self.assertContains(response, poll.question)
+
+    def test_delete_poll(self):
+        poll = Poll.objects.create(question="some question", pub_date=timezone.now())
+        response = self.client.post(reverse("admin2:polls_poll_delete",
+                                            args=(poll.pk, )))
+        self.assertRedirects(response, reverse("admin2:polls_poll_index"))
+        self.assertFalse(Poll.objects.filter(pk=poll.pk).exists())
