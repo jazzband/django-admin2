@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 
@@ -22,6 +23,31 @@ class AdminIndexTest(BaseIntegrationTest):
     def test_view_ok(self):
         response = self.client.get(reverse("admin2:dashboard"))
         self.assertContains(response, reverse("admin2:blog_post_index"))
+
+class UserListTest(BaseIntegrationTest):
+    def test_search_users_m2m_group(self):
+        # This test should cause the distinct search path to exectue
+        group = Group.objects.create(name="Test Group")
+        self.user.groups.add(group)
+
+        params = {"q":"group"}
+        response = self.client.get(reverse("admin2:auth_user_index"), params)
+        self.assertContains(response, 'user')
+
+class CommentListTest(BaseIntegrationTest):
+    def test_search_comments(self):
+        # Test search across Foriegn Keys
+        post_1 = Post.objects.create(title="post_1_title", body="body")
+        post_2 = Post.objects.create(title="post_2_title", body="another body")
+        Comment.objects.create(body="comment_post_1_a", post=post_1)
+        Comment.objects.create(body="comment_post_1_b", post=post_1)
+        Comment.objects.create(body="comment_post_2", post=post_2)
+
+        params = {"q":"post_1_title"}
+        response = self.client.get(reverse("admin2:blog_comment_index"), params)
+        self.assertContains(response, "comment_post_1_a")
+        self.assertContains(response, "comment_post_1_b")
+        self.assertNotContains(response, "comment_post_2")
 
 
 class PostListTest(BaseIntegrationTest):
@@ -51,6 +77,18 @@ class PostListTest(BaseIntegrationTest):
         params = {'action': 'DeleteSelectedAction'}
         response = self.client.post(reverse("admin2:blog_post_index"), params, follow=True)
         self.assertContains(response, "Items must be selected in order to perform actions on them. No items have been changed.")
+
+    def test_search_posts(self):
+        Post.objects.create(title="a_post_title", body="body")
+        Post.objects.create(title="another_post_title", body="body")
+        Post.objects.create(title="post_with_keyword_in_body", body="another post body")
+        params = {"q":"another"}
+        response = self.client.get(reverse("admin2:blog_post_index"), params)
+        self.assertContains(response, "another_post_title")
+        self.assertContains(response, "post_with_keyword_in_body")
+        self.assertNotContains(response, "a_post_title")
+
+
 
 
 class PostDetailViewTest(BaseIntegrationTest):

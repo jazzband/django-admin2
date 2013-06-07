@@ -1,6 +1,26 @@
 from django.db.models import ProtectedError
+from django.db.models import ManyToManyRel
 from django.db.models.deletion import Collector
+from django.db.models.related import RelatedObject
 
+
+def lookup_needs_distinct(opts, lookup_path):
+    """
+    Returns True if 'distinct()' should be used to query the given lookup path.
+
+    This is adopted from the Django core. django-admin2 mandates that code
+    doesn't depend on imports from django.contrib.admin.
+
+    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L20
+    """
+    field_name = lookup_path.split('__', 1)[0]
+    field = opts.get_field_by_name(field_name)[0]
+    if ((hasattr(field, 'rel') and
+         isinstance(field.rel, ManyToManyRel)) or
+        (isinstance(field, RelatedObject) and
+         not field.field.unique)):
+         return True
+    return False
 
 def model_options(model):
     """
