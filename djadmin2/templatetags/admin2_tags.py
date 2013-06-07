@@ -86,8 +86,11 @@ def for_object(permissions, obj):
 
 
 @register.simple_tag
-def get_attr(record, attribute):
+def get_attr(record, attribute_name):
     """ Allows dynamic fetching of model attributes in templates """
-    if attribute == "__str__":
+    if attribute_name == "__str__":
         return record.__unicode__()
-    return getattr(record, attribute)
+    attribute = getattr(record, attribute_name)
+    if callable(attribute):
+        return attribute()
+    return attribute
