@@ -4,12 +4,15 @@ from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.db import models
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.views import generic
 
 import extra_views
+
+import operator
 
 from . import permissions, utils
 from .forms import AdminAuthenticationForm
@@ -70,10 +73,56 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         else:
             return response
 
+    def get_search_results(self, queryset, search_term):
+        # Lifted from django.contrib.admin
+        def construct_search(field_name):
+            if field_name.startswith('^'):
+                return "%s__istartswith" % field_name[1:]
+            elif field_name.startswith('='):
+                return "%s__iexact" % field_name[1:]
+            elif field_name.startswith('@'):
+                return "%s__search" % field_name[1:]
+            else:
+                return "%s__icontains" % field_name
+
+
+        use_distinct = False
+
+        orm_lookups = [construct_search(str(search_field))
+                       for search_field in self.model_admin.search_fields]
+
+        for bit in search_term.split():
+            or_queries = [models.Q(**{orm_lookup: bit})
+                          for orm_lookup in orm_lookups]
+            queryset = queryset.filter(reduce(operator.or_, or_queries))
+
+        if not use_distinct:
+            for search_spec in orm_lookups:
+                opts = utils.model_options(self.get_model())
+                if utils.lookup_needs_distinct(opts, search_spec):
+                    use_distinct = True
+                    break
+
+        return queryset, use_distinct
+
+    def get_queryset(self):
+        queryset = super(ModelListView, self).get_queryset()
+        search_term = self.request.GET.get('q', None)
+        search_use_distinct = False
+        if self.model_admin.search_fields and search_term:
+            queryset, search_use_distinct = self.get_search_results(queryset, search_term)
+
+        if search_use_distinct:
+            return queryset.distinct()
+        else:
+            return queryset
+
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
         context['actions'] = self.get_actions().values()
+        context['search_fields'] = self.get_search_fields()
+        context['search_term'] = self.request.GET.get('q', '')
         return context
 
     def get_success_url(self):
@@ -82,6 +131,9 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
     def get_actions(self):
         return self.model_admin.get_list_actions()
+
+    def get_search_fields(self):
+        return self.model_admin.search_fields
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
