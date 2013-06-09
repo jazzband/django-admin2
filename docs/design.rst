@@ -20,6 +20,7 @@ Rather than creating yet another project that skins ``django.contrib.admin``, ou
 While the internal API for the backend may be drastically different, the end goal is to achieve relative parity with existing functionality in an extendable way:
 
 * Relative functional parity with ``django.contrib.admin``. This is our desire to replicate much of the existing functionality, but not have to worry too much about coding ourselves into an overly-architected corner.
+* Ability handle well under high load situations with many concurrent users. This is diametrically opposite from `django.contrib.admin` which doesn't work well in this regard.
 * Extensible presentation and data views in such a way that it does not violate Constraint #4. To cover many cases, we will provide instructions on how to use the REST API to fetch data rather than create overly complex backend code.
 * Create an architecture that follows the "*Principle of least surprise*". Things should behave as you expect them to, and you should be blocked from making dangerous mistakes. This is the reason for the ImmutableAdmin type.
 
