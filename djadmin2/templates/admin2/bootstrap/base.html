@@ -12,6 +12,7 @@
         {% endblock css %}
     </head>
     <body>
+        {% block navbar %}
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
@@ -48,12 +49,15 @@
                 </div>
             </div>
         </div>
+        {% endblock navbar %}
 
+        {% block breacrumbs %}
         <ul class="breadcrumb">
             {% block breadcrumbs %}
             <li class="active">Home</li>
             {% endblock breadcrumbs %}
         </ul>
+        {% endblock breacrumbs %}
 
         {% if messages %}
         <ul class="messages">
