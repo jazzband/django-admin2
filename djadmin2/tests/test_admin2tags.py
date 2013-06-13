@@ -74,3 +74,25 @@ class TagsTests(TestCase):
             admin2_tags.get_attr(Klass(), "hello"),
             "hello"
         )
+
+    def test_get_attr_str(self):
+        class Klass(object):
+            def __str__(self):
+                return "str"
+
+            def __unicode__(self):
+                return "unicode"
+
+        self.assertEquals(
+            admin2_tags.get_attr(Klass(), "__str__"),
+            "unicode"
+        )
+
+    def test_get_attr(self):
+        class Klass(object):
+            attr = "value"
+
+        self.assertEquals(
+            admin2_tags.get_attr(Klass(), "attr"),
+            "value"
+        )
