@@ -63,11 +63,12 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
         #  If action_callable is a class subclassing from actions.BaseListAction
         #       then we generate the callable object.
-        if hasattr(action_callable, "render_or_none"):
-            response = action_callable(request, queryset)()
+        if hasattr(action_callable, "process_queryset"):
+            response = action_callable.as_view(queryset=queryset)(request)
         else:
             # generate the reponse if a function.
             response = action_callable(request, queryset)
+
         if response is None:
             return HttpResponseRedirect(self.get_success_url())
         else:
@@ -84,7 +85,6 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 return "%s__search" % field_name[1:]
             else:
                 return "%s__icontains" % field_name
-
 
         use_distinct = False
 

@@ -1,12 +1,12 @@
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
-from django.template.response import TemplateResponse
+from django.views.generic import TemplateView
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy
 from django.utils.translation import ugettext as _
 
-from . import utils
+from . import permissions, utils
+from .viewmixins import AdminModel2Mixin
 
 
 def get_description(action):
@@ -16,45 +16,55 @@ def get_description(action):
         return capfirst(action.__name__.replace('_', ' '))
 
 
-class BaseListAction(object):
+class BaseListAction(AdminModel2Mixin, TemplateView):
 
-    def __init__(self, request, queryset):
-        self.request = request
+    permission_classes = (permissions.IsStaffPermission,)
+
+    empty_message = 'Items must be selected in order to perform actions on them. No items have been changed.'
+    success_message = 'Successfully deleted %d %s'
+
+    queryset = None
+
+    def __init__(self, queryset, *args, **kwargs):
         self.queryset = queryset
         self.model = queryset.model
-        self.options = utils.model_options(self.model)
+
+        options = utils.model_options(self.model)
+
+        self.app_label = options.app_label
+        self.model_name = options.module_name
 
         self.item_count = len(queryset)
 
         if self.item_count <= 1:
-            objects_name = self.options.verbose_name
+            objects_name = options.verbose_name
         else:
-            objects_name = self.options.verbose_name_plural
+            objects_name = options.verbose_name_plural
         self.objects_name = unicode(objects_name)
 
-    @property
-    def permission_name(self):
-        return None
+        super(BaseListAction, self).__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        """ Replaced `get_queryset` from `AdminModel2Mixin`"""
+        return self.queryset
 
     def description(self):
-        raise NotImplementedError("List action classes require a description attribute.")
-
-    def render_or_none(self):
-        """ Returns either:
-                Http response (anything)
-                None object (shows the list)
-        """
-        raise NotImplementedError("List action classes require a render_or_none method that returns either a None or HTTP response object.")
+        raise NotImplementedError("List action classes require"
+                                  " a description attribute.")
 
     @property
-    def template_for_display_nested_response(self):
-        """ This is a required attribute for when using the `display_nested_response` method. """
-        raise NotImplementedError("List actions classes using display_nested_response require a template")
+    def default_template_name(self):
+        raise NotImplementedError(
+            "List actions classes using display_nested_response"
+            " require a template"
+        )
 
-    def display_nested_response(self):
+    def get_context_data(self, **kwargs):
         """ Utility method when you want to display nested objects
-            (such as during a bulk update/delete
+            (such as during a bulk update/delete)
         """
+        context = super(BaseListAction, self).get_context_data()
+
         def _format_callback(obj):
             opts = utils.model_options(obj)
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
@@ -63,27 +73,41 @@ class BaseListAction(object):
         collector = utils.NestedObjects(using=None)
         collector.collect(self.queryset)
 
-        context = {
-            'queryset': self.queryset,
+        context.update({
+            'view': self,
             'objects_name': self.objects_name,
+            'queryset': self.queryset,
             'deletable_objects': collector.nested(_format_callback),
-        }
-        return TemplateResponse(self.request, self.template_for_display_nested_response, context)
+        })
 
-    def __call__(self):
-        # We check whether the user has permission to delete the objects in the
-        # queryset.
-        if self.permission_name and not self.request.user.has_perm(self.permission_name):
-            message = _("Permission to '%s' denied" % force_text(self.description))
-            messages.add_message(self.request, messages.INFO, message)
-            return None
+        return context
 
+    def get(self, request):
         if self.item_count > 0:
-            return self.render_or_none()
+            return super(BaseListAction, self).get(request)
+
+        message = _(self.empty_message)
+        messages.add_message(request, messages.INFO, message)
+
+        return None
+
+    def post(self, request):
+        if request.POST.get('confirmed'):
+            if self.process_queryset() is None:
+
+                message = _(self.success_message % (
+                    self.item_count, self.objects_name)
+                )
+                messages.add_message(request, messages.INFO, message)
+
+                return None
         else:
-            message = _("Items must be selected in order to perform actions on them. No items have been changed.")
-            messages.add_message(self.request, messages.INFO, message)
-            return None
+            # The user has not confirmed that they want to delete the objects, so
+            # render a template asking for their confirmation.
+            return self.get(request)
+
+    def process_queryset(self):
+        raise NotImplementedError('Must be provided to do some actions with queryset')
 
 
 class DeleteSelectedAction(BaseListAction):
@@ -91,31 +115,13 @@ class DeleteSelectedAction(BaseListAction):
     # `get_deleted_objects` in contrib.admin.util for how this is currently
     # done.  (Hint: I think we can do better.)
 
+    default_template_name = "actions/delete_selected_confirmation.html"
+
     description = ugettext_lazy("Delete selected items")
+    permission_classes = BaseListAction.permission_classes + (
+        permissions.ModelDeletePermission,
+    )
 
-    @property
-    def permission_name(self):
-        return '%s.delete.%s' \
-                % (self.options.app_label, self.options.object_name.lower())
-
-    def render_or_none(self):
-
-        if self.request.POST.get('confirmed'):
-            # The user has confirmed that they want to delete the objects.
-            num_objects_deleted = len(self.queryset)
-            self.queryset.delete()
-            message = _("Successfully deleted %d %s" % \
-                    (num_objects_deleted, self.objects_name))
-            messages.add_message(self.request, messages.INFO, message)
-            return None
-        else:
-            # The user has not confirmed that they want to delete the objects, so
-            # render a template asking for their confirmation.
-            return self.display_nested_response()
-
-    @property
-    def template_for_display_nested_response(self):
-        # TODO - power this off the ADMIN2_THEME_DIRECTORY setting
-        return "admin2/bootstrap/actions/delete_selected_confirmation.html"
-
-
+    def process_queryset(self):
+        # The user has confirmed that they want to delete the objects.
+        self.get_queryset().delete()
