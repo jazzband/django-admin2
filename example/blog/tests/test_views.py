@@ -89,6 +89,42 @@ class PostListTest(BaseIntegrationTest):
         self.assertNotContains(response, "a_post_title")
 
 
+class PostListTestCustomAction(BaseIntegrationTest):
+
+    def test_publish_action_displayed_in_list(self):
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="CustomPublishAction">Publish selected items</a>', response.content)
+
+    def test_publish_selected_items(self):
+        post = Post.objects.create(title="a_post_title",
+                                   body="body",
+                                   published=False)
+        self.assertEqual(Post.objects.filter(published=True).count(), 0)
+
+        params = {'action': 'CustomPublishAction',
+                  'selected_model_pk': str(post.pk),
+                  'confirmed': 'yes'}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertRedirects(response, reverse("admin2:blog_post_index"))
+
+        self.assertEqual(Post.objects.filter(published=True).count(), 1)
+
+    def test_unpublish_action_displayed_in_list(self):
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="unpublish_items">Unpublish selected items</a>', response.content)
+
+    def test_unpublish_selected_items(self):
+        post = Post.objects.create(title="a_post_title",
+                                   body="body",
+                                   published=True)
+        self.assertEqual(Post.objects.filter(published=True).count(), 1)
+
+        params = {'action': 'unpublish_items',
+                  'selected_model_pk': str(post.pk)}
+        response = self.client.post(reverse("admin2:blog_post_index"), params)
+        self.assertRedirects(response, reverse("admin2:blog_post_index"))
+
+        self.assertEqual(Post.objects.filter(published=True).count(), 0)
 
 
 class PostDetailViewTest(BaseIntegrationTest):

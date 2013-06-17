@@ -43,7 +43,7 @@ The basic workflow of Django’s admin is, in a nutshell, “select an object, t
 
 In these cases, Django’s admin lets you write and register “actions” – simple functions that get called with a list of objects selected on the change list page.
 
-If you look at any change list in the admin, you’ll see this feature in action; Django ships with a “delete selected objects” action available to all models.  Using our sample models, let's pretend we wrote a blog article about Django and our mother put in a whole bunch of embarressing comments. Rather than cherry-pick the comments, we want to delete the whole batch. 
+If you look at any change list in the admin, you’ll see this feature in action; Django ships with a “delete selected objects” action available to all models.  Using our sample models, let's pretend we wrote a blog article about Django and our mother put in a whole bunch of embarressing comments. Rather than cherry-pick the comments, we want to delete the whole batch.
 
 In our blog/admin.py module we write:
 
@@ -54,11 +54,23 @@ In our blog/admin.py module we write:
     from .models import Post, Comment
 
     class DeleteAllComments(djadmin2.actions.BaseListAction):
-        description = "Delete selected items"
-        template = "blog/actions/delete_all_comments_confirmation.html
+
+        description = 'Delete selected items'
+        default_template_name = 'actions/delete_all_comments_confirmation.html'
+        success_message = 'Successfully deleted %d %s' # first argument - items count, second - verbose_name[_plural]
+
+        def process_query(self):
+            """Every action must provide this method"""
+            self.get_queryset().delete()
+
+
+    def custom_function_action(request, queryset):
+        print(queryset.count())
+
+    custom_function_action.description = 'Do other action'
 
     class PostAdmin(djadmin2.ModelAdmin2):
-        actions = [DeleteAllComments]
+        actions = [DeleteAllComments, custom_function_action]
 
     djadmin2.default.register(Post, PostAdmin)
     djadmin2.default.register(Comment)
