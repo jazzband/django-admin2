@@ -27,14 +27,14 @@ Local Installation
 1. Create a **virtualenv**. Activate it.
 2. cd into django-admin2
 3. type ``$ pip install -r requirements.txt``
+4. type ``$ python setup.py develop`` 
 
 Try the example projects
 --------------------------
 
 1. cd into example/ (or example2/)
-2. create a symbolic link to djadmin2: `ln -s ../djadmin2`
-3. create the database: `python manage.py syncdb`
-4. run the dev server: `python manage.py runserver`
+2. create the database: `python manage.py syncdb`
+3. run the dev server: `python manage.py runserver`
 
 
 Issues!
