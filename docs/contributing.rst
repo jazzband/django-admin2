@@ -28,6 +28,14 @@ Local Installation
 2. cd into django-admin2
 3. type ``$ pip install -r requirements.txt``
 
+Try the example projects
+--------------------------
+
+1. cd into example/ (or example2/)
+2. create a symbolic link to djadmin2: `ln -s ../djadmin2`
+3. create the database: `python manage.py syncdb`
+4. run the dev server: `python manage.py runserver`
+
 
 Issues!
 =======
