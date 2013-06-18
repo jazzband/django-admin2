@@ -24,7 +24,7 @@ If you have git-scm installed, you now clone your git repo using the following c
 Local Installation
 -------------------------
 
-1. Create a **virtualenv**. Activate it.
+1. Create a virtualenv_ (or use virtualenvwrapper_). Activate it.
 2. cd into django-admin2
 3. type ``$ pip install -r requirements.txt``
 4. type ``$ python setup.py develop`` 
@@ -33,9 +33,11 @@ Try the example projects
 --------------------------
 
 1. cd into example/ (or example2/)
-2. create the database: `python manage.py syncdb`
-3. run the dev server: `python manage.py runserver`
+2. create the database: ``$ python manage.py syncdb``
+3. run the dev server: ``$ python manage.py runserver``
 
+.. _virtualenv: http://www.virtualenv.org/en/latest/
+.. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.org/en/latest/ 
 
 Issues!
 =======
