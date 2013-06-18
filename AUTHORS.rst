@@ -18,10 +18,11 @@ Developers
 * Chris Lawlor (@chrislawlor)
 * Ben Tappin <ben@mrben.co.uk>
 * Allison Kapture (@akapture)
-* Roman Gladkov (@d1ffuz0r / d1fffuz0r@gmail.com)
+* Roman Gladkov (@d1ffuz0r / <d1fffuz0r@gmail.com>)
 * Pau Rosello Van Schoor (@paurosello)
 * Wade Austin (@waustin)
 * the5fire (@the5fire)
-* Andrews Medina (@andrewsmedina / andrewsmedina@gmail.com)
+* Andrews Medina (@andrewsmedina / <andrewsmedina@gmail.com>)
 * Wade Austin (@waustin)
 * Douglas Miranda
+* Ethan Soergel (@esoergel / <esoergel@gmail.com>)
