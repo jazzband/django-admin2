@@ -24,5 +24,5 @@ Developers
 * the5fire (@the5fire)
 * Andrews Medina (@andrewsmedina / <andrewsmedina@gmail.com>)
 * Wade Austin (@waustin)
-* Douglas Miranda
+* Douglas Miranda (@douglasmiranda / <douglasmirandasilva@gmail.com>)
 * Ethan Soergel (@esoergel / <esoergel@gmail.com>)
