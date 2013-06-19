@@ -59,7 +59,7 @@ In our blog/admin.py module we write:
         default_template_name = 'actions/delete_all_comments_confirmation.html'
         success_message = 'Successfully deleted %d %s' # first argument - items count, second - verbose_name[_plural]
 
-        def process_query(self):
+        def process_queryset(self):
             """Every action must provide this method"""
             self.get_queryset().delete()
 
