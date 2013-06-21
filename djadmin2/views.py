@@ -19,6 +19,13 @@ from .forms import AdminAuthenticationForm
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
+class AdminView(object):
+
+    def __init__(self, url, view):
+        self.url = url
+        self.view = view
+
+
 class IndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "index.html"
     registry = None
