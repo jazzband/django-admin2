@@ -20,12 +20,12 @@ logger = logging.getLogger('djadmin2')
 class ModelAdminBase2(type):
 
     def __new__(cls, name, bases, attrs):
-        view_list = []
-        for attr in attrs.values():
-            if isinstance(attr, views.AdminView):
-                view_list.append(attr)
-        attrs['views'] = view_list
-        return super(ModelAdminBase2, cls).__new__(cls, name, bases, attrs)
+        new_class = super(ModelAdminBase2, cls).__new__(cls, name,
+                                                        bases, attrs)
+        view_list = [attr for attr in attrs.values()
+                     if isinstance(attr, views.AdminView)]
+        setattr(new_class, 'views', view_list)
+        return new_class
 
 
 class ModelAdmin2(object):
