@@ -17,11 +17,23 @@ from .forms import modelform_factory
 logger = logging.getLogger('djadmin2')
 
 
+class ModelAdminBase2(type):
+
+    def __new__(cls, name, bases, attrs):
+        view_list = []
+        for attr in attrs.values():
+            if isinstance(attr, views.AdminView):
+                view_list.append(attr)
+        attrs['views'] = view_list
+        return super(ModelAdminBase2, cls).__new__(cls, name, bases, attrs)
+
+
 class ModelAdmin2(object):
     """
     Warning: This class is targeted for reduction.
                 It's bloated and ugly.
     """
+    __metaclass__ = ModelAdminBase2
 
     list_display = ('__str__',)
     list_display_links = ()
@@ -75,6 +87,7 @@ class ModelAdmin2(object):
     update_view = views.ModelEditFormView
     detail_view = views.ModelDetailView
     delete_view = views.ModelDeleteView
+    views = []
 
     # API configuration
     api_serializer_class = None

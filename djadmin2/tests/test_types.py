@@ -1,6 +1,8 @@
 from django.test import TestCase
+from django.views.generic import View
 
-from ..types import immutable_admin_factory
+from ..types import ModelAdmin2, immutable_admin_factory
+from ..views import AdminView
 
 
 class ModelAdmin(object):
@@ -34,3 +36,18 @@ class ImmutableAdminFactoryTests(TestCase):
         with self.assertRaises(AttributeError):
             # 'ImmutableAdmin' object has no attribute 'd'
             self.immutable_admin.d
+
+
+class ModelAdminTest(TestCase):
+
+    def setUp(self):
+        class MyModelAdmin(ModelAdmin2):
+            my_view = AdminView(r'^$', View)
+
+        self.model_admin = MyModelAdmin
+
+    def test_views(self):
+        self.assertEquals(
+            self.model_admin.views[0],
+            self.model_admin.my_view
+        )
