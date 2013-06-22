@@ -21,9 +21,10 @@ from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 class AdminView(object):
 
-    def __init__(self, url, view):
+    def __init__(self, url, view, name=None):
         self.url = url
         self.view = view
+        self.name = name
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
