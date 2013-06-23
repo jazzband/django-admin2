@@ -23,8 +23,13 @@ class ModelAdminBase2(type):
         new_class = super(ModelAdminBase2, cls).__new__(cls, name,
                                                         bases, attrs)
         view_list = getattr(new_class, 'views', [])
-        view_list.extend([attr for attr in attrs.values()
-                     if isinstance(attr, views.AdminView)])
+
+        for key, value in attrs.items():
+            if isinstance(value, views.AdminView):
+                if not value.name:
+                    value.name = key
+                view_list.append(value)
+
         setattr(new_class, 'views', view_list)
         return new_class
 
@@ -131,9 +136,6 @@ class ModelAdmin2(object):
     def get_prefixed_view_name(self, view_name):
         return '{}_{}'.format(self.name, view_name)
 
-    def get_index_kwargs(self):
-        return self.get_default_view_kwargs()
-
     def get_create_kwargs(self):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({
@@ -152,12 +154,6 @@ class ModelAdmin2(object):
             'form_class': form_class,
         })
         return kwargs
-
-    def get_detail_kwargs(self):
-        return self.get_default_view_kwargs()
-
-    def get_delete_kwargs(self):
-        return self.get_default_view_kwargs()
 
     def get_index_url(self):
         return reverse('admin2:{}'.format(self.get_prefixed_view_name('index')))
