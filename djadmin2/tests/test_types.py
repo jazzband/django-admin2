@@ -47,7 +47,7 @@ class ModelAdminTest(TestCase):
         self.model_admin = MyModelAdmin
 
     def test_views(self):
-        self.assertEquals(
-            self.model_admin.views[0],
-            self.model_admin.my_view
+        self.assertIn(
+            self.model_admin.my_view,
+            self.model_admin.views
         )

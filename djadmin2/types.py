@@ -22,8 +22,9 @@ class ModelAdminBase2(type):
     def __new__(cls, name, bases, attrs):
         new_class = super(ModelAdminBase2, cls).__new__(cls, name,
                                                         bases, attrs)
-        view_list = [attr for attr in attrs.values()
-                     if isinstance(attr, views.AdminView)]
+        view_list = getattr(new_class, 'views', [])
+        view_list.extend([attr for attr in attrs.values()
+                     if isinstance(attr, views.AdminView)])
         setattr(new_class, 'views', view_list)
         return new_class
 
@@ -82,11 +83,11 @@ class ModelAdmin2(object):
     inlines = []
 
     #  Views
-    index_view = views.ModelListView
-    create_view = views.ModelAddFormView
-    update_view = views.ModelEditFormView
-    detail_view = views.ModelDetailView
-    delete_view = views.ModelDeleteView
+    index_view = views.AdminView(r'^$', views.ModelListView, name='index')
+    create_view = views.AdminView(r'^create/$', views.ModelAddFormView, name='create')
+    update_view = views.AdminView(r'^(?P<pk>[0-9]+)/$', views.ModelEditFormView, name='update')
+    detail_view = views.AdminView(r'^(?P<pk>[0-9]+)/update/$', views.ModelDetailView, name='detail')
+    delete_view = views.AdminView(r'^(?P<pk>[0-9]+)/delete/$', views.ModelDeleteView, name='delete')
     views = []
 
     # API configuration
@@ -172,33 +173,19 @@ class ModelAdmin2(object):
         return self.get_default_api_view_kwargs()
 
     def get_urls(self):
-        return patterns('',
-            url(
-                regex=r'^$',
-                view=self.index_view.as_view(**self.get_index_kwargs()),
-                name=self.get_prefixed_view_name('index')
-            ),
-            url(
-                regex=r'^create/$',
-                view=self.create_view.as_view(**self.get_create_kwargs()),
-                name=self.get_prefixed_view_name('create')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.detail_view.as_view(**self.get_detail_kwargs()),
-                name=self.get_prefixed_view_name('detail')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/update/$',
-                view=self.update_view.as_view(**self.get_update_kwargs()),
-                name=self.get_prefixed_view_name('update')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/delete/$',
-                view=self.delete_view.as_view(**self.get_delete_kwargs()),
-                name=self.get_prefixed_view_name('delete')
-            ),
-        )
+        pattern_list = []
+        for view in self.views:
+            get_kwargs = getattr(self, "get_%s_kwargs" % view.name, None)
+            if not get_kwargs:
+                get_kwargs = self.get_default_view_kwargs
+            pattern_list.append(
+                url(
+                    regex=view.url,
+                    view=view.view.as_view(**get_kwargs()),
+                    name=self.get_prefixed_view_name(view.name)
+                )
+            )
+        return patterns('', *pattern_list)
 
     def get_api_urls(self):
         return patterns('',
