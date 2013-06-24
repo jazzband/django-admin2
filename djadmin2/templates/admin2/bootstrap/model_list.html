@@ -10,90 +10,96 @@
 {% endblock javascript %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
-    <li><a href="{% url "admin2:app_index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
-    <li class="active">{{ model_name_pluralized|title }}</li>
+  <li>
+    <a href="{% url "admin2:dashboard" %}">Home</a>
+    <span class="divider">/</span>
+  </li>
+  <li>
+    <a href="{% url "admin2:app_index" app_label=app_label %}">{{ app_label|title }}</a>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">{{ model_name_pluralized|title }}</li>
 {% endblock breadcrumbs %}
 
 {% block content %}
 
 {% if search_fields %}
-	<div class="row">
-		<div class="span12">
-			<form method="get" class="form-search">
-				<div class="input-append">
-					<input type="text" class="input-medium search-query" placeholder="Search Term" name="q" value="{{search_term}}"/>
-					<button class="btn" type="button"><i class="icon-search"></i> Search</button>
-				</div>
-			</form>
-		</div>
-	</div>
+  <div class="row">
+    <div class="span12">
+      <form method="get" class="form-search">
+        <div class="input-append">
+          <input type="text" class="input-medium search-query" placeholder="Search Term" name="q" value="{{search_term}}"/>
+          <button class="btn" type="button"><i class="icon-search"></i> Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endif %}
 
 
 <div id="model-list" class="row">
-    <form id="model-list-form" class="form-inline" method="post">
-		{% csrf_token %}
+  <form id="model-list-form" class="form-inline" method="post">
+    {% csrf_token %}
 
-		<div class="span12">
-            <div class="navbar">
-				<div class="btn-group">
-            	    <button class="btn dropdown-toggle" data-toggle="dropdown">
-            	        Actions
-            	        <span class="caret"></span>
-            	    </button>
-            	    <ul class="dropdown-menu">
-                    	{% for action in actions %}
-							<li><a tabindex="-1" href="#" data-name="action" data-value="{{ action.name }}">{{ action.description }}</a></li>
-                    	{% endfor %}
-            	    </ul>
-            	</div>
-				<input type="hidden" name="action" value="" />
-            	<small class="muted"><span id="selected-count">0</span> of {{ object_list|length }} selected</small>
-                <div class="pull-right">
-                    {% if permissions.has_add_permission %}
-                    <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>
-                    {% endif %}
-                </div>
-			</div>
-
-			
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <th class="checkbox-column"><input type="checkbox" class="model-select-all"></th>
-                    {% for attr in view.model_admin.list_display %}
-                        {% if forloop.first and attr == "__str__" %}
-                            <th>{{ model_name|capfirst }}</th>
-                        {% else %}
-                            <th>{{ attr }}</th>
-                        {% endif%}
-                    {% endfor %}
-                </thead>
-                <tbody>
-                    {% for obj in object_list %}
-                    <tr>
-                        <td><input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}"></td>
-                        {% for attr in view.model_admin.list_display %}
-                            <td>
-                                {% if permissions.has_change_permission %}
-    								<a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% get_attr obj attr %}</a>
-    							{% else %}
-                                	{% if permissions.has_view_permission %}
-                                		<a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% get_attr obj attr %}</a>
-    								{% else %}
-    									{% get_attr obj attr %}
-                                	{% endif %}
-                                {% endif %}
-                            </td>
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            {{ object_list|length }} {{ model_name_pluralized }}
+    <div class="span12">
+      <div class="navbar">
+        <div class="btn-group">
+          <button class="btn dropdown-toggle" data-toggle="dropdown">
+            Actions
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            {% for action in actions %}
+              <li><a tabindex="-1" href="#" data-name="action" data-value="{{ action.name }}">{{ action.description }}</a></li>
+            {% endfor %}
+          </ul>
         </div>
-    </form>
+        <input type="hidden" name="action" value="" />
+        <small class="muted"><span id="selected-count">0</span> of {{ object_list|length }} selected</small>
+        <div class="pull-right">
+          {% if permissions.has_add_permission %}
+          <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>
+          {% endif %}
+        </div>
+      </div>
+
+
+      <table class="table table-bordered table-striped">
+        <thead>
+          <th class="checkbox-column"><input type="checkbox" class="model-select-all"></th>
+          {% for attr in view.model_admin.list_display %}
+            {% if forloop.first and attr == "__str__" %}
+              <th>{{ model_name|capfirst }}</th>
+            {% else %}
+              <th>{{ attr }}</th>
+            {% endif%}
+          {% endfor %}
+        </thead>
+        <tbody>
+          {% for obj in object_list %}
+          <tr>
+            <td><input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}"></td>
+            {% for attr in view.model_admin.list_display %}
+              <td>
+                {% if permissions.has_change_permission %}
+                  <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% get_attr obj attr %}</a>
+                {% else %}
+                  {% if permissions.has_view_permission %}
+                    <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% get_attr obj attr %}</a>
+                  {% else %}
+                    {% get_attr obj attr %}
+                  {% endif %}
+                {% endif %}
+              </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {{ object_list|length }} {{ model_name_pluralized }}
+    </div>
+  </form>
 </div>
 
 {% endblock content %}
