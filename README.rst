@@ -82,6 +82,15 @@ If you create a new theme, please define it thus:
     ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
 
 
+Screenshots
+===========
+
+.. image:: screenshots/Site_administration.png
+    :width: 722px
+    :alt: Site administration
+    :align: center
+    :target: screenshots/Site_administration.png
+
 History
 =========
 
