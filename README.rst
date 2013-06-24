@@ -91,6 +91,12 @@ Screenshots
     :align: center
     :target: screenshots/Site_administration.png
 
+.. image:: screenshots/Select_user.png
+    :width: 722px
+    :alt: Select user
+    :align: center
+    :target: screenshots/Select_user.png
+
 History
 =========
 
