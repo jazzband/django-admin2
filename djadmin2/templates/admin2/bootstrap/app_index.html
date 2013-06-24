@@ -2,16 +2,19 @@
 {% load admin2_tags i18n %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
-    <li class="active">{{ app_label|title }}</li>    
+  <li>
+    <a href="{% url "admin2:dashboard" %}">Home</a>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">{{ app_label|title }}</li>
 {% endblock breadcrumbs %}
 
 {% block page_title %}{% blocktrans with app_label=app_label|title %}{{ app_label }} administration{% endblocktrans %}{% endblock page_title %}
 
 {% block content %}
 <div class="row">
-    <div class="span7">
-            {% include 'admin2/bootstrap/includes/app_model_list.html' %}
-    </div>
+  <div class="span7">
+      {% include 'admin2/bootstrap/includes/app_model_list.html' %}
+  </div>
 </div>
 {% endblock content %}
