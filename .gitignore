@@ -56,3 +56,6 @@ logfile
 
 # vim swap files
 *.sw[o-z]
+
+# Vagrant state files
+.vagrant
