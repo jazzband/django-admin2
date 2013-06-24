@@ -185,6 +185,9 @@ django-admin2 pull requests should be as small/atomic as possible. Large, wide-s
 Best Practices
 --------------
 
+Python
+~~~~~~
+
 Follow PEP-0008 and memorize the Zen of Python::
 
     >>> import this
@@ -200,6 +203,14 @@ Furthermore, the pixel shortage is over. We want to see:
 As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
 
 .. _`Two Scoops of Django`: https://2scoops.org
+
+Templates
+~~~~~~~~~
+
+Follow bootstrap's coding standards for HTML_ and CSS_.  Use two spaces for indentation, and write so the templates are readable (not for the generated html).  
+
+.. _HTML: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-html
+.. _CSS: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-css
 
 
 How pull requests are checked, tested, and done
