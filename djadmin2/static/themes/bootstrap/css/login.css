@@ -1,0 +1,20 @@
+body{
+    margin-top: 100px;
+}
+.form-container {
+    float: none;
+    margin: 0 auto;
+    width: 400px;
+}
+.login-title{
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    body{
+        margin-top: 0px;
+    }
+    .form-container {
+        width: auto;
+    }
+}
