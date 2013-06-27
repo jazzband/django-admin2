@@ -171,9 +171,10 @@ class ModelAdmin2(object):
     def get_urls(self):
         pattern_list = []
         for view in self.views:
+            view.model_admin = self
             get_kwargs = getattr(self, "get_%s_kwargs" % view.name, None)
             if not get_kwargs:
-                get_kwargs = self.get_default_view_kwargs
+                get_kwargs = view.get_view_kwargs
             pattern_list.append(
                 url(
                     regex=view.url,

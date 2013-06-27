@@ -26,6 +26,14 @@ class AdminView(object):
         self.view = view
         self.name = name
 
+    def get_view_kwargs(self):
+        return {
+            'app_label': self.model_admin.app_label,
+            'model': self.model_admin.model,
+            'model_name': self.model_admin.model_name,
+            'model_admin': self.model_admin,
+        }
+
 
 class IndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "index.html"
