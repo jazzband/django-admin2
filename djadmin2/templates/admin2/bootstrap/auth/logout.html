@@ -4,15 +4,18 @@
 {% load admin2_tags %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
-    <li class="active">{% trans "Logout" %}</li>
+  <li>
+    <a href="{% url "admin2:dashboard" %}">Home</a>
+    <span class="divider">/</span>
+  </li>
+  <li class="active">{% trans "Logout" %}</li>
 {% endblock breadcrumbs %}
 
 {% block content %}
 <div class="row">
-    <div class="span12">
-        <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
-        <p><p><a href="{% url 'admin2:dashboard' %}">{% trans 'Log in again' %}</a></p></p>
-    </div>
+  <div class="span12">
+    <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+    <p><a href="{% url 'admin2:dashboard' %}">{% trans 'Log in again' %}</a></p>
+  </div>
 </div>
 {% endblock content %}

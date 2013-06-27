@@ -26,3 +26,4 @@ Developers
 * Wade Austin (@waustin)
 * Douglas Miranda (@douglasmiranda / <douglasmirandasilva@gmail.com>)
 * Ethan Soergel (@esoergel / <esoergel@gmail.com>)
+* Ryan Balfanz (@RyanBalfanz / <ryan@ryanbalfanz.net>)
