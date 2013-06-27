@@ -82,7 +82,7 @@ setup(
     keywords='django,admin',
     author=author,
     author_email='pydanny@gmail.com',
-    url='http://github.com/pydanny/django-admin2',
+    url='http://djangoadmin.org',
     license='MIT',
     packages=get_packages('djadmin2'),
     include_package_data=True,
