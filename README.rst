@@ -33,11 +33,17 @@ Requirements
 
 * Django 1.5+
 * Python 2.7+ or Python 3.3+
-* django-braces
-* django-extra-views
-* django-floppyforms
-* django-rest-framework
-* Sphinx (for documentation)
+* django-braces_
+* django-extra-views_
+* django-floppyforms_
+* django-rest-framework_
+* Sphinx_ (for documentation)
+
+.. _django-braces: https://github.com/brack3t/django-braces
+.. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
+.. _django-floppyforms: https://github.com/brutasse/django-floppyforms
+.. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
+.. _Sphinx: http://sphinx-doc.org/
 
 Basic Pattern
 ==============
