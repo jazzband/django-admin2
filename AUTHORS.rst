@@ -27,3 +27,4 @@ Developers
 * Douglas Miranda (@douglasmiranda / <douglasmirandasilva@gmail.com>)
 * Ethan Soergel (@esoergel / <esoergel@gmail.com>)
 * Ryan Balfanz (@RyanBalfanz / <ryan@ryanbalfanz.net>)
+* Tom Christie (@tomchristie)
