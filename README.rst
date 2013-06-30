@@ -54,9 +54,10 @@ Our goal is to make this API work:
 
   # myapp/admin2.py
   # Import your custom models
-  from .models import Post, Comment
   from django.contrib.auth.forms import UserCreationForm, UserChangeForm
   from django.contrib.auth.models import User
+
+  from .models import Post, Comment
 
   import djadmin2
 
@@ -112,6 +113,23 @@ Screenshots
 
 History
 =========
+
+0.4.0 (2013-06-30)
+
+  * Implemented both Function- and Class-based Action views
+  * Implemented ModelAdmin2.list_display
+  * Implemented ModelAdmin2.fieldsets 
+  * Dropdown widget now displays the selected choice
+  * Added support for callables in ModelAdmin2.list_display
+  * Added screenshots to README
+  * Added second example project
+  * Fixed breadcrumbs
+  * Default theme: Proper closing of template and media blocks
+  * Default theme: Standardized indentation in default theme templates
+  * Default theme: Pointed to CDN for JQuery
+  * Default theme: Added basic style for login form
+  * Default theme: Internationalized all text strings
+
 
 0.3.0 (2013-05-31)
 

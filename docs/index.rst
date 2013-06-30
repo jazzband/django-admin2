@@ -29,9 +29,10 @@ Our goal is to make this API work:
 
   # myapp/admin2.py
   # Import your custom models
-  from .models import Post, Comment
   from django.contrib.auth.forms import UserCreationForm, UserChangeForm
   from django.contrib.auth.models import User
+
+  from .models import Post, Comment
 
   import djadmin2
 
