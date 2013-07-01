@@ -22,10 +22,10 @@ A Django Admin 2 theme is merely a packaged Django app. Here are the necessary s
     $ cd djadmin2-theme-fancy
     $ touch setup.py
     
-Then enter the following information:
+Then enter the following information (you will probably want to change the highlighted lines below to match your package name):
 
 .. code-block:: python
-    :emphasize-lines: 25
+    :emphasize-lines: 25, 27, 28, 40, 41, 42, 44
     
 
     #!/usr/bin/env python
@@ -96,7 +96,6 @@ Then enter the following information:
 .. code-block:: bash
 
     $ mkdir static
-
     
 
 This is where the dandy theme's custom CSS, JavaScript, and Image files are placed.
@@ -115,20 +114,27 @@ Now you can start working on templates and static files!
 Installing the custom theme
 ------------------------------
 
-In the settings module:
+In the settings module, place the theme right after djadmin2 (change the highlighted line to your package's name):
 
 .. code-block:: python
+    :emphasize-lines: 5
 
+    ########### DJANGO-ADMIN2 CONFIGURATION
     ADMIN2_THEME_DIRECTORY = "djadmin2_dandy"
     INSTALLED_APPS += (
-        ...
         'djadmin2',
         'djadmin2_dandy'
     )
+    ########### END DJANGO-ADMIN2 CONFIGURATION
 
-4. You will also need 
+TODO
+----
 
-Look at the "bootstrap" theme as an example. If you run into any problems, please file an issue.
+1. Have someone besides pydanny test this!
+2. Provide a list of template context variables for each template per GitHub issue `#220`_
+
+.. _`#220`: https://github.com/twoscoops/django-admin2/issues/220
+
 
 Available Themes
 ----------------
