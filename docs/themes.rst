@@ -7,15 +7,19 @@ How To Create a Theme
 
 A Django Admin 2 theme is merely a packaged Django app. Here are the necessary steps to create a theme called '*dandy*':
 
+
 1. Make sure you have Django 1.5 or higher installed. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 2. Create the package:
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
     $ mkdir djadmin2-theme-fancy
 
 4. Create a :file:`setup.py` module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
@@ -81,6 +85,7 @@ Then enter the following information (you will probably want to change the highl
 
 
 5. Create a Django App called 'dandy' and go inside. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
