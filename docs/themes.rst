@@ -11,6 +11,10 @@ A Django Admin 2 theme is merely a packaged Django app. Here are the necessary s
 1. Make sure you have Django 1.5 or higher installed. 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. code-block:: python
+
+    $ python -c 'import django; print(django.get_version())'
+
 2. Create the package:
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -97,6 +101,7 @@ Then enter the following information (you will probably want to change the highl
     This is so we don't pollute our eligible app infrastructure with django-admin2 themes and utilities.
     
 6. Add a :file:`static/` file directory set (highlighted lines are where you need to customize):
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
     :emphasize-lines: 3,4,5
@@ -110,6 +115,7 @@ Then enter the following information (you will probably want to change the highl
 These directories are where the dandy theme's custom CSS, JavaScript, and Image files are placed.
 
 7. Add a :file:`templates/djadmin2_dandy` directory:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
     :emphasize-lines: 2
