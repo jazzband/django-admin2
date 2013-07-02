@@ -20,14 +20,14 @@ A Django Admin 2 theme is merely a packaged Django app. Here are the necessary s
 
 .. code-block:: bash
 
-    $ mkdir djadmin2-theme-fancy
+    $ mkdir djadmin2-theme-dandy
 
 4. Create a :file:`setup.py` module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    $ cd djadmin2-theme-fancy
+    $ cd djadmin2-theme-dandy
     $ touch setup.py
     
 Then enter the following information (you will probably want to change the highlighted lines below to match your package name):
