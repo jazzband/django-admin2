@@ -91,18 +91,23 @@ Then enter the following information (you will probably want to change the highl
 
     This is so we don't pollute our eligible app infrastructure with django-admin2 themes and utilities.
     
-6. Add a :file:`static/` file directory.
+6. Add a :file:`static/` file directory set (highlighted lines are where you need to customize):
 
 .. code-block:: bash
+    :emphasize-lines: 3,4,5
 
     $ mkdir static
-    
+    $ mkdir static/djadmin2_dandy
+    $ mkdir static/djadmin2_dandy/css
+    $ mkdir static/djadmin2_dandy/js
+    $ mkdir static/djadmin2_dandy/img
 
-This is where the dandy theme's custom CSS, JavaScript, and Image files are placed.
+These directories are where the dandy theme's custom CSS, JavaScript, and Image files are placed.
 
-7. Add a :file:`templates/djadmin2_dandy` directory.
+7. Add a :file:`templates/djadmin2_dandy` directory:
 
 .. code-block:: bash
+    :emphasize-lines: 2
 
     $ mkdir templates
     $ mkdir templates/djadmin2_dandy
