@@ -20,11 +20,21 @@ from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
+    """ 
+Context Variables
+    
+        :apps: A dictionary of apps, each app being a dictionary with keys
+                being models and the value being djadmin2.types.ModelAdmin2
+                objects.
+                
+        :request.user: The user object representing the current user.
+    """
     default_template_name = "index.html"
     registry = None
     apps = None
 
     def get_context_data(self, **kwargs):
+        
         data = super(IndexView, self).get_context_data(**kwargs)
         data.update({
             'apps': self.apps,
