@@ -23,7 +23,14 @@ project_directory = os.path.dirname(
 sys.path.insert(0, os.path.join(project_directory, 'example'))
 sys.path.insert(1, project_directory)
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "example.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "example.example.settings")
+
+sys.path.insert(0, os.path.abspath('../../'))
+sys.path.insert(0, os.path.abspath('../'))
+
+from example.example import settings
+from django.core.management import setup_environ
+setup_environ(settings)
 
 # -- General configuration -----------------------------------------------------
 

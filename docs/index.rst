@@ -61,6 +61,7 @@ Content
    architecture
    api
    themes
+   built-in-views
    meta
    tutorial
 

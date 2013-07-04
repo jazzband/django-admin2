@@ -137,20 +137,19 @@ In the settings module, place the theme right after djadmin2 (change the highlig
         'djadmin2_dandy'
     )
     ########### END DJANGO-ADMIN2 CONFIGURATION
+    
+.. TODO:: Have someone besides pydanny test this!
 
-TODO
-----
+Views and their Templates
+-------------------------
 
-1. Have someone besides pydanny test this!
-2. Provide a list of template context variables for each template per GitHub issue `#220`_
-
-.. _`#220`: https://github.com/twoscoops/django-admin2/issues/220
+See :ref:`Built-In Views`
 
 
 Available Themes
 ----------------
 
-Currently, only the "bootstrap" theme exists. The goal of this theme is to replicate the original Django admin UI functionality as closely as possible. This helps us ensure that we are not forgetting any functionality that Django users might be dependent on.
+Currently, only the default "bootstrap" theme exists. The goal of this theme is to replicate the original Django admin UI functionality as closely as possible. This helps us ensure that we are not forgetting any functionality that Django users might be dependent on.
 
 If you'd like to experiment with UI design that differs from the original Django admin UI, please create a new theme. It would be great to have at least 1 experimental theme!
 
