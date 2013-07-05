@@ -6,88 +6,14 @@ django-admin2
    :alt: Build Status
    :target: https://travis-ci.org/pydanny/django-admin2
 
-**Warning:** This project is currently in an **alpha** state and currently not meant for real projects.
-
 One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility and adaptability. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
 
-Contributing
+Core Features
 =============
 
-Yes please! Please read our formal contributing document at: https://django-admin2.readthedocs.org/en/latest/contributing.html
-
-Features
-========
-
-* Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
-* Built-in RESTFUL API powered by ``django-rest-framework``.
-* Default theme built on Twitter Bootstrap that is just starting to act like the current Django admin.
-* Easy to implement theme system.
-* Permission controls
-* Custom actions
-* Add/Change form inlines
-* i18n
-
-
-Requirements
-=============
-
-* Django 1.5+
-* Python 2.7+ or Python 3.3+
-* django-braces_
-* django-extra-views_
-* django-floppyforms_
-* django-rest-framework_
-* Sphinx_ (for documentation)
-
-.. _django-braces: https://github.com/brack3t/django-braces
-.. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
-.. _django-floppyforms: https://github.com/brutasse/django-floppyforms
-.. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
-.. _Sphinx: http://sphinx-doc.org/
-
-Basic Pattern
-==============
-
-Our goal is to make this API work:
-
-.. code-block:: python
-
-  # myapp/admin2.py
-  # Import your custom models
-  from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-  from django.contrib.auth.models import User
-
-  from .models import Post, Comment
-
-  import djadmin2
-
-
-  class UserAdmin2(djadmin2.ModelAdmin2):
-      create_form_class = UserCreationForm
-      update_form_class = UserChangeForm
-
-
-  #  Register each model with the admin
-  djadmin2.default.register(Post)
-  djadmin2.default.register(Comment)
-  djadmin2.default.register(User, UserAdmin2)
-
-
-Themes
-========
-
-The default theme is whatever bootstrap is most current. Specifically:
-
-.. code-block:: python
-
-    ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
-
-If you create a new theme, please define it thus:
-
-.. code-block:: python
-
-    ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
-
+* Rewrite of the Django Admin backend
+* Drop-in themes
+* Built-in RESTful API
 
 Screenshots
 ===========
@@ -109,6 +35,76 @@ Screenshots
     :alt: Change user
     :align: center
     :target: screenshots/Change_user.png
+
+
+
+Requirements
+=============
+
+* Django 1.5+
+* Python 2.7+ or Python 3.3+
+* django-braces_
+* django-extra-views_
+* django-floppyforms_
+* django-rest-framework_
+* Sphinx_ (for documentation)
+
+.. _django-braces: https://github.com/brack3t/django-braces
+.. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
+.. _django-floppyforms: https://github.com/brutasse/django-floppyforms
+.. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
+.. _Sphinx: http://sphinx-doc.org/
+
+How it Works
+==============
+
+.. code-block:: python
+
+  # myapp/admin2.py
+  # Import your custom models
+  from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+  from django.contrib.auth.models import User
+
+  from .models import Post, Comment
+
+  import djadmin2
+
+
+  class UserAdmin2(djadmin2.ModelAdmin2):
+      # Replicates the traditional admin for django.contrib.auth.models.User
+      create_form_class = UserCreationForm
+      update_form_class = UserChangeForm
+
+
+  #  Register each model with the admin
+  djadmin2.default.register(Post)
+  djadmin2.default.register(Comment)
+  djadmin2.default.register(User, UserAdmin2)
+
+
+Drop-In Themes
+===============
+
+The default theme is whatever bootstrap is most current. Specifically:
+
+.. code-block:: python
+
+    ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+
+If you create a new theme, please define it thus:
+
+.. code-block:: python
+
+    ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
+
+
+
+    
+Contributing
+=============
+
+Yes please! Please read our formal contributing document at: https://django-admin2.readthedocs.org/en/latest/contributing.html
+
 
 
 History
