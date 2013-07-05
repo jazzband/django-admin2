@@ -55,8 +55,8 @@ Requirements
 .. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
 .. _Sphinx: http://sphinx-doc.org/
 
-How it Works
-==============
+How to write django-admin2 modules
+=====================================
 
 .. code-block:: python
 
@@ -89,23 +89,17 @@ The default theme is whatever bootstrap is most current. Specifically:
 
 .. code-block:: python
 
+    # settings.py
     ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
 
-If you create a new theme, please define it thus:
+If you create a new theme, you define it thus:
 
 .. code-block:: python
 
+    # settings.py
     ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
 
-
-
     
-Contributing
-=============
-
-Yes please! Please read our formal contributing document at: https://django-admin2.readthedocs.org/en/latest/contributing.html
-
-
 
 History
 =========
