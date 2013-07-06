@@ -1,0 +1,30 @@
+{% load i18n %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Example.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    {% block css %}
+    <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    {% endblock css %}
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="{% block class_page_title %}span10{% endblock class_page_title %}">
+          <h3></h3>
+        </div>
+      </div>
+      {% block content %}{% endblock content %}
+    </div>
+
+    {% block javascript %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}themes/bootstrap/js/jquery.min.js">\x3C/script>')</script>
+    <script src="{{ STATIC_URL }}themes/bootstrap/js/bootstrap.min.js"></script>
+    {% endblock javascript %}
+  </body>
+</html>
