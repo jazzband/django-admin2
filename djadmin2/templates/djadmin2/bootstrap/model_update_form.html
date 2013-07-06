@@ -2,9 +2,9 @@
 
 {% load admin2_tags i18n %}
 
-{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock title %}
+{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock title %}
 
-{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
+{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
 
 {% block breadcrumbs %}
   <li>
@@ -20,7 +20,7 @@
     <span class="divider">/</span>
   </li>
   {% if action == 'Add' %}
-    <li class="active">{{ action }}</li>
+    <li class="active">{{ action_name }}</li>
   {% else %}
     <li>
       <a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a>

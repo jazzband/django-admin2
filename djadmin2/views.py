@@ -179,7 +179,8 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
     def get_context_data(self, **kwargs):
         context = super(ModelEditFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
-        context['action'] = ugettext_lazy("Change")
+        context['action'] = "Change"
+        context['action_name'] = ugettext_lazy("Change")
         return context
 
 
@@ -199,7 +200,8 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
-        context['action'] = ugettext_lazy("Add")
+        context['action'] = "Add"
+        context['action_name'] = ugettext_lazy("Add")
         return context
 
 
