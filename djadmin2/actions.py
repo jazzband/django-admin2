@@ -11,8 +11,10 @@ from .viewmixins import AdminModel2Mixin
 
 def get_description(action):
     if hasattr(action, 'description'):
+        # This is for classes
         return action.description
     else:
+        # This if for functions
         return capfirst(action.__name__.replace('_', ' '))
 
 
@@ -20,7 +22,8 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
-    empty_message = 'Items must be selected in order to perform actions on them. No items have been changed.'
+    empty_message = 'Items must be selected in order to perform actions'
+    empty_message += ' on them. No items have been changed.'
     success_message = 'Successfully deleted %d %s'
 
     queryset = None
@@ -102,12 +105,14 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
 
                 return None
         else:
-            # The user has not confirmed that they want to delete the objects, so
-            # render a template asking for their confirmation.
+            # The user has not confirmed that they want to delete the
+            # objects, so render a template asking for their confirmation.
             return self.get(request)
 
     def process_queryset(self):
-        raise NotImplementedError('Must be provided to do some actions with queryset')
+        raise NotImplementedError(
+            'Must be provided to do some actions with queryset'
+            )
 
 
 class DeleteSelectedAction(BaseListAction):
