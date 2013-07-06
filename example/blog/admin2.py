@@ -2,12 +2,16 @@
 from django.contrib.auth.models import Group, User
 from django.contrib import messages
 
+import django_filters
+
 from rest_framework.relations import PrimaryKeyRelatedField
 
 import djadmin2
 from djadmin2.actions import DeleteSelectedAction
 from djadmin2.forms import UserCreationForm, UserChangeForm
 from djadmin2.apiviews import Admin2APISerializer
+
+import djadmin2.filters as djadmin2_filters
 
 from .actions import CustomPublishAction
 from .models import Post, Comment
@@ -47,10 +51,12 @@ class PostAdmin(djadmin2.ModelAdmin2):
     list_actions = [DeleteSelectedAction, CustomPublishAction, unpublish_items]
     inlines = [CommentInline]
     search_fields = ('title', '^body')
+    list_filter = ['published', ]
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):
     search_fields = ('body', '=post__title')
+    list_filter = ['post', ]
 
 
 class UserAdmin2(djadmin2.ModelAdmin2):
