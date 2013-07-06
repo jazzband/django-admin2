@@ -79,9 +79,9 @@ Add djadmin2 urls to your URLconf:
 
    # urls.py
    from django.conf.urls import patterns, include
-   
+
    import djadmin2
-   
+
    djadmin2.default.autodiscover()
 
 
@@ -126,16 +126,16 @@ The default theme is whatever bootstrap is most current. Specifically:
 .. code-block:: python
 
     # settings.py
-    ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
 
 If you create a new theme, you define it thus:
 
 .. code-block:: python
 
     # settings.py
-    ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2/foundation/"
 
-    
+
 
 History
 =========
@@ -144,7 +144,7 @@ History
 
   * Implemented both Function- and Class-based Action views
   * Implemented ModelAdmin2.list_display
-  * Implemented ModelAdmin2.fieldsets 
+  * Implemented ModelAdmin2.fieldsets
   * Dropdown widget now displays the selected choice
   * Added support for callables in ModelAdmin2.list_display
   * Added screenshots to README

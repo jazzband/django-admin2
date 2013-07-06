@@ -163,7 +163,7 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
 
 ########## TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation

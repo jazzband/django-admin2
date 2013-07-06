@@ -162,7 +162,7 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
 
 
 ########## TOOLBAR CONFIGURATION
