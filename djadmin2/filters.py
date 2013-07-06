@@ -16,6 +16,9 @@ LINK_TEMPLATE = '<a href=?{0}={1} {2}>{3}</a>'
 
 
 class ChoicesAsLinksWidget(django_widgets.Select):
+    """Select form widget taht renders links for choices
+    instead of select element with options.
+    """
     def render(self, name, value, attrs=None, choices=()):
         links = []
         for choice_value, choice_label in chain(self.choices, choices):
@@ -38,7 +41,8 @@ class NullBooleanLinksWidget(
             ('3', ugettext_lazy('No')),
         ]
 
-
+#: Maps `django_filter`'s field filters types to our
+#: custom form widget.
 FILTER_TYPE_TO_WIDGET = {
     django_filters.BooleanFilter: NullBooleanLinksWidget,
     django_filters.ChoiceFilter: ChoicesAsLinksWidget,
