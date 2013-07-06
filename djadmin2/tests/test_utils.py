@@ -33,12 +33,30 @@ class UtilsTest(TestCase):
             UtilsTestModel._meta,
             utils.model_options(UtilsTestModel)
         )
+        UtilsTestModel._meta.verbose_name = "Utils Test Model is singular"
+        UtilsTestModel._meta.verbose_name_plural = "Utils Test Model are " +\
+            " plural"
+        self.assertEquals(
+            UtilsTestModel._meta,
+            utils.model_options(UtilsTestModel)
+            )
+        UtilsTestModel._meta.verbose_name = "Utils Test Model"
+        UtilsTestModel._meta.verbose_name_plural = "Utils Test Models"
 
     def test_as_model_instance(self):
         self.assertEquals(
             self.instance._meta,
             utils.model_options(self.instance)
         )
+        self.instance._meta.verbose_name = "Utils Test Model is singular"
+        self.instance._meta.verbose_name_plural = "Utils Test Model are " +\
+            " plural"
+        self.assertEquals(
+            self.instance._meta,
+            utils.model_options(self.instance)
+            )
+        self.instance._meta.verbose_name = "Utils Test Model"
+        self.instance._meta.verbose_name_plural = "Utils Test Models"
 
     def test_admin2_urlname(self):
         self.assertEquals(
