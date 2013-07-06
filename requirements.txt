@@ -7,3 +7,4 @@ django-coverage==1.2.2
 django-extra-views==0.6.2
 django-floppyforms==1.1
 Sphinx==1.2b1
+django-filter==0.6
