@@ -40,6 +40,7 @@ Developers
 * Ignasi Fosch Alonso (@ifosch)
 * Henri Colas (@NotSqrt)
 * Andy Boot (@bootandy)
+* Eleonore Mayola (@Eleonore9)
 
 Translators
 -----------
