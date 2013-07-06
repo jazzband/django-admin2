@@ -32,3 +32,4 @@ Developers
 * Danilo Bargen (@dbrgn)
 * Ignasi Fosch Alonso (@ifosch)
 * Henri Colas (@NotSqrt)
+* Andy Boot (@bootandy)
