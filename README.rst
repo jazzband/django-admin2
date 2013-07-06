@@ -9,7 +9,13 @@ django-admin2
    :alt: Coverage Status
    :target: https://coveralls.io/r/twoscoops/django-admin2
 
-One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility and adaptability. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
+One of the most useful parts of ``django.contrib.admin`` is the ability to
+configure various views that touch and alter data. django-admin2 is a complete
+rewrite of that library using modern Class-Based Views and enjoying a design
+focused on extendibility and adaptability. By starting over, we can avoid the
+legacy code and make it easier to write extensions and themes.
+
+Documentation: http://django-admin2.rtfd.org/
 
 Features
 =============
