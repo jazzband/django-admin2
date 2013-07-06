@@ -2,15 +2,15 @@
 import os
 import sys
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'example.settings'
-exampleproject_dir = os.path.join(os.path.dirname(__file__), 'example')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'example2.settings'
+exampleproject_dir = os.path.join(os.path.dirname(__file__), 'example2')
 sys.path.insert(0, exampleproject_dir)
 
 from django.test.utils import get_runner
 from django.conf import settings
 
 
-def runtests(tests=('blog', 'djadmin2',)):
+def runtests(tests=('polls', 'djadmin2',)):
     '''
     Takes a list as first argument, enumerating the apps and specific testcases
     that should be executed. The syntax is the same as for what you would pass
