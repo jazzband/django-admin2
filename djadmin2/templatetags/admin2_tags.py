@@ -38,6 +38,14 @@ def model_verbose_name_plural(obj):
 
 
 @register.filter
+def model_field_verbose_name(obj, field_name):
+    """
+    Returns the verbose name of a model field.
+    """
+    return utils.model_field_verbose_name(obj, field_name)
+
+
+@register.filter
 def formset_visible_fieldlist(formset):
     """
     Returns the labels of a formset's visible fields as an array.
