@@ -45,4 +45,4 @@ Add djadmin2 urls to your URLconf:
 Development Installation
 =========================
 
-See :docs:`contributing`.
+See :doc:`contributing`.
