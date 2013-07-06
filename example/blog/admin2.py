@@ -2,8 +2,6 @@
 from django.contrib.auth.models import Group, User
 from django.contrib import messages
 
-import django_filters
-
 from rest_framework.relations import PrimaryKeyRelatedField
 
 import djadmin2
@@ -11,7 +9,6 @@ from djadmin2.actions import DeleteSelectedAction
 from djadmin2.forms import UserCreationForm, UserChangeForm
 from djadmin2.apiviews import Admin2APISerializer
 
-import djadmin2.filters as djadmin2_filters
 
 from .actions import CustomPublishAction
 from .models import Post, Comment
