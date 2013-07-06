@@ -31,3 +31,4 @@ Developers
 * Chris Jones (@chrisjones-brack3t / <chris@brack3t.com>)
 * Danilo Bargen (@dbrgn)
 * Ignasi Fosch Alonso (@ifosch)
+* Henri Colas (@NotSqrt)
