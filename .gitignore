@@ -55,3 +55,7 @@ logfile
 
 # vim swap files
 *.sw[o-z]
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
