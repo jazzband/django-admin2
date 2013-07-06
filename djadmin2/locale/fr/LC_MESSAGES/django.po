@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 12:25+0200\n"
-"PO-Revision-Date: 2013-07-06 12:15+0200\n"
+"POT-Creation-Date: 2013-07-06 13:16+0200\n"
+"PO-Revision-Date: 2013-07-06 13:27+0200\n"
 "Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/django-admin2/"
 "language/fr/)\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: actions.py:25
+#: actions.py:26
 msgid ""
 "Items must be selected in order to perform actions on them. No items have "
 "been changed."
@@ -25,16 +25,12 @@ msgstr ""
 "Des éléments doivent être sélectionnés afin d'appliquer les actions. Aucun "
 "élément n'a été modifié."
 
-#: actions.py:27
+#: actions.py:29
 #, python-format
-msgid "Successfully deleted %(count)d %(items)s"
-msgstr "La suppression de %(count)d %(items)s a réussi."
+msgid "Successfully deleted %(count)s %(items)s"
+msgstr "La suppression de %(count)s %(items)s a réussi."
 
-#: actions.py:102
-msgid "count"
-msgstr "count"
-
-#: actions.py:125
+#: actions.py:127
 msgid "Delete selected items"
 msgstr "Supprimer les objets sélectionnés"
 

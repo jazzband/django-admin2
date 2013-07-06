@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 12:25+0200\n"
-"PO-Revision-Date: 2013-07-06 12:15+0200\n"
+"POT-Creation-Date: 2013-07-06 13:16+0200\n"
+"PO-Revision-Date: 2013-07-06 13:27+0200\n"
 "Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
 "Language-Team: English <en@li.org>\n"
 "Language: en\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:25
+#: actions.py:26
 msgid ""
 "Items must be selected in order to perform actions on them. No items have "
 "been changed."
@@ -23,16 +23,12 @@ msgstr ""
 "Items must be selected in order to perform actions on them. No items have "
 "been changed."
 
-#: actions.py:27
+#: actions.py:29
 #, python-format
-msgid "Successfully deleted %(count)d %(items)s"
-msgstr "Successfully deleted %(count)d %(items)s"
+msgid "Successfully deleted %(count)s %(items)s"
+msgstr "Successfully deleted %(count)s %(items)s"
 
-#: actions.py:102
-msgid "count"
-msgstr "count"
-
-#: actions.py:125
+#: actions.py:127
 msgid "Delete selected items"
 msgstr "Delete selected items"
 

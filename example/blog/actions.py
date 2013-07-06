@@ -11,7 +11,7 @@ class CustomPublishAction(BaseListAction):
     )
 
     description = ugettext_lazy('Publish selected items')
-    success_message = 'Successfully published %d %s'
+    success_message = ugettext_lazy('Successfully published %(count)s %(items)s')
 
     default_template_name = "actions/publish_selected_items.html"
 
