@@ -6,7 +6,7 @@ from django.test.client import RequestFactory
 import floppyforms
 
 import djadmin2
-from blog.admin2 import UserAdmin2
+from ..admin2 import UserAdmin2
 
 
 class UserAdminTest(TestCase):
