@@ -10,6 +10,14 @@ class UtilsTestModel(models.Model):
     field1 = models.CharField(max_length=23)
     field2 = models.CharField('second field', max_length=42)
 
+    def simple_method(self):
+        return 42
+
+    def was_published_recently(self):
+        return True
+    was_published_recently.boolean = True
+    was_published_recently.short_description = 'Published recently?'
+
     class Meta:
         verbose_name = "Utils Test Model"
         verbose_name_plural = "Utils Test Models"
@@ -84,6 +92,18 @@ class UtilsTest(TestCase):
         self.assertEquals(
             'second field',
             utils.model_field_verbose_name(self.instance, 'field2')
+        )
+
+    def test_model_method_verbose_name(self):
+        self.assertEquals(
+            'Published recently?',
+            utils.model_method_verbose_name(self.instance, 'was_published_recently')
+        )
+
+    def test_model_method_verbose_name_fallback(self):
+        self.assertEquals(
+            'simple_method',
+            utils.model_method_verbose_name(self.instance, 'simple_method')
         )
 
     def test_app_label_as_model_class(self):

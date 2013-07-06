@@ -64,6 +64,18 @@ def model_field_verbose_name(model, field_name):
     return field.verbose_name
 
 
+def model_method_verbose_name(model, method_name):
+    """
+    Returns the verbose name / short description of a model field.
+    """
+    meta = model_options(model)
+    method = getattr(model, method_name)
+    try:
+        return method.short_description
+    except AttributeError:
+        return method_name
+
+
 def model_app_label(obj):
     """
     Returns the app label of a model instance or class.
