@@ -61,7 +61,7 @@ def build_list_filter(request, model_admin, queryset):
     """
     # if ``list_filter`` is not iterable return it right away
     if not isinstance(model_admin.list_filter, collections.Iterable):
-        return queryset.model_admin.list_filter(
+        return model_admin.list_filter(
             request.GET,
             queryset=queryset,
         )
