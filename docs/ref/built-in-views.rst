@@ -9,13 +9,18 @@ issue in view class' top-level docstring `#220`_
 
 .. _`#220`: https://github.com/twoscoops/django-admin2/issues/220
 
-.. code-block:: python
+View Constants
+---------------
+
+The following are available in every view:
 
     :next: The page to redirect the user to after login
     :MEDIA_URL: Specify a directory where file uploads for users who use your site go
     :STATIC_URL: Specify a directory for JavaScript, CSS and image files.
     :user: Currently logged in user
 
+View Descriptions
+------------------
 
 .. autoclass:: djadmin2.views.IndexView
     :members:
