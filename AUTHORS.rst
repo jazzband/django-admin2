@@ -41,6 +41,7 @@ Developers
 * Henri Colas (@NotSqrt)
 * Andy Boot (@bootandy)
 * Eleonore Mayola (@Eleonore9)
+* Michal Kuffa (@beezz / Michal Kuffa)
 
 Translators
 -----------
