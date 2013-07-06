@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'djadmin2',
     'polls',
+    'django_extensions',
 )
 
 # A sample logging configuration. The only tangible logging
