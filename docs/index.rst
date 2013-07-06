@@ -64,6 +64,7 @@ Content
    contributing
    design
    tutorial
+   internationalization
 
 Reference
 -----------
