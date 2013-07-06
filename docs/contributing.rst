@@ -27,7 +27,7 @@ Local Installation
 1. Create a virtualenv_ (or use virtualenvwrapper_). Activate it.
 2. cd into django-admin2
 3. type ``$ pip install -r requirements.txt``
-4. type ``$ python setup.py develop`` 
+4. type ``$ python setup.py develop``
 
 Try the example projects
 --------------------------
@@ -37,7 +37,7 @@ Try the example projects
 3. run the dev server: ``$ python manage.py runserver``
 
 .. _virtualenv: http://www.virtualenv.org/en/latest/
-.. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.org/en/latest/ 
+.. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.org/en/latest/
 
 Issues!
 =======
@@ -61,7 +61,7 @@ Setting up topic branches and generating pull requests
 
 While it's handy to provide useful code snippets in an issue, it is better for
 you as a developer to submit pull requests. By submitting pull request your
-contribution to django-admin2 will be recorded by Github. 
+contribution to django-admin2 will be recorded by Github.
 
 In git it is best to isolate each topic or feature into a "topic branch".  While
 individual commits allow you control over how small individual changes are made
@@ -113,22 +113,23 @@ add a comment to the discussion section of the pull request.
 Pull upstream changes into your fork regularly
 ==================================================
 
-**django-admin2** is advancing quickly. It is therefore critical that you pull upstream changes from master into your fork on a regular basis. Nothing is worse than putting in a day of hard work into a pull request only to have it rejected because it has diverged too far from master. 
+**django-admin2** is advancing quickly. It is therefore critical that you pull upstream changes from master into your fork on a regular basis. Nothing is worse than putting in a day of hard work into a pull request only to have it rejected because it has diverged too far from master.
 
 To pull in upstream changes::
 
     git remote add upstream https://github.com/twoscoops/django-admin2.git
-    git fetch upstream develop
-
-Check the log to be sure that you actually want the changes, before merging::
-
-    git log upstream/develop
-
-Then merge the changes that you fetched::
-
-    git merge upstream/develop
+    git pull upstream develop
 
 For more info, see http://help.github.com/fork-a-repo/
+
+Advanced git users: Pull with rebase
+------------------------------------
+
+This will pull and then reapply your work on top of the upcoming changes::
+
+    git pull --rebase upstream develop
+
+It saves you from an extra merge, keeping the history cleaner, but it's potentially dangerous because you're rewriting history. For more info, see http://gitready.com/advanced/2009/02/11/pull-with-rebase.html
 
 How to get your pull request accepted
 =====================================
@@ -207,7 +208,7 @@ As much as possible, we follow the advice of the `Two Scoops of Django`_ book. P
 Templates
 ~~~~~~~~~
 
-Follow bootstrap's coding standards for HTML_ and CSS_.  Use two spaces for indentation, and write so the templates are readable (not for the generated html).  
+Follow bootstrap's coding standards for HTML_ and CSS_.  Use two spaces for indentation, and write so the templates are readable (not for the generated html).
 
 .. _HTML: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-html
 .. _CSS: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-css
