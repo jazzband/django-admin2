@@ -22,10 +22,10 @@ _WIDGET_COMMON_ARGUMENTS = ('attrs',)
 
 
 def _copy_attributes(original, new_widget, attributes):
-        for attr in attributes:
-            original_value = getattr(original, attr)
-            original_value = deepcopy(original_value)
-            setattr(new_widget, attr, original_value)
+    for attr in attributes:
+        original_value = getattr(original, attr)
+        original_value = deepcopy(original_value)
+        setattr(new_widget, attr, original_value)
 
 
 def _create_widget(widget_class, copy_attributes=(), init_arguments=()):
