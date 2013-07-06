@@ -48,7 +48,8 @@ Attributes copied from ``Meta``
 
 Some of ``_meta``'s attributes are just copied from the ``Meta`` options. The
 following attributes are those. Their behaviour is more detailed described in
-the :doc:`django documentation <django:/ref/models/options>`.
+the `django documentation
+<https://docs.djangoproject.com/en/dev/ref/models/options/>`__.
 
 ``abstract``
     A boolean value.
@@ -87,7 +88,9 @@ the :doc:`django documentation <django:/ref/models/options>`.
     :attr:`~django.db.models.Options.get_latest_by`.
 
 ``managed``
-    If ``managed`` is ``True`` then the :djadmin:`syncdb` management command will take care of creating the database tables. Defaults to ``True``.
+    If ``managed`` is ``True`` then the :django:djadmin:`syncdb` management
+    command will take care of creating the database tables. Defaults to
+    ``True``.
 
     Also see the django documentation about
     :attr:`~django.db.models.Options.managed`.
