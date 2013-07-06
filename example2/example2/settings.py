@@ -122,8 +122,15 @@ INSTALLED_APPS = (
     'rest_framework',
     'djadmin2',
     'polls',
-    'django_extensions',
 )
+
+try:
+    import django_extensions
+    INSTALLED_APPS += (
+        'django_extensions',
+    )
+except ImportError:
+    pass
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
