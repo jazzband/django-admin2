@@ -11,7 +11,7 @@
 
 {% block breadcrumbs %}
   <li>
-    <a href="{% url "admin2:dashboard" %}">Home</a>
+    <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
     <span class="divider">/</span>
   </li>
   <li>
@@ -28,8 +28,8 @@
     <div class="span12">
       <form method="get" class="form-search">
         <div class="input-append">
-          <input type="text" class="input-medium search-query" placeholder="Search Term" name="q" value="{{search_term}}"/>
-          <button class="btn" type="button"><i class="icon-search"></i> Search</button>
+          <input type="text" class="input-medium search-query" placeholder="{% trans 'Search Term' %}" name="q" value="{{search_term}}"/>
+          <button class="btn" type="button"><i class="icon-search"></i> {% trans "Search" %}</button>
         </div>
       </form>
     </div>
@@ -55,7 +55,9 @@
           </ul>
         </div>
         <input type="hidden" name="action" value="" />
-        <small class="muted"><span id="selected-count">0</span> of {{ object_list|length }} selected</small>
+        <small class="muted">
+          {% blocktrans with selected='<span id="selected-count">0</span>' total=object_list|length %}{{selected}} of {{total}} selected{% endblocktrans %}
+        </small>
         <div class="pull-right">
           {% if permissions.has_add_permission %}
           <a href="{% url view|admin2_urlname:'create' %}" class="btn"><i class="icon-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}</a>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>{% block title %}Site administration{% endblock title %} | django-admin2</title>
+    <title>{% block title %}{% trans "Site administration" %}{% endblock title %} | django-admin2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     {% block css %}
@@ -31,9 +31,7 @@
                 {% if user.get_full_name %}
                   {{ user.get_full_name }}
                 {% else %}
-                  {% blocktrans with user=user.username %}
-                    Logged in as {{ user }}
-                  {% endblocktrans %}
+                  {% blocktrans with user=user.username %}Logged in as {{ user }}{% endblocktrans %}
                 {% endif %}
                 <b class="caret"></b>
               </a>
@@ -54,7 +52,7 @@
     {% block breacrumbs %}
     <ul class="breadcrumb">
       {% block breadcrumbs %}
-      <li class="active">Home</li>
+      <li class="active">{% trans "Home" %}</li>
       {% endblock breadcrumbs %}
     </ul>
     {% endblock breacrumbs %}
