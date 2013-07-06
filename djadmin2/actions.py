@@ -22,9 +22,9 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
-    empty_message = 'Items must be selected in order to perform actions ' + \
-                    'on them. No items have been changed.'
-    success_message = 'Successfully deleted %d %s'
+    empty_message = _('Items must be selected in order to perform actions '
+                      'on them. No items have been changed.')
+    success_message = _('Successfully deleted %(count)d %(items)s')
 
     queryset = None
 
@@ -98,9 +98,9 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         if request.POST.get('confirmed'):
             if self.process_queryset() is None:
 
-                message = _(self.success_message % (
-                    self.item_count, self.objects_name)
-                )
+                message = _(self.success_message % {
+                    'count': self.item_count, 'items': self.objects_name
+                })
                 messages.add_message(request, messages.INFO, message)
 
                 return None

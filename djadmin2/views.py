@@ -4,6 +4,7 @@ from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.utils.translation import ugettext_lazy
 from django.db import models
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
@@ -161,7 +162,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
     def get_context_data(self, **kwargs):
         context = super(ModelEditFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
-        context['action'] = "Change"
+        context['action'] = ugettext_lazy("Change")
         return context
 
 
@@ -175,7 +176,7 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
-        context['action'] = "Add"
+        context['action'] = ugettext_lazy("Add")
         return context
 
 
