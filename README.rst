@@ -58,13 +58,14 @@ Use pip to install from PyPI:
 
    pip install django-admin2
 
-Add djadmin2 to your settings.py file:
+Add djadmin2 and rest_framework to your settings file:
 
 .. code-block:: python
 
    INSTALLED_APPS = (
       ...
       'djadmin2',
+      'rest_framework', # for the browsable API templates
       ...
    )
 
