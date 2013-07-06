@@ -22,13 +22,8 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
-<<<<<<< HEAD
     empty_message = 'Items must be selected in order to perform actions ' + \
                     'on them. No items have been changed.'
-=======
-    empty_message = 'Items must be selected in order to perform actions on ' +\
-                    'them. No items have been changed.'
->>>>>>> djadmin2.actions.get_description test implemented
     success_message = 'Successfully deleted %d %s'
 
     queryset = None
