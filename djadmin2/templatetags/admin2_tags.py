@@ -1,4 +1,5 @@
 from django import template
+from django.db.models.fields import FieldDoesNotExist
 
 register = template.Library()
 
@@ -38,11 +39,14 @@ def model_verbose_name_plural(obj):
 
 
 @register.filter
-def model_field_verbose_name(obj, field_name):
+def model_attr_verbose_name(obj, attr):
     """
-    Returns the verbose name of a model field.
+    Returns the verbose name of a model field or method.
     """
-    return utils.model_field_verbose_name(obj, field_name)
+    try:
+        return utils.model_field_verbose_name(obj, attr)
+    except FieldDoesNotExist:
+        return utils.model_method_verbose_name(obj, attr)
 
 
 @register.filter
