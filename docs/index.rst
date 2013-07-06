@@ -63,8 +63,8 @@ Content
    installation
    contributing
    design
-   tutorial
    internationalization
+   tutorial
 
 Reference
 -----------
