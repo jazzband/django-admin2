@@ -2,6 +2,8 @@
 Installation
 ============
 
+.. index:: installation
+
 Adding django-admin2 to your project
 ====================================
 
