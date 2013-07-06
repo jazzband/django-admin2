@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-06 13:16+0200\n"
+"POT-Creation-Date: 2013-07-06 15:02+0200\n"
 "PO-Revision-Date: 2013-07-06 13:27+0200\n"
 "Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
-"Language-Team: https://www.transifex.com/projects/p/django-admin2/language/fr/\n"
+"Language-Team: https://www.transifex.com/projects/p/django-admin2/language/"
+"fr/\n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n>1;\n"
 
 #: actions.py:26
 msgid ""
@@ -98,6 +99,7 @@ msgid "Change password"
 msgstr "Modifier votre mot de passe"
 
 #: templates/admin2/bootstrap/base.html:42
+#: templates/admin2/bootstrap/auth/logout.html:11
 msgid "Log out"
 msgstr "Déconnexion"
 
@@ -188,7 +190,8 @@ msgstr ""
 "Les éléments suivants seront supprimés :"
 
 #: templates/admin2/bootstrap/auth/login.html:15
-msgid "Login"
+#: templates/admin2/bootstrap/auth/login.html:52
+msgid "Log in"
 msgstr "Connexion"
 
 #: templates/admin2/bootstrap/auth/login.html:27
@@ -197,14 +200,6 @@ msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Corrigez l'erreur suivante."
 msgstr[1] "Corrigez les erreurs suivantes."
-
-#: templates/admin2/bootstrap/auth/login.html:52
-msgid "Log in"
-msgstr "Connexion"
-
-#: templates/admin2/bootstrap/auth/logout.html:11
-msgid "Logout"
-msgstr "Déconnexion"
 
 #: templates/admin2/bootstrap/auth/logout.html:17
 msgid "Thanks for spending some quality time with the Web site today."
