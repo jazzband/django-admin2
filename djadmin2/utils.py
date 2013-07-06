@@ -22,6 +22,7 @@ def lookup_needs_distinct(opts, lookup_path):
          return True
     return False
 
+
 def model_options(model):
     """
     Wrapper for accessing model._meta. If this access point changes in core

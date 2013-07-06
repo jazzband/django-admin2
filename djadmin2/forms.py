@@ -2,9 +2,8 @@ from __future__ import unicode_literals
 from copy import deepcopy
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import (
-        AuthenticationForm, UserCreationForm, UserChangeForm
-    )
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 import django.forms
 import django.forms.models
 import django.forms.extras.widgets
@@ -225,7 +224,7 @@ def floppify_form(form_class):
 
 
 def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
-                      exclude=None, formfield_callback=None,  widgets=None):
+                      exclude=None, formfield_callback=None, widgets=None):
     form_class = django.forms.models.modelform_factory(
         model=model,
         form=form,
@@ -246,8 +245,11 @@ class AdminAuthenticationForm(AuthenticationForm):
     Liberally copied from django.contrib.admin.forms.AdminAuthenticationForm
 
     """
-    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput, initial=1,
-        error_messages={'required': ugettext_lazy("Please log in again, because your session has expired.")})
+    error_messages = {
+        'required': ugettext_lazy("Please log in again, because your session has expired."),
+    }
+    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput,
+            initial=1, error_messages=error_messages)
 
     def clean(self):
         username = self.cleaned_data.get('username')
