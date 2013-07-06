@@ -26,8 +26,6 @@ class IndexView(Admin2Mixin, generic.TemplateView):
     :apps: A dictionary of apps, each app being a dictionary with keys
            being models and the value being djadmin2.types.ModelAdmin2
            objects.
-    :request.user: The user object representing the current user.
-
     """
     default_template_name = "index.html"
     registry = None
@@ -59,6 +57,13 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
 
 
 class ModelListView(AdminModel2Mixin, generic.ListView):
+    """Context Variables
+
+    :is_paginated: If the page is paginated (page has a next button)
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     default_template_name = "model_list.html"
     permission_classes = (
         permissions.IsStaffPermission,
@@ -146,6 +151,12 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     default_template_name = "model_detail.html"
     permission_classes = (
         permissions.IsStaffPermission,
@@ -153,6 +164,12 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
 
 
 class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     form_class = None
     default_template_name = "model_update_form.html"
     permission_classes = (
@@ -167,6 +184,12 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
 
 
 class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     form_class = None
     default_template_name = "model_update_form.html"
     permission_classes = (
@@ -181,6 +204,13 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    :deletable_objects: Objects to delete
+    """
     success_url = "../../"  # TODO - fix this!
     default_template_name = "model_confirm_delete.html"
     permission_classes = (
@@ -233,6 +263,10 @@ class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 
 
 class LoginView(Admin2Mixin, generic.TemplateView):
+    """Context Variables
+
+    :site_name: Name of the site
+    """
 
     default_template_name = 'auth/login.html'
     authentication_form = AdminAuthenticationForm
@@ -245,6 +279,10 @@ class LoginView(Admin2Mixin, generic.TemplateView):
 
 
 class LogoutView(Admin2Mixin, generic.TemplateView):
+    """Context Variables
+
+    :site_name: Name of the site
+    """
 
     default_template_name = 'auth/logout.html'
 

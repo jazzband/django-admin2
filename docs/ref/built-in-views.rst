@@ -9,6 +9,14 @@ issue in view class' top-level docstring `#220`_
 
 .. _`#220`: https://github.com/twoscoops/django-admin2/issues/220
 
+.. code-block:: python
+
+    :next: The page to redirect the user to after login
+    :MEDIA_URL: Specify a directory where file uploads for users who use your site go
+    :STATIC_URL: Specify a directory for JavaScript, CSS and image files.
+    :user: Currently logged in user
+
+
 .. autoclass:: djadmin2.views.IndexView
     :members:
 
@@ -29,10 +37,8 @@ issue in view class' top-level docstring `#220`_
 .. autoclass:: djadmin2.views.ModelAddFormView
     :members:
 
-
 .. autoclass:: djadmin2.views.ModelDeleteView
     :members:
-
 
 .. autoclass:: djadmin2.views.PasswordChangeView
     :members:
