@@ -5,6 +5,9 @@ django-admin2
 .. image:: https://travis-ci.org/pydanny/django-admin2.png
    :alt: Build Status
    :target: https://travis-ci.org/pydanny/django-admin2
+.. image:: https://coveralls.io/repos/twoscoops/django-admin2/badge.png
+   :alt: Coverage Status
+   :target: https://coveralls.io/r/twoscoops/django-admin2
 
 One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility and adaptability. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
 
@@ -52,6 +55,7 @@ Requirements
 
 Installation
 ============
+
 Use pip to install from PyPI:
 
 .. code-block:: python
@@ -75,9 +79,9 @@ Add djadmin2 urls to your URLconf:
 
    # urls.py
    from django.conf.urls import patterns, include
-   
+
    import djadmin2
-   
+
    djadmin2.default.autodiscover()
 
 
@@ -85,9 +89,6 @@ Add djadmin2 urls to your URLconf:
       ...
       url(r'^admin2/', include(djadmin2.default.urls)),
    )
-   
-
-
 
 
 How to write django-admin2 modules
@@ -125,16 +126,16 @@ The default theme is whatever bootstrap is most current. Specifically:
 .. code-block:: python
 
     # settings.py
-    ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
 
 If you create a new theme, you define it thus:
 
 .. code-block:: python
 
     # settings.py
-    ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2/foundation/"
 
-    
+
 
 History
 =========
@@ -143,7 +144,7 @@ History
 
   * Implemented both Function- and Class-based Action views
   * Implemented ModelAdmin2.list_display
-  * Implemented ModelAdmin2.fieldsets 
+  * Implemented ModelAdmin2.fieldsets
   * Dropdown widget now displays the selected choice
   * Added support for callables in ModelAdmin2.list_display
   * Added screenshots to README

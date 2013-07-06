@@ -2,6 +2,8 @@
 Actions
 =======
 
+.. index:: Actions
+
 Actions are defined to work on a single view type. Currently, actions are only implemented against the ``ModelListView``. This view contains the default ``DeleteSelectedAction`` method, which in end functionality mirrors ``django.contrib.admin.delete_selected``.
 
 However, under the hood, django-admin2's  actions work very differently. Instead of functions with assigned attributes, they can either be functions or full fledged objects. Which means you can more easily extend them to suit your needs.
@@ -38,6 +40,9 @@ The documentation works off a simple set of models, as listed below:
 
 Writing List Actions
 -----------------------
+
+.. index:: 
+    single: Actions; Writing List Actions
 
 The basic workflow of Django’s admin is, in a nutshell, “select an object, then change it.” This works well for a majority of use cases. However, if you need to make the same change to many objects at once, this workflow can be quite tedious.
 

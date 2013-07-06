@@ -4,6 +4,7 @@ from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.utils.translation import ugettext_lazy
 from django.db import models
 from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
@@ -25,21 +26,17 @@ from .filters import build_list_filter
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
-    """
-Context Variables
+    """Context Variables
 
-        :apps: A dictionary of apps, each app being a dictionary with keys
-                being models and the value being djadmin2.types.ModelAdmin2
-                objects.
-
-        :request.user: The user object representing the current user.
+    :apps: A dictionary of apps, each app being a dictionary with keys
+           being models and the value being djadmin2.types.ModelAdmin2
+           objects.
     """
     default_template_name = "index.html"
     registry = None
     apps = None
 
     def get_context_data(self, **kwargs):
-
         data = super(IndexView, self).get_context_data(**kwargs)
         data.update({
             'apps': self.apps,
@@ -65,6 +62,13 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
 
 
 class ModelListView(AdminModel2Mixin, generic.ListView):
+    """Context Variables
+
+    :is_paginated: If the page is paginated (page has a next button)
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     default_template_name = "model_list.html"
     permission_classes = (
         permissions.IsStaffPermission,
@@ -167,6 +171,12 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
 
 class ModelDetailView(AdminModel2Mixin, generic.DetailView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     default_template_name = "model_detail.html"
     permission_classes = (
         permissions.IsStaffPermission,
@@ -174,6 +184,12 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
 
 
 class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     form_class = None
     default_template_name = "model_update_form.html"
     permission_classes = (
@@ -183,11 +199,17 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
     def get_context_data(self, **kwargs):
         context = super(ModelEditFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
-        context['action'] = "Change"
+        context['action'] = ugettext_lazy("Change")
         return context
 
 
 class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    """
     form_class = None
     default_template_name = "model_update_form.html"
     permission_classes = (
@@ -197,11 +219,18 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
     def get_context_data(self, **kwargs):
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
-        context['action'] = "Add"
+        context['action'] = ugettext_lazy("Add")
         return context
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    :deletable_objects: Objects to delete
+    """
     success_url = "../../"  # TODO - fix this!
     default_template_name = "model_confirm_delete.html"
     permission_classes = (
@@ -254,6 +283,10 @@ class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 
 
 class LoginView(Admin2Mixin, generic.TemplateView):
+    """Context Variables
+
+    :site_name: Name of the site
+    """
 
     default_template_name = 'auth/login.html'
     authentication_form = AdminAuthenticationForm
@@ -266,6 +299,10 @@ class LoginView(Admin2Mixin, generic.TemplateView):
 
 
 class LogoutView(Admin2Mixin, generic.TemplateView):
+    """Context Variables
+
+    :site_name: Name of the site
+    """
 
     default_template_name = 'auth/logout.html'
 

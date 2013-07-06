@@ -1,12 +1,19 @@
 CONTRIBUTORS
+============
 
 Project Lead
-===============
+------------
 
 * Daniel Greenfeld (@pydanny / <pydanny@gmail.com>)
 
+Translation Managers
+--------------------
+
+* Henri Colas (@NotSqrt)
+* Danilo Bargen (@dbrgn)
+
 Developers
-=============
+----------
 
 * Audrey Roy (@audreyr)
 * Peter Ingelsby (@inglesp)
@@ -29,3 +36,15 @@ Developers
 * Ryan Balfanz (@RyanBalfanz / <ryan@ryanbalfanz.net>)
 * Tom Christie (@tomchristie)
 * Chris Jones (@chrisjones-brack3t / <chris@brack3t.com>)
+* Danilo Bargen (@dbrgn)
+* Ignasi Fosch Alonso (@ifosch)
+* Henri Colas (@NotSqrt)
+* Andy Boot (@bootandy)
+
+Translators
+-----------
+
+* Henri Colas (@NotSqrt)
+* Danilo Bargen (@dbrgn)
+* Ignasi Fosch Alonso (@ifosch)
+* Margherita Zamponi (@Margherita-)

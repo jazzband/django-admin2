@@ -88,6 +88,7 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,6 +125,14 @@ INSTALLED_APPS = (
     'polls',
 )
 
+try:
+    import django_extensions
+    INSTALLED_APPS += (
+        'django_extensions',
+    )
+except ImportError:
+    pass
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -154,4 +163,24 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
+
+########## TOOLBAR CONFIGURATION
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INSTALLED_APPS += (
+    'debug_toolbar',
+)
+
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INTERNAL_IPS = ('127.0.0.1',)
+
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+MIDDLEWARE_CLASSES += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TEMPLATE_CONTEXT': True,
+}
+########## END TOOLBAR CONFIGURATION

@@ -22,6 +22,7 @@ def lookup_needs_distinct(opts, lookup_path):
          return True
     return False
 
+
 def model_options(model):
     """
     Wrapper for accessing model._meta. If this access point changes in core
@@ -40,18 +41,39 @@ def admin2_urlname(view, action):
     return 'admin2:%s_%s_%s' % (view.app_label, view.model_name, action)
 
 
-def model_verbose_name(obj):
+def model_verbose_name(model):
     """
     Returns the verbose name of a model instance or class.
     """
-    return model_options(obj).verbose_name
+    return model_options(model).verbose_name
 
 
-def model_verbose_name_plural(obj):
+def model_verbose_name_plural(model):
     """
     Returns the pluralized verbose name of a model instance or class.
     """
-    return model_options(obj).verbose_name_plural
+    return model_options(model).verbose_name_plural
+
+
+def model_field_verbose_name(model, field_name):
+    """
+    Returns the verbose name of a model field.
+    """
+    meta = model_options(model)
+    field = meta.get_field_by_name(field_name)[0]
+    return field.verbose_name
+
+
+def model_method_verbose_name(model, method_name):
+    """
+    Returns the verbose name / short description of a model field.
+    """
+    meta = model_options(model)
+    method = getattr(model, method_name)
+    try:
+        return method.short_description
+    except AttributeError:
+        return method_name
 
 
 def model_app_label(obj):

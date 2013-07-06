@@ -11,8 +11,10 @@ from .viewmixins import AdminModel2Mixin
 
 def get_description(action):
     if hasattr(action, 'description'):
+        # This is for classes
         return action.description
     else:
+        # This if for functions
         return capfirst(action.__name__.replace('_', ' '))
 
 
@@ -20,8 +22,11 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
-    empty_message = 'Items must be selected in order to perform actions on them. No items have been changed.'
-    success_message = 'Successfully deleted %d %s'
+    empty_message = ugettext_lazy(
+        'Items must be selected in order to perform actions '
+        'on them. No items have been changed.'
+    )
+    success_message = ugettext_lazy('Successfully deleted %(count)s %(items)s')
 
     queryset = None
 
@@ -95,19 +100,21 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         if request.POST.get('confirmed'):
             if self.process_queryset() is None:
 
-                message = _(self.success_message % (
-                    self.item_count, self.objects_name)
-                )
+                message = self.success_message % {
+                    'count': self.item_count, 'items': self.objects_name
+                }
                 messages.add_message(request, messages.INFO, message)
 
                 return None
         else:
-            # The user has not confirmed that they want to delete the objects, so
-            # render a template asking for their confirmation.
+            # The user has not confirmed that they want to delete the
+            # objects, so render a template asking for their confirmation.
             return self.get(request)
 
     def process_queryset(self):
-        raise NotImplementedError('Must be provided to do some actions with queryset')
+        raise NotImplementedError(
+            'Must be provided to do some actions with queryset'
+            )
 
 
 class DeleteSelectedAction(BaseListAction):
