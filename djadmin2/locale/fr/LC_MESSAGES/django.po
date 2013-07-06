@@ -1,0 +1,248 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# NotSqrt <notsqrt@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-06 12:25+0200\n"
+"PO-Revision-Date: 2013-07-06 12:15+0200\n"
+"Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/django-admin2/"
+"language/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: actions.py:25
+msgid ""
+"Items must be selected in order to perform actions on them. No items have "
+"been changed."
+msgstr ""
+"Des éléments doivent être sélectionnés afin d'appliquer les actions. Aucun "
+"élément n'a été modifié."
+
+#: actions.py:27
+#, python-format
+msgid "Successfully deleted %(count)d %(items)s"
+msgstr "La suppression de %(count)d %(items)s a réussi."
+
+#: actions.py:102
+msgid "count"
+msgstr "count"
+
+#: actions.py:125
+msgid "Delete selected items"
+msgstr "Supprimer les objets sélectionnés"
+
+#: forms.py:238
+#, python-format
+msgid ""
+"Please enter the correct %(username)s and password for a staff account. Note "
+"that both fields may be case-sensitive."
+msgstr ""
+"Veuillez compléter correctement les champs « %(username)s » et « mot de "
+"passe » d'un compte autorisé. Sachez que les deux champs peuvent être "
+"sensibles à la casse."
+
+#: forms.py:249
+msgid "Please log in again, because your session has expired."
+msgstr "Reconnectez-vous car votre session a expiré."
+
+#: views.py:165 templates/admin2/bootstrap/model_update_form.html:29
+#: templates/admin2/bootstrap/includes/app_model_list.html:38
+msgid "Change"
+msgstr "Modifier"
+
+#: views.py:179 templates/admin2/bootstrap/includes/app_model_list.html:30
+msgid "Add"
+msgstr "Ajouter"
+
+#: templates/admin2/bootstrap/app_index.html:6
+#: templates/admin2/bootstrap/base.html:55
+#: templates/admin2/bootstrap/model_confirm_delete.html:10
+#: templates/admin2/bootstrap/model_detail.html:11
+#: templates/admin2/bootstrap/model_list.html:14
+#: templates/admin2/bootstrap/model_update_form.html:11
+#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:10
+#: templates/admin2/bootstrap/auth/logout.html:8
+#: templates/admin2/bootstrap/auth/password_change_done.html:11
+#: templates/admin2/bootstrap/auth/password_change_form.html:10
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/admin2/bootstrap/app_index.html:12
+#, python-format
+msgid "%(app_label)s administration"
+msgstr "Administration de %(app_label)s"
+
+#: templates/admin2/bootstrap/base.html:6
+#: templates/admin2/bootstrap/base.html:71
+#: templates/admin2/bootstrap/auth/login.html:15
+msgid "Site administration"
+msgstr "Administration du site"
+
+#: templates/admin2/bootstrap/base.html:22
+msgid "API"
+msgstr "API"
+
+#: templates/admin2/bootstrap/base.html:25
+msgid "Documentation"
+msgstr "Documentation"
+
+#: templates/admin2/bootstrap/base.html:34
+#, python-format
+msgid "Logged in as %(user)s"
+msgstr "Connecté en tant que %(user)s"
+
+#: templates/admin2/bootstrap/base.html:40
+msgid "Change password"
+msgstr "Modifier votre mot de passe"
+
+#: templates/admin2/bootstrap/base.html:42
+msgid "Log out"
+msgstr "Déconnexion"
+
+#: templates/admin2/bootstrap/index.html:13
+msgid "Recent Actions"
+msgstr "Actions récentes"
+
+#: templates/admin2/bootstrap/index.html:14
+msgid "My Actions"
+msgstr "Mes actions"
+
+#: templates/admin2/bootstrap/model_confirm_delete.html:4
+#: templates/admin2/bootstrap/model_confirm_delete.html:6
+#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:4
+#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:6
+msgid "Are you sure?"
+msgstr "Êtes-vous sûr ?"
+
+#: templates/admin2/bootstrap/model_confirm_delete.html:25
+#: templates/admin2/bootstrap/model_update_form.html:74
+#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:21
+msgid "Delete"
+msgstr "Supprimer"
+
+#: templates/admin2/bootstrap/model_confirm_delete.html:30
+#, python-format
+msgid ""
+"Are you sure you want to delete the %(model_name)s \"%(object)s\"? All of "
+"the following items will be deleted:"
+msgstr ""
+"Voulez-vous vraiment supprimer l'objet %(model_name)s « %(object)s » ? Les "
+"éléments suivants seront supprimés :"
+
+#: templates/admin2/bootstrap/model_confirm_delete.html:40
+#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:40
+msgid "Yes, I'm sure"
+msgstr "Oui, je suis sûr"
+
+#: templates/admin2/bootstrap/model_list.html:4
+#: templates/admin2/bootstrap/model_list.html:6
+#, python-format
+msgid "Select %(model_name)s to change"
+msgstr "Sélectionnez l'objet %(model_name)s à modifier"
+
+#: templates/admin2/bootstrap/model_list.html:31
+msgid "Search Term"
+msgstr "Terme à rechercher"
+
+#: templates/admin2/bootstrap/model_list.html:32
+msgid "Search"
+msgstr "Recherche"
+
+#: templates/admin2/bootstrap/model_list.html:59
+#, python-format
+msgid "%(selected)s of %(total)s selected"
+msgstr "%(selected)s sur %(total)s sélectionnés"
+
+#: templates/admin2/bootstrap/model_list.html:63
+#, python-format
+msgid "Add %(model_verbose_name)s"
+msgstr "Ajouter %(model_verbose_name)s"
+
+#: templates/admin2/bootstrap/model_update_form.html:5
+#: templates/admin2/bootstrap/model_update_form.html:7
+#, python-format
+msgid "%(action)s %(model_name)s"
+msgstr "%(action)s %(model_name)s"
+
+#: templates/admin2/bootstrap/model_update_form.html:78
+msgid "Save and add another"
+msgstr "Enregistrer et ajouter un nouveau"
+
+#: templates/admin2/bootstrap/model_update_form.html:79
+msgid "Save and continue editing"
+msgstr "Enregistrer et continuer les modifications"
+
+#: templates/admin2/bootstrap/model_update_form.html:80
+msgid "Save"
+msgstr "Enregistrer"
+
+#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:27
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s?  All of the "
+"following items will be deleted:"
+msgstr ""
+"Voulez-vous vraiment supprimer les objets %(objects_name)s sélectionnés ? "
+"Les éléments suivants seront supprimés :"
+
+#: templates/admin2/bootstrap/auth/login.html:15
+msgid "Login"
+msgstr "Connexion"
+
+#: templates/admin2/bootstrap/auth/login.html:27
+#: templates/admin2/bootstrap/auth/password_change_form.html:24
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Corrigez l'erreur suivante."
+msgstr[1] "Corrigez les erreurs suivantes."
+
+#: templates/admin2/bootstrap/auth/login.html:52
+msgid "Log in"
+msgstr "Connexion"
+
+#: templates/admin2/bootstrap/auth/logout.html:11
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: templates/admin2/bootstrap/auth/logout.html:17
+msgid "Thanks for spending some quality time with the Web site today."
+msgstr "Merci pour le temps que vous avez accordé à ce site aujourd'hui."
+
+#: templates/admin2/bootstrap/auth/logout.html:18
+msgid "Log in again"
+msgstr "Connectez-vous à nouveau"
+
+#: templates/admin2/bootstrap/auth/password_change_done.html:6
+#: templates/admin2/bootstrap/auth/password_change_done.html:7
+#: templates/admin2/bootstrap/auth/password_change_done.html:14
+msgid "Password change successful"
+msgstr "Mot de passe modifié avec succès"
+
+#: templates/admin2/bootstrap/auth/password_change_done.html:20
+msgid "Your password was changed."
+msgstr "Votre mot de passe a été modifié."
+
+#: templates/admin2/bootstrap/auth/password_change_form.html:6
+#: templates/admin2/bootstrap/auth/password_change_form.html:13
+msgid "Password change"
+msgstr "Modification de votre mot de passe"
+
+#: templates/admin2/bootstrap/auth/password_change_form.html:20
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Pour des raisons de sécurité, saisissez votre ancien mot de passe puis votre "
+"nouveau mot de passe à deux reprises afin de vérifier qu'il est correctement "
+"saisi."
+
+#: templates/admin2/bootstrap/auth/password_change_form.html:31
+msgid "Change my password"
+msgstr "Modifier mon mot de passe"
