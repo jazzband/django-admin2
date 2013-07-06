@@ -2,15 +2,16 @@
 # vim:fenc=utf-8
 
 import collections
-import django_filters
-
 from itertools import chain
+
 from django.forms.util import flatatt
 from django.utils.html import format_html
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.forms import widgets as django_widgets
 from django.utils.translation import ugettext_lazy
+
+import django_filters
 
 LINK_TEMPLATE = '<a href=?{0}={1} {2}>{3}</a>'
 
