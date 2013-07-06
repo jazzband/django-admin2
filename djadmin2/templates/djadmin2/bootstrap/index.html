@@ -1,4 +1,4 @@
-{% extends "admin2/bootstrap/base.html" %}
+{% extends "djadmin2/bootstrap/base.html" %}
 {% load admin2_tags i18n %}
 
 {% block content %}
@@ -6,7 +6,7 @@
 <div class="row">
   <div class="span7">
     {% for app_label, registry in apps.items %}
-      {% include 'admin2/bootstrap/includes/app_model_list.html' %}
+      {% include 'djadmin2/bootstrap/includes/app_model_list.html' %}
     {% endfor %}
   </div>
   <div class="span5">

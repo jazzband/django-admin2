@@ -1,4 +1,4 @@
-{% extends "admin2/bootstrap/base.html" %}
+{% extends "djadmin2/bootstrap/base.html" %}
 {% load admin2_tags i18n %}
 
 {% block title %}{% trans "Are you sure?" %}{% endblock title %}
@@ -18,16 +18,13 @@
     <a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a>
     <span class="divider">/</span>
   </li>
-  <li>
-    <a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a>
-    <span class="divider">/</span>
-  </li>
   <li class="active">{% trans "Delete" %}</li>
 {% endblock breadcrumbs %}
 
+
 {% block content %}
 
-<p>{% blocktrans with model_name=model_name object=object %}Are you sure you want to delete the {{ model_name }} "{{ object }}"? All of the following items will be deleted:{% endblocktrans %}</p>
+<p>{% blocktrans with objects_name=objects_name %}Are you sure you want to delete the selected {{ objects_name }}?  All of the following items will be deleted:{% endblocktrans %}</p>
 
 <ul>
   {{ deletable_objects|unordered_list }}
@@ -35,10 +32,12 @@
 
 <form method="post">
   {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-small btn-danger" type="submit">
-    {% trans "Yes, I'm sure" %}
-  </button>
+  <input type="hidden" name="confirmed" value="yes" />
+  <input type="hidden" name="action" value="DeleteSelectedAction" />
+  {% for item in queryset %}
+    <input type="hidden" name="selected_model_pk" value="{{ item.pk }}" />
+  {% endfor %}
+  <button class="btn btn-small btn-danger" type="submit">{% trans "Yes, I'm sure" %}</button>
 </form>
 
 {% endblock content %}

@@ -45,82 +45,82 @@ msgstr ""
 msgid "Please log in again, because your session has expired."
 msgstr "Please log in again, because your session has expired."
 
-#: views.py:165 templates/admin2/bootstrap/model_update_form.html:29
-#: templates/admin2/bootstrap/includes/app_model_list.html:38
+#: views.py:165 templates/djadmin2/bootstrap/model_update_form.html:29
+#: templates/djadmin2/bootstrap/includes/app_model_list.html:38
 msgid "Change"
 msgstr "Change"
 
-#: views.py:179 templates/admin2/bootstrap/includes/app_model_list.html:30
+#: views.py:179 templates/djadmin2/bootstrap/includes/app_model_list.html:30
 msgid "Add"
 msgstr "Add"
 
-#: templates/admin2/bootstrap/app_index.html:6
-#: templates/admin2/bootstrap/base.html:55
-#: templates/admin2/bootstrap/model_confirm_delete.html:10
-#: templates/admin2/bootstrap/model_detail.html:11
-#: templates/admin2/bootstrap/model_list.html:14
-#: templates/admin2/bootstrap/model_update_form.html:11
-#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:10
-#: templates/admin2/bootstrap/auth/logout.html:8
-#: templates/admin2/bootstrap/auth/password_change_done.html:11
-#: templates/admin2/bootstrap/auth/password_change_form.html:10
+#: templates/djadmin2/bootstrap/app_index.html:6
+#: templates/djadmin2/bootstrap/base.html:55
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:10
+#: templates/djadmin2/bootstrap/model_detail.html:11
+#: templates/djadmin2/bootstrap/model_list.html:14
+#: templates/djadmin2/bootstrap/model_update_form.html:11
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:10
+#: templates/djadmin2/bootstrap/auth/logout.html:8
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:11
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:10
 msgid "Home"
 msgstr "Home"
 
-#: templates/admin2/bootstrap/app_index.html:12
+#: templates/djadmin2/bootstrap/app_index.html:12
 #, python-format
 msgid "%(app_label)s administration"
 msgstr "%(app_label)s administration"
 
-#: templates/admin2/bootstrap/base.html:6
-#: templates/admin2/bootstrap/base.html:71
-#: templates/admin2/bootstrap/auth/login.html:15
+#: templates/djadmin2/bootstrap/base.html:6
+#: templates/djadmin2/bootstrap/base.html:71
+#: templates/djadmin2/bootstrap/auth/login.html:15
 msgid "Site administration"
 msgstr "Site administration"
 
-#: templates/admin2/bootstrap/base.html:22
+#: templates/djadmin2/bootstrap/base.html:22
 msgid "API"
 msgstr "API"
 
-#: templates/admin2/bootstrap/base.html:25
+#: templates/djadmin2/bootstrap/base.html:25
 msgid "Documentation"
 msgstr "Documentation"
 
-#: templates/admin2/bootstrap/base.html:34
+#: templates/djadmin2/bootstrap/base.html:34
 #, python-format
 msgid "Logged in as %(user)s"
 msgstr "Logged in as %(user)s"
 
-#: templates/admin2/bootstrap/base.html:40
+#: templates/djadmin2/bootstrap/base.html:40
 msgid "Change password"
 msgstr "Change password"
 
-#: templates/admin2/bootstrap/base.html:42
+#: templates/djadmin2/bootstrap/base.html:42
 msgid "Log out"
 msgstr "Log out"
 
-#: templates/admin2/bootstrap/index.html:13
+#: templates/djadmin2/bootstrap/index.html:13
 msgid "Recent Actions"
 msgstr "Recent Actions"
 
-#: templates/admin2/bootstrap/index.html:14
+#: templates/djadmin2/bootstrap/index.html:14
 msgid "My Actions"
 msgstr "My Actions"
 
-#: templates/admin2/bootstrap/model_confirm_delete.html:4
-#: templates/admin2/bootstrap/model_confirm_delete.html:6
-#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:4
-#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:6
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:4
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:6
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:4
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:6
 msgid "Are you sure?"
 msgstr "Are you sure?"
 
-#: templates/admin2/bootstrap/model_confirm_delete.html:25
-#: templates/admin2/bootstrap/model_update_form.html:74
-#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:21
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:25
+#: templates/djadmin2/bootstrap/model_update_form.html:74
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:21
 msgid "Delete"
 msgstr "Delete"
 
-#: templates/admin2/bootstrap/model_confirm_delete.html:30
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:30
 #, python-format
 msgid ""
 "Are you sure you want to delete the %(model_name)s \"%(object)s\"? All of "
@@ -129,54 +129,54 @@ msgstr ""
 "Are you sure you want to delete the %(model_name)s \"%(object)s\"? All of "
 "the following items will be deleted:"
 
-#: templates/admin2/bootstrap/model_confirm_delete.html:40
-#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:40
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:40
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:40
 msgid "Yes, I'm sure"
 msgstr "Yes, I'm sure"
 
-#: templates/admin2/bootstrap/model_list.html:4
-#: templates/admin2/bootstrap/model_list.html:6
+#: templates/djadmin2/bootstrap/model_list.html:4
+#: templates/djadmin2/bootstrap/model_list.html:6
 #, python-format
 msgid "Select %(model_name)s to change"
 msgstr "Select %(model_name)s to change"
 
-#: templates/admin2/bootstrap/model_list.html:31
+#: templates/djadmin2/bootstrap/model_list.html:31
 msgid "Search Term"
 msgstr "Search Term"
 
-#: templates/admin2/bootstrap/model_list.html:32
+#: templates/djadmin2/bootstrap/model_list.html:32
 msgid "Search"
 msgstr "Search"
 
-#: templates/admin2/bootstrap/model_list.html:59
+#: templates/djadmin2/bootstrap/model_list.html:59
 #, python-format
 msgid "%(selected)s of %(total)s selected"
 msgstr "%(selected)s of %(total)s selected"
 
-#: templates/admin2/bootstrap/model_list.html:63
+#: templates/djadmin2/bootstrap/model_list.html:63
 #, python-format
 msgid "Add %(model_verbose_name)s"
 msgstr "Add %(model_verbose_name)s"
 
-#: templates/admin2/bootstrap/model_update_form.html:5
-#: templates/admin2/bootstrap/model_update_form.html:7
+#: templates/djadmin2/bootstrap/model_update_form.html:5
+#: templates/djadmin2/bootstrap/model_update_form.html:7
 #, python-format
 msgid "%(action)s %(model_name)s"
 msgstr "%(action)s %(model_name)s"
 
-#: templates/admin2/bootstrap/model_update_form.html:78
+#: templates/djadmin2/bootstrap/model_update_form.html:78
 msgid "Save and add another"
 msgstr "Save and add another"
 
-#: templates/admin2/bootstrap/model_update_form.html:79
+#: templates/djadmin2/bootstrap/model_update_form.html:79
 msgid "Save and continue editing"
 msgstr "Save and continue editing"
 
-#: templates/admin2/bootstrap/model_update_form.html:80
+#: templates/djadmin2/bootstrap/model_update_form.html:80
 msgid "Save"
 msgstr "Save"
 
-#: templates/admin2/bootstrap/actions/delete_selected_confirmation.html:27
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:27
 #, python-format
 msgid ""
 "Are you sure you want to delete the selected %(objects_name)s?  All of the "
@@ -185,49 +185,49 @@ msgstr ""
 "Are you sure you want to delete the selected %(objects_name)s?  All of the "
 "following items will be deleted:"
 
-#: templates/admin2/bootstrap/auth/login.html:15
+#: templates/djadmin2/bootstrap/auth/login.html:15
 msgid "Login"
 msgstr "Login"
 
-#: templates/admin2/bootstrap/auth/login.html:27
-#: templates/admin2/bootstrap/auth/password_change_form.html:24
+#: templates/djadmin2/bootstrap/auth/login.html:27
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:24
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
 msgstr[0] "Please correct the error below."
 msgstr[1] "Please correct the errors below."
 
-#: templates/admin2/bootstrap/auth/login.html:52
+#: templates/djadmin2/bootstrap/auth/login.html:52
 msgid "Log in"
 msgstr "Log in"
 
-#: templates/admin2/bootstrap/auth/logout.html:11
+#: templates/djadmin2/bootstrap/auth/logout.html:11
 msgid "Logout"
 msgstr "Logout"
 
-#: templates/admin2/bootstrap/auth/logout.html:17
+#: templates/djadmin2/bootstrap/auth/logout.html:17
 msgid "Thanks for spending some quality time with the Web site today."
 msgstr "Thanks for spending some quality time with the Web site today."
 
-#: templates/admin2/bootstrap/auth/logout.html:18
+#: templates/djadmin2/bootstrap/auth/logout.html:18
 msgid "Log in again"
 msgstr "Log in again"
 
-#: templates/admin2/bootstrap/auth/password_change_done.html:6
-#: templates/admin2/bootstrap/auth/password_change_done.html:7
-#: templates/admin2/bootstrap/auth/password_change_done.html:14
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:6
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:7
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:14
 msgid "Password change successful"
 msgstr "Password change successful"
 
-#: templates/admin2/bootstrap/auth/password_change_done.html:20
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:20
 msgid "Your password was changed."
 msgstr "Your password was changed."
 
-#: templates/admin2/bootstrap/auth/password_change_form.html:6
-#: templates/admin2/bootstrap/auth/password_change_form.html:13
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:6
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:13
 msgid "Password change"
 msgstr "Password change"
 
-#: templates/admin2/bootstrap/auth/password_change_form.html:20
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:20
 msgid ""
 "Please enter your old password, for security's sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
@@ -235,6 +235,6 @@ msgstr ""
 "Please enter your old password, for security's sake, and then enter your new "
 "password twice so we can verify you typed it in correctly."
 
-#: templates/admin2/bootstrap/auth/password_change_form.html:31
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:31
 msgid "Change my password"
 msgstr "Change my password"
