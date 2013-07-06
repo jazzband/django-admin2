@@ -1,4 +1,4 @@
-{% extends "admin2/bootstrap/base.html" %}
+{% extends "djadmin2/bootstrap/base.html" %}
 
 {% load i18n %}
 {% load admin2_tags %}
@@ -8,7 +8,7 @@
     <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
     <span class="divider">/</span>
   </li>
-  <li class="active">{% trans "Logout" %}</li>
+  <li class="active">{% trans "Log out" %}</li>
 {% endblock breadcrumbs %}
 
 {% block content %}
