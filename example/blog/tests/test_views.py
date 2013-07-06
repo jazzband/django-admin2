@@ -56,6 +56,12 @@ class PostListTest(BaseIntegrationTest):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertContains(response, post.title)
 
+    def test_list_filter_presence(self):
+        Post.objects.create(title="post_1_title", body="body")
+        Post.objects.create(title="post_2_title", body="another body")
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertContains(response, 'id="list_filter_container"')
+
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', response.content)
