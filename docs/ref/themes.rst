@@ -138,12 +138,12 @@ In the settings module, place the theme right after djadmin2 (change the highlig
     )
     ########### END DJANGO-ADMIN2 CONFIGURATION
     
-.. TODO:: Have someone besides pydanny test this!
+.. todo:: Have someone besides pydanny test this!
 
 Views and their Templates
 -------------------------
 
-See :ref:`Built-In Views`
+See doc:`built-in-views`
 
 
 Available Themes

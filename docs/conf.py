@@ -33,6 +33,10 @@ from example.example import settings
 from django.core.management import setup_environ
 setup_environ(settings)
 
+# For intersphinx
+ext_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "_ext"))
+sys.path.append(ext_path)
+
 # -- General configuration -----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -40,7 +44,8 @@ setup_environ(settings)
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.intersphinx']
+extensions = ['djangodocs', 'sphinx.ext.autodoc', 'sphinx.ext.intersphinx',
+'sphinx.ext.todo']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -265,7 +270,9 @@ texinfo_documents = [
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
+    'python': ('http://python.readthedocs.org/en/v2.7.2/', None),
     'django': (
         'http://docs.djangoproject.com/en/dev/',
-        'http://docs.djangoproject.com/en/dev/_objects/'),
+        'http://docs.djangoproject.com/en/dev/_objects/'
+    ),
 }
