@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -7,6 +7,7 @@ import floppyforms
 
 import djadmin2
 from ..admin2 import UserAdmin2
+from ..types import ModelAdmin2
 
 
 class UserAdminTest(TestCase):
@@ -59,3 +60,7 @@ class UserAdminTest(TestCase):
         self.assertTrue(
             isinstance(form.fields['date_joined'].widget,
                        floppyforms.DateTimeInput))
+
+    def test_default_entry(self):
+        self.assertTrue(isinstance(djadmin2.default.registry[User], ModelAdmin2))
+        self.assertTrue(isinstance(djadmin2.default.registry[Group], ModelAdmin2))
