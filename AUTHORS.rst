@@ -28,3 +28,4 @@ Developers
 * Ethan Soergel (@esoergel / <esoergel@gmail.com>)
 * Ryan Balfanz (@RyanBalfanz / <ryan@ryanbalfanz.net>)
 * Tom Christie (@tomchristie)
+* Chris Jones (@chrisjones-brack3t / <chris@brack3t.com>)
