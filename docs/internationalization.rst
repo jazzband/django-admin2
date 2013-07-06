@@ -92,7 +92,10 @@ Adding a new locale
 
 A new file will be created under ``locale/$LOCALE_CODE/LC_MESSAGES/django.po``
 
-Update the headers of the newly created file to match existing files and start the translation !
+Update the headers of the newly created file to match existing files and start the translation!
+
+If you need help to adjust the *Plural-Forms* configuration in the .po file,
+refer to the `gettext docs`_.
 
 
 Updating existing locales
@@ -117,3 +120,4 @@ When the translation is done, you need to recompile the new translations:
 .. _`django i18n documentation`: https://docs.djangoproject.com/en/dev/topics/i18n/
 .. _transifex: https://www.transifex.com/projects/p/django-admin2/
 .. _project page: https://www.transifex.com/projects/p/django-admin2/
+.. _gettext docs: http://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_node/Plural-forms.html
