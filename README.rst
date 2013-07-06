@@ -52,6 +52,7 @@ Requirements
 
 Installation
 ============
+
 Use pip to install from PyPI:
 
 .. code-block:: python
@@ -85,9 +86,6 @@ Add djadmin2 urls to your URLconf:
       ...
       url(r'^admin2/', include(djadmin2.default.urls)),
    )
-   
-
-
 
 
 How to write django-admin2 modules
