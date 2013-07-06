@@ -42,11 +42,12 @@ Developers
 * Andy Boot (@bootandy)
 * Eleonore Mayola (@Eleonore9)
 * Michal Kuffa (@beezz / Michal Kuffa)
+* Tom Viner (@tomviner)
 
 Translators
 -----------
 
-* Henri Colas (@NotSqrt)
-* Danilo Bargen (@dbrgn)
-* Ignasi Fosch Alonso (@ifosch)
-* Margherita Zamponi (@Margherita-)
+* [French] Henri Colas (@NotSqrt) 
+* [German] Danilo Bargen (@dbrgn)
+* [Spanish, Catalan] Ignasi Fosch Alonso (@ifosch)
+* [Italian] Margherita Zamponi (@Margherita-)
