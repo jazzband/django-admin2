@@ -13,11 +13,16 @@ from django.views import generic
 
 import extra_views
 
+import collections
+import django_filters
+
 import operator
 
 from . import permissions, utils
 from .forms import AdminAuthenticationForm
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
+from .filters import build_list_filter
+
 
 
 class IndexView(Admin2Mixin, generic.TemplateView):
@@ -126,10 +131,24 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         if self.model_admin.search_fields and search_term:
             queryset, search_use_distinct = self.get_search_results(queryset, search_term)
 
+        if self.model_admin.list_filter:
+            queryset = self.build_list_filter(queryset).qs
+
         if search_use_distinct:
             return queryset.distinct()
         else:
             return queryset
+
+    def build_list_filter(self, queryset=None):
+        if not hasattr(self, '_list_filter'):
+            if queryset is None:
+                queryset = self.get_queryset()
+            self._list_filter = build_list_filter(
+                self.request,
+                self.model_admin,
+                queryset,
+            )
+        return self._list_filter
 
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
@@ -137,6 +156,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context['actions'] = self.get_actions().values()
         context['search_fields'] = self.get_search_fields()
         context['search_term'] = self.request.GET.get('q', '')
+        context['list_filter'] = self.build_list_filter()
         return context
 
     def get_success_url(self):
