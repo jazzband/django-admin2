@@ -1,5 +1,5 @@
-API
-===
+RESTful API
+=============
 
 **django-admin2** comes with a builtin REST-API for accessing all the
 resources you can get from the frontend via JSON.
