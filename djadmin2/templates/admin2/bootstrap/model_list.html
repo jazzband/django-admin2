@@ -71,7 +71,7 @@
             {% if forloop.first and attr == "__str__" %}
               <th>{{ model_name|capfirst }}</th>
             {% else %}
-              <th>{{ attr }}</th>
+              <th>{{ model|model_attr_verbose_name:attr|capfirst }}</th>
             {% endif%}
           {% endfor %}
         </thead>
