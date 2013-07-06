@@ -5,6 +5,12 @@ Project Lead
 
 * Daniel Greenfeld (@pydanny / <pydanny@gmail.com>)
 
+Translation Managers
+====================
+
+* Henri Colas (@NotSqrt)
+* Danilo Bargen (@dbrgn)
+
 Developers
 =============
 
