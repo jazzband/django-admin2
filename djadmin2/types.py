@@ -19,8 +19,22 @@ logger = logging.getLogger('djadmin2')
 
 class ModelAdmin2(object):
     """
-    Warning: This class is targeted for reduction.
-                It's bloated and ugly.
+    Adding new ModelAdmin2 attributes:
+
+        Step 1: Add the attribute to this class
+        Step 2: Add the attribute to djadmin2.settings.MODEL_ADMIN_ATTRS
+
+        Reasoning:
+
+            Changing values on ModelAdmin2 objects or their attributes from
+            within a view results in leaky scoping issues. Therefore, we use
+            the immutable_admin_factory to render the ModelAdmin2 class
+            practically immutable before passing it to the view. To constrain
+            things further (in order to protect ourselves from causing
+            hard-to-find security problems), we also restrict which attrs are
+            passed to the final ImmutableAdmin object (i.e. a namedtuple).
+            This prevents us from easily implementing methods/setters which
+            bypass the blocking features of the ImmutableAdmin.
     """
 
     list_display = ('__str__',)
