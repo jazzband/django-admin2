@@ -30,10 +30,6 @@ class PostAdmin(djadmin2.ModelAdmin2):
     inlines = [CommentInline]
     search_fields = ('title', '^body')
     list_display = ('title', 'body', 'published')
-    field_renderers = {
-        'title': renderers.title_renderer,
-        'published': renderers.boolean_renderer,
-    }
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):
@@ -43,9 +39,6 @@ class CommentAdmin(djadmin2.ModelAdmin2):
 
 class EventAdmin(djadmin2.ModelAdmin2):
     list_display = ('date',)
-    field_renderers = {
-        'date': renderers.datetime_renderer,
-    }
 
 
 #  Register each model with the admin

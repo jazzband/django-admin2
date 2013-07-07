@@ -1,9 +1,11 @@
+from numbers import Number
+from datetime import date, time, datetime
 from django import template
 from django.db.models.fields import FieldDoesNotExist
 
 register = template.Library()
 
-from .. import utils
+from .. import utils, renderers
 
 
 @register.filter
@@ -106,9 +108,20 @@ def render(context, model_instance, attribute_name):
 
     # Get renderer
     admin = context['view'].model_admin
-    renderer = admin.field_renderers.get(attribute_name)
-    if not renderer:
+    renderer = admin.field_renderers.get(attribute_name, False)
+    if renderer is None:
+        # Renderer has explicitly been overridden
         return value
+    if not renderer:
+        # Try to automatically pick best renderer
+        if isinstance(value, bool):
+            renderer = renderers.boolean_renderer
+        elif isinstance(value, (date, time, datetime)):
+            renderer = renderers.datetime_renderer
+        elif isinstance(value, Number):
+            renderer = renderers.number_renderer
+        else:
+            return value
 
     # Apply renderer and return value
     try:
