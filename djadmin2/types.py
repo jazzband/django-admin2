@@ -36,6 +36,7 @@ class ModelAdmin2(object):
     verbose_name = None
     verbose_name_plural = None
     model_admin_attributes = settings.MODEL_ADMIN_ATTRS
+    actions_on_bottom = True
 
     search_fields = []
 
