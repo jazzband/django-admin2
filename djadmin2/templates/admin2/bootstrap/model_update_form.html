@@ -1,14 +1,20 @@
-{% extends "admin2/bootstrap/base.html" %}
+{% extends "djadmin2/bootstrap/base.html" %}
 
-{% load admin2_tags i18n %}
+{% load admin2_tags i18n crispy_forms_tags %}
 
-{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock title %}
+{# Translators : examples : Add post, Change object #}
+{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock title %}
 
-{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
+{# Translators : examples : Add post, Change object #}
+{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
+
+{% block page_title_link %}
+<a href="#" class="btn btn-info">History</a>
+{% endblock page_title_link %}
 
 {% block breadcrumbs %}
   <li>
-    <a href="{% url "admin2:dashboard" %}">Home</a>
+    <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
     <span class="divider">/</span>
   </li>
   <li>
@@ -20,7 +26,7 @@
     <span class="divider">/</span>
   </li>
   {% if action == 'Add' %}
-    <li class="active">{{ action }}</li>
+    <li class="active">{{ action_name }}</li>
   {% else %}
     <li>
       <a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a>
@@ -28,6 +34,7 @@
     </li>
     <li class="active">{% trans 'Change' %}</li>
   {% endif %}
+
 {% endblock breadcrumbs %}
 
 
@@ -36,10 +43,31 @@
 <div class="row-fluid">
   <div class="span12">
     <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
 
+       
+      {% if view.model_admin.save_on_top %}
+      <div class="save_btns">
+        {# TODO - fix the format of the HTML #}
+        <!-- <hr/> -->
+        {% if object %}
+        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+          <i class="icon-remove icon-white"></i>
+          {% trans "Delete" %}
+        </a>
+        {% endif %}
+          {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+          <!-- <hr /> -->
+      </div>
+      {% endif %}
+      
+
+      <div class="change_form">
+        {% csrf_token %}
+        {{ form|crispy }}
       {% for formset in inlines %}
+      </div>
+
+      <div class="comments_form">
       <h4>{{ formset.model|model_verbose_name_plural|capfirst }}</h4>
       {{ formset.management_form }}
       <table class="table table-striped table-bordered">
@@ -65,20 +93,34 @@
             {% endfor %}
           </tr>
           {% endfor %}
+          <tr class="new_row">
+            <td colspan="3">
+              <div class="add_comment">
+                <a href="#" class="btn btn-small">
+                  <i class="icon-plus"></i>
+                  Add another comment
+                </a>
+              </div>
+            </td>
+          </tr>
         </tbody>
+              
       </table>
       {% endfor %}
-
-      <hr/>
-      {% if object %}
-      <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
-      {% endif %}
-
-      <div class="pull-right">
-        <button class="btn btn-small" type="submit" name="_addanother">{% trans "Save and add another" %}</button>
-        <button class="btn btn-small" type="submit" name="_continue">{% trans "Save and continue editing" %}</button>
-        <button class="btn btn-small btn-success" type="submit" name="_save">{% trans "Save" %}</button>
+      
+      {% if view.model_admin.save_on_bottom %}
+      <div class="save_btns">
+        <!-- <hr/> -->
+        {% if object %}
+        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+          <i class="icon-remove icon-white"></i>
+          {% trans "Delete" %}
+        </a>
+        {% endif %}
+          {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
       </div>
+      {% endif %}
+      
     </form>
   </div>
 </div>
