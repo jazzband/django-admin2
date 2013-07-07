@@ -47,7 +47,42 @@ Developers
 Translators
 -----------
 
-* [French] Henri Colas (@NotSqrt) 
-* [German] Danilo Bargen (@dbrgn)
-* [Spanish, Catalan] Ignasi Fosch Alonso (@ifosch)
-* [Italian] Margherita Zamponi (@Margherita-)
+Catalan
+
+* Ignasi Fosch Alonso (NaTx)
+
+Chinese
+
+* Eric Ho (EricHo)
+* Shiyao.Ma (introom)
+
+French
+
+* Henri Colas (NotSqrt) 
+
+German
+
+* Albrecht Mühlenschulte (a7p)
+* Danilo Bargen (dbrgn)
+* Jannis Leidel (jezdez)
+
+Italian
+
+* Margherita Zamponi (margherita.zamponi)
+
+Polish
+
+* Dariusz Smigiel (dasm)
+
+Portuguese (Brazil)
+
+* andrewsmedina
+
+Slovak
+
+* Ivana Kellyérová (eruraina)
+* Marek Zelinkaa (marekzelinka)
+
+Spanish
+
+* Ignasi Fosch Alonso (NaTx)
