@@ -8,6 +8,10 @@ django-admin2
 .. image:: https://coveralls.io/repos/twoscoops/django-admin2/badge.png
    :alt: Coverage Status
    :target: https://coveralls.io/r/twoscoops/django-admin2
+.. image:: https://pypip.in/v/django-admin2/badge.png
+   :target: https://crate.io/packages/django-admin2/
+.. image:: https://pypip.in/d/django-admin2/badge.png
+   :target: https://crate.io/packages/django-admin2/
 
 One of the most useful parts of ``django.contrib.admin`` is the ability to
 configure various views that touch and alter data. django-admin2 is a complete
