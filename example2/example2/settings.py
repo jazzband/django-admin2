@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'floppyforms',
     'rest_framework',
     'djadmin2',
+    'crispy_forms',
     'polls',
 )
 

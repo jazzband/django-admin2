@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'django_coverage',
     'floppyforms',
     'rest_framework',
+    'crispy_forms',
     'djadmin2',
     'blog',
 )
