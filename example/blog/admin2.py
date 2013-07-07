@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
+
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy
 
@@ -37,6 +38,8 @@ class PostAdmin(djadmin2.ModelAdmin2):
 class CommentAdmin(djadmin2.ModelAdmin2):
     search_fields = ('body', '=post__title')
     list_filter = ['post', ]
+    actions_on_top = True
+    actions_on_bottom = True
 
 
 #  Register each model with the admin

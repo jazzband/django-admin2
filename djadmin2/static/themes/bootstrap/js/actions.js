@@ -2,7 +2,7 @@ $(function() {
 	var element = $("#model-list");
 	var selectAllCheckbox = element.find('.model-select-all');
 	var selectCheckbox = element.find('.model-select');
-	var selectedCount = element.find('#selected-count');
+	var selectedCount = element.find('.selected-count');
 
 	var updateSelectedCount = function() {
 		var count = 0;

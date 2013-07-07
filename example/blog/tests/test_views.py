@@ -24,15 +24,17 @@ class AdminIndexTest(BaseIntegrationTest):
         response = self.client.get(reverse("admin2:dashboard"))
         self.assertContains(response, reverse("admin2:blog_post_index"))
 
+
 class UserListTest(BaseIntegrationTest):
     def test_search_users_m2m_group(self):
         # This test should cause the distinct search path to exectue
         group = Group.objects.create(name="Test Group")
         self.user.groups.add(group)
 
-        params = {"q":"group"}
+        params = {"q": "group"}
         response = self.client.get(reverse("admin2:auth_user_index"), params)
         self.assertContains(response, 'user')
+
 
 class CommentListTest(BaseIntegrationTest):
     def test_search_comments(self):
@@ -43,7 +45,7 @@ class CommentListTest(BaseIntegrationTest):
         Comment.objects.create(body="comment_post_1_b", post=post_1)
         Comment.objects.create(body="comment_post_2", post=post_2)
 
-        params = {"q":"post_1_title"}
+        params = {"q": "post_1_title"}
         response = self.client.get(reverse("admin2:blog_comment_index"), params)
         self.assertContains(response, "comment_post_1_a")
         self.assertContains(response, "comment_post_1_b")
@@ -65,6 +67,12 @@ class PostListTest(BaseIntegrationTest):
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', response.content)
+
+    def test_actions_displayed_twice(self):
+        # If actions_on_top and actions_on_bottom are both set
+        response = self.client.get(reverse("admin2:blog_comment_index"))
+        self.assertInHTML('<div class="navbar actions-top">', response.content)
+        self.assertInHTML('<div class="navbar actions-bottom">', response.content)
 
     def test_delete_selected_post(self):
         post = Post.objects.create(title="A Post Title", body="body")
@@ -89,7 +97,7 @@ class PostListTest(BaseIntegrationTest):
         Post.objects.create(title="A Post Title", body="body")
         Post.objects.create(title="Another Post Title", body="body")
         Post.objects.create(title="Post With Keyword In Body", body="another post body")
-        params = {"q":"another"}
+        params = {"q": "another"}
         response = self.client.get(reverse("admin2:blog_post_index"), params)
         self.assertContains(response, "Another Post Title")
         self.assertContains(response, "Post With Keyword In Body")
