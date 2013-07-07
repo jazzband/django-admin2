@@ -2,8 +2,10 @@
 
 {% load admin2_tags i18n %}
 
+{# Translators : examples : Add post, Change object #}
 {% block title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock title %}
 
+{# Translators : examples : Add post, Change object #}
 {% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
 
 {% block breadcrumbs %}

@@ -1,10 +1,10 @@
 {% extends "djadmin2/bootstrap/base.html" %}
-
+{% load i18n %}
 {% block content %}
-<h1>Example Home</h1>
+<h1>{% trans "Example Home" %}</h1>
 
 <ul>
     <li><a href="/admin2/">django-admin2</a></li>
-    <li><a href="/admin/">django.contrib.admin</a> (for reference)</li>
+    <li><a href="/admin/">django.contrib.admin</a> {% trans "(for reference)" %}</li>
 </ul>
 {% endblock %}

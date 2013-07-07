@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.utils.translation import ugettext_lazy
 
 import djadmin2
 from djadmin2.actions import DeleteSelectedAction
@@ -14,9 +15,10 @@ class CommentInline(djadmin2.Admin2Inline):
 
 def unpublish_items(request, queryset):
     queryset.update(published=False)
-    messages.add_message(request, messages.INFO, u'Items unpublished')
+    messages.add_message(request, messages.INFO, ugettext_lazy(u'Items unpublished'))
 
-unpublish_items.description = 'Unpublish selected items'
+# Translators : action description
+unpublish_items.description = ugettext_lazy('Unpublish selected items')
 
 
 class PostAdmin(djadmin2.ModelAdmin2):
