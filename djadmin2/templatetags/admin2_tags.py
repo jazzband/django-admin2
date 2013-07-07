@@ -97,29 +97,12 @@ def for_object(permissions, obj):
     return permissions.bind_object(obj)
 
 
-@register.filter
-def get_attr(record, attribute_name):
-    """ Allows dynamic fetching of model attributes in templates """
-    if attribute_name == "__str__":
-        return record.__unicode__()
-    attribute = getattr(record, attribute_name)
-    if callable(attribute):
-        return attribute()
-    return attribute
-
-
 @register.simple_tag(takes_context=True)
 def render(context, model_instance, attribute_name):
     """
     This filter applies all renderers specified in admin2.py to the field.
     """
-    # Get the right value for the attribute. Handle special cases like
-    # callables and the __str__ attribute.
-    if attribute_name == '__str__':
-        value = unicode(model_instance)
-    else:
-        attribute = getattr(model_instance, attribute_name)
-        value = attribute() if callable(attribute) else attribute
+    value = utils.get_attr(model_instance, attribute_name)
 
     # Get renderer
     admin = context['view'].model_admin
