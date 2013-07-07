@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 10:58+0200\n"
+"POT-Creation-Date: 2013-07-07 11:01+0200\n"
 "PO-Revision-Date: 2013-07-06 13:27+0200\n"
 "Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
 "Language-Team: https://www.transifex.com/projects/p/django-admin2/language/"
@@ -205,18 +205,6 @@ msgstr "Ajouter %(model_verbose_name)s"
 msgid "%(action_name)s %(model_name)s"
 msgstr "%(action_name)s %(model_name)s"
 
-#: templates/djadmin2/bootstrap/model_update_form.html:80
-msgid "Save and add another"
-msgstr "Enregistrer et ajouter un nouveau"
-
-#: templates/djadmin2/bootstrap/model_update_form.html:81
-msgid "Save and continue editing"
-msgstr "Enregistrer et continuer les modifications"
-
-#: templates/djadmin2/bootstrap/model_update_form.html:82
-msgid "Save"
-msgstr "Enregistrer"
-
 #: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:27
 #, python-format
 msgid ""
@@ -283,3 +271,15 @@ msgstr ""
 #: templates/djadmin2/bootstrap/auth/password_change_form.html:31
 msgid "Change my password"
 msgstr "Modifier mon mot de passe"
+
+#: templates/djadmin2/bootstrap/includes/action_buttons.html:3
+msgid "Save and add another"
+msgstr "Enregistrer et ajouter un nouveau"
+
+#: templates/djadmin2/bootstrap/includes/action_buttons.html:4
+msgid "Save and continue editing"
+msgstr "Enregistrer et continuer les modifications"
+
+#: templates/djadmin2/bootstrap/includes/action_buttons.html:5
+msgid "Save"
+msgstr "Enregistrer"
