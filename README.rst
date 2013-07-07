@@ -159,6 +159,7 @@ History
   * Implemented default ``django.contrib.auth`` and ``django.contrib.sites`` registrations
   * Implemented the displayed of verbose field/method names in list view
   * Improved internal test coverage
+  * Documentation for Context Variables in Themes
   * Corrected early nomenclature decisions
   * Completed Internationalization
   * Added django-admin2 to Transifex
