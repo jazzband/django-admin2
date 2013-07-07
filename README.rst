@@ -150,6 +150,19 @@ If you create a new theme, you define it thus:
 History
 =========
 
+0.5.0 (pending)
+
+  * Implemented list filters using django-filters. Greatly supersedes what Django provides.
+  * Implemented ModelAdmin2.save_on_top and ModelAdmin2.save_on_bottom
+  * Implemented BooleanField icons for List and Detail views
+  * Implemented default ``django.contrib.auth`` and ``django.contrib.sites`` registrations
+  * Implemented the displayed of verbose field/method names in list view
+  * Improved internal test coverage
+  * Corrected early nomenclature decisions
+  * Completed Internationalization
+  * Added django-admin2 to Transifex
+  * Translations for Catalan, Chinese, Sp
+
 0.4.0 (2013-06-30)
 
   * Implemented both Function- and Class-based Action views
