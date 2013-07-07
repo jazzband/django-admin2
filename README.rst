@@ -165,7 +165,7 @@ History
   * Corrected early nomenclature decisions
   * Completed Internationalization
   * Added django-admin2 to Transifex
-  * Translations for Catalan, Chinese, Sp
+  * Translations for French, Polish, Slovak, Chinese, German, Catalan, Italian, and Spanish.
 
 0.4.0 (2013-06-30)
 
