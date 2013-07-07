@@ -83,6 +83,19 @@ def model_app_label(obj):
     return model_options(obj).app_label
 
 
+def get_attr(obj, attr):
+    """
+    Get the right value for the attribute. Handle special cases like callables
+    and the __str__ attribute.
+    """
+    if attr == '__str__':
+        value = unicode(obj)
+    else:
+        attribute = getattr(obj, attr)
+        value = attribute() if callable(attribute) else attribute
+    return value
+
+
 class NestedObjects(Collector):
     """
     This is adopted from the Django core. django-admin2 mandates that code
