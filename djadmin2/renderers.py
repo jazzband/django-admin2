@@ -6,8 +6,10 @@ example in the list view.
 from __future__ import division, absolute_import, unicode_literals
 
 import os.path
+from decimal import Decimal
 from datetime import date, time, datetime
 
+from django.db import models
 from django.utils import formats, timezone
 from django.template.loader import render_to_string
 
@@ -63,3 +65,19 @@ def title_renderer(value, field):
 
     """
     return unicode(value).title()
+
+
+def number_renderer(value, field):
+    """
+    Format a number.
+
+    :param value: The value to process.
+    :type value: float or long
+    :param field: The model field instance
+    :type field: django.db.models.fields.Field
+    :rtype: unicode
+
+    """
+    if isinstance(field, models.DecimalField):
+        return formats.number_format(value, field.decimal_places)
+    return formats.number_format(value)
