@@ -15,6 +15,7 @@ from django.http import HttpResponseRedirect
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.views import generic
+from django.db.models.fields import FieldDoesNotExist
 
 import extra_views
 
@@ -134,10 +135,33 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         if self.model_admin.list_filter:
             queryset = self.build_list_filter(queryset).qs
 
+        queryset = self._modify_queryset_for_sort(queryset)
+
         if search_use_distinct:
             return queryset.distinct()
         else:
             return queryset
+
+    def _modify_queryset_for_sort(self, queryset):
+        # If we are sorting AND the field exists on the model
+        sort_by = self.request.GET.get('sort', None)
+        if sort_by:
+            # Special case when we are not explicityly displaying fields
+            if sort_by == '-__str__':
+                queryset = queryset[::-1]
+            try:
+                # If we sort on '-' remove it before looking for that field
+                field_exists = sort_by
+                if field_exists[0] == '-':
+                    field_exists = field_exists[1:]
+
+                options = utils.model_options(self.model)
+                options.get_field(field_exists)
+                queryset = queryset.order_by(sort_by)
+            except FieldDoesNotExist:
+                # If the field does not exist then we dont sort on it
+                pass
+        return queryset
 
     def build_list_filter(self, queryset=None):
         if not hasattr(self, '_list_filter'):
@@ -157,6 +181,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context['search_fields'] = self.get_search_fields()
         context['search_term'] = self.request.GET.get('q', '')
         context['list_filter'] = self.build_list_filter()
+        context['sort_term'] = self.request.GET.get('sort', '')
         return context
 
     def get_success_url(self):
