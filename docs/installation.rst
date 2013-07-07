@@ -22,6 +22,8 @@ Add djadmin2 and rest_framework to your settings file:
       ...
       'djadmin2',
       'rest_framework', # for the browsable API templates
+      'floppyforms', # For HTML5 form fields
+      'crispy_forms', # Required for the default theme's layout
       ...
    )
 
