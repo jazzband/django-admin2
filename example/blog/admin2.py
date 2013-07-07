@@ -23,7 +23,7 @@ class PostAdmin(djadmin2.ModelAdmin2):
     list_actions = [DeleteSelectedAction, CustomPublishAction, unpublish_items]
     inlines = [CommentInline]
     search_fields = ('title', '^body')
-    list_filter = ['published', ]
+    list_filter = ['published', 'title']
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):

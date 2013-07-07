@@ -105,12 +105,16 @@
 
 
   {% block filters %}
-    {% if list_filter %}
     <div id="list_filter_container" class="well span4">
-      <h4>{% trans "Filter" %}</h4>
-      {{ list_filter.form.as_p }}
+      {% if list_filter %}
+        <h4>{% trans "Filter" %}</h4>
+        <form id='filter_form'>
+          {{ list_filter.form.as_p }}
+        </form>
+      {% else %}
+        <a href='./'>Reset Filter</a>
+      {% endif %}
     </div>
-    {% endif %}
   {% endblock filters %}
 
 </div>
