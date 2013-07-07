@@ -7,7 +7,7 @@ $(document).ready(function() {
     $("#filter_form").find('input').each(function(){
         var input_field = $(this);
 
-        var btn = input_field.after('<button>Go</button>');
+        var btn = input_field.after('<button class="btn">Go</button>');
     });
 
 });

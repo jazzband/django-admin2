@@ -108,7 +108,7 @@
     <div id="list_filter_container" class="well span4">
       {% if list_filter %}
         <h4>{# Translators : action verb #}{% trans "Filter" %}</h4>
-        <form id='filter_form'>
+        <form id='filter_form' class="form-search">
           {{ list_filter.form.as_p }}
         </form>
       {% else %}
