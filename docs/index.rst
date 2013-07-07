@@ -80,6 +80,7 @@ Reference
    ref/permissions
    ref/views
    ref/built-in-views
+   ref/renderers
    ref/meta
 
 Indices and tables

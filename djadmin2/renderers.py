@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-This module contains default renderers for admin fields. They are used for
-example in the list view.
+There are currently a few renderers that come directly with django-admin2. They
+are used by default for some field types.
 """
 from __future__ import division, absolute_import, unicode_literals
 
