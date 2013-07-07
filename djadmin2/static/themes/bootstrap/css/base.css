@@ -1,0 +1,9 @@
+.sort_link {
+    display: block;
+    cursor: pointer;
+    color: black;
+}
+
+.sort_link:hover {
+    color: black;
+}
