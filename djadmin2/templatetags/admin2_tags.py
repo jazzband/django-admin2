@@ -97,7 +97,7 @@ def for_object(permissions, obj):
     return permissions.bind_object(obj)
 
 
-@register.simple_tag
+@register.filter
 def get_attr(record, attribute_name):
     """ Allows dynamic fetching of model attributes in templates """
     if attribute_name == "__str__":

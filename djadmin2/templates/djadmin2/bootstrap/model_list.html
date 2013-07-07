@@ -84,12 +84,12 @@
             {% for attr in view.model_admin.list_display %}
               <td>
                 {% if permissions.has_change_permission %}
-                  <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% get_attr obj attr %}</a>
+                  <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{{ obj|get_attr:attr }}</a>
                 {% else %}
                   {% if permissions.has_view_permission %}
-                    <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% get_attr obj attr %}</a>
+                    <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{{ obj|get_attr:attr }}</a>
                   {% else %}
-                    {% get_attr obj attr %}
+                    {{ obj|get_attr:attr }}
                   {% endif %}
                 {% endif %}
               </td>
