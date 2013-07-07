@@ -24,3 +24,57 @@
 .space-below {
     margin-bottom: 10px;
 }
+
+
+.history_btn {
+	float: right;
+	margin-bottom: 10px;
+	margin-right: 3px;
+}
+
+.change_form {
+	border: 1px solid #C6BCBC;
+	border-radius: 5px;
+	height: 360px;
+}
+
+label {
+	float: left;
+	margin-right : 40px;
+	font-weight: bold;
+}
+
+p {
+	margin-bottom: 30px;
+}
+
+.checkbox {
+	
+}
+
+.comments_form {
+	clear: both;
+	margin-top: 50px;
+}
+
+.control-group {
+	/*margin-bottom: 20px;*/
+	padding-top: 10px;
+	padding-left: 20px;
+	border-bottom: 1px solid #CCCCC1;
+}
+
+input {
+	width: 400px;
+	margin-left: 5px;
+}
+.textarea {
+	width: 800px;
+}
+textarea {
+	width: 800px;
+}
+
+.add_comment {
+	height: 20px;
+}
