@@ -30,6 +30,9 @@ class PostAdmin(djadmin2.ModelAdmin2):
     inlines = [CommentInline]
     search_fields = ('title', '^body')
     list_display = ('title', 'body', 'published')
+    field_renderers = {
+        'title': renderers.title_renderer,
+    }
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):
