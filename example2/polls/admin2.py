@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 import djadmin2
 
 from .models import Poll, Choice
@@ -10,7 +13,7 @@ class ChoiceInline(djadmin2.Admin2Inline):
 
 class PollAdmin(djadmin2.ModelAdmin2):
     fieldsets = [
-        (None,               {'fields': ['question']}),
+        (None, {'fields': ['question']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
     inlines = [ChoiceInline]

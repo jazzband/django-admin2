@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from django.contrib import admin
 
 from .models import Poll, Choice
@@ -10,7 +13,7 @@ class ChoiceInline(admin.TabularInline):
 
 class PollAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['question']}),
+        (None, {'fields': ['question']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
     ]
     inlines = [ChoiceInline]

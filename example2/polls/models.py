@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 import datetime
 
 from django.db import models

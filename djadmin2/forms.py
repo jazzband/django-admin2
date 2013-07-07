@@ -1,4 +1,6 @@
-from __future__ import unicode_literals
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from copy import deepcopy
 
 from django.contrib.auth import authenticate

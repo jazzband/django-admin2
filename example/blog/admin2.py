@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Import your custom models
+from __future__ import division, absolute_import, unicode_literals
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy
 

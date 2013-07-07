@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# vim:fenc=utf-8
+from __future__ import division, absolute_import, unicode_literals
 
 import collections
 from itertools import chain
@@ -81,7 +81,7 @@ def build_list_filter(request, model_admin, queryset):
         filterset_dict[field_filter.name] = field_filter
     fields = filterset_dict.keys()
     filterset_dict['Meta'] = type(
-        "Meta",
+        b'Meta',
         (),
         {
             'model': queryset.model,
@@ -89,7 +89,7 @@ def build_list_filter(request, model_admin, queryset):
         },
     )
     return type(
-        "%sFilterSet" % queryset.model.__name__,
+        b'%sFilterSet' % queryset.model.__name__,
         (django_filters.FilterSet, ),
         filterset_dict,
     )(request.GET, queryset=queryset)
