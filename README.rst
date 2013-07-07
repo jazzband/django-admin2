@@ -152,6 +152,7 @@ History
 
 0.5.0 (pending)
 
+  * Implemented customizable value renderers
   * Implemented list filters using django-filters. Greatly supersedes what Django provides.
   * Implemented ModelAdmin2.save_on_top and ModelAdmin2.save_on_bottom
   * Implemented BooleanField icons for List and Detail views
