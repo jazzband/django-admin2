@@ -1,12 +1,12 @@
 {% extends "djadmin2/bootstrap/base.html" %}
 {% load admin2_tags i18n %}
 
-{% block title %}Are you sure?{% endblock title %}
+{% block title %}{% trans "Are you sure?" %}{% endblock title %}
 
-{% block page_title %}Are you sure?{% endblock page_title %}
+{% block page_title %}{% trans "Are you sure?" %}{% endblock page_title %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url "admin2:dashboard" %}">Home</a> <span class="divider">/</span></li>
+    <li><a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a> <span class="divider">/</span></li>
     <li><a href="{% url "admin2:app_index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
     <li><a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a> <span class="divider">/</span></li>
     <li class="active">{% trans "Publish" %}</li>
@@ -15,7 +15,13 @@
 
 {% block content %}
 
-<p>{% blocktrans with objects_name=objects_name %}Are you sure you want to publish the selected {{ objects_name }}?  All of the following items will be published:{% endblocktrans %}</p>
+<p>
+{% blocktrans with objects_name=objects_name count counter=deletable_objects|length %}Are you sure you want to publish the selected {{ objects_name }}?
+ The following item will be published:
+{% plural %}Are you sure you want to publish the selected {{ objects_name }}?
+ The following items will be published:
+{% endblocktrans %}
+</p>
 
 <ul>
     {{ deletable_objects|unordered_list }}

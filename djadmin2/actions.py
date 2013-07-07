@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
 from django.utils.translation import ugettext as _
 
 from . import permissions, utils
@@ -26,7 +26,6 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         'Items must be selected in order to perform actions '
         'on them. No items have been changed.'
     )
-    success_message = ugettext_lazy('Successfully deleted %(count)s %(items)s')
 
     queryset = None
 
@@ -56,6 +55,21 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
     def description(self):
         raise NotImplementedError("List action classes require"
                                   " a description attribute.")
+
+    @property
+    def success_message(self):
+        raise NotImplementedError(
+            "List actions classes require a success_message"
+        )
+
+    @property
+    def success_message_plural(self):
+        """
+        A plural form for the success_message
+
+        If not provided, falls back to the regular form
+        """
+        return self.success_message
 
     @property
     def default_template_name(self):
@@ -100,9 +114,15 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         if request.POST.get('confirmed'):
             if self.process_queryset() is None:
 
-                message = self.success_message % {
+                # objects_name should already be pluralized, see __init__
+                message = ungettext(
+                    self.success_message,
+                    self.success_message_plural,
+                    self.item_count
+                ) % {
                     'count': self.item_count, 'items': self.objects_name
                 }
+
                 messages.add_message(request, messages.INFO, message)
 
                 return None
@@ -125,6 +145,16 @@ class DeleteSelectedAction(BaseListAction):
     default_template_name = "actions/delete_selected_confirmation.html"
 
     description = ugettext_lazy("Delete selected items")
+
+    success_message = pgettext_lazy(
+        'singular form',
+        'Successfully deleted %(count)s %(items)s',
+    )
+    success_message_plural = pgettext_lazy(
+        'plural form',
+        'Successfully deleted %(count)s %(items)s',
+    )
+
     permission_classes = BaseListAction.permission_classes + (
         permissions.ModelDeletePermission,
     )

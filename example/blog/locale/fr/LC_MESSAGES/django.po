@@ -1,0 +1,163 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# NotSqrt <notsqrt@gmail.com>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-07 11:01+0200\n"
+"PO-Revision-Date: 2013-07-06 14:16+0200\n"
+"Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/projects/p/django-admin2/"
+"language/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: actions.py:13
+msgid "Publish selected items"
+msgstr "Publier les éléments sélectionnés"
+
+#: actions.py:14
+#, python-format
+msgctxt "singular form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr "%(count)s %(items)s publié avec succès"
+
+#: actions.py:15
+#, python-format
+msgctxt "plural form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr "%(count)s %(items)s publiés avec succès"
+
+#: admin2.py:18
+msgid "Items unpublished"
+msgstr "Les éléments ne sont plus publiés"
+
+#. Translators : action description
+#: admin2.py:21
+msgid "Unpublish selected items"
+msgstr "Ne plus publier les éléments sélectionnés"
+
+#: models.py:8
+msgid "title"
+msgstr "Titre"
+
+#: models.py:9 models.py:22
+msgid "body"
+msgstr "corps"
+
+#: models.py:10
+msgid "published"
+msgstr "publié"
+
+#: models.py:16 models.py:21
+msgid "post"
+msgstr "billet"
+
+#: models.py:17
+msgid "posts"
+msgstr "billets"
+
+#: models.py:28
+msgid "comment"
+msgstr "commentaire"
+
+#: models.py:29
+msgid "comments"
+msgstr "commentaires"
+
+#: templates/blog/home.html:9
+msgid "Imagine that this is a real site"
+msgstr "Imaginez que ce site est réel"
+
+#: templates/blog/home.html:11
+msgid "Pretend that this is the homepage of a big Django site."
+msgstr ""
+"Faites semblant que ceci est la page d'accueil d'un projet Django imposant."
+
+#: templates/blog/home.html:13
+msgid "Imagine lots of things are here:"
+msgstr "Imaginez qu'une foule d'objets sont là:"
+
+#: templates/blog/home.html:15
+msgid "A blog"
+msgstr "Un blog"
+
+#: templates/blog/home.html:16
+msgid "Comments"
+msgstr "Des commentaires"
+
+#: templates/blog/home.html:17
+msgid "And so on..."
+msgstr "et caetera"
+
+#: templates/blog/home.html:20
+msgid ""
+"In other words, these are items that we can introspect through the Django "
+"admin."
+msgstr ""
+"Dit autrement, ce sont les objets qui peuvent être inspectés via l'admin de "
+"Django"
+
+#: templates/blog/home.html:22
+msgid "Under the hood"
+msgstr "Sous le capot"
+
+#: templates/blog/home.html:24
+msgid ""
+"Now, explore the Django admin for example.com. Click on either of the "
+"following:"
+msgstr ""
+"Maintenant, explorez l'admin Django pour le site example.com. Cliquez sur "
+"l'un des 2 liens:"
+
+#: templates/blog/home.html:30
+#, python-format
+msgid "The original <a href=\"%(admin_url)s\">Django Admin</a>"
+msgstr "L'<a href=\"%(admin_url)s\">admin Django</a> initiale"
+
+#: templates/blog/home.html:36
+msgid "Powered by django.contrib.admin. This is just here for reference."
+msgstr "Propulsé, par django.contrib.admin. Juste pour référence."
+
+#: templates/blog/home.html:39
+#, python-format
+msgid "The new <a href=\"%(admin2_url)s\">Admin2</a>"
+msgstr "Le nouvel <a href=\"%(admin2_url)s\">Admin2</a>"
+
+#: templates/blog/home.html:45
+msgid "Powered by django-admin2."
+msgstr "Propulsé par django-admin2."
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:4
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:6
+msgid "Are you sure?"
+msgstr "Êtes-vous sûr ?"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:9
+msgid "Home"
+msgstr "Accueil"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:12
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:37
+msgid "Publish"
+msgstr "Publier"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:19
+#, python-format
+msgid ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following item will be published:\n"
+msgid_plural ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following items will be published:\n"
+msgstr[0] ""
+"Voulez-vous vraiment publier le %(objects_name)s sélectionné ?\n"
+" L'élément suivant sera publié :\n"
+msgstr[1] ""
+"Voulez-vous vraiment publier les %(objects_name)s sélectionnés ?\n"
+" Les éléments suivants seront publiés :\n"

@@ -235,6 +235,8 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
     return floppify_form(form_class)
 
 
+# Translators : %(username)s will be replaced by the username_field name
+# (default : username, but could be email, or something else)
 ERROR_MESSAGE = ugettext_lazy("Please enter the correct %(username)s and password "
         "for a staff account. Note that both fields may be case-sensitive.")
 

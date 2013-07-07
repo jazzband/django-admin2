@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-07 11:13+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: actions.py:13
+msgid "Publish selected items"
+msgstr ""
+
+#: actions.py:14
+#, python-format
+msgctxt "singular form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr ""
+
+#: actions.py:15
+#, python-format
+msgctxt "plural form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr ""
+
+#: admin2.py:18
+msgid "Items unpublished"
+msgstr ""
+
+#. Translators : action description
+#: admin2.py:21
+msgid "Unpublish selected items"
+msgstr ""
+
+#: models.py:8
+msgid "title"
+msgstr ""
+
+#: models.py:9 models.py:22
+msgid "body"
+msgstr ""
+
+#: models.py:10
+msgid "published"
+msgstr ""
+
+#: models.py:16 models.py:21
+msgid "post"
+msgstr ""
+
+#: models.py:17
+msgid "posts"
+msgstr ""
+
+#: models.py:28
+msgid "comment"
+msgstr ""
+
+#: models.py:29
+msgid "comments"
+msgstr ""
+
+#: templates/blog/home.html:9
+msgid "Imagine that this is a real site"
+msgstr ""
+
+#: templates/blog/home.html:11
+msgid "Pretend that this is the homepage of a big Django site."
+msgstr ""
+
+#: templates/blog/home.html:13
+msgid "Imagine lots of things are here:"
+msgstr ""
+
+#: templates/blog/home.html:15
+msgid "A blog"
+msgstr ""
+
+#: templates/blog/home.html:16
+msgid "Comments"
+msgstr ""
+
+#: templates/blog/home.html:17
+msgid "And so on..."
+msgstr ""
+
+#: templates/blog/home.html:20
+msgid ""
+"In other words, these are items that we can introspect through the Django "
+"admin."
+msgstr ""
+
+#: templates/blog/home.html:22
+msgid "Under the hood"
+msgstr ""
+
+#: templates/blog/home.html:24
+msgid ""
+"Now, explore the Django admin for example.com. Click on either of the "
+"following:"
+msgstr ""
+
+#: templates/blog/home.html:30
+#, python-format
+msgid "The original <a href=\"%(admin_url)s\">Django Admin</a>"
+msgstr ""
+
+#: templates/blog/home.html:36
+msgid "Powered by django.contrib.admin. This is just here for reference."
+msgstr ""
+
+#: templates/blog/home.html:39
+#, python-format
+msgid "The new <a href=\"%(admin2_url)s\">Admin2</a>"
+msgstr ""
+
+#: templates/blog/home.html:45
+msgid "Powered by django-admin2."
+msgstr ""
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:4
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:6
+msgid "Are you sure?"
+msgstr ""
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:9
+msgid "Home"
+msgstr ""
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:12
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:37
+msgid "Publish"
+msgstr ""
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:19
+#, python-format
+msgid ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following item will be published:\n"
+msgid_plural ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following items will be published:\n"
+msgstr[0] ""
+msgstr[1] ""
