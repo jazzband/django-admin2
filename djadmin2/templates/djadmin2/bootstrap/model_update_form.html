@@ -8,6 +8,10 @@
 {# Translators : examples : Add post, Change object #}
 {% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
 
+{% block page_title_link %}
+<a href="#" class="btn btn-info">History</a>
+{% endblock page_title_link %}
+
 {% block breadcrumbs %}
   <li>
     <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
@@ -35,10 +39,6 @@
 
 
 {% block content %}
-
-<div class="history_btn">
-  <a href="#" class="btn btn-info">History</a>
-</div>
 
 <div class="row-fluid">
   <div class="span12">
