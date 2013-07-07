@@ -1,48 +1,48 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load staticfiles i18n %}
 
 {% block content %}
 <div class="row-fluid">
     <div class="span10">
         <h1>Example.com</h1>
 
-        <h3>Imagine that this is a real site</h3>
+        <h3>{% trans "Imagine that this is a real site" %}</h3>
 
-        <p>Pretend that this is the homepage of a big Django site.</p>
+        <p>{% trans "Pretend that this is the homepage of a big Django site." %}</p>
 
-        <p>Imagine lots of things are here:</p>
+        <p>{% trans "Imagine lots of things are here:" %}</p>
         <ul>
-            <li>A blog</li>
-            <li>Comments</li>
-            <li>And so on...</li>
+            <li>{% trans "A blog" %}</li>
+            <li>{% trans "Comments" %}</li>
+            <li>{% trans "And so on..." %}</li>
         </ul>
 
-        <p>In other words, these are items that we can introspect through the Django admin.</p>
+        <p>{% trans "In other words, these are items that we can introspect through the Django admin." %}</p>
 
-        <h3>Under the hood</h3>
+        <h3>{% trans "Under the hood" %}</h3>
 
-        <p>Now, explore the Django admin for example.com. Click on either of the following:</p>
+        <p>{% trans "Now, explore the Django admin for example.com. Click on either of the following:" %}</p>
     </div>
 </div>
 
 <div class="row-fluid">
     <div class="span5">
-        <h4>The original <a href="/admin/">Django Admin</a></h4>
+        <h4>{% blocktrans with admin_url="/admin/" %}The original <a href="{{admin_url}}">Django Admin</a>{% endblocktrans %}</h4>
 
         <a href="/admin/">
             <img class="img-polaroid" src="{% static 'img/admin.png' %}" />
         </a>
 
-        <p>Powered by django.contrib.admin. This is just here for reference.</p>
+        <p>{% trans "Powered by django.contrib.admin. This is just here for reference." %}</p>
     </div>
     <div class="offset1 span5">
-        <h4>The new <a href="/admin2/">Admin2</a></h4>
+        <h4>{% blocktrans with admin2_url="/admin2/" %}The new <a href="{{admin2_url}}">Admin2</a>{% endblocktrans %}</h4>
 
         <a href="/admin2/">
             <img class="img-polaroid" src="{% static 'img/admin2.png' %}" />
         </a>
 
-        <p>Powered by django-admin2.</p>
+        <p>{% trans "Powered by django-admin2." %}</p>
     </div>
 </div>
 {% endblock %}

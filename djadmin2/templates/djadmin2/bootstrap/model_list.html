@@ -107,7 +107,7 @@
   {% block filters %}
     {% if list_filter %}
     <div id="list_filter_container" class="well span4">
-      <h4>{% trans "Filter" %}</h4>
+      <h4>{# Translators : action verb #}{% trans "Filter" %}</h4>
       {{ list_filter.form.as_p }}
     </div>
     {% endif %}

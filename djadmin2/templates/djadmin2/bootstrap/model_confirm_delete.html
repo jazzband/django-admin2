@@ -27,7 +27,17 @@
 
 {% block content %}
 
-<p>{% blocktrans with model_name=model_name object=object %}Are you sure you want to delete the {{ model_name }} "{{ object }}"? All of the following items will be deleted:{% endblocktrans %}</p>
+<p>
+{# Translators : this is singular, example : delete the post "My Title" #}
+{% blocktrans with model_name=model_name object=object %}
+Are you sure you want to delete the {{ model_name }} "{{ object }}"?
+{% endblocktrans %}
+
+{% blocktrans count counter=deletable_objects|length %}
+The following item will be deleted:
+{% plural %}
+All of the following items will be deleted:
+{% endblocktrans %}</p>
 
 <ul>
   {{ deletable_objects|unordered_list }}
