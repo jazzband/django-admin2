@@ -63,14 +63,17 @@ class ModelAdmin2(object):
     # TODO: Confirm that this is what the Django admin uses
     list_fields = []
 
-    #This shows up on the DocumentListView of the Posts
+    # This shows up on the DocumentListView of the Posts
     list_actions = [actions.DeleteSelectedAction]
 
     # This shows up in the DocumentDetailView of the Posts.
     document_actions = []
 
-    # shows up on a particular field
+    # Shows up on a particular field
     field_actions = {}
+
+    # Defines custom field renderers
+    field_renderers = {}
 
     fields = None
     exclude = None

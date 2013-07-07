@@ -106,3 +106,32 @@ def get_attr(record, attribute_name):
     if callable(attribute):
         return attribute()
     return attribute
+
+
+@register.simple_tag(takes_context=True)
+def render(context, model_instance, attribute_name):
+    """
+    This filter applies all renderers specified in admin2.py to the field.
+    """
+    # Get the right value for the attribute. Handle special cases like
+    # callables and the __str__ attribute.
+    if attribute_name == '__str__':
+        value = unicode(model_instance)
+    else:
+        attribute = getattr(model_instance, attribute_name)
+        value = attribute() if callable(attribute) else attribute
+
+    # Get renderer
+    admin = context['view'].model_admin
+    renderer = admin.field_renderers.get(attribute_name)
+    if not renderer:
+        return value
+
+    # Apply renderer and return value
+    try:
+        field = model_instance._meta.get_field_by_name(attribute_name)[0]
+    except FieldDoesNotExist:
+        # There is no field with the specified name.
+        # It must be a method instead.
+        field = None
+    return renderer(value, field)
