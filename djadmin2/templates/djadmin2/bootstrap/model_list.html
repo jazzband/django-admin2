@@ -70,11 +70,22 @@
         <thead>
           <th class="checkbox-column"><input type="checkbox" class="model-select-all"></th>
           {% for attr in view.model_admin.list_display %}
-            {% if forloop.first and attr == "__str__" %}
-              <th>{{ model_name|capfirst }}</th>
-            {% else %}
-              <th>{{ model|model_attr_verbose_name:attr|capfirst }}</th>
-            {% endif%}
+            <th>
+              {# comment if we sorted on this field last time invert the sort #}
+              {% if sort_term == attr %}
+                <a class='sort_link' href='./?sort=-{{attr}}'>
+              {% else %}
+                <a class='sort_link' href='./?sort={{attr}}'>
+              {% endif %}
+
+              {% if forloop.first and attr == "__str__" %}
+                {{ model_name|capfirst }}
+              {% else %}
+                {{ model|model_attr_verbose_name:attr|capfirst }}
+              {% endif %}
+
+              </a>
+            </th>
           {% endfor %}
         </thead>
         <tbody>

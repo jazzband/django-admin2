@@ -26,6 +26,7 @@ class PostAdmin(djadmin2.ModelAdmin2):
     inlines = [CommentInline]
     search_fields = ('title', '^body')
     list_filter = ['published', 'title']
+    list_display = ('title',)
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):
