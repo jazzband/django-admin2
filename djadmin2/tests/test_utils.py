@@ -135,3 +135,35 @@ class UtilsTest(TestCase):
             self.instance._meta.app_label,
             utils.model_app_label(self.instance)
         )
+
+    def test_get_attr_callable(self):
+        class Klass(object):
+            def hello(self):
+                return "hello"
+
+        self.assertEquals(
+            utils.get_attr(Klass(), "hello"),
+            "hello"
+        )
+
+    def test_get_attr_str(self):
+        class Klass(object):
+            def __str__(self):
+                return "str"
+
+            def __unicode__(self):
+                return "unicode"
+
+        self.assertEquals(
+            utils.get_attr(Klass(), "__str__"),
+            "unicode"
+        )
+
+    def test_get_attr(self):
+        class Klass(object):
+            attr = "value"
+
+        self.assertEquals(
+            utils.get_attr(Klass(), "attr"),
+            "value"
+        )

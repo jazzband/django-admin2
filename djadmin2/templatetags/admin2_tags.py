@@ -1,9 +1,11 @@
+from numbers import Number
+from datetime import date, time, datetime
 from django import template
 from django.db.models.fields import FieldDoesNotExist
 
 register = template.Library()
 
-from .. import utils
+from .. import utils, renderers
 
 
 @register.filter
@@ -97,12 +99,35 @@ def for_object(permissions, obj):
     return permissions.bind_object(obj)
 
 
-@register.simple_tag
-def get_attr(record, attribute_name):
-    """ Allows dynamic fetching of model attributes in templates """
-    if attribute_name == "__str__":
-        return record.__unicode__()
-    attribute = getattr(record, attribute_name)
-    if callable(attribute):
-        return attribute()
-    return attribute
+@register.simple_tag(takes_context=True)
+def render(context, model_instance, attribute_name):
+    """
+    This filter applies all renderers specified in admin2.py to the field.
+    """
+    value = utils.get_attr(model_instance, attribute_name)
+
+    # Get renderer
+    admin = context['view'].model_admin
+    renderer = admin.field_renderers.get(attribute_name, False)
+    if renderer is None:
+        # Renderer has explicitly been overridden
+        return value
+    if not renderer:
+        # Try to automatically pick best renderer
+        if isinstance(value, bool):
+            renderer = renderers.boolean_renderer
+        elif isinstance(value, (date, time, datetime)):
+            renderer = renderers.datetime_renderer
+        elif isinstance(value, Number):
+            renderer = renderers.number_renderer
+        else:
+            return value
+
+    # Apply renderer and return value
+    try:
+        field = model_instance._meta.get_field_by_name(attribute_name)[0]
+    except FieldDoesNotExist:
+        # There is no field with the specified name.
+        # It must be a method instead.
+        field = None
+    return renderer(value, field)
