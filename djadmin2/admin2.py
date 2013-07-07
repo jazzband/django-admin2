@@ -1,6 +1,6 @@
+from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
-
 
 from rest_framework.relations import PrimaryKeyRelatedField
 
@@ -36,12 +36,16 @@ class UserAdmin2(djadmin2.ModelAdmin2):
     api_serializer_class = UserSerializer
 
 
-class SiteAdmin2(djadmin2.ModelAdmin2):
-    list_display = ('domain', 'name')
-    search_fields = ('domain', 'name')
-
-
 #  Register each model with the admin
 djadmin2.default.register(User, UserAdmin2)
 djadmin2.default.register(Group, GroupAdmin2)
-djadmin2.default.register(Site, SiteAdmin2)
+
+
+# Register the sites app if it's been activated in INSTALLED_APPS
+if "django.contrib.sites" in settings.INSTALLED_APPS:
+
+    class SiteAdmin2(djadmin2.ModelAdmin2):
+        list_display = ('domain', 'name')
+        search_fields = ('domain', 'name')
+
+    djadmin2.default.register(Site, SiteAdmin2)
