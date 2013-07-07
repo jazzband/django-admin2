@@ -70,7 +70,8 @@ class PostListTest(BaseIntegrationTest):
         post = Post.objects.create(title="a_post_title", body="body")
         params = {'action': 'DeleteSelectedAction', 'selected_model_pk': str(post.pk)}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
-        self.assertInHTML('<p>Are you sure you want to delete the selected post? All of the following items will be deleted:</p>', response.content)
+        # caution : uses pluralization
+        self.assertInHTML('<p>Are you sure you want to delete the selected post? The following item will be deleted:</p>', response.content)
 
     def test_delete_selected_post_confirmation(self):
         post = Post.objects.create(title="a_post_title", body="body")

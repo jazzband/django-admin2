@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 10:07+0200\n"
+"POT-Creation-Date: 2013-07-07 10:58+0200\n"
 "PO-Revision-Date: 2013-07-06 14:16+0200\n"
 "Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/django-admin2/"
@@ -33,12 +33,12 @@ msgctxt "plural form"
 msgid "Successfully published %(count)s %(items)s"
 msgstr "%(count)s %(items)s publiés avec succès"
 
-#: admin2.py:42
+#: admin2.py:18
 msgid "Items unpublished"
 msgstr "Les éléments ne sont plus publiés"
 
 #. Translators : action description
-#: admin2.py:45
+#: admin2.py:21
 msgid "Unpublish selected items"
 msgstr "Ne plus publier les éléments sélectionnés"
 
@@ -143,17 +143,21 @@ msgid "Home"
 msgstr "Accueil"
 
 #: templates/djadmin2/bootstrap/actions/publish_selected_items.html:12
-#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:36
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:37
 msgid "Publish"
 msgstr "Publier"
 
 #: templates/djadmin2/bootstrap/actions/publish_selected_items.html:19
 #, python-format
-msgid "Are you sure you want to publish the selected %(objects_name)s?"
-msgstr "Voulez-vous vraiment publier le %(objects_name)s sélectionné ?"
-
-#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:20
-msgid "The following item will be published:\n"
-msgid_plural "All of the following items will be published:\n"
-msgstr[0] "L'élément suivant sera publié :\n"
-msgstr[1] "Les éléments suivants seront publiés :\n"
+msgid ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following item will be published:\n"
+msgid_plural ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following items will be published:\n"
+msgstr[0] ""
+"Voulez-vous vraiment publier le %(objects_name)s sélectionné ?\n"
+" L'élément suivant sera publié :\n"
+msgstr[1] ""
+"Voulez-vous vraiment publier les %(objects_name)s sélectionnés ?\n"
+" Les éléments suivants seront publiés :\n"

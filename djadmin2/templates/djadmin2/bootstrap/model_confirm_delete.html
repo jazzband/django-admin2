@@ -33,7 +33,7 @@
 Are you sure you want to delete the {{ model_name }} "{{ object }}"?
 {% endblocktrans %}
 
-{% blocktrans with count=deletable_objects|len%}
+{% blocktrans count counter=deletable_objects|length %}
 The following item will be deleted:
 {% plural %}
 All of the following items will be deleted:

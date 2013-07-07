@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 10:07+0200\n"
+"POT-Creation-Date: 2013-07-07 10:58+0200\n"
 "PO-Revision-Date: 2013-07-06 14:47+0200\n"
 "Last-Translator: Margherita Zamponi <margherita.zamponi@gmail.com>\n"
 "Language-Team: https://www.transifex.com/projects/p/django-admin2/language/"
@@ -39,6 +39,18 @@ msgctxt "plural form"
 msgid "Successfully deleted %(count)s %(items)s"
 msgstr ""
 
+#: filters.py:40
+msgid "Unknown"
+msgstr ""
+
+#: filters.py:41
+msgid "Yes"
+msgstr ""
+
+#: filters.py:42
+msgid "No"
+msgstr ""
+
 #. Translators : %(username)s will be replaced by the username_field name
 #. (default : username, but could be email, or something else)
 #: forms.py:240
@@ -52,12 +64,12 @@ msgstr ""
 msgid "Please log in again, because your session has expired."
 msgstr ""
 
-#: views.py:182 templates/djadmin2/bootstrap/model_update_form.html:30
+#: views.py:200 templates/djadmin2/bootstrap/model_update_form.html:31
 #: templates/djadmin2/bootstrap/includes/app_model_list.html:38
 msgid "Change"
 msgstr ""
 
-#: views.py:202 templates/djadmin2/bootstrap/includes/app_model_list.html:30
+#: views.py:221 templates/djadmin2/bootstrap/includes/app_model_list.html:30
 msgid "Add"
 msgstr ""
 
@@ -66,7 +78,7 @@ msgstr ""
 #: templates/djadmin2/bootstrap/model_confirm_delete.html:10
 #: templates/djadmin2/bootstrap/model_detail.html:11
 #: templates/djadmin2/bootstrap/model_list.html:14
-#: templates/djadmin2/bootstrap/model_update_form.html:12
+#: templates/djadmin2/bootstrap/model_update_form.html:13
 #: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:10
 #: templates/djadmin2/bootstrap/auth/logout.html:8
 #: templates/djadmin2/bootstrap/auth/password_change_done.html:11
@@ -123,7 +135,7 @@ msgid "Are you sure?"
 msgstr ""
 
 #: templates/djadmin2/bootstrap/model_confirm_delete.html:25
-#: templates/djadmin2/bootstrap/model_update_form.html:75
+#: templates/djadmin2/bootstrap/model_update_form.html:76
 #: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:21
 msgid "Delete"
 msgstr ""
@@ -147,7 +159,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: templates/djadmin2/bootstrap/model_confirm_delete.html:50
-#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:40
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:44
 msgid "Yes, I'm sure"
 msgstr ""
 
@@ -176,30 +188,36 @@ msgid "Add %(model_verbose_name)s"
 msgstr ""
 
 #. Translators : examples : Add post, Change object
-#: templates/djadmin2/bootstrap/model_update_form.html:5
-#: templates/djadmin2/bootstrap/model_update_form.html:8
+#: templates/djadmin2/bootstrap/model_update_form.html:6
+#: templates/djadmin2/bootstrap/model_update_form.html:9
 #, python-format
-msgid "%(action)s %(model_name)s"
-msgstr ""
-
-#: templates/djadmin2/bootstrap/model_update_form.html:79
-msgid "Save and add another"
+msgid "%(action_name)s %(model_name)s"
 msgstr ""
 
 #: templates/djadmin2/bootstrap/model_update_form.html:80
-msgid "Save and continue editing"
+msgid "Save and add another"
 msgstr ""
 
 #: templates/djadmin2/bootstrap/model_update_form.html:81
+msgid "Save and continue editing"
+msgstr ""
+
+#: templates/djadmin2/bootstrap/model_update_form.html:82
 msgid "Save"
 msgstr ""
 
 #: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:27
 #, python-format
 msgid ""
-"Are you sure you want to delete the selected %(objects_name)s?  All of the "
-"following items will be deleted:"
-msgstr ""
+"\n"
+"Are you sure you want to delete the selected %(objects_name)s? The following "
+"item will be deleted:\n"
+msgid_plural ""
+"\n"
+"Are you sure you want to delete the selected %(objects_name)s? The following "
+"items will be deleted:\n"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/djadmin2/bootstrap/auth/login.html:15
 #: templates/djadmin2/bootstrap/auth/login.html:52

@@ -24,7 +24,11 @@
 
 {% block content %}
 
-<p>{% blocktrans with objects_name=objects_name %}Are you sure you want to delete the selected {{ objects_name }}?  All of the following items will be deleted:{% endblocktrans %}</p>
+<p>{% blocktrans with objects_name=objects_name count counter=deletable_objects|length %}
+Are you sure you want to delete the selected {{ objects_name }}? The following item will be deleted:
+{% plural %}
+Are you sure you want to delete the selected {{ objects_name }}? The following items will be deleted:
+{% endblocktrans %}</p>
 
 <ul>
   {{ deletable_objects|unordered_list }}

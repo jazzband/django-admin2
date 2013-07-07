@@ -16,9 +16,10 @@
 {% block content %}
 
 <p>
-{% blocktrans with objects_name=objects_name %}Are you sure you want to publish the selected {{ objects_name }}?{% endblocktrans %}
-{% blocktrans with count=deletable_objects|len %}The following item will be published:
-{% plural %}All of the following items will be published:
+{% blocktrans with objects_name=objects_name count counter=deletable_objects|length %}Are you sure you want to publish the selected {{ objects_name }}?
+ The following item will be published:
+{% plural %}Are you sure you want to publish the selected {{ objects_name }}?
+ The following items will be published:
 {% endblocktrans %}
 </p>
 
