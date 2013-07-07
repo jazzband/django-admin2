@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from django.db import models
 from django.utils import six
 from django.utils.encoding import python_2_unicode_compatible

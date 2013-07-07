@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from django.contrib import messages
 from django.views.generic import TemplateView
 from django.utils.encoding import force_text
@@ -132,9 +135,8 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
             return self.get(request)
 
     def process_queryset(self):
-        raise NotImplementedError(
-            'Must be provided to do some actions with queryset'
-            )
+        msg = 'Must be provided to do some actions with queryset'
+        raise NotImplementedError(msg)
 
 
 class DeleteSelectedAction(BaseListAction):

@@ -1,11 +1,16 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from numbers import Number
 from datetime import date, time, datetime
+
 from django import template
 from django.db.models.fields import FieldDoesNotExist
 
-register = template.Library()
-
 from .. import utils, renderers
+
+
+register = template.Library()
 
 
 @register.filter
