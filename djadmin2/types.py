@@ -50,7 +50,12 @@ class ModelAdmin2(object):
     verbose_name = None
     verbose_name_plural = None
     model_admin_attributes = settings.MODEL_ADMIN_ATTRS
-    actions_on_bottom = True
+    save_on_top = False
+    save_on_bottom = True
+
+    # Not yet implemented. See #267 and #268
+    actions_on_bottom = False
+    actions_on_top = True
 
     search_fields = []
 

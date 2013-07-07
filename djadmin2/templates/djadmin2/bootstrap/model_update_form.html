@@ -38,6 +38,18 @@
 <div class="row-fluid">
   <div class="span12">
     <form method="post">
+
+      {% if view.model_admin.save_on_bottom %}
+        {# TODO - fix the format of the HTML #}
+        <hr />
+        {% if object %}
+        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
+        {% endif %}
+          {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+          <hr />
+      {% endif %}
+
+
       {% csrf_token %}
       {{ form.as_p }}
 
@@ -71,12 +83,12 @@
       </table>
       {% endfor %}
 
-      <hr/>
-      {% if object %}
-      <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
-      {% endif %}
-      {% if view.model_admin.actions_on_bottom %}
-          {% include "djadmin2/bootstrap/includes/action_buttons.html" %}
+      {% if view.model_admin.save_on_bottom %}
+        <hr/>
+        {% if object %}
+        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
+        {% endif %}
+          {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
       {% endif %}
 
     </form>

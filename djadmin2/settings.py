@@ -8,6 +8,7 @@ MODEL_ADMIN_ATTRS = (
     'search_fields',
     'index_view', 'detail_view', 'create_view', 'update_view', 'delete_view',
     'get_default_view_kwargs', 'get_list_actions',
-    'actions_on_bottom',)
+    'actions_on_bottom', 'actions_on_top',
+    'save_on_top', 'save_on_bottom')
 
 ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "djadmin2/bootstrap")
