@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from collections import namedtuple
 import logging
 
@@ -271,5 +274,7 @@ def immutable_admin_factory(model_admin):
         Note: This won't stop developers from saving mutable objects to the result, but hopefully
                 developers attempting that 'workaround/hack' will read our documentation.
     """
-    ImmutableAdmin = namedtuple("ImmutableAdmin", model_admin.model_admin_attributes, verbose=False)
+    ImmutableAdmin = namedtuple('ImmutableAdmin',
+                                model_admin.model_admin_attributes,
+                                verbose=False)
     return ImmutableAdmin(*[getattr(model_admin, x) for x in model_admin.model_admin_attributes])

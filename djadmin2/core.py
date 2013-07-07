@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-:
 """
 WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
 """
+from __future__ import division, absolute_import, unicode_literals
 
 from django.conf.urls import patterns, include, url
 from django.conf import settings

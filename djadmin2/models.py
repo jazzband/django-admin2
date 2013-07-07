@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
 """ Boilerplate for now, will serve a purpose soon! """
+from __future__ import division, absolute_import, unicode_literals
+
 from django.db.models import signals
+
 from . import permissions
 
 

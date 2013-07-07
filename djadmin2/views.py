@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 import operator
 
 from django.contrib.auth.forms import (PasswordChangeForm,

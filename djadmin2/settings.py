@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from django.conf import settings
+
 
 # Restricts the attributes that are passed from ModelAdmin2 classes to their
 #   views. This is a security feature.
