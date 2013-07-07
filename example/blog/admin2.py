@@ -47,7 +47,5 @@ class EventAdmin(djadmin2.ModelAdmin2):
 #  Register each model with the admin
 djadmin2.default.register(Post, PostAdmin)
 djadmin2.default.register(Comment, CommentAdmin)
-djadmin2.default.register(User, UserAdmin2)
-djadmin2.default.register(Group, GroupAdmin2)
 djadmin2.default.register(Event, EventAdmin)
 djadmin2.default.register(EventGuide)
