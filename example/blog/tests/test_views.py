@@ -71,8 +71,8 @@ class PostListTest(BaseIntegrationTest):
     def test_actions_displayed_twice(self):
         # If actions_on_top and actions_on_bottom are both set
         response = self.client.get(reverse("admin2:blog_comment_index"))
-        self.assertInHTML('<div class="navbar actions-top">', response.content)
-        self.assertInHTML('<div class="navbar actions-bottom">', response.content)
+        self.assertContains(response, '<div class="navbar actions-top">')
+        self.assertContains(response, '<div class="navbar actions-bottom">')
 
     def test_delete_selected_post(self):
         post = Post.objects.create(title="A Post Title", body="body")
