@@ -160,6 +160,7 @@ History
   * Implemented BooleanField icons for List and Detail views
   * Implemented default ``django.contrib.auth`` and ``django.contrib.sites`` registrations
   * Implemented the displayed of verbose field/method names in list view
+  * Implemented client-side ordering of model list fields in default theme
   * Improved internal test coverage
   * Documentation for Context Variables in Themes
   * Corrected early nomenclature decisions
