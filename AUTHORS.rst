@@ -62,9 +62,9 @@ French
 
 German
 
-* Albrecht Mühlenschulte (a7p)
 * Danilo Bargen (dbrgn)
 * Jannis Leidel (jezdez)
+* Albrecht Mühlenschulte (a7p)
 
 Italian
 
@@ -80,8 +80,8 @@ Portuguese (Brazil)
 
 Slovak
 
-* Ivana Kellyérová (eruraina)
 * Marek Zelinkaa (marekzelinka)
+* Ivana Kellyérová (eruraina)
 
 Spanish
 
