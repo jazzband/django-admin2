@@ -73,6 +73,7 @@ Italian
 Polish
 
 * Dariusz Smigiel (dasm)
+* Marcin Jabrzyk (bzyx)
 
 Portuguese (Brazil)
 
