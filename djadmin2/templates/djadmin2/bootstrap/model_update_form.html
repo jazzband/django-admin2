@@ -40,24 +40,25 @@
 
 {% block content %}
 
-<div class="row-fluid">
-  <div class="span12">
     <form method="post">
        
       {% if view.model_admin.save_on_top %}
-      <div class="save_btns">
-        <!-- <hr/> -->
-        {% if object %}
-        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
-          <i class="icon-remove icon-white"></i>
-          {% trans "Delete" %}
-        </a>
-        {% endif %}
-          {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
-          <!-- <hr /> -->
+      <div class="row-fluid">
+        <div class="span12 save_btns">
+            {% if object %}
+            <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+              <i class="icon-remove icon-white"></i>
+              {% trans "Delete" %}
+            </a>
+            {% endif %}
+              {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+          </div>
       </div>
       {% endif %}
 
+<div class="row-fluid"><!-- begin main form row -->
+    <div class="span12">
+        
       <div class="change_form">
         {% csrf_token %}
         {{ form|crispy }}
@@ -104,22 +105,25 @@
               
       </table>
       {% endfor %}
+
+  </div>
+</div><!-- end main form row -->
       
       {% if view.model_admin.save_on_bottom %}
-      <div class="save_btns">
-        <!-- <hr/> -->
-        {% if object %}
-        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
-          <i class="icon-remove icon-white"></i>
-          {% trans "Delete" %}
-        </a>
-        {% endif %}
-          {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+      <div class="row-fluid">
+        <div class="span12 save_btns">
+            {% if object %}
+            <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+              <i class="icon-remove icon-white"></i>
+              {% trans "Delete" %}
+            </a>
+            {% endif %}
+              {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+          </div>
       </div>
       {% endif %}
       
-    </form>
-  </div>
-</div>
+</form>
+
 
 {% endblock content %}

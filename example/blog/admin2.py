@@ -33,6 +33,7 @@ class PostAdmin(djadmin2.ModelAdmin2):
     field_renderers = {
         'title': renderers.title_renderer,
     }
+    save_on_top = True
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):
