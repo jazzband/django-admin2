@@ -25,7 +25,6 @@
     margin-bottom: 10px;
 }
 
-
 .history_btn {
 	float: right;
 	margin-bottom: 10px;
@@ -54,7 +53,7 @@ p {
 
 .comments_form {
 	clear: both;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 
 .control-group {
@@ -76,5 +75,18 @@ textarea {
 }
 
 .add_comment {
-	height: 20px;
+	margin-top: 0;
+	height: 25px;
+	padding: 5px;
+	/*border: 1px solid #CCCCC1;
+	border-radius: 5px;*/
+}
+
+.save_btns {
+	margin-top: 10px;
+	border: 1px solid #CCCCC1;
+	border-radius: 5px;
+	padding: 10px;
+	padding-left: 15px;
+	margin-bottom: 20px;
 }

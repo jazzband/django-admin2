@@ -43,15 +43,19 @@
 <div class="row-fluid">
   <div class="span12">
     <form method="post">
-
+       
       {% if view.model_admin.save_on_top %}
-        {# TODO - fix the format of the HTML #}
-        <hr />
+      <div class="save_btns">
+        <!-- <hr/> -->
         {% if object %}
-        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
+        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+          <i class="icon-remove icon-white"></i>
+          {% trans "Delete" %}
+        </a>
         {% endif %}
           {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
-          <hr />
+          <!-- <hr /> -->
+      </div>
       {% endif %}
 
       <div class="change_form">
@@ -86,24 +90,34 @@
             {% endfor %}
           </tr>
           {% endfor %}
+          <tr class="new_row">
+            <td colspan="3">
+              <div class="add_comment">
+                <a href="#" class="btn btn-small">
+                  <i class="icon-plus"></i>
+                  Add another comment
+                </a>
+              </div>
+            </td>
+          </tr>
         </tbody>
+              
       </table>
       {% endfor %}
-
-      <div class="add_comment">
-        <a href="#" class="btn">
-          <i class="icon-plus"></i>
-          Add another comment
-        </a>
-      </div>
       
       {% if view.model_admin.save_on_bottom %}
-        <hr/>
+      <div class="save_btns">
+        <!-- <hr/> -->
         {% if object %}
-        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">{% trans "Delete" %}</a>
+        <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
+          <i class="icon-remove icon-white"></i>
+          {% trans "Delete" %}
+        </a>
         {% endif %}
           {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+      </div>
       {% endif %}
+      
     </form>
   </div>
 </div>
