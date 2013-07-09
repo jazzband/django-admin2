@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-08 16:07+0200\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
 "PO-Revision-Date: 2013-07-07 18:39+0000\n"
 "Last-Translator: marekzelinka <mzelinka@myopera.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/projects/p/django-admin2/"
@@ -141,7 +141,7 @@ msgstr "Určite?"
 
 #: templates/djadmin2/bootstrap/model_confirm_delete.html:25
 #: templates/djadmin2/bootstrap/model_update_form.html:51
-#: templates/djadmin2/bootstrap/model_update_form.html:103
+#: templates/djadmin2/bootstrap/model_update_form.html:118
 #: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:21
 msgid "Delete"
 msgstr "Odstrániť"
@@ -191,16 +191,6 @@ msgstr "Vyhľadávaný výraz"
 #: templates/djadmin2/bootstrap/model_list.html:32
 msgid "Search"
 msgstr "Hľadať"
-
-#: templates/djadmin2/bootstrap/model_list.html:59
-#, python-format
-msgid "%(selected)s of %(total)s selected"
-msgstr "Vybraných %(selected)s z %(total)s"
-
-#: templates/djadmin2/bootstrap/model_list.html:63
-#, python-format
-msgid "Add %(model_verbose_name)s"
-msgstr "Pridať %(model_verbose_name)s"
 
 #. Translators : examples : Add post, Change object
 #: templates/djadmin2/bootstrap/model_update_form.html:6
@@ -279,6 +269,16 @@ msgstr ""
 #: templates/djadmin2/bootstrap/auth/password_change_form.html:31
 msgid "Change my password"
 msgstr "Zmeniť moje heslo"
+
+#: templates/djadmin2/bootstrap/includes/list_actions.html:17
+#, python-format
+msgid "%(selected)s of %(total)s selected"
+msgstr "Vybraných %(selected)s z %(total)s"
+
+#: templates/djadmin2/bootstrap/includes/list_actions.html:21
+#, python-format
+msgid "Add %(model_verbose_name)s"
+msgstr "Pridať %(model_verbose_name)s"
 
 #: templates/djadmin2/bootstrap/includes/save_buttons.html:3
 msgid "Save and add another"

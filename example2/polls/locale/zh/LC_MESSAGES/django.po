@@ -1,0 +1,62 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# EricHo <eric913@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-07 11:16+0000\n"
+"Last-Translator: EricHo <eric913@gmail.com>\n"
+"Language-Team: Chinese (http://www.transifex.com/projects/p/django-admin2/"
+"language/zh/)\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: models.py:12
+msgid "question"
+msgstr "問題"
+
+#: models.py:13
+msgid "date published"
+msgstr "發布日期"
+
+#: models.py:22
+msgid "Published recently?"
+msgstr "最近發布?"
+
+#: models.py:25 models.py:30
+msgid "poll"
+msgstr "投票"
+
+#: models.py:26
+msgid "polls"
+msgstr "投票"
+
+#: models.py:31
+msgid "choice text"
+msgstr "選擇文字"
+
+#: models.py:32
+msgid "votes"
+msgstr "投票"
+
+#: models.py:38
+msgid "choice"
+msgstr "選擇"
+
+#: models.py:39
+msgid "choices"
+msgstr "選擇"
+
+#: templates/home.html:4
+msgid "Example Home"
+msgstr "首頁範本"
+
+#: templates/home.html:8
+msgid "(for reference)"
+msgstr "(參考)"

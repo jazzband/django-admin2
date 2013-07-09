@@ -1,55 +1,51 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the django-admin2 package.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 11:13+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-09 11:57+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:9
+#: models.py:12
 msgid "question"
 msgstr ""
 
-#: models.py:10
+#: models.py:13
 msgid "date published"
 msgstr ""
 
-#: models.py:19
+#: models.py:22
 msgid "Published recently?"
 msgstr ""
 
-#: models.py:22 models.py:27
+#: models.py:25 models.py:30
 msgid "poll"
 msgstr ""
 
-#: models.py:23
+#: models.py:26
 msgid "polls"
 msgstr ""
 
-#: models.py:28
+#: models.py:31
 msgid "choice text"
 msgstr ""
 
-#: models.py:29
+#: models.py:32
 msgid "votes"
 msgstr ""
 
-#: models.py:35
+#: models.py:38
 msgid "choice"
 msgstr ""
 
-#: models.py:36
+#: models.py:39
 msgid "choices"
 msgstr ""
 

@@ -1,0 +1,64 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# dasm <smigiel.dariusz@gmail.com>, 2013
+# Marcin Jabrzyk <marcin.jabrzyk@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-08 18:04+0000\n"
+"Last-Translator: dasm <smigiel.dariusz@gmail.com>\n"
+"Language-Team: Polish (Poland) (http://www.transifex.com/projects/p/django-"
+"admin2/language/pl_PL/)\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#: models.py:12
+msgid "question"
+msgstr "pytanie"
+
+#: models.py:13
+msgid "date published"
+msgstr "data publikacji"
+
+#: models.py:22
+msgid "Published recently?"
+msgstr "Ostatnio opublikowane?"
+
+#: models.py:25 models.py:30
+msgid "poll"
+msgstr "ankieta"
+
+#: models.py:26
+msgid "polls"
+msgstr "ankiety"
+
+#: models.py:31
+msgid "choice text"
+msgstr "tekst opcji"
+
+#: models.py:32
+msgid "votes"
+msgstr "głosy"
+
+#: models.py:38
+msgid "choice"
+msgstr "opcja"
+
+#: models.py:39
+msgid "choices"
+msgstr "opcje"
+
+#: templates/home.html:4
+msgid "Example Home"
+msgstr "Początek"
+
+#: templates/home.html:8
+msgid "(for reference)"
+msgstr "(dla przykładu)"

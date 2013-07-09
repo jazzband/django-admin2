@@ -1,0 +1,62 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# Density21.5 <jasper@plainspace.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-08 10:46+0000\n"
+"Last-Translator: Density21.5 <jasper@plainspace.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/django-admin2/"
+"language/nl/)\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: models.py:12
+msgid "question"
+msgstr "vraag"
+
+#: models.py:13
+msgid "date published"
+msgstr "publicatiedatum"
+
+#: models.py:22
+msgid "Published recently?"
+msgstr "Recent gepubliceerd?"
+
+#: models.py:25 models.py:30
+msgid "poll"
+msgstr "enquête"
+
+#: models.py:26
+msgid "polls"
+msgstr "enquêtes"
+
+#: models.py:31
+msgid "choice text"
+msgstr "keuzetekst"
+
+#: models.py:32
+msgid "votes"
+msgstr "stemmen"
+
+#: models.py:38
+msgid "choice"
+msgstr "keuze"
+
+#: models.py:39
+msgid "choices"
+msgstr "keuzes"
+
+#: templates/home.html:4
+msgid "Example Home"
+msgstr "Voorbeeld Home"
+
+#: templates/home.html:8
+msgid "(for reference)"
+msgstr "(ter verwijzing)"

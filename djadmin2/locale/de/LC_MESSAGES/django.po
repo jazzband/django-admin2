@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-08 16:01+0200\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
 "PO-Revision-Date: 2013-07-08 08:45+0000\n"
 "Last-Translator: dbrgn <gezuru@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/django-admin2/"
@@ -143,7 +143,7 @@ msgstr "Sind Sie sicher?"
 
 #: templates/djadmin2/bootstrap/model_confirm_delete.html:25
 #: templates/djadmin2/bootstrap/model_update_form.html:51
-#: templates/djadmin2/bootstrap/model_update_form.html:103
+#: templates/djadmin2/bootstrap/model_update_form.html:118
 #: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:21
 msgid "Delete"
 msgstr "Löschen"
@@ -155,7 +155,8 @@ msgid ""
 "\n"
 "Are you sure you want to delete the %(model_name)s \"%(object)s\"?\n"
 msgstr ""
-"\nSind Sie sicher, dass Sie den %(model_name)s-Eintrag \"%(object)s\" löschen "
+"\n"
+"Sind Sie sicher, dass Sie den %(model_name)s-Eintrag \"%(object)s\" löschen "
 "möchten?\n"
 
 #: templates/djadmin2/bootstrap/model_confirm_delete.html:36
@@ -190,16 +191,6 @@ msgstr "Suchbegriff"
 #: templates/djadmin2/bootstrap/model_list.html:32
 msgid "Search"
 msgstr "Suchen"
-
-#: templates/djadmin2/bootstrap/model_list.html:59
-#, python-format
-msgid "%(selected)s of %(total)s selected"
-msgstr "%(selected)s von %(total)s ausgewählt"
-
-#: templates/djadmin2/bootstrap/model_list.html:63
-#, python-format
-msgid "Add %(model_verbose_name)s"
-msgstr "%(model_verbose_name)s hinzufügen"
 
 #. Translators : examples : Add post, Change object
 #: templates/djadmin2/bootstrap/model_update_form.html:6
@@ -274,6 +265,16 @@ msgstr ""
 #: templates/djadmin2/bootstrap/auth/password_change_form.html:31
 msgid "Change my password"
 msgstr "Mein Passwort ändern"
+
+#: templates/djadmin2/bootstrap/includes/list_actions.html:17
+#, python-format
+msgid "%(selected)s of %(total)s selected"
+msgstr "%(selected)s von %(total)s ausgewählt"
+
+#: templates/djadmin2/bootstrap/includes/list_actions.html:21
+#, python-format
+msgid "Add %(model_verbose_name)s"
+msgstr "%(model_verbose_name)s hinzufügen"
 
 #: templates/djadmin2/bootstrap/includes/save_buttons.html:3
 msgid "Save and add another"
