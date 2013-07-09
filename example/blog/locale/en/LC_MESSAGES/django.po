@@ -1,15 +1,11 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the django-admin2 package.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 11:13+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-09 11:57+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,56 +13,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: actions.py:13
+#: actions.py:16
 msgid "Publish selected items"
 msgstr ""
 
-#: actions.py:14
+#: actions.py:18
 #, python-format
 msgctxt "singular form"
 msgid "Successfully published %(count)s %(items)s"
 msgstr ""
 
-#: actions.py:15
+#: actions.py:20
 #, python-format
 msgctxt "plural form"
 msgid "Successfully published %(count)s %(items)s"
 msgstr ""
 
-#: admin2.py:18
+#: admin2.py:22
 msgid "Items unpublished"
 msgstr ""
 
 #. Translators : action description
-#: admin2.py:21
+#: admin2.py:25
 msgid "Unpublish selected items"
 msgstr ""
 
-#: models.py:8
+#: models.py:11
 msgid "title"
 msgstr ""
 
-#: models.py:9 models.py:22
+#: models.py:12 models.py:25
 msgid "body"
 msgstr ""
 
-#: models.py:10
+#: models.py:13
 msgid "published"
 msgstr ""
 
-#: models.py:16 models.py:21
+#: models.py:19 models.py:24
 msgid "post"
 msgstr ""
 
-#: models.py:17
+#: models.py:20
 msgid "posts"
 msgstr ""
 
-#: models.py:28
+#: models.py:31
 msgid "comment"
 msgstr ""
 
-#: models.py:29
+#: models.py:32
 msgid "comments"
 msgstr ""
 

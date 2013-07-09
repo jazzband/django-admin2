@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 11:01+0200\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: NotSqrt <notsqrt@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/django-admin2/"
@@ -18,39 +18,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: models.py:9
+#: models.py:12
 msgid "question"
 msgstr "question"
 
-#: models.py:10
+#: models.py:13
 msgid "date published"
 msgstr "date de publication"
 
-#: models.py:19
+#: models.py:22
 msgid "Published recently?"
 msgstr "Publié récemment ?"
 
-#: models.py:22 models.py:27
+#: models.py:25 models.py:30
 msgid "poll"
 msgstr "sondage"
 
-#: models.py:23
+#: models.py:26
 msgid "polls"
 msgstr "sondages"
 
-#: models.py:28
+#: models.py:31
 msgid "choice text"
 msgstr "Texte du choix"
 
-#: models.py:29
+#: models.py:32
 msgid "votes"
 msgstr "votes"
 
-#: models.py:35
+#: models.py:38
 msgid "choice"
 msgstr "choix"
 
-#: models.py:36
+#: models.py:39
 msgid "choices"
 msgstr "choix"
 

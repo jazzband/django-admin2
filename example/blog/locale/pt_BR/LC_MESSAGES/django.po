@@ -1,7 +1,5 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# 
+# This file is distributed under the same license as the django-admin2 package.
+#
 # Translators:
 # andrewsmedina <andrewsmedina@gmail.com>, 2013
 # Douglas Miranda <douglasmirandasilva@gmail.com>, 2013
@@ -9,66 +7,67 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 11:13+0200\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
 "PO-Revision-Date: 2013-07-09 04:57+0000\n"
 "Last-Translator: Douglas Miranda <douglasmirandasilva@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/django-admin2/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"django-admin2/language/pt_BR/)\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: actions.py:13
+#: actions.py:16
 msgid "Publish selected items"
 msgstr "Publicar os itens selecionados"
 
-#: actions.py:14
+#: actions.py:18
 #, python-format
 msgctxt "singular form"
 msgid "Successfully published %(count)s %(items)s"
 msgstr "%(count)s %(items)s publicados com sucesso"
 
-#: actions.py:15
+#: actions.py:20
 #, python-format
 msgctxt "plural form"
 msgid "Successfully published %(count)s %(items)s"
 msgstr "%(count)s %(items)s publicados com sucesso"
 
-#: admin2.py:18
+#: admin2.py:22
 msgid "Items unpublished"
 msgstr "Itens publicados"
 
 #. Translators : action description
-#: admin2.py:21
+#: admin2.py:25
 msgid "Unpublish selected items"
 msgstr "Despublicar os itens selecionados"
 
-#: models.py:8
+#: models.py:11
 msgid "title"
 msgstr "título"
 
-#: models.py:9 models.py:22
+#: models.py:12 models.py:25
 msgid "body"
 msgstr "corpo"
 
-#: models.py:10
+#: models.py:13
 msgid "published"
 msgstr "publicado"
 
-#: models.py:16 models.py:21
+#: models.py:19 models.py:24
 msgid "post"
 msgstr "post"
 
-#: models.py:17
+#: models.py:20
 msgid "posts"
 msgstr "posts"
 
-#: models.py:28
+#: models.py:31
 msgid "comment"
 msgstr "comentário"
 
-#: models.py:29
+#: models.py:32
 msgid "comments"
 msgstr "comentários"
 
@@ -100,7 +99,9 @@ msgstr "E assim por diante..."
 msgid ""
 "In other words, these are items that we can introspect through the Django "
 "admin."
-msgstr "Em outras palavras, estes itens são os que podemos introspectar através da administração do Django."
+msgstr ""
+"Em outras palavras, estes itens são os que podemos introspectar através da "
+"administração do Django."
 
 #: templates/blog/home.html:22
 msgid "Under the hood"
@@ -110,7 +111,9 @@ msgstr "Sob o capô"
 msgid ""
 "Now, explore the Django admin for example.com. Click on either of the "
 "following:"
-msgstr "Agora, explore a administração do Django para o example.com. Clique em uma das seguintes opções:"
+msgstr ""
+"Agora, explore a administração do Django para o example.com. Clique em uma "
+"das seguintes opções:"
 
 #: templates/blog/home.html:30
 #, python-format
@@ -119,7 +122,8 @@ msgstr "Original <a href=\"%(admin_url)s\">Django Admin</a>"
 
 #: templates/blog/home.html:36
 msgid "Powered by django.contrib.admin. This is just here for reference."
-msgstr "Desenvolvido com django.contrib.admin. Está aqui apenas para referência."
+msgstr ""
+"Desenvolvido com django.contrib.admin. Está aqui apenas para referência."
 
 #: templates/blog/home.html:39
 #, python-format
@@ -152,5 +156,9 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to publish the selected %(objects_name)s?\n"
 " The following items will be published:\n"
-msgstr[0] "Você está certo em querer publicar o %(objects_name)s selecionado?\nO item seguinte será publicado:\n"
-msgstr[1] "Você está certo em querer publicar os %(objects_name)s selecionados?\nOs itens seguintes serão publicados:\n"
+msgstr[0] ""
+"Você está certo em querer publicar o %(objects_name)s selecionado?\n"
+"O item seguinte será publicado:\n"
+msgstr[1] ""
+"Você está certo em querer publicar os %(objects_name)s selecionados?\n"
+"Os itens seguintes serão publicados:\n"
