@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span10">
+        <h3> <a href='{% url 'blog_list' %}'>Back to the Blog</a> </h3>
+
+        <h3>
+            {{ post.title }}
+        </h3>
+
+        {% if post.published %}
+            <p>
+                {{ post.body }}
+            </p>
+
+            <ul>
+                {% for comment in post.comments.all %}
+                    <li>{{ comment.body }}</li>
+                {% empty %}
+                    <li>No comments yet</li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p> Unpublished - publish it in <a href="/admin2/">admin2</a> </p>
+        {% endif %}
+    </div>
+</div>
+
+<hr />
+
+<div class="row-fluid">
+    <div class="span5">
+        <h4>The original <a href="/admin/">Django Admin</a></h4>
+
+        <a href="/admin/">
+            <img class="img-polaroid" src="{% static 'img/admin.png' %}" />
+        </a>
+
+        <p>Powered by django.contrib.admin. This is just here for reference.</p>
+    </div>
+    <div class="offset1 span5">
+        <h4>The new <a href="/admin2/">Admin2</a></h4>
+
+        <a href="/admin2/">
+            <img class="img-polaroid" src="{% static 'img/admin2.png' %}" />
+        </a>
+
+        <p>Powered by django-admin2.</p>
+    </div>
+</div>
+{% endblock %}

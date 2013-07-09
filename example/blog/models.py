@@ -21,7 +21,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, verbose_name=_('post'))
+    post = models.ForeignKey(Post, verbose_name=_('post'), related_name="comments")
     body = models.TextField(verbose_name=_('body'))
 
     def __unicode__(self):

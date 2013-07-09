@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
+
+from blog.views import BlogListView, BlogDetailView
 
 admin.autodiscover()
 
@@ -11,5 +12,7 @@ djadmin2.default.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin2/', include(djadmin2.default.urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', TemplateView.as_view(template_name="blog/home.html")),
+    url(r'^blog/', BlogListView.as_view(template_name="blog/blog_list.html"), name='blog_list'),
+    url(r'^blog_detail(?P<pk>\d+)/$', BlogDetailView.as_view(template_name="blog/blog_detail.html"), name='blog_detail'),
+    url(r'^$', BlogListView.as_view(template_name="blog/blog_list.html"), name='blog_list'),
 )
