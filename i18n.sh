@@ -45,6 +45,12 @@ function compilemessages {
     ( cd example2/polls; django-admin.py compilemessages )
 }
 
+function checkmessages {
+    ls -1 djadmin2/locale/*/LC_MESSAGES/django.po | xargs -I {} msgfmt -c {}
+    ls -1 example/blog/locale/*/LC_MESSAGES/django.po | xargs -I {} msgfmt -c {}
+    ls -1 example2/polls/locale/*/LC_MESSAGES/django.po | xargs -I {} msgfmt -c {}
+}
+
 function pulltx {
     assert_tx
     echo "### Pulling new translations from Transifex..."
@@ -66,6 +72,7 @@ case $1 in
         echo "Available commands:"
         echo "--- makemessages: Generate or update .po files"
         echo "--- compilemessages: Compile .po files to .mo files";
+        echo "--- checkmessages: Check .po files for syntax errors";
         echo "--- pulltx: Pull new translations from Transifex";
         echo "--- pushtx: Push translations and sources to Transifex";
     ;;
@@ -74,6 +81,9 @@ case $1 in
     ;;
     "compilemessages")
         compilemessages
+    ;;
+    "checkmessages")
+        checkmessages
     ;;
     "pulltx")
         pulltx
