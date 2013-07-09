@@ -82,7 +82,7 @@ Then enter the following information (you will probably want to change the highl
         packages=get_packages('djadmin2_dandy'),
         include_package_data=True,
         install_requires=[
-            'django-admin2>=0.4.0',
+            'django-admin2>=0.5.0',
             ],
         zip_safe=False,
     )
