@@ -1,0 +1,295 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# Translators:
+# amarsahinovic, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-07 21:32+0000\n"
+"Last-Translator: amarsahinovic\n"
+"Language-Team: Bosnian (http://www.transifex.com/projects/p/django-admin2/"
+"language/bs/)\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: actions.py:29
+msgid ""
+"Items must be selected in order to perform actions on them. No items have "
+"been changed."
+msgstr ""
+"Stavke moraju biti odabrane da bi se nad njima izvodile akcije. Nijedna "
+"stavka nije promijenjena."
+
+#: actions.py:149
+msgid "Delete selected items"
+msgstr "Izbrišite odabrane stavke"
+
+#: actions.py:153
+#, python-format
+msgctxt "singular form"
+msgid "Successfully deleted %(count)s %(items)s"
+msgstr "Uspješno izbrisano %(count)s %(items)s"
+
+#: actions.py:157
+#, python-format
+msgctxt "plural form"
+msgid "Successfully deleted %(count)s %(items)s"
+msgstr "Uspješno izbrisano %(count)s %(items)s"
+
+#: filters.py:40
+msgid "Unknown"
+msgstr "Nepoznato"
+
+#: filters.py:41
+msgid "Yes"
+msgstr "Da"
+
+#: filters.py:42
+msgid "No"
+msgstr "Ne"
+
+#. Translators : %(username)s will be replaced by the username_field name
+#. (default : username, but could be email, or something else)
+#: forms.py:242
+#, python-format
+msgid ""
+"Please enter the correct %(username)s and password for a staff account. Note "
+"that both fields may be case-sensitive."
+msgstr ""
+"Molimo unesite ispravno %(username)s i lozinku za račun osoblja. Imajte na "
+"umu da oba polja mogu sadržavati velika i mala slova."
+
+#: forms.py:253
+msgid "Please log in again, because your session has expired."
+msgstr "Molimo prijavite se ponovo, vaša sesija je istekla."
+
+#: views.py:228 templates/djadmin2/bootstrap/model_update_form.html:35
+#: templates/djadmin2/bootstrap/includes/app_model_list.html:38
+msgid "Change"
+msgstr "Promijeni"
+
+#: views.py:249 templates/djadmin2/bootstrap/includes/app_model_list.html:30
+msgid "Add"
+msgstr "Dodaj"
+
+#: templates/djadmin2/bootstrap/app_index.html:6
+#: templates/djadmin2/bootstrap/base.html:56
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:10
+#: templates/djadmin2/bootstrap/model_detail.html:11
+#: templates/djadmin2/bootstrap/model_list.html:14
+#: templates/djadmin2/bootstrap/model_update_form.html:17
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:10
+#: templates/djadmin2/bootstrap/auth/logout.html:8
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:11
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:10
+msgid "Home"
+msgstr "Početna"
+
+#: templates/djadmin2/bootstrap/app_index.html:12
+#, python-format
+msgid "%(app_label)s administration"
+msgstr "%(app_label)s administracija"
+
+#: templates/djadmin2/bootstrap/base.html:6
+#: templates/djadmin2/bootstrap/base.html:72
+#: templates/djadmin2/bootstrap/auth/login.html:15
+msgid "Site administration"
+msgstr "Administracija stranice"
+
+#: templates/djadmin2/bootstrap/base.html:23
+msgid "API"
+msgstr "API"
+
+#: templates/djadmin2/bootstrap/base.html:26
+msgid "Documentation"
+msgstr "Dokumentacija"
+
+#: templates/djadmin2/bootstrap/base.html:35
+#, python-format
+msgid "Logged in as %(user)s"
+msgstr "Prijavljen kao %(user)s"
+
+#: templates/djadmin2/bootstrap/base.html:41
+msgid "Change password"
+msgstr "Promijeni lozinku"
+
+#: templates/djadmin2/bootstrap/base.html:43
+#: templates/djadmin2/bootstrap/auth/logout.html:11
+msgid "Log out"
+msgstr "Odjavi se"
+
+#: templates/djadmin2/bootstrap/index.html:13
+msgid "Recent Actions"
+msgstr "Nedavne akcije"
+
+#: templates/djadmin2/bootstrap/index.html:14
+msgid "My Actions"
+msgstr "Moje akcije"
+
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:4
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:6
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:4
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:6
+msgid "Are you sure?"
+msgstr "Da li ste sigurni?"
+
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:25
+#: templates/djadmin2/bootstrap/model_update_form.html:51
+#: templates/djadmin2/bootstrap/model_update_form.html:118
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:21
+msgid "Delete"
+msgstr "Izbriši"
+
+#. Translators : this is singular, example : delete the post "My Title"
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:32
+#, python-format
+msgid ""
+"\n"
+"Are you sure you want to delete the %(model_name)s \"%(object)s\"?\n"
+msgstr ""
+"\n"
+"Da li ste sigurni da želite obrisati %(model_name)s \"%(object)s\"?\n"
+
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:36
+msgid ""
+"\n"
+"The following item will be deleted:\n"
+msgid_plural ""
+"\n"
+"All of the following items will be deleted:\n"
+msgstr[0] ""
+"\n"
+"Sve navedene stavke će biti obrisane:\n"
+msgstr[1] ""
+"\n"
+"Sve navedene stavke će biti obrisane:\n"
+msgstr[2] ""
+"\n"
+"Sve navedene stavke će biti obrisane:\n"
+
+#: templates/djadmin2/bootstrap/model_confirm_delete.html:50
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:44
+msgid "Yes, I'm sure"
+msgstr "Da, siguran sam"
+
+#: templates/djadmin2/bootstrap/model_list.html:4
+#: templates/djadmin2/bootstrap/model_list.html:6
+#, python-format
+msgid "Select %(model_name)s to change"
+msgstr "Odaberite %(model_name)s za izmjenu"
+
+#: templates/djadmin2/bootstrap/model_list.html:31
+msgid "Search Term"
+msgstr "Pojam za pretragu"
+
+#: templates/djadmin2/bootstrap/model_list.html:32
+msgid "Search"
+msgstr "Traži"
+
+#. Translators : examples : Add post, Change object
+#: templates/djadmin2/bootstrap/model_update_form.html:6
+#: templates/djadmin2/bootstrap/model_update_form.html:9
+#, python-format
+msgid "%(action_name)s %(model_name)s"
+msgstr "%(action_name)s %(model_name)s"
+
+#: templates/djadmin2/bootstrap/actions/delete_selected_confirmation.html:27
+#, python-format
+msgid ""
+"\n"
+"Are you sure you want to delete the selected %(objects_name)s? The following "
+"item will be deleted:\n"
+msgid_plural ""
+"\n"
+"Are you sure you want to delete the selected %(objects_name)s? The following "
+"items will be deleted:\n"
+msgstr[0] ""
+"\n"
+"Da li ste sigurni da želite obrisati odabrani %(objects_name)s? Sve navedene "
+"stavke će biti obrisane:\n"
+msgstr[1] ""
+"\n"
+"Da li ste sigurni da želite obrisati odabrane %(objects_name)s? Sve navedene "
+"stavke će biti obrisane:\n"
+msgstr[2] ""
+"\n"
+"Da li ste sigurni da želite obrisati odabrane %(objects_name)s? Sve navedene "
+"stavke će biti obrisane:\n"
+
+#: templates/djadmin2/bootstrap/auth/login.html:15
+#: templates/djadmin2/bootstrap/auth/login.html:52
+msgid "Log in"
+msgstr "Prijavi se"
+
+#: templates/djadmin2/bootstrap/auth/login.html:27
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:24
+msgid "Please correct the error below."
+msgid_plural "Please correct the errors below."
+msgstr[0] "Molimo ispravite dole navedenu grešku."
+msgstr[1] "Molimo ispravite dole navedene greške."
+msgstr[2] "Molimo ispravite dole navedene greške."
+
+#: templates/djadmin2/bootstrap/auth/logout.html:17
+msgid "Thanks for spending some quality time with the Web site today."
+msgstr "Hvala što ste proveli kvalitetno vrijeme na stranici danas."
+
+#: templates/djadmin2/bootstrap/auth/logout.html:18
+msgid "Log in again"
+msgstr "Prijavite se ponovo"
+
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:6
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:7
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:14
+msgid "Password change successful"
+msgstr "Promjena lozinke uspješna"
+
+#: templates/djadmin2/bootstrap/auth/password_change_done.html:20
+msgid "Your password was changed."
+msgstr "Vaša lozinka je promijenjena."
+
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:6
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:13
+msgid "Password change"
+msgstr "Promjena lozinke"
+
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:20
+msgid ""
+"Please enter your old password, for security's sake, and then enter your new "
+"password twice so we can verify you typed it in correctly."
+msgstr ""
+"Molimo unesite vašu staru lozinku, iz sigurnosnih razloga, a zatim unesite "
+"Vašu novu lozinku dva puta da bi mogli biti sigurni da ste je unijeli "
+"ispravno."
+
+#: templates/djadmin2/bootstrap/auth/password_change_form.html:31
+msgid "Change my password"
+msgstr "Promijeni moju lozinku"
+
+#: templates/djadmin2/bootstrap/includes/list_actions.html:17
+#, python-format
+msgid "%(selected)s of %(total)s selected"
+msgstr "%(selected)s od %(total)s ukupno"
+
+#: templates/djadmin2/bootstrap/includes/list_actions.html:21
+#, python-format
+msgid "Add %(model_verbose_name)s"
+msgstr "Dodaj %(model_verbose_name)s"
+
+#: templates/djadmin2/bootstrap/includes/save_buttons.html:3
+msgid "Save and add another"
+msgstr "Sačuvaj i dodaj još jedan"
+
+#: templates/djadmin2/bootstrap/includes/save_buttons.html:4
+msgid "Save and continue editing"
+msgstr "Sačuvaj i nastavi sa izmjenama"
+
+#: templates/djadmin2/bootstrap/includes/save_buttons.html:5
+msgid "Save"
+msgstr "Sačuvaj"

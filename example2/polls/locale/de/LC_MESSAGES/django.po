@@ -1,7 +1,5 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# 
+# This file is distributed under the same license as the django-admin2 package.
+#
 # Translators:
 # dbrgn <gezuru@gmail.com>, 2013
 # Jannis Leidel <jannis@leidel.info>, 2013
@@ -9,49 +7,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-admin2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-07 11:13+0200\n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
 "PO-Revision-Date: 2013-07-08 08:49+0000\n"
 "Last-Translator: dbrgn <gezuru@gmail.com>\n"
-"Language-Team: German (http://www.transifex.com/projects/p/django-admin2/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/projects/p/django-admin2/"
+"language/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: models.py:9
+#: models.py:12
 msgid "question"
 msgstr "Frage"
 
-#: models.py:10
+#: models.py:13
 msgid "date published"
 msgstr "Veröffentlichungsdatum"
 
-#: models.py:19
+#: models.py:22
 msgid "Published recently?"
 msgstr "Kürzlich veröffentlicht?"
 
-#: models.py:22 models.py:27
+#: models.py:25 models.py:30
 msgid "poll"
 msgstr "Abstimmung"
 
-#: models.py:23
+#: models.py:26
 msgid "polls"
 msgstr "Abstimmungen"
 
-#: models.py:28
+#: models.py:31
 msgid "choice text"
 msgstr "Auswahltext"
 
-#: models.py:29
+#: models.py:32
 msgid "votes"
 msgstr "Stimmen"
 
-#: models.py:35
+#: models.py:38
 msgid "choice"
 msgstr "Auswahl"
 
-#: models.py:36
+#: models.py:39
 msgid "choices"
 msgstr "Auswahlmöglichkeiten"
 
