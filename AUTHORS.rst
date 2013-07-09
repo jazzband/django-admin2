@@ -43,6 +43,7 @@ Developers
 * Eleonore Mayola (@Eleonore9)
 * Michal Kuffa (@beezz / Michal Kuffa)
 * Tom Viner (@tomviner)
+* Marek Zelinkaa (@marekzelinka)
 
 Translators
 -----------
