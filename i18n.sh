@@ -1,14 +1,32 @@
 #!/bin/bash
 
-# Make sure `django-admin.py` is available
+### Helper functions
 
-hash django-admin.py 2>/dev/null ||
-    { echo >&2 "django-admin.py not found. Please install Django."; exit 1; }
+function assert_django {
+    hash django-admin.py 2>/dev/null ||
+        { echo >&2 "django-admin.py not found. Please install Django."; exit 1; }
+}
+
+function assert_tx {
+    hash tx 2>/dev/null ||
+        { echo >&2 "tx not found. Please install transifex-client."; exit 1; }
+}
+
+function are_you_sure {
+    read -r -p "$1 Are you sure? [y/n] " response
+    if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
+    then
+        :
+    else
+        exit 1
+    fi
+}
 
 
-# Functions
+### Command functions
 
-function makemessages() {
+function makemessages {
+    assert_django
     echo "### Processing djadmin2..."
     ( cd djadmin2; django-admin.py makemessages -a )
     echo "### Processing example app..."
@@ -17,7 +35,8 @@ function makemessages() {
     ( cd example2/polls; django-admin.py makemessages -a )
 }
 
-function compilemessages() {
+function compilemessages {
+    assert_django
     echo "### Processing djadmin2..."
     ( cd djadmin2; django-admin.py compilemessages )
     echo "### Processing example app..."
@@ -26,19 +45,43 @@ function compilemessages() {
     ( cd example2/polls; django-admin.py compilemessages )
 }
 
+function pulltx {
+    assert_tx
+    echo "### Pulling new translations from Transifex..."
+    tx pull -a
+}
 
-# Parse arguments
+function pushtx {
+    assert_tx
+    are_you_sure "Warning: This might destroy existing translations."
+    echo "### Pushing translations and sources to Transifex..."
+    tx push -s
+}
+
+
+### Parse arguments
 
 case $1 in
     "")
         echo "Available commands:"
-        echo "--- makemessages"
-        echo "--- compilemessages";
+        echo "--- makemessages: Generate or update .po files"
+        echo "--- compilemessages: Compile .po files to .mo files";
+        echo "--- pulltx: Pull new translations from Transifex";
+        echo "--- pushtx: Push translations and sources to Transifex";
     ;;
     "makemessages")
         makemessages
     ;;
     "compilemessages")
         compilemessages
+    ;;
+    "pulltx")
+        pulltx
+    ;;
+    "pushtx")
+        pushtx
+    ;;
+    *)
+        echo "Unknown command: $1"
     ;;
 esac
