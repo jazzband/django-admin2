@@ -145,14 +145,15 @@ If you create a new theme, you define it thus:
 .. code-block:: python
 
     # settings.py
-    ADMIN2_THEME_DIRECTORY = "djadmin2/foundation/"
+    INSTALLED_APPS += ("djadmin2_theme_foundation", )
+    ADMIN2_THEME_DIRECTORY = "foundation/"
 
 
 
 History
 =========
 
-0.5.0 (pending)
+0.5.0 (2013-07-09)
 
   * Implemented customizable value renderers
   * Implemented list filters using django-filters. Greatly supersedes what Django provides.
@@ -168,7 +169,8 @@ History
   * Corrected early nomenclature decisions
   * Much improved Internationalization
   * Added django-admin2 to Transifex
-  * Translations for French, Polish, Slovak, Chinese, German, Catalan, Italian, and Spanish.
+  * Complete translations for Dutch, French, German, Polish, Portuguese (Brazil) and Slovak
+  * In-progress translations for Chinese, Italian, Bosnian, Catalan, Spanish, and Tagalog.
 
 0.4.0 (2013-06-30)
 
