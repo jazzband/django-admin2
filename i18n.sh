@@ -59,9 +59,9 @@ function pulltx {
 
 function pushtx {
     assert_tx
-    are_you_sure "Warning: This might destroy existing translations."
+    are_you_sure "Warning: This might destroy existing translations. Probably you should pull first."
     echo "### Pushing translations and sources to Transifex..."
-    tx push -s
+    tx push -s -t
 }
 
 
