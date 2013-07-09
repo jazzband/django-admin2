@@ -161,10 +161,12 @@ History
   * Implemented default ``django.contrib.auth`` and ``django.contrib.sites`` registrations
   * Implemented the displayed of verbose field/method names in list view
   * Implemented client-side ordering of model list fields in default theme
+  * Implemented improved internal naming conventions
+  * Improved example project home page
   * Improved internal test coverage
   * Documentation for Context Variables in Themes
   * Corrected early nomenclature decisions
-  * Completed Internationalization
+  * Much improved Internationalization
   * Added django-admin2 to Transifex
   * Translations for French, Polish, Slovak, Chinese, German, Catalan, Italian, and Spanish.
 
