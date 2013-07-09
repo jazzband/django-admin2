@@ -34,7 +34,9 @@
 .change_form {
 	border: 1px solid #C6BCBC;
 	border-radius: 5px;
-	height: 360px;
+}
+.change_form .controls{
+    display: inline-block;
 }
 
 label {
