@@ -8,7 +8,7 @@ How To Create a Theme
 A Django Admin 2 theme is merely a packaged Django app. Here are the necessary steps to create a theme called '*dandy*':
 
 
-1. Make sure you have Django 1.5 or higher installed. 
+1. Make sure you have Django 1.5 or higher installed.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
@@ -29,12 +29,12 @@ A Django Admin 2 theme is merely a packaged Django app. Here are the necessary s
 
     $ cd djadmin2-theme-dandy
     $ touch setup.py
-    
+
 Then enter the following information (you will probably want to change the highlighted lines below to match your package name):
 
 .. code-block:: python
     :emphasize-lines: 25, 27, 28, 40, 41, 42, 44
-    
+
 
     #!/usr/bin/env python
     # -*- coding: utf-8 -*-
@@ -43,7 +43,7 @@ Then enter the following information (you will probably want to change the highl
     import re
     import os
     import sys
-    
+
     def get_packages(package):
         """
         Return root package and all sub-packages.
@@ -88,18 +88,18 @@ Then enter the following information (you will probably want to change the highl
     )
 
 
-5. Create a Django App called 'dandy' and go inside. 
+5. Create a Django App called 'dandy' and go inside.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    $ django-admin2 startapp djadmin2_dandy
+    $ django-admin.py startapp djadmin2_dandy
     $ cd djadmin2_dandy
-    
+
 .. note:: Why the djadmin2 prefix?
 
     This is so we don't pollute our eligible app infrastructure with django-admin2 themes and utilities.
-    
+
 6. Add a :file:`static/` file directory set:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -137,7 +137,7 @@ In the settings module, place the theme right after djadmin2 (change the highlig
         'djadmin2_dandy'
     )
     ########### END DJANGO-ADMIN2 CONFIGURATION
-    
+
 .. todo:: Have someone besides pydanny test this!
 
 Views and their Templates
