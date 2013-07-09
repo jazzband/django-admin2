@@ -30,7 +30,7 @@ def checkmessages():
     command = 'ls -1 locale/*/LC_MESSAGES/django.po | xargs -I {} msgfmt -c {}'
     for d in DIRS:
         _run(command, d)
-        
+
 
 def pulltx():
     print('\n### Pulling new translations from Transifex...')
