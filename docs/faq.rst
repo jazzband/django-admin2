@@ -20,7 +20,7 @@ Django is a huge project with a lot of people relying on it. The conservative pa
 
 However, there are times when it's good to be outside of core, especially for experimental replacements for core functionality. Working outside of Django core means we can do what we want, when we want it.
 
-What's wrong with django.contrib.admin?
------------------------------------------
+What's wrong with the Django Admin?
+-----------------------------------
 
 Forthcoming...
