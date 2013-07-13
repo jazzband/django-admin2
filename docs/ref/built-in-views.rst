@@ -4,6 +4,8 @@ Built-In Views
 Each of these views contains the list of context variables that are included in
 their templates.
 
+.. note:: TODO: Fix the capitalization of context variables!
+
 View Constants
 ---------------
 
