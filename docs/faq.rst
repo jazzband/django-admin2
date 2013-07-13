@@ -6,7 +6,7 @@ Is this intended to go into Django contrib?
 
 No.
 
-Reasons why it was never intended to go into Django core and why it won't be going into Django core:
+Reasons why it won't be going into Django core:
 
 1. We want to rely on external dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
