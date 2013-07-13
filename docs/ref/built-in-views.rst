@@ -4,11 +4,6 @@ Built-In Views
 Each of these views contains the list of context variables that are included in
 their templates.
 
-TODO: Provide a list of template context variables for each view per GitHub
-issue in view class' top-level docstring `#220`_
-
-.. _`#220`: https://github.com/twoscoops/django-admin2/issues/220
-
 View Constants
 ---------------
 
