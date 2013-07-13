@@ -93,7 +93,8 @@ setup(
         'django-extra-views==0.6.2',
         'djangorestframework==2.3.3',
         'django-floppyforms==1.1',
-        'django-crispy-forms==1.3.2'
+        'django-crispy-forms==1.3.2',
+        'django-filter==0.6'
         ],
     zip_safe=False,
 )

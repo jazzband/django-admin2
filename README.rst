@@ -53,12 +53,14 @@ Requirements
 * django-extra-views_
 * django-floppyforms_
 * django-rest-framework_
+* django-filter
 * Sphinx_ (for documentation)
 
 .. _django-braces: https://github.com/brack3t/django-braces
 .. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
 .. _django-floppyforms: https://github.com/brutasse/django-floppyforms
 .. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
+.. _django-filter: https://github.com/alex/django-filter
 .. _Sphinx: http://sphinx-doc.org/
 
 
