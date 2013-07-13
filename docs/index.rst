@@ -63,6 +63,11 @@ Content
    installation
    contributing
    design
+   faq
+   api
+   themes
+   meta
+   reference
    internationalization
    tutorial
 
