@@ -5,6 +5,7 @@ from setuptools import setup
 import re
 import os
 import sys
+import string
 
 
 def get_author(package):
@@ -48,6 +49,23 @@ def get_package_data(package):
     return {package: filepaths}
 
 
+def remove_screenshots(text):
+    """
+    Removes the section with screenshots since PyPI doesn't like them.
+    """
+    outputting = True
+    new_text = ""
+    for line in text.splitlines():
+        if line.startswith("Screenshots"):
+            outputting = False
+            continue
+        if len(line) and line[0] in string.ascii_letters:
+            outputting = True
+        if outputting:
+            new_text += line
+    return new_text
+
+
 author = get_author('djadmin2')
 version = get_version('djadmin2')
 
@@ -59,7 +77,7 @@ if sys.argv[-1] == 'publish':
     print("  git push --tags")
     sys.exit()
 
-LONG_DESCRIPTION = open('README.rst').read()
+LONG_DESCRIPTION = remove_screenshots(open('README.rst').read())
 HISTORY = open('HISTORY.rst').read()
 
 setup(

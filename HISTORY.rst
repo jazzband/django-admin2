@@ -3,10 +3,18 @@ History
 
 0.5.1 (2013-07-08)
 
+ * No longer pinning dependencies on specific versions
+ * `Documentation on built-in views`_ shows context variables.
  * Added django-filter to dependency list
  * Problem with related_name resolved
  * Fixed the height of the change_form
- * FAQ added
+ * Example app actually shows added content
+ * Pull requests going forward are internationalized_
+ * FAQ_ begun
+ 
+.. _`internationalized`: https://django-admin2.readthedocs.org/en/latest/contributing.html#internationalize
+.. _`Documentation on built-in views`: https://django-admin2.readthedocs.org/en/latest/ref/built-in-views.html
+.. _faq: https://django-admin2.readthedocs.org/en/latest/faq.html
 
 0.5.0 (2013-07-08)
 
