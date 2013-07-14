@@ -1,6 +1,10 @@
 History
 =========
 
+0.5.2 (2013-07-14)
+
+ * setup.py fix
+
 0.5.1 (2013-07-14)
 
  * No longer pinning dependencies on specific versions
