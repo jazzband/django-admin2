@@ -5,9 +5,6 @@ django-admin2
 .. image:: https://travis-ci.org/pydanny/django-admin2.png
    :alt: Build Status
    :target: https://travis-ci.org/pydanny/django-admin2
-.. image:: https://coveralls.io/repos/twoscoops/django-admin2/badge.png
-   :alt: Coverage Status
-   :target: https://coveralls.io/r/twoscoops/django-admin2
 .. image:: https://pypip.in/v/django-admin2/badge.png
    :target: https://crate.io/packages/django-admin2/
 .. image:: https://pypip.in/d/django-admin2/badge.png
