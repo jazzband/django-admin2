@@ -60,12 +60,13 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 LONG_DESCRIPTION = open('README.rst').read()
+HISTORY = open('HISTORY.rst').read()
 
 setup(
     name='django-admin2',
     version=version,
     description="An introspective interface for Django's ORM.",
-    long_description=LONG_DESCRIPTION,
+    long_description=LONG_DESCRIPTION + '\n\n' + HISTORY,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
