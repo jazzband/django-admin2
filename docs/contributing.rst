@@ -213,6 +213,13 @@ Follow bootstrap's coding standards for HTML_ and CSS_.  Use two spaces for inde
 .. _HTML: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-html
 .. _CSS: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-css
 
+Internationalize
+~~~~~~~~~~~~~~~~
+
+Any new text visible to the user must be internationalized_.
+
+.. _internationalized: https://django-admin2.readthedocs.org/en/latest/internationalization.html
+
 
 How pull requests are checked, tested, and done
 ===============================================
