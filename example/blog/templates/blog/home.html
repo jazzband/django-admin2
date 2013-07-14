@@ -24,25 +24,26 @@
         <p>{% trans "Now, explore the Django admin for example.com. Click on either of the following:" %}</p>
     </div>
 </div>
-
 <div class="row-fluid">
     <div class="span5">
-        <h4>{% blocktrans with admin_url="/admin/" %}The original <a href="{{admin_url}}">Django Admin</a>{% endblocktrans %}</h4>
+        <h4>The original <a href="{% url "admin:index" %}">Django Admin</a></h4>
 
-        <a href="/admin/">
+        <a href="{% url "admin:index" %}">
             <img class="img-polaroid" src="{% static 'img/admin.png' %}" />
         </a>
 
-        <p>{% trans "Powered by django.contrib.admin. This is just here for reference." %}</p>
+        <p>Powered by django.contrib.admin. This is just here for reference.</p>
     </div>
     <div class="offset1 span5">
-        <h4>{% blocktrans with admin2_url="/admin2/" %}The new <a href="{{admin2_url}}">Admin2</a>{% endblocktrans %}</h4>
+        <h4>The new <a href="{% url "admin2:dashboard" %}">Admin2</a></h4>
 
-        <a href="/admin2/">
+        <a href="{% url "admin2:dashboard" %}">
             <img class="img-polaroid" src="{% static 'img/admin2.png' %}" />
         </a>
 
-        <p>{% trans "Powered by django-admin2." %}</p>
+        <p>Powered by django-admin2.</p>
     </div>
 </div>
+<hr />
+<h2>See the <a href="{% url 'blog_list' %}">Blog</a> in Action</h2>
 {% endblock %}

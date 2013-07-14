@@ -1,4 +1,4 @@
-{% load i18n %}<!DOCTYPE html>
+{% load i18n static %}<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -13,11 +13,7 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row-fluid">
-        <div class="{% block class_page_title %}span10{% endblock class_page_title %}">
-          <h3></h3>
-        </div>
-      </div>
+
       {% block content %}{% endblock content %}
     </div>
 
