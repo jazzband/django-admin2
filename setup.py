@@ -89,11 +89,12 @@ setup(
     test_suite='runtests.runtests',
     install_requires=[
         'django>=1.5.0',
-        'django-braces==1.0.0',
-        'django-extra-views==0.6.2',
-        'djangorestframework==2.3.3',
-        'django-floppyforms==1.1',
-        'django-crispy-forms==1.3.2'
+        'django-braces>=1.0.0',
+        'django-extra-views>=0.6.2',
+        'djangorestframework>=2.3.3',
+        'django-floppyforms>=1.1',
+        'django-filter>=0.6',
+        'django-crispy-forms>=1.3.2'
         ],
     zip_safe=False,
 )
