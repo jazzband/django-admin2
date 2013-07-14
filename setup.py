@@ -62,7 +62,7 @@ def remove_screenshots(text):
         if len(line) and line[0] in string.ascii_letters:
             outputting = True
         if outputting:
-            new_text += line
+            new_text += line + '\n'
     return new_text
 
 

@@ -1,7 +1,7 @@
 History
 =========
 
-0.5.1 (2013-07-08)
+0.5.1 (2013-07-14)
 
  * No longer pinning dependencies on specific versions
  * `Documentation on built-in views`_ shows context variables.
