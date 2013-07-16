@@ -2,6 +2,8 @@
 include =
     djadmin2*
     example*
+omit =
+    */tests*
 
 [report]
 # Regexes for lines to exclude from consideration
