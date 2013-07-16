@@ -44,6 +44,7 @@ Developers
 * Michal Kuffa (@beezz / Michal Kuffa)
 * Tom Viner (@tomviner)
 * Marek Zelinkaa (@marekzelinka)
+* Andrea de Marco (@z4r)
 
 Translators
 -----------
