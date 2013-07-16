@@ -17,3 +17,8 @@ from . import types
 default = core.Admin2()
 ModelAdmin2 = types.ModelAdmin2
 Admin2Inline = types.Admin2Inline
+
+# Utility to make migration between versions easier
+sites = default
+ModelAdmin = ModelAdmin2
+AdminInline = Admin2Inline
