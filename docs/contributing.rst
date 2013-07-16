@@ -186,6 +186,11 @@ django-admin2 pull requests should be as small/atomic as possible. Large, wide-s
 Best Practices
 --------------
 
+
+As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
+
+.. _`Two Scoops of Django`: https://2scoops.org
+
 Python
 ~~~~~~
 
@@ -200,10 +205,6 @@ Furthermore, the pixel shortage is over. We want to see:
 * `options` instead of `opts`
 * `model_name` instead of `model`
 * `my_function_that_does_things` instead of `mftdt`
-
-As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
-
-.. _`Two Scoops of Django`: https://2scoops.org
 
 Templates
 ~~~~~~~~~
