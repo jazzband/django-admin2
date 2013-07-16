@@ -5,7 +5,7 @@ django-admin2
 .. image:: https://travis-ci.org/pydanny/django-admin2.png
    :alt: Build Status
    :target: https://travis-ci.org/pydanny/django-admin2
-.. image:: https://coveralls.io/repos/pydanny/django-admin2/badge.png
+.. image:: https://coveralls.io/repos/pydanny/django-admin2/badge.png?branch=develop
    :alt: Coverage Status
    :target: https://coveralls.io/r/pydanny/django-admin2
 .. image:: https://pypip.in/v/django-admin2/badge.png
