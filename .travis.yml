@@ -10,5 +10,5 @@ script:
   - coverage run runtests.py
 after_success:
   - coverage report
-  - pip install --quiet --use-mirrors coveralls
+  - pip install --quiet --use-mirrors python-coveralls
   - coveralls
