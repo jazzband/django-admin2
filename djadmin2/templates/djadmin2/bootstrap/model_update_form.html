@@ -43,17 +43,7 @@
     <form method="post">
        
       {% if view.model_admin.save_on_top %}
-      <div class="row-fluid">
-        <div class="span12 save_btns">
-            {% if object %}
-            <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
-              <i class="icon-remove icon-white"></i>
-              {% trans "Delete" %}
-            </a>
-            {% endif %}
-              {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
-          </div>
-      </div>
+        {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
       {% endif %}
 
 <div class="row-fluid"><!-- begin main form row -->
@@ -110,17 +100,7 @@
 </div><!-- end main form row -->
       
       {% if view.model_admin.save_on_bottom %}
-      <div class="row-fluid">
-        <div class="span12 save_btns">
-            {% if object %}
-            <a class="btn btn-small btn-danger" href="{% url view|admin2_urlname:'delete' pk=object.pk %}">
-              <i class="icon-remove icon-white"></i>
-              {% trans "Delete" %}
-            </a>
-            {% endif %}
-              {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
-          </div>
-      </div>
+        {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
       {% endif %}
       
 </form>
