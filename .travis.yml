@@ -6,9 +6,9 @@ before_install:
   - export PIP_INDEX_URL=https://simple.crate.io/
 install:
   - pip install -r requirements.txt
-before_script:
-  - pip install --quiet --use-mirrors coveralls
 script:
-  - python runtests.py
-after_script:
+  - coverage run runtests.py
+after_success:
+  - coverage report
+  - pip install --quiet --use-mirrors coveralls
   - coveralls

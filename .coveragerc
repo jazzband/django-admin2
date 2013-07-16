@@ -1,3 +1,8 @@
+[run]
+include =
+    djadmin2*
+    example*
+
 [report]
 # Regexes for lines to exclude from consideration
 exclude_lines =
