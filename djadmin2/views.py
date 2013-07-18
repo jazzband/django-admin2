@@ -81,8 +81,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         selected_model_pks = request.POST.getlist('selected_model_pk')
         queryset = self.model.objects.filter(pk__in=selected_model_pks)
 
-        #  If action_callable is a class subclassing from actions.BaseListAction
-        #       then we generate the callable object.
+        #  If action_callable is a class subclassing from
+        #  actions.BaseListAction then we generate the callable object.
         if hasattr(action_callable, "process_queryset"):
             response = action_callable.as_view(queryset=queryset)(request)
         else:
@@ -130,7 +130,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         search_term = self.request.GET.get('q', None)
         search_use_distinct = False
         if self.model_admin.search_fields and search_term:
-            queryset, search_use_distinct = self.get_search_results(queryset, search_term)
+            queryset, search_use_distinct = self.get_search_results(
+                queryset, search_term)
 
         if self.model_admin.list_filter:
             queryset = self.build_list_filter(queryset).qs
@@ -185,7 +186,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return context
 
     def get_success_url(self):
-        view_name = 'admin2:{}_{}_index'.format(self.app_label, self.model_name)
+        view_name = 'admin2:{}_{}_index'.format(
+            self.app_label, self.model_name)
         return reverse(view_name)
 
     def get_actions(self):
@@ -208,7 +210,8 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
         permissions.ModelViewPermission)
 
 
-class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
+class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+                        extra_views.UpdateWithInlinesView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -229,7 +232,8 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
         return context
 
 
-class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
+class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+                       extra_views.CreateWithInlinesView):
     """Context Variables
 
     :model: Type of object you are editing
