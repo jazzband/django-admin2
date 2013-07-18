@@ -34,7 +34,7 @@
 
 <ol>
     {% for log in object_list %}
-        <li>{{ log }}</li>
+        <li>{{ log }} {% trans "by" %} {{ log.user }}</li>
     {% endfor %}
 </ol>
 {% endblock content %}
