@@ -1,0 +1,10 @@
+{% if actions %}
+    <ol>
+        {% for action in actions %}
+        <li>{{ action.change_message }}</li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <p>None available</p>
+{% endif %}
+
