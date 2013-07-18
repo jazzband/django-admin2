@@ -139,7 +139,7 @@ The default theme is whatever bootstrap is most current. Specifically:
 .. code-block:: python
 
     # settings.py
-    ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
 
 If you create a new theme, you define it thus:
 

@@ -122,6 +122,7 @@ INSTALLED_APPS = (
     'floppyforms',
     'rest_framework',
     'djadmin2',
+    'djadmin2.themes.djadmin2theme_default',
     'crispy_forms',
     'polls',
 )
@@ -164,7 +165,7 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"
 
 ########## TOOLBAR CONFIGURATION
 # See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation

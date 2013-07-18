@@ -1,4 +1,4 @@
-{% extends "djadmin2/bootstrap/base.html" %}
+{% extends "djadmin2theme_default/base.html" %}
 {% load admin2_tags i18n %}
 
 {% block title %}{% blocktrans with model_name=model_name %}Select {{ model_name }} to change{% endblocktrans %}{% endblock title %}
@@ -44,7 +44,7 @@
     <div class="span12">
 
       {% if view.model_admin.actions_on_top %}
-        {% include 'djadmin2/bootstrap/includes/list_actions.html' with position='top' %}
+        {% include 'djadmin2theme_default/includes/list_actions.html' with position='top' %}
       {% endif %}
 
       <table class="table table-bordered table-striped">
@@ -92,7 +92,7 @@
       </table>
 
       {% if view.model_admin.actions_on_bottom %}
-        {% include 'djadmin2/bootstrap/includes/list_actions.html' with position='bottom' %}
+        {% include 'djadmin2theme_default/includes/list_actions.html' with position='bottom' %}
       {% endif %}
 
       <div>{{ object_list|length }} {{ model_name_pluralized }}</div>

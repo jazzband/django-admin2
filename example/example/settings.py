@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'crispy_forms',
     'djadmin2',
+    'djadmin2.themes.djadmin2theme_default',
     'blog',
 )
 
@@ -160,7 +161,7 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "djadmin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"
 
 
 ########## TOOLBAR CONFIGURATION

@@ -1,4 +1,4 @@
-{% extends "djadmin2/bootstrap/base.html" %}
+{% extends "djadmin2theme_default/base.html" %}
 
 {% load admin2_tags i18n crispy_forms_tags %}
 
@@ -43,7 +43,7 @@
     <form method="post">
        
       {% if view.model_admin.save_on_top %}
-        {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+        {% include "djadmin2theme_default/includes/save_buttons.html" %}
       {% endif %}
 
 <div class="row-fluid"><!-- begin main form row -->
@@ -65,7 +65,7 @@
 </div><!-- end main form row -->
       
       {% if view.model_admin.save_on_bottom %}
-        {% include "djadmin2/bootstrap/includes/save_buttons.html" %}
+        {% include "djadmin2theme_default/includes/save_buttons.html" %}
       {% endif %}
       
 </form>
