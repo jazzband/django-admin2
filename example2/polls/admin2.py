@@ -6,7 +6,7 @@ import djadmin2
 from .models import Poll, Choice
 
 
-class ChoiceInline(djadmin2.Admin2Inline):
+class ChoiceInline(djadmin2.Admin2TabularInline):
     model = Choice
     extra = 3
 

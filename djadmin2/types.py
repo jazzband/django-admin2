@@ -3,6 +3,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 from collections import namedtuple
 import logging
+import os
 
 from django.core.urlresolvers import reverse
 from django.conf.urls import patterns, url
@@ -255,6 +256,7 @@ class Admin2Inline(extra_views.InlineFormSet):
     A simple extension of django-extra-view's InlineFormSet that
     adds some useful functionality.
     """
+    template = None
 
     def construct_formset(self):
         """
@@ -263,7 +265,16 @@ class Admin2Inline(extra_views.InlineFormSet):
         """
         formset = super(Admin2Inline, self).construct_formset()
         formset.model = self.inline_model
+        formset.template = self.template
         return formset
+
+
+class Admin2TabularInline(Admin2Inline):
+    template = os.path.join(settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/tabular.html')
+
+
+class Admin2StackedInline(Admin2Inline):
+    template = os.path.join(settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/stacked.html')
 
 
 def immutable_admin_factory(model_admin):

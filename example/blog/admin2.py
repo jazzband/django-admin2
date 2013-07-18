@@ -13,7 +13,7 @@ from .actions import CustomPublishAction
 from .models import Post, Comment
 
 
-class CommentInline(djadmin2.Admin2Inline):
+class CommentInline(djadmin2.Admin2TabularInline):
     model = Comment
 
 
