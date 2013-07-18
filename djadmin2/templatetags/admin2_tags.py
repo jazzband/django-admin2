@@ -7,7 +7,7 @@ from datetime import date, time, datetime
 from django import template
 from django.db.models.fields import FieldDoesNotExist
 
-from .. import utils, renderers
+from .. import utils, renderers, models
 
 
 register = template.Library()
@@ -141,6 +141,5 @@ def render(context, model_instance, attribute_name):
 @register.inclusion_tag('djadmin2theme_default/includes/history.html',
                         takes_context=True)
 def action_history(context):
-    from django.contrib.admin.models import LogEntry
-    actions = LogEntry.objects.filter(user__pk=context['user'].pk)
+    actions = models.LogEntry.objects.filter(user__pk=context['user'].pk)
     return {'actions': actions}

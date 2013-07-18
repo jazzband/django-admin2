@@ -15,11 +15,11 @@ from . import permissions
 
 
 class LogEntryManager(models.Manager):
-    def log_action(self, user_id, content_type_id, object_id, object_repr,
-                   action_flag, change_message=''):
+    def log_action(self, user_id, obj, action_flag, change_message=''):
+        content_type_id = ContentType.objects.get_for_model(obj).id
         e = self.model(None, None, user_id, content_type_id,
-                       smart_text(object_id), object_repr[:200], action_flag,
-                       change_message)
+                       smart_text(obj.id), obj.__unicode__()[:200],
+                       action_flag, change_message)
         e.save()
 
 
@@ -30,8 +30,10 @@ class LogEntry(models.Model):
     DELETION = 3
 
     action_time = models.DateTimeField(_('action time'), auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name='log_entries')
+    content_type = models.ForeignKey(ContentType, blank=True, null=True,
+                                     related_name='log_entries')
     object_id = models.TextField(_('object id'), blank=True, null=True)
     object_repr = models.CharField(_('object repr'), max_length=200)
     action_flag = models.PositiveSmallIntegerField(_('action flag'))

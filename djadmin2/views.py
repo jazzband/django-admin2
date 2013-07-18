@@ -22,6 +22,7 @@ import extra_views
 
 from . import permissions, utils
 from .forms import AdminAuthenticationForm
+from .models import LogEntry
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter
 
@@ -231,6 +232,11 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
         context['action_name'] = ugettext_lazy("Change")
         return context
 
+    def forms_valid(self, form, inlines):
+        response = super(ModelEditFormView, self).forms_valid(form, inlines)
+        LogEntry.objects.log_action(self.request.user.id, self.object, 2)
+        return response
+
 
 class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
                        extra_views.CreateWithInlinesView):
@@ -252,6 +258,11 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
         context['action'] = "Add"
         context['action_name'] = ugettext_lazy("Add")
         return context
+
+    def forms_valid(self, form, inlines):
+        response = super(ModelAddFormView, self).forms_valid(form, inlines)
+        LogEntry.objects.log_action(self.request.user.id, self.object, 1)
+        return response
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
@@ -282,6 +293,10 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             'deletable_objects': collector.nested(_format_callback)
         })
         return context
+
+    def delete(self, request, *args, **kwargs):
+        LogEntry.objects.log_action(request.user.id, self.get_object(), 3)
+        return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
 class PasswordChangeView(Admin2Mixin, generic.UpdateView):
