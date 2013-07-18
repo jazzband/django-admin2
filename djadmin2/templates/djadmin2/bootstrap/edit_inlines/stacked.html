@@ -1,0 +1,7 @@
+{% load admin2_tags crispy_forms_tags %}
+
+{% for inline_form in formset %}
+  <div class="change_form space-below">
+  {{ inline_form|crispy }}
+  </div>
+{% endfor %}
