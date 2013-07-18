@@ -262,12 +262,20 @@ How pull requests are checked, tested, and done
 
 First we pull the code into a local branch::
 
-    git checkout -b <branch-name> <submitter-github-name
-    git pull git://github.com/<submitter-github-name/django-twoscoops-project.git develop
+    git checkout develop
+    git checkout -b <submitter-github-name>-<submitter-branch> develop
+    git pull git://github.com/<submitter-github-name>/django-admin2.git <submitter-branch> <branch-name>
 
 Then we run the tests::
 
-    ./runtests.py
+    coverage run runtests.py
+    coverage report
+
+We do the following:
+
+1. Any test failures or the code coverage drops and the pull request is rejected.
+2. We open up a browser and make sure it looks okay.
+3. We check the commit's code changes and make sure that they follow our rules.
 
 We finish with a merge and push to GitHub::
 
