@@ -35,6 +35,7 @@ class UserAdmin2(djadmin2.ModelAdmin2):
     create_form_class = UserCreationForm
     update_form_class = UserChangeForm
     search_fields = ('username', 'groups__name')
+    # readonly_fields = ('username',)
 
     api_serializer_class = UserSerializer
 

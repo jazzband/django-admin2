@@ -6,7 +6,6 @@ are used by default for some field types.
 from __future__ import division, absolute_import, unicode_literals
 
 import os.path
-from decimal import Decimal
 from datetime import date, time, datetime
 
 from django.db import models
