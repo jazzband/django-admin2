@@ -9,9 +9,7 @@
             {% else %}
                 <span class="deleted">-</span>
             {% endif %}
-            {% with action.get_edited_object as object %}
-                {{ object }}
-            {% endwith %}
+            <a href="{{ action.get_admin_url }}">{{ action }}</a>
         </li>
         {% endfor %}
     </ol>
