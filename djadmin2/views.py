@@ -234,7 +234,8 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
 
     def forms_valid(self, form, inlines):
         response = super(ModelEditFormView, self).forms_valid(form, inlines)
-        LogEntry.objects.log_action(self.request.user.id, self.object, 2)
+        LogEntry.objects.log_action(
+            self.request.user.id, self.object, LogEntry.CHANGE)
         return response
 
 
@@ -261,7 +262,8 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
 
     def forms_valid(self, form, inlines):
         response = super(ModelAddFormView, self).forms_valid(form, inlines)
-        LogEntry.objects.log_action(self.request.user.id, self.object, 1)
+        LogEntry.objects.log_action(
+            self.request.user.id, self.object, LogEntry.ADDITION)
         return response
 
 
@@ -295,7 +297,8 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        LogEntry.objects.log_action(request.user.id, self.get_object(), 3)
+        LogEntry.objects.log_action(
+            request.user.id, self.get_object(), LogEntry.DELETION)
         return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
