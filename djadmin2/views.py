@@ -302,7 +302,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
-class ModelHistoryView(Admin2Mixin, generic.ListView):
+class ModelHistoryView(Admin2Mixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(ModelHistoryView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
