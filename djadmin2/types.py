@@ -151,13 +151,15 @@ class ModelAdmin2(object):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({
             'inlines': self.inlines,
-            'form_class': self.create_form_class if self.create_form_class else self.form_class,
+            'form_class': (self.create_form_class if
+                           self.create_form_class else self.form_class),
         })
         return kwargs
 
     def get_update_kwargs(self):
         kwargs = self.get_default_view_kwargs()
-        form_class = self.update_form_class if self.update_form_class else self.form_class
+        form_class = (self.update_form_class if
+                      self.update_form_class else self.form_class)
         if form_class is None:
             form_class = modelform_factory(self.model)
         kwargs.update({
@@ -173,7 +175,8 @@ class ModelAdmin2(object):
         return self.get_default_view_kwargs()
 
     def get_index_url(self):
-        return reverse('admin2:{}'.format(self.get_prefixed_view_name('index')))
+        return reverse('admin2:{}'.format(
+            self.get_prefixed_view_name('index')))
 
     def get_api_list_kwargs(self):
         kwargs = self.get_default_api_view_kwargs()
@@ -186,7 +189,8 @@ class ModelAdmin2(object):
         return self.get_default_api_view_kwargs()
 
     def get_urls(self):
-        return patterns('',
+        return patterns(
+            '',
             url(
                 regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
@@ -212,10 +216,16 @@ class ModelAdmin2(object):
                 view=self.delete_view.as_view(**self.get_delete_kwargs()),
                 name=self.get_prefixed_view_name('delete')
             ),
+            url(
+                regex=r'^(?P<pk>[0-9]+)/history/$',
+                view=self.history_view.as_view(**self.get_history_kwargs()),
+                name=self.get_prefixed_view_name('history')
+            )
         )
 
     def get_api_urls(self):
-        return patterns('',
+        return patterns(
+            '',
             url(
                 regex=r'^$',
                 view=self.api_list_view.as_view(**self.get_api_list_kwargs()),
@@ -223,7 +233,8 @@ class ModelAdmin2(object):
             ),
             url(
                 regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.api_detail_view.as_view(**self.get_api_detail_kwargs()),
+                view=self.api_detail_view.as_view(
+                    **self.get_api_detail_kwargs()),
                 name=self.get_prefixed_view_name('api_detail'),
             ),
         )
@@ -244,9 +255,9 @@ class ModelAdmin2(object):
             class_actions = getattr(cls, 'list_actions', [])
             for action in class_actions:
                 actions_dict[action.__name__] = {
-                        'name': action.__name__,
-                        'description': actions.get_description(action),
-                        'action_callable': action
+                    'name': action.__name__,
+                    'description': actions.get_description(action),
+                    'action_callable': action
                 }
         return actions_dict
 
@@ -270,22 +281,28 @@ class Admin2Inline(extra_views.InlineFormSet):
 
 
 class Admin2TabularInline(Admin2Inline):
-    template = os.path.join(settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/tabular.html')
+    template = os.path.join(
+        settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/tabular.html')
 
 
 class Admin2StackedInline(Admin2Inline):
-    template = os.path.join(settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/stacked.html')
+    template = os.path.join(
+        settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/stacked.html')
 
 
 def immutable_admin_factory(model_admin):
-    """ Provide an ImmutableAdmin to make it harder for developers to dig themselves into holes.
-        See https://github.com/twoscoops/django-admin2/issues/99
-        Frozen class implementation as namedtuple suggested by Audrey Roy
+    """
+    Provide an ImmutableAdmin to make it harder for developers to
+    dig themselves into holes.
+    See https://github.com/twoscoops/django-admin2/issues/99
+    Frozen class implementation as namedtuple suggested by Audrey Roy
 
-        Note: This won't stop developers from saving mutable objects to the result, but hopefully
-                developers attempting that 'workaround/hack' will read our documentation.
+    Note: This won't stop developers from saving mutable objects to
+    the result, but hopefully developers attempting that
+    'workaround/hack' will read our documentation.
     """
     ImmutableAdmin = namedtuple('ImmutableAdmin',
                                 model_admin.model_admin_attributes,
                                 verbose=False)
-    return ImmutableAdmin(*[getattr(model_admin, x) for x in model_admin.model_admin_attributes])
+    return ImmutableAdmin(*[getattr(
+        model_admin, x) for x in model_admin.model_admin_attributes])
