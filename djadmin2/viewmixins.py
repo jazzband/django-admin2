@@ -43,8 +43,10 @@ class PermissionMixin(AccessMixin):
             if self.raise_exception:
                 raise PermissionDenied  # return a forbidden response
             else:
-                return redirect_to_login(request.get_full_path(),
-                    self.get_login_url(), self.get_redirect_field_name())
+                return redirect_to_login(
+                    request.get_full_path(),
+                    self.get_login_url(),
+                    self.get_redirect_field_name())
         return super(PermissionMixin, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -67,7 +69,8 @@ class Admin2Mixin(PermissionMixin):
     index_path = reverse_lazy('admin2:dashboard')
 
     def get_template_names(self):
-        return [os.path.join(settings.ADMIN2_THEME_DIRECTORY, self.default_template_name)]
+        return [os.path.join(
+            settings.ADMIN2_THEME_DIRECTORY, self.default_template_name)]
 
     def get_model(self):
         return self.model
