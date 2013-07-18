@@ -3,19 +3,21 @@ from __future__ import division, absolute_import, unicode_literals
 
 import operator
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
-from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.utils.translation import ugettext_lazy
 from django.db import models
+from django.db.models.fields import FieldDoesNotExist
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
+from django.utils.translation import ugettext_lazy
 from django.views import generic
-from django.db.models.fields import FieldDoesNotExist
 
 import extra_views
 
@@ -302,11 +304,28 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
-class ModelHistoryView(Admin2Mixin, generic.ListView):
+class ModelHistoryView(AdminModel2Mixin, generic.ListView):
+    default_template_name = "model_history.html"
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelChangePermission
+    )
+
     def get_context_data(self, **kwargs):
         context = super(ModelHistoryView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
+        context['object'] = self.get_object()
         return context
+
+    def get_object(self):
+        return get_object_or_404(self.get_model(), pk=self.kwargs.get('pk'))
+
+    def get_queryset(self):
+        content_type = ContentType.objects.get_for_model(self.get_object())
+        return LogEntry.objects.filter(
+            content_type=content_type,
+            object_id=self.get_object().id
+        )
 
 
 class PasswordChangeView(Admin2Mixin, generic.UpdateView):
