@@ -1,7 +1,18 @@
 {% if actions %}
     <ol>
         {% for action in actions %}
-        <li>{{ action.change_message }}</li>
+        <li>
+            {% if action.is_addition %}
+                <span class="added">+</span>
+            {% elif action.is_change %}
+                <span class="changed">~</span>
+            {% else %}
+                <span class="deleted">-</span>
+            {% endif %}
+            {% with action.get_edited_object as object %}
+                {{ object }}
+            {% endwith %}
+        </li>
         {% endfor %}
     </ol>
 {% else %}
