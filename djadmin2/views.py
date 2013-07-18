@@ -302,6 +302,13 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
+class ModelHistoryView(Admin2Mixin, generic.ListView):
+    def get_context_data(self, **kwargs):
+        context = super(ModelHistoryView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()
+        return context
+
+
 class PasswordChangeView(Admin2Mixin, generic.UpdateView):
 
     default_template_name = 'auth/password_change_form.html'

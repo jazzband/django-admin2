@@ -102,6 +102,7 @@ class ModelAdmin2(object):
     update_view = views.ModelEditFormView
     detail_view = views.ModelDetailView
     delete_view = views.ModelDeleteView
+    history_view = views.ModelHistoryView
 
     # API configuration
     api_serializer_class = None
@@ -172,6 +173,9 @@ class ModelAdmin2(object):
         return self.get_default_view_kwargs()
 
     def get_delete_kwargs(self):
+        return self.get_default_view_kwargs()
+
+    def get_history_kwargs(self):
         return self.get_default_view_kwargs()
 
     def get_index_url(self):
