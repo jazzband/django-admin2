@@ -74,6 +74,16 @@ class LogEntry(models.Model):
     def is_deletion(self):
         return self.action_flag == self.DELETION
 
+    @property
+    def action_type(self):
+        if self.is_addition:
+            return _('added')
+        if self.is_change:
+            return _('changed')
+        if self.is_deletion():
+            return _('deleted')
+        return ''
+
     def get_edited_object(self):
         "Returns the edited object represented by this log entry"
         return self.content_type.get_object_for_this_type(pk=self.object_id)
