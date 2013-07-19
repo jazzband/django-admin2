@@ -10,7 +10,7 @@
 
 {% block page_title_link %}
 {% if object.pk %}
-    <a href="{% url view|admin2_urlname:"history" pk=object.pk %}" class="btn btn-info">History</a>
+    <a href="{% url view|admin2_urlname:"history" pk=object.pk %}" class="btn btn-info pull-right">History</a>
 {% endif %}
 {% endblock page_title_link %}
 
