@@ -9,7 +9,9 @@
 {% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}{% endblocktrans %}{% endblock page_title %}
 
 {% block page_title_link %}
+{% if object.pk %}
     <a href="{% url view|admin2_urlname:"history" pk=object.pk %}" class="btn btn-info">History</a>
+{% endif %}
 {% endblock page_title_link %}
 
 {% block breadcrumbs %}
