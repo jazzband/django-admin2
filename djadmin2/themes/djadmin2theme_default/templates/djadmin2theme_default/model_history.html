@@ -47,7 +47,7 @@
             <tr>
                 <td>{{ log.action_time }}</td>
                 <td>{{ log.user }}</td>
-                <td>{{ log.action_flag }}</td>
+                <td>{{ log.action_type|capfirst }}</td>
                 <td>{{ log.change_message }}</td>
             </tr>
             {% endfor %}
