@@ -1,15 +1,16 @@
 {% if actions %}
-    <ol>
+    <ol class="unstyled">
         {% for action in actions %}
         <li>
             {% if action.is_addition %}
-                <span class="added">+</span>
+                <i class="added icon-plus"></i>
             {% elif action.is_change %}
-                <span class="changed">~</span>
+                <i class="changed icon-pencil"></i>
             {% else %}
-                <span class="deleted">-</span>
+                <i class="deleted icon-minus"></i>
             {% endif %}
             {{ action }}
+            <span class="muted">{{ action.content_type.model }}</span>
         </li>
         {% endfor %}
     </ol>
