@@ -8,6 +8,10 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect
+from django.utils.encoding import force_text
+from django.utils.text import get_text_list
+from django.utils.translation import ugettext as _
+
 from braces.views import AccessMixin
 
 from . import settings, permissions
@@ -142,3 +146,33 @@ class Admin2ModelFormMixin(object):
 
         # default to index view
         return reverse(admin2_urlname(self, 'index'))
+
+    def construct_change_message(self, request, form, formsets):
+        """ Construct a change message from a changed object """
+        change_message = []
+        if form.changed_data:
+            change_message.append(
+                _('Changed {0}.'.format(
+                    get_text_list(form.changed_data, _('and')))))
+
+        if formsets:
+            for formset in formsets:
+                for added_object in formset.new_objects:
+                    change_message.append(
+                        _('Added {0} "{1}".'.format(
+                            force_text(added_object._meta.verbose_name),
+                            force_text(added_object))))
+                for changed_object, changed_fields in formset.changed_objects:
+                    change_message.append(
+                        _('Changed {0} for {1} "{2}".'.format(
+                            get_text_list(changed_fields, _('and')),
+                            force_text(changed_object._meta.verbose_name),
+                            force_text(changed_object))))
+                for deleted_object in formset.deleted_objects:
+                    change_message.append(
+                        _('Deleted {0} "{1}".'.format(
+                            force_text(deleted_object._meta.verbose_name),
+                            force_text(deleted_object))))
+
+        change_message = ' '.join(change_message)
+        return change_message or _('No fields changed.')
