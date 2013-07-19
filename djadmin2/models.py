@@ -76,9 +76,9 @@ class LogEntry(models.Model):
 
     @property
     def action_type(self):
-        if self.is_addition:
+        if self.is_addition():
             return _('added')
-        if self.is_change:
+        if self.is_change():
             return _('changed')
         if self.is_deletion():
             return _('deleted')
