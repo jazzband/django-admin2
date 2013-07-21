@@ -51,31 +51,31 @@ Translators
 
 Catalan
 
-* Ignasi Fosch Alonso (NaTx)
+* Ignasi Fosch Alonso (@NaTx)
 
 Chinese
 
-* Eric Ho (EricHo)
-* Shiyao.Ma (introom)
+* Eric Ho (@EricHo)
+* Shiyao.Ma (@introom)
 
 French
 
-* Henri Colas (NotSqrt) 
+* Henri Colas (@NotSqrt) 
 
 German
 
-* Danilo Bargen (dbrgn)
-* Jannis Leidel (jezdez)
-* Albrecht Mühlenschulte (a7p)
+* Danilo Bargen (@dbrgn)
+* Jannis Leidel (@jezdez)
+* Albrecht Mühlenschulte (@a7p)
 
 Italian
 
-* Margherita Zamponi (margherita.zamponi)
+* Margherita Zamponi (@margherita.zamponi)
 
 Polish
 
-* Dariusz Smigiel (dasm)
-* Marcin Jabrzyk (bzyx)
+* Dariusz Smigiel (@dasm)
+* Marcin Jabrzyk (@bzyx)
 
 Portuguese (Brazil)
 
@@ -83,9 +83,9 @@ Portuguese (Brazil)
 
 Slovak
 
-* Marek Zelinkaa (marekzelinka)
-* Ivana Kellyérová (eruraina)
+* Marek Zelinkaa (@marekzelinka)
+* Ivana Kellyérová (@eruraina)
 
 Spanish
 
-* Ignasi Fosch Alonso (NaTx)
+* Ignasi Fosch Alonso (@NaTx)

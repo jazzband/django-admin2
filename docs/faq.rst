@@ -23,4 +23,21 @@ However, there are times when it's good to be outside of core, especially for ex
 What's wrong with the Django Admin?
 -----------------------------------
 
-Forthcoming...
+The existing Django Admin is a powerful tool with pretty extensive extension capabilities. That said, it does have several significant issues.
+
+Doesn't handle a million-record foreign key relation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Say you have a million users and a model with a foreign key relation to them. You go the model detail field in the admin and you know what happens? The Django admin tries to serve out a million option links to your browser. Django doesn't handle this well, and neither does your browser. You can fix this yourself, find a third-party package to do it for you, or use django-admin2.
+
+Yes, before release 1.0  of django-admin2 it will handle this problem for you.
+
+Uses an early version of Class-Based Views
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO
+
+Very Challenging to Theme
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+TODO
