@@ -3,25 +3,28 @@ from __future__ import division, absolute_import, unicode_literals
 
 import operator
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
-from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.utils.translation import ugettext_lazy
 from django.db import models
+from django.db.models.fields import FieldDoesNotExist
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
+from django.utils.translation import ugettext_lazy
 from django.views import generic
-from django.db.models.fields import FieldDoesNotExist
 
 import extra_views
 
 
 from . import permissions, utils
 from .forms import AdminAuthenticationForm
+from .models import LogEntry
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter
 
@@ -81,8 +84,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         selected_model_pks = request.POST.getlist('selected_model_pk')
         queryset = self.model.objects.filter(pk__in=selected_model_pks)
 
-        #  If action_callable is a class subclassing from actions.BaseListAction
-        #       then we generate the callable object.
+        #  If action_callable is a class subclassing from
+        #  actions.BaseListAction then we generate the callable object.
         if hasattr(action_callable, "process_queryset"):
             response = action_callable.as_view(queryset=queryset)(request)
         else:
@@ -130,7 +133,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         search_term = self.request.GET.get('q', None)
         search_use_distinct = False
         if self.model_admin.search_fields and search_term:
-            queryset, search_use_distinct = self.get_search_results(queryset, search_term)
+            queryset, search_use_distinct = self.get_search_results(
+                queryset, search_term)
 
         if self.model_admin.list_filter:
             queryset = self.build_list_filter(queryset).qs
@@ -185,7 +189,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return context
 
     def get_success_url(self):
-        view_name = 'admin2:{}_{}_index'.format(self.app_label, self.model_name)
+        view_name = 'admin2:{}_{}_index'.format(
+            self.app_label, self.model_name)
         return reverse(view_name)
 
     def get_actions(self):
@@ -208,7 +213,8 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
         permissions.ModelViewPermission)
 
 
-class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.UpdateWithInlinesView):
+class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+                        extra_views.UpdateWithInlinesView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -228,8 +234,18 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Upda
         context['action_name'] = ugettext_lazy("Change")
         return context
 
+    def forms_valid(self, form, inlines):
+        response = super(ModelEditFormView, self).forms_valid(form, inlines)
+        LogEntry.objects.log_action(
+            self.request.user.id,
+            self.object,
+            LogEntry.CHANGE,
+            self.construct_change_message(self.request, form, inlines))
+        return response
 
-class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.CreateWithInlinesView):
+
+class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+                       extra_views.CreateWithInlinesView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -248,6 +264,15 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin, extra_views.Creat
         context['action'] = "Add"
         context['action_name'] = ugettext_lazy("Add")
         return context
+
+    def forms_valid(self, form, inlines):
+        response = super(ModelAddFormView, self).forms_valid(form, inlines)
+        LogEntry.objects.log_action(
+            self.request.user.id,
+            self.object,
+            LogEntry.ADDITION,
+            'Object created.')
+        return response
 
 
 class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
@@ -278,6 +303,38 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             'deletable_objects': collector.nested(_format_callback)
         })
         return context
+
+    def delete(self, request, *args, **kwargs):
+        LogEntry.objects.log_action(
+            request.user.id,
+            self.get_object(),
+            LogEntry.DELETION,
+            'Object deleted.')
+        return super(ModelDeleteView, self).delete(request, *args, **kwargs)
+
+
+class ModelHistoryView(AdminModel2Mixin, generic.ListView):
+    default_template_name = "model_history.html"
+    permission_classes = (
+        permissions.IsStaffPermission,
+        permissions.ModelChangePermission
+    )
+
+    def get_context_data(self, **kwargs):
+        context = super(ModelHistoryView, self).get_context_data(**kwargs)
+        context['model'] = self.get_model()
+        context['object'] = self.get_object()
+        return context
+
+    def get_object(self):
+        return get_object_or_404(self.get_model(), pk=self.kwargs.get('pk'))
+
+    def get_queryset(self):
+        content_type = ContentType.objects.get_for_model(self.get_object())
+        return LogEntry.objects.filter(
+            content_type=content_type,
+            object_id=self.get_object().id
+        )
 
 
 class PasswordChangeView(Admin2Mixin, generic.UpdateView):

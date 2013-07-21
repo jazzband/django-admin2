@@ -1,0 +1,20 @@
+{% if actions %}
+    <ol class="unstyled">
+        {% for action in actions %}
+        <li>
+            {% if action.is_addition %}
+                <i class="added icon-plus"></i>
+            {% elif action.is_change %}
+                <i class="changed icon-pencil"></i>
+            {% else %}
+                <i class="deleted icon-minus"></i>
+            {% endif %}
+            {{ action }}
+            <span class="muted">{{ action.content_type.model }}</span>
+        </li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <p>None available</p>
+{% endif %}
+
