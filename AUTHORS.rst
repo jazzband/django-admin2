@@ -45,6 +45,7 @@ Developers
 * Tom Viner (@tomviner)
 * Marek Zelinkaa (@marekzelinka)
 * Andrea de Marco (@z4r)
+* Kenneth Love (@kennethlove / <kenneth@gigantuan.net>)
 
 Translators
 -----------
