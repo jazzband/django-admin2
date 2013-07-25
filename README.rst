@@ -149,3 +149,8 @@ If you create a new theme, you define it thus:
     ADMIN2_THEME_DIRECTORY = "djadmin2/foundation/"
 
 
+Support this project!
+======================
+
+You can hire the lead maintainer to perform dedicated work on this package. Please email pydanny@cartwheelweb.com.
+
