@@ -3,6 +3,7 @@ import logging
 
 from django.core.urlresolvers import reverse
 from django.conf.urls import patterns, url
+from django.utils.six import with_metaclass
 
 import extra_views
 
@@ -34,13 +35,11 @@ class ModelAdminBase2(type):
         return new_class
 
 
-class ModelAdmin2(object):
+class ModelAdmin2(with_metaclass(ModelAdminBase2)):
     """
     Warning: This class is targeted for reduction.
                 It's bloated and ugly.
     """
-    __metaclass__ = ModelAdminBase2
-
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()
