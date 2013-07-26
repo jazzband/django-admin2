@@ -31,7 +31,7 @@ Local Installation
 
 1. Create a virtualenv_ (or use virtualenvwrapper_). Activate it.
 2. cd into django-admin2
-3. type ``$ pip install -r requirements.txt``
+3. type ``$ pip install -r requirements/development.txt``
 4. type ``$ python setup.py develop``
 
 Try the example projects

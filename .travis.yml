@@ -5,7 +5,7 @@ before_install:
   - export PIP_USE_MIRRORS=true
   - export PIP_INDEX_URL=https://simple.crate.io/
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements/development.txt
 script:
   - coverage run runtests.py
 after_success:
