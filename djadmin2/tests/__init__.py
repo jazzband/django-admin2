@@ -6,3 +6,4 @@ from test_core import *
 from test_actions import *
 from test_auth_admin import *
 from test_renderers import *
+from test_fieldsets import *
