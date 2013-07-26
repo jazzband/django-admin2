@@ -1,0 +1,162 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# Ivana Kellyerova <eruraina@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-07 12:46+0000\n"
+"Last-Translator: marekzelinka <mzelinka@myopera.com>\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/django-admin2/"
+"language/sk/)\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: actions.py:16
+msgid "Publish selected items"
+msgstr "Zverejniť vybrané položky"
+
+#: actions.py:18
+#, python-format
+msgctxt "singular form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr "%(count)s %(items)s úspešne zverejnené"
+
+#: actions.py:20
+#, python-format
+msgctxt "plural form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr "%(count)s %(items)s úspešne zverejnené"
+
+#: admin2.py:22
+msgid "Items unpublished"
+msgstr "Položky nezverejnené"
+
+#. Translators : action description
+#: admin2.py:25
+msgid "Unpublish selected items"
+msgstr "Zmeniť vybrané položky na neverejné"
+
+#: models.py:11
+msgid "title"
+msgstr "nadpis"
+
+#: models.py:12 models.py:25
+msgid "body"
+msgstr "telo"
+
+#: models.py:13
+msgid "published"
+msgstr "zverejnené"
+
+#: models.py:19 models.py:24
+msgid "post"
+msgstr "príspevok"
+
+#: models.py:20
+msgid "posts"
+msgstr "príspevky"
+
+#: models.py:31
+msgid "comment"
+msgstr "komentár"
+
+#: models.py:32
+msgid "comments"
+msgstr "komentáre"
+
+#: templates/blog/home.html:9
+msgid "Imagine that this is a real site"
+msgstr "Predstavte si, že toto je skutočná stránka"
+
+#: templates/blog/home.html:11
+msgid "Pretend that this is the homepage of a big Django site."
+msgstr "Predstierajme, že toto je domovská stránka veľkého Django webu."
+
+#: templates/blog/home.html:13
+msgid "Imagine lots of things are here:"
+msgstr "Predstavte si, že tu je veľa vecí:"
+
+#: templates/blog/home.html:15
+msgid "A blog"
+msgstr "Blog"
+
+#: templates/blog/home.html:16
+msgid "Comments"
+msgstr "Komentáre"
+
+#: templates/blog/home.html:17
+msgid "And so on..."
+msgstr "A tak ďalej..."
+
+#: templates/blog/home.html:20
+msgid ""
+"In other words, these are items that we can introspect through the Django "
+"admin."
+msgstr "Inak povedané, toto sú položky, ktoré môžeme skúmať cez Django admina."
+
+#: templates/blog/home.html:22
+msgid "Under the hood"
+msgstr "Pod kapotou"
+
+#: templates/blog/home.html:24
+msgid ""
+"Now, explore the Django admin for example.com. Click on either of the "
+"following:"
+msgstr ""
+"Teraz vyskúšajte Django admin pre example.com. Vyberte jedno z nasledujúcich:"
+
+#: templates/blog/home.html:30
+#, python-format
+msgid "The original <a href=\"%(admin_url)s\">Django Admin</a>"
+msgstr "Pôvodný <a href=\"%(admin_url)s\">Django Admin</a>"
+
+#: templates/blog/home.html:36
+msgid "Powered by django.contrib.admin. This is just here for reference."
+msgstr "Poháňané django.contrib.admin. Toto je tu len pre informáciu."
+
+#: templates/blog/home.html:39
+#, python-format
+msgid "The new <a href=\"%(admin2_url)s\">Admin2</a>"
+msgstr "Nový <a href=\"%(admin2_url)s\">Admin2</a>"
+
+#: templates/blog/home.html:45
+msgid "Powered by django-admin2."
+msgstr "Poháňané django-admin2."
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:4
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:6
+msgid "Are you sure?"
+msgstr "Určite?"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:9
+msgid "Home"
+msgstr "Domov"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:12
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:37
+msgid "Publish"
+msgstr "Zverejniť"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:19
+#, python-format
+msgid ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following item will be published:\n"
+msgid_plural ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following items will be published:\n"
+msgstr[0] ""
+"Určite chcete zverejniť vybranú položku %(objects_name)s?\n"
+"Zverejníte tak nasledujúcu položku:\n"
+msgstr[1] ""
+"Určite chcete zverejniť vybrané %(objects_name)s?\n"
+"Zverejníte tak nasledujúce položky:\n"
+msgstr[2] ""
+"Určite chcete zverejniť vybrané %(objects_name)s?\n"
+"Zverejníte tak nasledujúce položky:\n"

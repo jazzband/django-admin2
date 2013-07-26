@@ -1,6 +1,8 @@
 Permissions
 ===========
 
+.. index:: Permissions
+
 Permissions are handled on a per view basis. So basically each admin view can
 hold its own permissions. That way you are very flexible in defining
 who is allowed to access which view. For example, the edit view might need some
@@ -28,8 +30,11 @@ attribute:
 See the following sections on which permission classes ship with
 **django-admin2**, ready to use and how you can roll your own.
 
-Builtin permission classes
---------------------------
+Built-in permission classes
+---------------------------
+
+.. index::
+    single: Permissions; Built-In Permission Classes
 
 You can use the following permission classes directly in you views.
 
@@ -47,6 +52,9 @@ You can use the following permission classes directly in you views.
 
 Writing your own permission class
 ---------------------------------
+
+.. index::
+    single: Permissions; Custom Permission Classes
 
 If you need it, writing your own permission class is really easy. You just need
 to subclass the :class:`djadmin2.permissions.BasePermission` class and
@@ -89,8 +97,11 @@ Here is an example implementation of a custom permission class:
                     return False
             return True
 
-Permissions in templates
+Permissions in Templates
 ------------------------
+
+.. index::
+    single: Permissions; Permissions in Templates
 
 Since the permission handling is designed around views, the permission checks
 in the template will also always access a view and return either ``True`` or
@@ -128,8 +139,11 @@ At the moment we can check for the following four basic permissions:
 ``has_delete_permission``
     This will check the permissions against the current admin's ``delete_view``.
 
-Object-level permissions
+Object-Level Permissions
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. index::
+    single: Permissions; Object-Level Permissions
 
 The permission handling in templates also support checking for object-level
 permissions. To do so, you can use the ``for_object`` filter implemented in the
@@ -181,8 +195,11 @@ permissions as well:
         {% include "list_of_model_actions.html" with permissions=object_permissions %}
     {% endwith %}
 
-Checking for permissions on other models
+Checking for Permissions on Other Models
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. index::
+    single: Permissions; Checking for Permissions on Other Models
 
 Sometimes you just need to check the permissions for that particular model. In
 that case, you can access its permissions like this:
@@ -214,8 +231,11 @@ to a model admin, you can use the ``for_admin`` filter:
         {% endwith %}
     {% endfor %}
 
-Dynamically check for a specific permission name
+Dynamically Check for a Specific Permission Name
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. index::
+    single: Permissions; Dynamically Check for a Specific Permission Name
 
 Just like you can bind a permission dynamically to a model admin, you can also
 specify the actual permission name on the fly. There is the ``for_view`` filter

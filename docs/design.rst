@@ -2,6 +2,9 @@
 Design
 ======
 
+.. index:: Design
+    single: Design; Constraints
+
 Constraints
 ------------
 
@@ -11,6 +14,9 @@ This section outlines the design constraints that django-admin2 follows:
 2. The original bootstrap/ theme shall contain no UI enhancements beyond the original ``django.contrib.admin`` UI. (However, future themes can and should be experimental.)
 3. External package dependencies are allowed but should be very limited.
 4. Building a django-admin2 theme cannot involve learning Python, which explains why we are not using tools like django-crispy-forms. (One of our goals is to make it easier for designers to explore theming django-admin2).
+
+.. index::
+    single: Design; Backend Goals
 
 Backend Goals
 ---------------
@@ -30,6 +36,9 @@ Clean code with substantial documentation is also a goal:
 2. All classes/methods/functions documented.
 3. Provide a wealth of in-line code documentation.
 
+.. index::
+    single: Design; REST API Goals
+
 REST API Goals
 ----------------
 
@@ -40,6 +49,9 @@ Goals:
 1. Provide a extendable self-documenting API (django-rest-framework).
 2. Reuse components from the HTML view.
 3. Backwards compatibility: Use a easily understood API versioning system so we can expand functionality of the API without breaking existing themes.
+
+.. index::
+    single: Design; UI Goals
 
 UI Goals
 ---------

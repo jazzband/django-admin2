@@ -5,6 +5,7 @@ from setuptools import setup
 import re
 import os
 import sys
+import string
 
 
 def get_author(package):
@@ -48,6 +49,23 @@ def get_package_data(package):
     return {package: filepaths}
 
 
+def remove_screenshots(text):
+    """
+    Removes the section with screenshots since PyPI doesn't like them.
+    """
+    outputting = True
+    new_text = ""
+    for line in text.splitlines():
+        if line.startswith("Screenshots"):
+            outputting = False
+            continue
+        if len(line) and line[0] in string.ascii_letters:
+            outputting = True
+        if outputting:
+            new_text += line + '\n'
+    return new_text
+
+
 author = get_author('djadmin2')
 version = get_version('djadmin2')
 
@@ -59,13 +77,14 @@ if sys.argv[-1] == 'publish':
     print("  git push --tags")
     sys.exit()
 
-LONG_DESCRIPTION = open('README.rst').read()
+LONG_DESCRIPTION = remove_screenshots(open('README.rst').read())
+HISTORY = open('HISTORY.rst').read()
 
 setup(
     name='django-admin2',
     version=version,
     description="An introspective interface for Django's ORM.",
-    long_description=LONG_DESCRIPTION,
+    long_description=LONG_DESCRIPTION + '\n\n' + HISTORY,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
@@ -82,17 +101,19 @@ setup(
     keywords='django,admin',
     author=author,
     author_email='pydanny@gmail.com',
-    url='http://github.com/pydanny/django-admin2',
+    url='http://djangoadmin.org',
     license='MIT',
     packages=get_packages('djadmin2'),
     include_package_data=True,
     test_suite='runtests.runtests',
     install_requires=[
         'django>=1.5.0',
-        'django-braces==1.0.0',
-        'django-extra-views==0.6.2',
-        'djangorestframework==2.3.3',
-        'django-floppyforms==1.1'
+        'django-braces>=1.0.0',
+        'django-extra-views>=0.6.2',
+        'djangorestframework>=2.3.3',
+        'django-floppyforms>=1.1',
+        'django-filter>=0.6',
+        'django-crispy-forms>=1.3.2'
         ],
     zip_safe=False,
 )

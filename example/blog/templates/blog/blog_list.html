@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span10">
+        <h1>The blog of Example.com</h1>
+
+        {% for post in post_list %}
+            <h3>
+                <a href="{% url 'blog_detail' post.pk %}">
+                    {{ post.title }}
+                </a>
+            </h3>
+            {% if post.published %}
+                <p>
+                    {{ post.body }}
+                </p>
+            {% else %}
+                <p> Unpublished - Choose an <a href="{% url 'home' %}">admin</a> tool and publish it.</p>
+            {% endif %}
+        {% empty %}
+            <h3>No Content Yet!</h3>
+
+            <p>Choose an <a href="{% url 'home' %}">admin</a> tool and add content.</p>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

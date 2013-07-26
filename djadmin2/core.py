@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-:
 """
-WARNING: This file about to undergo major refactoring by @pydanny per Issue #99.
+WARNING: This file about to undergo major refactoring by @pydanny per
+Issue #99.
 """
+from __future__ import division, absolute_import, unicode_literals
 
 from django.conf.urls import patterns, include, url
 from django.conf import settings
@@ -20,7 +23,8 @@ class Admin2(object):
     It keeps a registry of all registered Models and collects the urls of their
     related ModelAdmin2 instances.
 
-    It also provides an index view that serves as an entry point to the admin site.
+    It also provides an index view that serves as an entry point to the
+    admin site.
     """
     index_view = views.IndexView
     app_index_view = views.AppIndexView
@@ -44,7 +48,8 @@ class Admin2(object):
         If a model is already registered, this will raise ImproperlyConfigured.
         """
         if model in self.registry:
-            raise ImproperlyConfigured('%s is already registered in django-admin2' % model)
+            raise ImproperlyConfigured(
+                '%s is already registered in django-admin2' % model)
         if not model_admin:
             model_admin = types.ModelAdmin2
         self.registry[model] = model_admin(model, admin=self, **kwargs)
@@ -60,12 +65,14 @@ class Admin2(object):
         """
         Deregisters the given model. Remove the model from the self.app as well
 
-        If the model is not already registered, this will raise ImproperlyConfigured.
+        If the model is not already registered, this will raise
+        ImproperlyConfigured.
         """
         try:
             del self.registry[model]
         except KeyError:
-            raise ImproperlyConfigured('%s was never registered in django-admin2' % model)
+            raise ImproperlyConfigured(
+                '%s was never registered in django-admin2' % model)
 
         # Remove the model from the apps registry
         # Get the app label
@@ -99,7 +106,8 @@ class Admin2(object):
         for object_admin in self.registry.values():
             if object_admin.name == name:
                 return object_admin
-        raise ValueError(u'No object admin found with name {}'.format(repr(name)))
+        raise ValueError(
+            u'No object admin found with name {}'.format(repr(name)))
 
     def get_index_kwargs(self):
         return {
@@ -120,11 +128,12 @@ class Admin2(object):
         }
 
     def get_urls(self):
-        urlpatterns = patterns('',
+        urlpatterns = patterns(
+            '',
             url(regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
-            ),
+                ),
             url(regex='^auth/user/(?P<pk>\d+)/update/password/$',
                 view=views.PasswordChangeView.as_view(),
                 name='password_change'
@@ -137,20 +146,21 @@ class Admin2(object):
                 view=views.LogoutView.as_view(),
                 name='logout'
                 ),
-            url(
-                regex=r'^(?P<app_label>\w+)/$',
-                view=self.app_index_view.as_view(**self.get_app_index_kwargs()),
+            url(regex=r'^(?P<app_label>\w+)/$',
+                view=self.app_index_view.as_view(
+                    **self.get_app_index_kwargs()),
                 name='app_index'
-            ),
-            url(
-                regex=r'^api/v0/$',
-                view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
+                ),
+            url(regex=r'^api/v0/$',
+                view=self.api_index_view.as_view(
+                    **self.get_api_index_kwargs()),
                 name='api_index'
-            ),
+                ),
         )
         for model, model_admin in self.registry.iteritems():
             model_options = utils.model_options(model)
-            urlpatterns += patterns('',
+            urlpatterns += patterns(
+                '',
                 url('^{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),

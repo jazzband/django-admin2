@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from django.db.models import ProtectedError
 from django.db.models import ManyToManyRel
 from django.db.models.deletion import Collector
@@ -15,12 +18,10 @@ def lookup_needs_distinct(opts, lookup_path):
     """
     field_name = lookup_path.split('__', 1)[0]
     field = opts.get_field_by_name(field_name)[0]
-    if ((hasattr(field, 'rel') and
-         isinstance(field.rel, ManyToManyRel)) or
-        (isinstance(field, RelatedObject) and
-         not field.field.unique)):
-         return True
-    return False
+    condition1 = hasattr(field, 'rel') and isinstance(field.rel, ManyToManyRel)
+    condition2 = isinstance(field, RelatedObject) and not field.field.unique
+    return condition1 or condition2
+
 
 def model_options(model):
     """
@@ -40,18 +41,38 @@ def admin2_urlname(view, action):
     return 'admin2:%s_%s_%s' % (view.app_label, view.model_name, action)
 
 
-def model_verbose_name(obj):
+def model_verbose_name(model):
     """
     Returns the verbose name of a model instance or class.
     """
-    return model_options(obj).verbose_name
+    return model_options(model).verbose_name
 
 
-def model_verbose_name_plural(obj):
+def model_verbose_name_plural(model):
     """
     Returns the pluralized verbose name of a model instance or class.
     """
-    return model_options(obj).verbose_name_plural
+    return model_options(model).verbose_name_plural
+
+
+def model_field_verbose_name(model, field_name):
+    """
+    Returns the verbose name of a model field.
+    """
+    meta = model_options(model)
+    field = meta.get_field_by_name(field_name)[0]
+    return field.verbose_name
+
+
+def model_method_verbose_name(model, method_name):
+    """
+    Returns the verbose name / short description of a model field.
+    """
+    method = getattr(model, method_name)
+    try:
+        return method.short_description
+    except AttributeError:
+        return method_name
 
 
 def model_app_label(obj):
@@ -59,6 +80,19 @@ def model_app_label(obj):
     Returns the app label of a model instance or class.
     """
     return model_options(obj).app_label
+
+
+def get_attr(obj, attr):
+    """
+    Get the right value for the attribute. Handle special cases like callables
+    and the __str__ attribute.
+    """
+    if attr == '__str__':
+        value = unicode(obj)
+    else:
+        attribute = getattr(obj, attr)
+        value = attribute() if callable(attribute) else attribute
+    return value
 
 
 class NestedObjects(Collector):

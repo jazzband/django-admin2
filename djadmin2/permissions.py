@@ -1,4 +1,5 @@
-'''
+# -*- coding: utf-8 -*-
+"""
 djadmin2's permission handling. The permission classes have the same API as
 the permission handling classes of the django-rest-framework. That way, we can
 reuse them in the admin's REST API.
@@ -13,13 +14,17 @@ interface:
 
 The permission classes are then just fancy wrappers of these basic checks of
 which it can hold multiple.
-'''
+"""
+from __future__ import division, absolute_import, unicode_literals
+
 import logging
 import re
+
 from django.contrib.auth import models as auth_models
 from django.contrib.contenttypes import models as contenttypes_models
 from django.db.models import get_models
 from django.utils import six
+
 from . import utils
 
 

@@ -1,10 +1,49 @@
-{% extends "admin2/bootstrap/base.html" %}
+{% extends "base.html" %}
+{% load staticfiles i18n %}
 
 {% block content %}
-<h1>Example Home</h1>
+<div class="row-fluid">
+    <div class="span10">
+        <h1>Example.com</h1>
 
-<ul>
-    <li><a href="/admin2/">django-admin2</a></li>
-    <li><a href="/admin/">django.contrib.admin</a> (for reference)</li>
-</ul>
+        <h3>{% trans "Imagine that this is a real site" %}</h3>
+
+        <p>{% trans "Pretend that this is the homepage of a big Django site." %}</p>
+
+        <p>{% trans "Imagine lots of things are here:" %}</p>
+        <ul>
+            <li>{% trans "A blog" %}</li>
+            <li>{% trans "Comments" %}</li>
+            <li>{% trans "And so on..." %}</li>
+        </ul>
+
+        <p>{% trans "In other words, these are items that we can introspect through the Django admin." %}</p>
+
+        <h3>{% trans "Under the hood" %}</h3>
+
+        <p>{% trans "Now, explore the Django admin for example.com. Click on either of the following:" %}</p>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span5">
+        <h4>The original <a href="{% url "admin:index" %}">Django Admin</a></h4>
+
+        <a href="{% url "admin:index" %}">
+            <img class="img-polaroid" src="{% static 'img/admin.png' %}" />
+        </a>
+
+        <p>Powered by django.contrib.admin. This is just here for reference.</p>
+    </div>
+    <div class="offset1 span5">
+        <h4>The new <a href="{% url "admin2:dashboard" %}">Admin2</a></h4>
+
+        <a href="{% url "admin2:dashboard" %}">
+            <img class="img-polaroid" src="{% static 'img/admin2.png' %}" />
+        </a>
+
+        <p>Powered by django-admin2.</p>
+    </div>
+</div>
+<hr />
+<h2>See the <a href="{% url 'blog_list' %}">Blog</a> in Action</h2>
 {% endblock %}

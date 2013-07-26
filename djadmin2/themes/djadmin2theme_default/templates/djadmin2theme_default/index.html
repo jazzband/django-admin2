@@ -1,0 +1,18 @@
+{% extends "djadmin2theme_default/base.html" %}
+{% load admin2_tags i18n %}
+
+{% block content %}
+
+<div class="row-fluid">
+  <div class="span8">
+    {% for app_label, registry in apps.items %}
+      {% include 'djadmin2theme_default/includes/app_model_list.html' %}
+    {% endfor %}
+  </div>
+  <div class="span4 well pull-right">
+    <h4>{% trans "Recent Actions" %}</h4>
+    <h5>{% trans "My Actions" %}</h5>
+    {% action_history %}
+  </div>
+</div>
+{% endblock content %}

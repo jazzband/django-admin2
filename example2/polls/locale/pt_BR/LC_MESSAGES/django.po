@@ -1,0 +1,61 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-09 05:00+0000\n"
+"Last-Translator: Douglas Miranda <douglasmirandasilva@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"django-admin2/language/pt_BR/)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: models.py:12
+msgid "question"
+msgstr "pergunta"
+
+#: models.py:13
+msgid "date published"
+msgstr "data de publicação"
+
+#: models.py:22
+msgid "Published recently?"
+msgstr "Publicada recentemente? "
+
+#: models.py:25 models.py:30
+msgid "poll"
+msgstr "enquete"
+
+#: models.py:26
+msgid "polls"
+msgstr "enquetes"
+
+#: models.py:31
+msgid "choice text"
+msgstr "texto da opção"
+
+#: models.py:32
+msgid "votes"
+msgstr "votos"
+
+#: models.py:38
+msgid "choice"
+msgstr "opção"
+
+#: models.py:39
+msgid "choices"
+msgstr "opções"
+
+#: templates/home.html:4
+msgid "Example Home"
+msgstr "Página inicial de exemplo"
+
+#: templates/home.html:8
+msgid "(for reference)"
+msgstr "(para referência)"

@@ -2,9 +2,14 @@
 Contributing
 ============
 
-.. note:: Before you begin working on your contribution, please read and become familiar with the design_ of ``django-admin2``. The design_ document should hopefully make it clear what our constraints and goals are for the project.
+.. index:: Contributing
+
+.. warning:: Before you begin working on your contribution, please read and become familiar with the design_ of ``django-admin2``. The design_ document should hopefully make it clear what our constraints and goals are for the project.
 
 .. _design: https://django-admin2.readthedocs.org/en/latest/design.html
+
+.. index::
+    single: Contributing; Setup
 
 Setup
 =====
@@ -27,7 +32,7 @@ Local Installation
 1. Create a virtualenv_ (or use virtualenvwrapper_). Activate it.
 2. cd into django-admin2
 3. type ``$ pip install -r requirements.txt``
-4. type ``$ python setup.py develop`` 
+4. type ``$ python setup.py develop``
 
 Try the example projects
 --------------------------
@@ -37,7 +42,10 @@ Try the example projects
 3. run the dev server: ``$ python manage.py runserver``
 
 .. _virtualenv: http://www.virtualenv.org/en/latest/
-.. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.org/en/latest/ 
+.. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.org/en/latest/
+
+.. index::
+    single: Contributing; Issues
 
 Issues!
 =======
@@ -54,6 +62,10 @@ Tips
 #. Since this project will live on inheritance, all views are Class-Based.
 #. Familiarize yourself with the project design_ document.
 
+.. index:: 
+    single: Contributing; Topic Branches
+    single: Contributing; Pull Requests
+
 Setting up topic branches and generating pull requests
 ======================================================
 
@@ -61,7 +73,7 @@ Setting up topic branches and generating pull requests
 
 While it's handy to provide useful code snippets in an issue, it is better for
 you as a developer to submit pull requests. By submitting pull request your
-contribution to django-admin2 will be recorded by Github. 
+contribution to django-admin2 will be recorded by Github.
 
 In git it is best to isolate each topic or feature into a "topic branch".  While
 individual commits allow you control over how small individual changes are made
@@ -110,30 +122,45 @@ a reviewer asks for changes, you do not need to close the pull and reissue it
 after making changes. Just make the changes locally, push them to GitHub, then
 add a comment to the discussion section of the pull request.
 
+.. index::
+    single: Contributing; Pulling Upstream Changes
+
 Pull upstream changes into your fork regularly
 ==================================================
 
-**django-admin2** is advancing quickly. It is therefore critical that you pull upstream changes from master into your fork on a regular basis. Nothing is worse than putting in a day of hard work into a pull request only to have it rejected because it has diverged too far from master. 
+**django-admin2** is advancing quickly. It is therefore critical that you pull upstream changes from master into your fork on a regular basis. Nothing is worse than putting in a day of hard work into a pull request only to have it rejected because it has diverged too far from master.
 
 To pull in upstream changes::
 
     git remote add upstream https://github.com/twoscoops/django-admin2.git
-    git fetch upstream develop
-
-Check the log to be sure that you actually want the changes, before merging::
-
-    git log upstream/develop
-
-Then merge the changes that you fetched::
-
-    git merge upstream/develop
+    git pull upstream develop
 
 For more info, see http://help.github.com/fork-a-repo/
+
+.. index::
+    single: Contributing; Pulling with Rebase
+
+Advanced git users: Pull with rebase
+------------------------------------
+
+This will pull and then reapply your work on top of the upcoming changes::
+
+    git pull --rebase upstream develop
+
+It saves you from an extra merge, keeping the history cleaner, but it's potentially dangerous because you're rewriting history. For more info, see http://gitready.com/advanced/2009/02/11/pull-with-rebase.html
+
+.. index::
+    single: Contributing; Getting your Pull Requests Accepted
+
+.. index:: Getting your Pull Request Accepting
 
 How to get your pull request accepted
 =====================================
 
 We want your submission. But we also want to provide a stable experience for our users and the community. Follow these rules and you should succeed without a problem!
+
+.. index:: 
+    single: Getting your Pull Request Accepting; Run the tests!
 
 Run the tests!
 --------------
@@ -143,6 +170,10 @@ Before you submit a pull request, please run the entire django-admin2 test suite
     python runtests.py
 
 The first thing the core committers will do is run this command. Any pull request that fails this test suite will be **immediately rejected**.
+
+.. index:: 
+    single: Getting your Pull Request Accepting; Don't reduce test coverage!
+
 
 If you add code/views you need to add tests!
 --------------------------------------------
@@ -167,11 +198,17 @@ Examples::
     # run all tests from application ``blog`` and the test named
     # ``test_register`` on the ``djadmin2.Admin2Test`` testcase.
     python runtests.py djadmin2.Admin2Test.test_register blog
+    
+.. index:: 
+    single: Getting your Pull Request Accepting; Don't mix code changes with whitespace cleanup
 
 Don't mix code changes with whitespace cleanup
 ----------------------------------------------
 
 If you change two lines of code and correct 200 lines of whitespace issues in a file the diff on that pull request is functionally unreadable and will be **immediately rejected**. Whitespace cleanups need to be in their own pull request.
+
+.. index:: 
+    single: Getting your Pull Request Accepting; Keep your pull requests limited to single issues
 
 Keep your pull requests limited to a single issue
 --------------------------------------------------
@@ -184,6 +221,10 @@ django-admin2 pull requests should be as small/atomic as possible. Large, wide-s
 
 Best Practices
 --------------
+
+As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
+
+.. _`Two Scoops of Django`: https://2scoops.org
 
 Python
 ~~~~~~
@@ -200,17 +241,20 @@ Furthermore, the pixel shortage is over. We want to see:
 * `model_name` instead of `model`
 * `my_function_that_does_things` instead of `mftdt`
 
-As much as possible, we follow the advice of the `Two Scoops of Django`_ book. Periodically the book will be referenced either for best practices or as a blunt object by the project lead in order to end bike-shedding.
-
-.. _`Two Scoops of Django`: https://2scoops.org
-
 Templates
 ~~~~~~~~~
 
-Follow bootstrap's coding standards for HTML_ and CSS_.  Use two spaces for indentation, and write so the templates are readable (not for the generated html).  
+Follow bootstrap's coding standards for HTML_ and CSS_.  Use two spaces for indentation, and write so the templates are readable (not for the generated html).
 
 .. _HTML: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-html
 .. _CSS: https://github.com/twitter/bootstrap/blob/master/CONTRIBUTING.md#coding-standards-css
+
+Internationalize
+~~~~~~~~~~~~~~~~
+
+Any new text visible to the user must be internationalized_.
+
+.. _internationalized: https://django-admin2.readthedocs.org/en/latest/internationalization.html
 
 
 How pull requests are checked, tested, and done
@@ -218,12 +262,20 @@ How pull requests are checked, tested, and done
 
 First we pull the code into a local branch::
 
-    git checkout -b <branch-name> <submitter-github-name
-    git pull git://github.com/<submitter-github-name/django-twoscoops-project.git develop
+    git checkout develop
+    git checkout -b <submitter-github-name>-<submitter-branch> develop
+    git pull git://github.com/<submitter-github-name>/django-admin2.git <submitter-branch> <branch-name>
 
 Then we run the tests::
 
-    ./runtests.py
+    coverage run runtests.py
+    coverage report
+
+We do the following:
+
+1. Any test failures or the code coverage drops and the pull request is rejected.
+2. We open up a browser and make sure it looks okay.
+3. We check the commit's code changes and make sure that they follow our rules.
 
 We finish with a merge and push to GitHub::
 

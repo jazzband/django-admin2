@@ -88,8 +88,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -121,8 +122,18 @@ INSTALLED_APPS = (
     'floppyforms',
     'rest_framework',
     'djadmin2',
+    'djadmin2.themes.djadmin2theme_default',
+    'crispy_forms',
     'polls',
 )
+
+try:
+    import django_extensions
+    INSTALLED_APPS += (
+        'django_extensions',
+    )
+except ImportError:
+    pass
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -154,4 +165,24 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"
+
+########## TOOLBAR CONFIGURATION
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INSTALLED_APPS += (
+    'debug_toolbar',
+)
+
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+INTERNAL_IPS = ('127.0.0.1',)
+
+# See: https://github.com/django-debug-toolbar/django-debug-toolbar#installation
+MIDDLEWARE_CLASSES += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TEMPLATE_CONTEXT': True,
+}
+########## END TOOLBAR CONFIGURATION

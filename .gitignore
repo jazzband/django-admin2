@@ -20,10 +20,7 @@ pip-log.txt
 .coverage
 .tox
 
-#Translations
-*.mo
-
-#Mr Developer
+# Mr Developer
 .mr.developer.cfg
 
 # Django
@@ -42,7 +39,6 @@ coverage
 
 # Sphinx
 docs/_build
-docs/_static
 
 # Launchpad
 lp-cache
@@ -56,3 +52,7 @@ logfile
 
 # vim swap files
 *.sw[o-z]
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project

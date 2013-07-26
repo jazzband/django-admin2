@@ -5,57 +5,122 @@ django-admin2
 .. image:: https://travis-ci.org/pydanny/django-admin2.png
    :alt: Build Status
    :target: https://travis-ci.org/pydanny/django-admin2
+.. image:: https://coveralls.io/repos/pydanny/django-admin2/badge.png?branch=develop
+   :alt: Coverage Status
+   :target: https://coveralls.io/r/pydanny/django-admin2
+.. image:: https://pypip.in/v/django-admin2/badge.png
+   :target: https://crate.io/packages/django-admin2/
+.. image:: https://pypip.in/d/django-admin2/badge.png
+   :target: https://crate.io/packages/django-admin2/
 
-**Warning:** This project is currently in an **alpha** state and currently not meant for real projects.
+One of the most useful parts of ``django.contrib.admin`` is the ability to
+configure various views that touch and alter data. django-admin2 is a complete
+rewrite of that library using modern Class-Based Views and enjoying a design
+focused on extendibility and adaptability. By starting over, we can avoid the
+legacy code and make it easier to write extensions and themes.
 
-One of the most useful parts of ``django.contrib.admin`` is the ability to configure various views that touch and alter data. django-admin2 is a complete rewrite of that library using modern Class-Based Views and enjoying a design focused on extendibility and adaptability. By starting over, we can avoid the legacy code and make it easier to write extensions and themes.
-
-Contributing
-=============
-
-Yes please! Please read our formal contributing document at: https://django-admin2.readthedocs.org/en/latest/contributing.html
+Full Documentation at: http://django-admin2.rtfd.org/
 
 Features
-========
+=============
 
-* Easy-to-extend API that follows similar patterns to ``django.contrib.admin``.
-* Built-in RESTFUL API powered by ``django-rest-framework``.
-* Default theme built on Twitter Bootstrap that is just starting to act like the current Django admin.
-* Easy to implement theme system.
-* Permission controls
-* Custom actions
-* Add/Change form inlines
-* i18n
+* Rewrite of the Django Admin backend
+* Drop-in themes
+* Built-in RESTful API
 
+Screenshots
+===========
+
+.. image:: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Site_administration.png
+    :width: 722px
+    :alt: Site administration
+    :align: center
+    :target: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Site_administration.png
+
+.. image:: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Select_user.png
+    :width: 722px
+    :alt: Select user
+    :align: center
+    :target: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Select_user.png
 
 Requirements
 =============
 
 * Django 1.5+
 * Python 2.7+ or Python 3.3+
-* django-braces
-* django-extra-views
-* django-floppyforms
-* django-rest-framework
-* Sphinx (for documentation)
+* django-braces_
+* django-extra-views_
+* django-floppyforms_
+* django-rest-framework_
+* django-filter_
+* Sphinx_ (for documentation)
 
-Basic Pattern
-==============
+.. _django-braces: https://github.com/brack3t/django-braces
+.. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
+.. _django-floppyforms: https://github.com/brutasse/django-floppyforms
+.. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
+.. _django-filter: https://github.com/alex/django-filter
+.. _Sphinx: http://sphinx-doc.org/
 
-Our goal is to make this API work:
+
+
+Installation
+============
+
+Use pip to install from PyPI:
+
+.. code-block:: python
+
+   pip install django-admin2
+
+Add djadmin2 and rest_framework to your settings file:
+
+.. code-block:: python
+
+    INSTALLED_APPS = (
+        ...
+        'djadmin2',
+        'rest_framework', # for the browsable API templates
+        'floppyforms', # For HTML5 form fields
+        'crispy_forms', # Required for the default theme's layout
+        ...
+    )
+
+Add djadmin2 urls to your URLconf:
+
+.. code-block:: python
+
+   # urls.py
+   from django.conf.urls import patterns, include
+
+   import djadmin2
+
+   djadmin2.default.autodiscover()
+
+
+   urlpatterns = patterns(
+      ...
+      url(r'^admin2/', include(djadmin2.default.urls)),
+   )
+
+
+How to write django-admin2 modules
+=====================================
 
 .. code-block:: python
 
   # myapp/admin2.py
   # Import your custom models
-  from .models import Post, Comment
   from django.contrib.auth.forms import UserCreationForm, UserChangeForm
   from django.contrib.auth.models import User
+
+  from .models import Post, Comment
 
   import djadmin2
 
 
   class UserAdmin2(djadmin2.ModelAdmin2):
+      # Replicates the traditional admin for django.contrib.auth.models.User
       create_form_class = UserCreationForm
       update_form_class = UserChangeForm
 
@@ -66,82 +131,26 @@ Our goal is to make this API work:
   djadmin2.default.register(User, UserAdmin2)
 
 
-Themes
-========
+Drop-In Themes
+===============
 
 The default theme is whatever bootstrap is most current. Specifically:
 
 .. code-block:: python
 
-    ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+    # settings.py
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
 
-If you create a new theme, please define it thus:
+If you create a new theme, you define it thus:
 
 .. code-block:: python
 
-    ADMIN2_THEME_DIRECTORY = "admin2/foundation/"
+    # settings.py
+    ADMIN2_THEME_DIRECTORY = "djadmin2/foundation/"
 
 
-Screenshots
-===========
+Support this project!
+======================
 
-.. image:: screenshots/Site_administration.png
-    :width: 722px
-    :alt: Site administration
-    :align: center
-    :target: screenshots/Site_administration.png
+You can hire the lead maintainer to perform dedicated work on this package. Please email pydanny@cartwheelweb.com.
 
-.. image:: screenshots/Select_user.png
-    :width: 722px
-    :alt: Select user
-    :align: center
-    :target: screenshots/Select_user.png
-
-.. image:: screenshots/Change_user.png
-    :width: 722px
-    :alt: Change user
-    :align: center
-    :target: screenshots/Change_user.png
-
-
-History
-=========
-
-0.3.0 (2013-05-31)
-
-  * HTML5 forms via floppyforms.
-  * Many API improvements.
-  * Added Breadcrumbs.
-  * Added Login, Logout, ChangePassword views.
-  * Added Actions.
-  * Added support for inlines.
-  * Added view based permission controls
-  * Implement delete confirmations for child models.
-  * Testrunner now can run on a specific test set or module.
-  * Internal code refactoring to follow standards.
-  * Moved to git-flow for accepting pull requests.
-  * Model create/update pages now have save options.
-  * Added i18n to all templates, much of internal code.
-  * All print statements replaced with proper logging.
-  * Design goals specified in the documentation.
-
-0.2.0 (2013-05-19)
-
-  * Birth! (Working Prototype)
-  * Easy-to-extend API that follows similar patterns to django.contrib.admin.
-  * Built-in RESTFUL API powered by django-rest-framework.
-  * Default theme built on Twitter Bootstrap.
-  * Easy to implement theme system.
-  * Basic permission controls.
-  * Testrunner
-  * Documentation
-
-0.1.1 (2013-05-17)
-
-  * Code adoption from django-mongonaut.
-  * Preperation for Django Circus sprints.
-
-0.1 (2013-05-13)
-
-  * Discussion with Russell Keith-Magee.
-  * Inception.

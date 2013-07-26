@@ -1,10 +1,11 @@
-from __future__ import unicode_literals
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
 from copy import deepcopy
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import (
-        AuthenticationForm, UserCreationForm, UserChangeForm
-    )
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 import django.forms
 import django.forms.models
 import django.forms.extras.widgets
@@ -23,10 +24,10 @@ _WIDGET_COMMON_ARGUMENTS = ('attrs',)
 
 
 def _copy_attributes(original, new_widget, attributes):
-        for attr in attributes:
-            original_value = getattr(original, attr)
-            original_value = deepcopy(original_value)
-            setattr(new_widget, attr, original_value)
+    for attr in attributes:
+        original_value = getattr(original, attr)
+        original_value = deepcopy(original_value)
+        setattr(new_widget, attr, original_value)
 
 
 def _create_widget(widget_class, copy_attributes=(), init_arguments=()):
@@ -225,7 +226,7 @@ def floppify_form(form_class):
 
 
 def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
-                      exclude=None, formfield_callback=None,  widgets=None):
+                      exclude=None, formfield_callback=None, widgets=None):
     form_class = django.forms.models.modelform_factory(
         model=model,
         form=form,
@@ -236,6 +237,8 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
     return floppify_form(form_class)
 
 
+# Translators : %(username)s will be replaced by the username_field name
+# (default : username, but could be email, or something else)
 ERROR_MESSAGE = ugettext_lazy("Please enter the correct %(username)s and password "
         "for a staff account. Note that both fields may be case-sensitive.")
 
@@ -246,8 +249,11 @@ class AdminAuthenticationForm(AuthenticationForm):
     Liberally copied from django.contrib.admin.forms.AdminAuthenticationForm
 
     """
-    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput, initial=1,
-        error_messages={'required': ugettext_lazy("Please log in again, because your session has expired.")})
+    error_messages = {
+        'required': ugettext_lazy("Please log in again, because your session has expired."),
+    }
+    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput,
+            initial=1, error_messages=error_messages)
 
     def clean(self):
         username = self.cleaned_data.get('username')

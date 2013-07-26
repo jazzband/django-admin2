@@ -1,0 +1,60 @@
+{% extends "djadmin2theme_default/base.html" %}
+
+{% load i18n %}
+{% load admin2_tags %}
+
+{% block css %}
+  {{ block.super }}
+  <link href="{{ STATIC_URL }}themes/bootstrap/css/login.css" rel="stylesheet" media="screen">
+{% endblock css %}
+
+{% block navbar %}{% endblock navbar %}
+{% block breacrumbs %}{% endblock breacrumbs %}
+
+{% block class_page_title %}span12 login-title{% endblock class_page_title %}
+{% block page_title %}{% trans "Site administration" %} - {% trans "Log in" %}{% endblock page_title %}
+
+{% block content %}
+<div class="row-fluid">
+  <div class="span12">
+    <div class="well form-container">
+      <form method="post" class="">
+        {% csrf_token %}
+        <fieldset>
+          {% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
+          <p class="alert alert-error fade in">
+            <button data-dismiss="alert" class="close" type="button">×</button>
+            {% blocktrans count form.errors.items|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
+          </p>
+          {% endif %}
+
+          {% if form.non_field_errors or form.this_is_the_login_form.errors %}
+            {% for error in form.non_field_errors|add:form.this_is_the_login_form.errors %}
+            <p class="alert alert-error fade in">
+            <a href="#" data-dismiss="alert" class="close">×</a>
+              {{ error }}
+            </p>
+            {% endfor %}
+          {% endif %}
+
+          <div class="control-group {% if form.username.errors %}error{% endif %}">
+            <label for="id_{{ form.username.html_name }}" class="control-label">{{ form.username.label }}: </label>
+            <input type="text" class="span12" name="{{ form.username.html_name }}" id="id_{{ form.username.html_name }}" class=" focused" value="{% firstof form.username.value "" %}">
+          </div>
+          <div class="control-group {% if form.password.errors %}error{% endif %}">
+            <label for="id_{{ form.password.html_name }}" class="control-label">{{ form.password.label }}: </label>
+            <input type="password" class="span12" name="{{ form.password.html_name }}" id="id_{{ form.password.html_name }}" value="">
+          </div>
+
+          <input type="hidden" name="this_is_the_login_form" value="1" />
+          <input type="hidden" name="next" value="{{ next }}" />
+          <button class="btn btn-small btn-primary pull-right" type="submit">
+            {% trans "Log in" %}
+          </button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

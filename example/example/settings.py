@@ -1,4 +1,7 @@
 # Django settings for example project.
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -67,6 +70,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(BASE_DIR, "static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -88,8 +92,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -108,8 +113,6 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -120,10 +123,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'django_coverage',
     'floppyforms',
     'rest_framework',
+    'crispy_forms',
     'djadmin2',
+    'djadmin2.themes.djadmin2theme_default',
     'blog',
 )
 
@@ -157,7 +161,7 @@ LOGGING = {
 }
 
 
-ADMIN2_THEME_DIRECTORY = "admin2/bootstrap/"
+ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"
 
 
 ########## TOOLBAR CONFIGURATION

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span10">
+        <h3> <a href='{% url 'blog_list' %}'>Back to the Blog</a> </h3>
+
+        <h3>
+            {{ post.title }}
+        </h3>
+
+        {% if post.published %}
+            <p>
+                {{ post.body }}
+            </p>
+
+            <ul>
+                {% for comment in post.comments.all %}
+                    <li>{{ comment.body }}</li>
+                {% empty %}
+                    <li>No comments yet</li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+            <p> Unpublished - Choose an <a href="{% url 'home' %}">admin</a> tool and publish it.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

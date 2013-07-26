@@ -1,0 +1,86 @@
+{% load i18n %}<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>{% block title %}{% trans "Site administration" %}{% endblock title %} | django-admin2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    {% block css %}
+    <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <link href="{{ STATIC_URL }}themes/bootstrap/css/base.css" rel="stylesheet" media="screen">
+    {% endblock css %}
+  </head>
+  <body>
+    {% block navbar %}
+    <div class="navbar navbar-inverse navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a tabindex="1" class="brand" href="{% url 'admin2:dashboard' %}">Django-Admin2</a>
+
+          <ul class="nav pull-right">
+            <li><a tabindex="2" href="{% url 'admin2:api_index' %}">{% trans "API" %}</a></li>
+
+            {% if docsroot %}
+            <li><a tabindex="3" href="{{ docsroot }}">{% trans 'Documentation' %}</a></li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <li class="dropdown">
+              <a tabindex="4" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {% if user.get_full_name %}
+                  {{ user.get_full_name }}
+                {% else %}
+                  {% blocktrans with user=user.username %}Logged in as {{ user }}{% endblocktrans %}
+                {% endif %}
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                {% if user.has_usable_password %}
+                <li><a href="{% url 'admin2:password_change' user.id %}">{% trans "Change password" %}</a></li>
+                {% endif %}
+                <li><a href="{% url 'admin2:logout' %}">{% trans "Log out" %}</a></li>
+              </ul>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endblock navbar %}
+
+    {% block breacrumbs %}
+    <ul class="breadcrumb">
+      {% block breadcrumbs %}
+      <li class="active">{% trans "Home" %}</li>
+      {% endblock breadcrumbs %}
+    </ul>
+    {% endblock breacrumbs %}
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="{% block class_page_title %}span10{% endblock class_page_title %}">
+          <h3>{% block page_title %}{% trans "Site administration" %}{% endblock page_title %}</h3>
+        </div>
+        <div class="span2">{% block page_title_link %}{% endblock page_title_link %}</div>
+      </div>
+      {% block content %}{% endblock content %}
+    </div>
+
+    {% block javascript %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}themes/bootstrap/js/jquery.min.js">\x3C/script>')</script>
+    <script src="{{ STATIC_URL }}themes/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}themes/bootstrap/js/base.js"></script>
+    {% endblock javascript %}
+  </body>
+</html>

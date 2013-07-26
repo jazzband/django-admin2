@@ -24,15 +24,17 @@ class AdminIndexTest(BaseIntegrationTest):
         response = self.client.get(reverse("admin2:dashboard"))
         self.assertContains(response, reverse("admin2:blog_post_index"))
 
+
 class UserListTest(BaseIntegrationTest):
     def test_search_users_m2m_group(self):
         # This test should cause the distinct search path to exectue
         group = Group.objects.create(name="Test Group")
         self.user.groups.add(group)
 
-        params = {"q":"group"}
+        params = {"q": "group"}
         response = self.client.get(reverse("admin2:auth_user_index"), params)
         self.assertContains(response, 'user')
+
 
 class CommentListTest(BaseIntegrationTest):
     def test_search_comments(self):
@@ -43,7 +45,7 @@ class CommentListTest(BaseIntegrationTest):
         Comment.objects.create(body="comment_post_1_b", post=post_1)
         Comment.objects.create(body="comment_post_2", post=post_2)
 
-        params = {"q":"post_1_title"}
+        params = {"q": "post_1_title"}
         response = self.client.get(reverse("admin2:blog_comment_index"), params)
         self.assertContains(response, "comment_post_1_a")
         self.assertContains(response, "comment_post_1_b")
@@ -52,41 +54,74 @@ class CommentListTest(BaseIntegrationTest):
 
 class PostListTest(BaseIntegrationTest):
     def test_view_ok(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertContains(response, post.title)
+
+    def test_list_filter_presence(self):
+        Post.objects.create(title="post_1_title", body="body")
+        Post.objects.create(title="post_2_title", body="another body")
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertContains(response, 'id="list_filter_container"')
 
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', response.content)
 
+    def test_actions_displayed_twice(self):
+        # If actions_on_top and actions_on_bottom are both set
+        response = self.client.get(reverse("admin2:blog_comment_index"))
+        self.assertContains(response, '<div class="navbar actions-top">')
+        self.assertContains(response, '<div class="navbar actions-bottom">')
+
     def test_delete_selected_post(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        post = Post.objects.create(title="A Post Title", body="body")
         params = {'action': 'DeleteSelectedAction', 'selected_model_pk': str(post.pk)}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
-        self.assertInHTML('<p>Are you sure you want to delete the selected post? All of the following items will be deleted:</p>', response.content)
+        # caution : uses pluralization
+        self.assertInHTML('<p>Are you sure you want to delete the selected post? The following item will be deleted:</p>', response.content)
 
     def test_delete_selected_post_confirmation(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        post = Post.objects.create(title="A Post Title", body="body")
         params = {'action': 'DeleteSelectedAction', 'selected_model_pk': str(post.pk), 'confirmed': 'yes'}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_delete_selected_post_none_selected(self):
-        Post.objects.create(title="a_post_title", body="body")
+        Post.objects.create(title="A Post Title", body="body")
         params = {'action': 'DeleteSelectedAction'}
         response = self.client.post(reverse("admin2:blog_post_index"), params, follow=True)
         self.assertContains(response, "Items must be selected in order to perform actions on them. No items have been changed.")
 
     def test_search_posts(self):
-        Post.objects.create(title="a_post_title", body="body")
-        Post.objects.create(title="another_post_title", body="body")
-        Post.objects.create(title="post_with_keyword_in_body", body="another post body")
-        params = {"q":"another"}
+        Post.objects.create(title="A Post Title", body="body")
+        Post.objects.create(title="Another Post Title", body="body")
+        Post.objects.create(title="Post With Keyword In Body", body="another post body")
+        params = {"q": "another"}
         response = self.client.get(reverse("admin2:blog_post_index"), params)
-        self.assertContains(response, "another_post_title")
-        self.assertContains(response, "post_with_keyword_in_body")
-        self.assertNotContains(response, "a_post_title")
+        self.assertContains(response, "Another Post Title")
+        self.assertContains(response, "Post With Keyword In Body")
+        self.assertNotContains(response, "A Post Title")
+
+    def test_renderer_title(self):
+        Post.objects.create(title='a lowercase title', body='body', published=False)
+        response = self.client.get(reverse('admin2:blog_post_index'))
+        self.assertContains(response, 'A Lowercase Title')
+
+    def test_renderer_body(self):
+        Post.objects.create(title='title', body='a lowercase body', published=False)
+        response = self.client.get(reverse('admin2:blog_post_index'))
+        self.assertContains(response, 'a lowercase body')
+
+    def test_renderer_unpublished(self):
+        Post.objects.create(title='title', body='body', published=False)
+        response = self.client.get(reverse('admin2:blog_post_index'))
+        self.assertContains(response, 'icon-minus-sign')
+
+    def test_renderer_published(self):
+        Post.objects.create(title='title', body='body', published=True)
+        response = self.client.get(reverse('admin2:blog_post_index'))
+        self.assertContains(response, 'icon-ok-sign')
 
 
 class PostListTestCustomAction(BaseIntegrationTest):
@@ -96,7 +131,7 @@ class PostListTestCustomAction(BaseIntegrationTest):
         self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="CustomPublishAction">Publish selected items</a>', response.content)
 
     def test_publish_selected_items(self):
-        post = Post.objects.create(title="a_post_title",
+        post = Post.objects.create(title="A Post Title",
                                    body="body",
                                    published=False)
         self.assertEqual(Post.objects.filter(published=True).count(), 0)
@@ -114,7 +149,7 @@ class PostListTestCustomAction(BaseIntegrationTest):
         self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="unpublish_items">Unpublish selected items</a>', response.content)
 
     def test_unpublish_selected_items(self):
-        post = Post.objects.create(title="a_post_title",
+        post = Post.objects.create(title="A Post Title",
                                    body="body",
                                    published=True)
         self.assertEqual(Post.objects.filter(published=True).count(), 1)
@@ -129,7 +164,7 @@ class PostListTestCustomAction(BaseIntegrationTest):
 
 class PostDetailViewTest(BaseIntegrationTest):
     def test_view_ok(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.get(reverse("admin2:blog_post_detail",
                                            args=(post.pk, )))
         self.assertContains(response, post.title)
@@ -141,20 +176,22 @@ class PostCreateViewTest(BaseIntegrationTest):
         self.assertEqual(response.status_code, 200)
 
     def test_create_post(self):
+        # Generated by inspecting the request with the pdb debugger
         post_data = {
-            "comment_set-TOTAL_FORMS": u'2',
-            "comment_set-INITIAL_FORMS": u'0',
-            "comment_set-MAX_NUM_FORMS": u'',
-            "comment_set-0-body": u'Comment Body',
-            "title": "a_post_title",
+            "comments-TOTAL_FORMS": u'2',
+            "comments-INITIAL_FORMS": u'0',
+            "comments-MAX_NUM_FORMS": u'',
+            "comments-0-body": u'Comment Body',
+            'comments-0-post': '',
+            'comments-0-id': '',
+            "title": "A Post Title",
             "body": "a_post_body",
         }
 
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data,
                                     follow=True)
-        self.assertTrue(Post.objects.filter(title="a_post_title").exists())
-        Post.objects.get(title="a_post_title")
+        self.assertTrue(Post.objects.filter(title="A Post Title").exists())
         Comment.objects.get(body="Comment Body")
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
@@ -164,17 +201,20 @@ class PostCreateViewTest(BaseIntegrationTest):
         page redirects the user to the model create page.
         """
         post_data = {
-            "comment_set-TOTAL_FORMS": u'2',
-            "comment_set-INITIAL_FORMS": u'0',
-            "comment_set-MAX_NUM_FORMS": u'',
-            "title": "a_post_title",
+            "comments-TOTAL_FORMS": u'2',
+            "comments-INITIAL_FORMS": u'0',
+            "comments-MAX_NUM_FORMS": u'',
+            "comments-0-body": u'Comment Body',
+            'comments-0-post': '',
+            'comments-0-id': '',
+            "title": "A Post Title",
             "body": "a_post_body",
             "_addanother": ""
         }
         self.client.login(username='admin', password='password')
         response = self.client.post(reverse("admin2:blog_post_create"),
                                     post_data)
-        Post.objects.get(title='a_post_title')
+        Post.objects.get(title='A Post Title')
         self.assertRedirects(response, reverse("admin2:blog_post_create"))
 
     def test_save_and_continue_editing_redirects_to_update(self):
@@ -183,9 +223,9 @@ class PostCreateViewTest(BaseIntegrationTest):
         the user to the model update form.
         """
         post_data = {
-            "comment_set-TOTAL_FORMS": u'2',
-            "comment_set-INITIAL_FORMS": u'0',
-            "comment_set-MAX_NUM_FORMS": u'',
+            "comments-TOTAL_FORMS": u'2',
+            "comments-INITIAL_FORMS": u'0',
+            "comments-MAX_NUM_FORMS": u'',
             "title": "Unique",
             "body": "a_post_body",
             "_continue": ""
@@ -199,13 +239,13 @@ class PostCreateViewTest(BaseIntegrationTest):
 
 class PostDeleteViewTest(BaseIntegrationTest):
     def test_view_ok(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.get(reverse("admin2:blog_post_delete",
                                            args=(post.pk, )))
         self.assertContains(response, post.title)
 
     def test_delete_post(self):
-        post = Post.objects.create(title="a_post_title", body="body")
+        post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.post(reverse("admin2:blog_post_delete",
                                             args=(post.pk, )))
         self.assertRedirects(response, reverse("admin2:blog_post_index"))

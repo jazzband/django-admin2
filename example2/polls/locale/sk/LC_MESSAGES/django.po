@@ -1,0 +1,62 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# Ivana Kellyerova <eruraina@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-07 12:47+0000\n"
+"Last-Translator: marekzelinka <mzelinka@myopera.com>\n"
+"Language-Team: Slovak (http://www.transifex.com/projects/p/django-admin2/"
+"language/sk/)\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: models.py:12
+msgid "question"
+msgstr "otázka"
+
+#: models.py:13
+msgid "date published"
+msgstr "dátum zverejnenia"
+
+#: models.py:22
+msgid "Published recently?"
+msgstr "Zverejnené nedávno?"
+
+#: models.py:25 models.py:30
+msgid "poll"
+msgstr "anketa"
+
+#: models.py:26
+msgid "polls"
+msgstr "ankety"
+
+#: models.py:31
+msgid "choice text"
+msgstr "text možnosti"
+
+#: models.py:32
+msgid "votes"
+msgstr "hlasy"
+
+#: models.py:38
+msgid "choice"
+msgstr "možnosť"
+
+#: models.py:39
+msgid "choices"
+msgstr "možnosti"
+
+#: templates/home.html:4
+msgid "Example Home"
+msgstr "Ukážka domovskej stránky"
+
+#: templates/home.html:8
+msgid "(for reference)"
+msgstr "(pre informáciu)"

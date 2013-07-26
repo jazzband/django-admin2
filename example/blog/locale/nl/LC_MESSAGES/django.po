@@ -1,0 +1,163 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# Density21.5 <jasper@plainspace.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-09 11:57+0200\n"
+"PO-Revision-Date: 2013-07-08 10:51+0000\n"
+"Last-Translator: Density21.5 <jasper@plainspace.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/projects/p/django-admin2/"
+"language/nl/)\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: actions.py:16
+msgid "Publish selected items"
+msgstr "Publiceer geselecteerde onderdelen"
+
+#: actions.py:18
+#, python-format
+msgctxt "singular form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr "%(count)s %(items)s zijn succesvol gepubliceerd"
+
+#: actions.py:20
+#, python-format
+msgctxt "plural form"
+msgid "Successfully published %(count)s %(items)s"
+msgstr "%(count)s %(items)s zijn succesvol gepubliceerd"
+
+#: admin2.py:22
+msgid "Items unpublished"
+msgstr "Ongepubliceerde onderdelen"
+
+#. Translators : action description
+#: admin2.py:25
+msgid "Unpublish selected items"
+msgstr "Ongepubliceerde geselecteerde onderdelen"
+
+#: models.py:11
+msgid "title"
+msgstr "titel"
+
+#: models.py:12 models.py:25
+msgid "body"
+msgstr "body"
+
+#: models.py:13
+msgid "published"
+msgstr "gepubliceerd"
+
+#: models.py:19 models.py:24
+msgid "post"
+msgstr "bericht"
+
+#: models.py:20
+msgid "posts"
+msgstr "berichten"
+
+#: models.py:31
+msgid "comment"
+msgstr "reactie"
+
+#: models.py:32
+msgid "comments"
+msgstr "reacties"
+
+#: templates/blog/home.html:9
+msgid "Imagine that this is a real site"
+msgstr "Stel u voor dat dit een echte site is"
+
+#: templates/blog/home.html:11
+msgid "Pretend that this is the homepage of a big Django site."
+msgstr "Doe alsof dit de voorpagina is van een grote Django site."
+
+#: templates/blog/home.html:13
+msgid "Imagine lots of things are here:"
+msgstr "Stel u voor dat hier een heleboel dingen staan:"
+
+#: templates/blog/home.html:15
+msgid "A blog"
+msgstr "Een blog"
+
+#: templates/blog/home.html:16
+msgid "Comments"
+msgstr "Reacties"
+
+#: templates/blog/home.html:17
+msgid "And so on..."
+msgstr "En zo verder..."
+
+#: templates/blog/home.html:20
+msgid ""
+"In other words, these are items that we can introspect through the Django "
+"admin."
+msgstr ""
+"Met andere woorden, dit zijn onderdelen die we van binnenuit kunnen bekijken "
+"door de Django admin."
+
+#: templates/blog/home.html:22
+msgid "Under the hood"
+msgstr "'Under the hood'"
+
+#: templates/blog/home.html:24
+msgid ""
+"Now, explore the Django admin for example.com. Click on either of the "
+"following:"
+msgstr ""
+"Nu gaan we de Django admin voor example.com verkennen. Klik op één van de "
+"volgende:"
+
+#: templates/blog/home.html:30
+#, python-format
+msgid "The original <a href=\"%(admin_url)s\">Django Admin</a>"
+msgstr "De originele <a href=\"%(admin_url)s\">Django beheer</a>"
+
+#: templates/blog/home.html:36
+msgid "Powered by django.contrib.admin. This is just here for reference."
+msgstr "Powered by django.contrib.admin. Dit staat hier alleen ter verwijzing."
+
+#: templates/blog/home.html:39
+#, python-format
+msgid "The new <a href=\"%(admin2_url)s\">Admin2</a>"
+msgstr "De nieuwe <a href=\"%(admin2_url)s\">Admin2</a>"
+
+#: templates/blog/home.html:45
+msgid "Powered by django-admin2."
+msgstr "Powered by django-admin2."
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:4
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:6
+msgid "Are you sure?"
+msgstr "Weet u het zeker?"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:9
+msgid "Home"
+msgstr "Home"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:12
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:37
+msgid "Publish"
+msgstr "Publiceren"
+
+#: templates/djadmin2/bootstrap/actions/publish_selected_items.html:19
+#, python-format
+msgid ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following item will be published:\n"
+msgid_plural ""
+"Are you sure you want to publish the selected %(objects_name)s?\n"
+" The following items will be published:\n"
+msgstr[0] ""
+"Weet u zeker dat u %(objects_name)s wilt publiceren?\n"
+"Het volgende onderdeel zal worden gepubliceerd:\n"
+"\n"
+msgstr[1] ""
+"Weet u zeker dat u %(objects_name)s wilt publiceren?\n"
+"De volgende onderdelen zullen worden gepubliceerd:\n"

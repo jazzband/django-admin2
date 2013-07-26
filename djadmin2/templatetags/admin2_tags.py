@@ -1,8 +1,16 @@
+# -*- coding: utf-8 -*-
+from __future__ import division, absolute_import, unicode_literals
+
+from numbers import Number
+from datetime import date, time, datetime
+
 from django import template
+from django.db.models.fields import FieldDoesNotExist
+
+from .. import utils, renderers, models
+
 
 register = template.Library()
-
-from .. import utils
 
 
 @register.filter
@@ -35,6 +43,17 @@ def model_verbose_name_plural(obj):
     Returns the pluralized verbose name of a model instance or class.
     """
     return utils.model_verbose_name_plural(obj)
+
+
+@register.filter
+def model_attr_verbose_name(obj, attr):
+    """
+    Returns the verbose name of a model field or method.
+    """
+    try:
+        return utils.model_field_verbose_name(obj, attr)
+    except FieldDoesNotExist:
+        return utils.model_method_verbose_name(obj, attr)
 
 
 @register.filter
@@ -85,12 +104,42 @@ def for_object(permissions, obj):
     return permissions.bind_object(obj)
 
 
-@register.simple_tag
-def get_attr(record, attribute_name):
-    """ Allows dynamic fetching of model attributes in templates """
-    if attribute_name == "__str__":
-        return record.__unicode__()
-    attribute = getattr(record, attribute_name)
-    if callable(attribute):
-        return attribute()
-    return attribute
+@register.simple_tag(takes_context=True)
+def render(context, model_instance, attribute_name):
+    """
+    This filter applies all renderers specified in admin2.py to the field.
+    """
+    value = utils.get_attr(model_instance, attribute_name)
+
+    # Get renderer
+    admin = context['view'].model_admin
+    renderer = admin.field_renderers.get(attribute_name, False)
+    if renderer is None:
+        # Renderer has explicitly been overridden
+        return value
+    if not renderer:
+        # Try to automatically pick best renderer
+        if isinstance(value, bool):
+            renderer = renderers.boolean_renderer
+        elif isinstance(value, (date, time, datetime)):
+            renderer = renderers.datetime_renderer
+        elif isinstance(value, Number):
+            renderer = renderers.number_renderer
+        else:
+            return value
+
+    # Apply renderer and return value
+    try:
+        field = model_instance._meta.get_field_by_name(attribute_name)[0]
+    except FieldDoesNotExist:
+        # There is no field with the specified name.
+        # It must be a method instead.
+        field = None
+    return renderer(value, field)
+
+
+@register.inclusion_tag('djadmin2theme_default/includes/history.html',
+                        takes_context=True)
+def action_history(context):
+    actions = models.LogEntry.objects.filter(user__pk=context['user'].pk)
+    return {'actions': actions}

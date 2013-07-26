@@ -1,0 +1,24 @@
+[main]
+host = https://www.transifex.com
+lang_map = sr@latin:sr_Latn
+
+[django-admin2.djadmin2po]
+file_filter = djadmin2/locale/<lang>/LC_MESSAGES/django.po
+source_file = djadmin2/locale/en/LC_MESSAGES/django.po
+source_lang = en_US
+type = PO
+minimum_perc = 80
+
+[django-admin2.example-app]
+file_filter = example/blog/locale/<lang>/LC_MESSAGES/django.po
+source_file = example/blog/locale/en/LC_MESSAGES/django.po
+source_lang = en_US
+type = PO
+minimum_perc = 50
+
+[django-admin2.example2-app]
+file_filter = example2/polls/locale/<lang>/LC_MESSAGES/django.po
+source_file = example2/polls/locale/en/LC_MESSAGES/django.po
+source_lang = en_US
+type = PO
+minimum_perc = 50
