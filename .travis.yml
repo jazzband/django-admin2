@@ -1,6 +1,7 @@
 language: python
 python:
   - "2.7"
+  - "pypy"
 before_install:
   - export PIP_USE_MIRRORS=true
   - export PIP_INDEX_URL=https://simple.crate.io/
