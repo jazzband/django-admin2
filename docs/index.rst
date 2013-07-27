@@ -84,6 +84,7 @@ Reference
    ref/forms
    ref/permissions
    ref/views
+   ref/modeladmin
    ref/built-in-views
    ref/renderers
    ref/meta
