@@ -157,7 +157,6 @@ class Admin2(object):
                 name='api_index'
                 ),
         )
-
         for model, model_admin in self.registry.iteritems():
             model_options = utils.model_options(model)
             urlpatterns += patterns(

@@ -7,6 +7,7 @@ import os
 
 from django.core.urlresolvers import reverse
 from django.conf.urls import patterns, url
+from django.utils.six import with_metaclass
 
 import extra_views
 
@@ -21,7 +22,24 @@ from .forms import modelform_factory
 logger = logging.getLogger('djadmin2')
 
 
-class ModelAdmin2(object):
+class ModelAdminBase2(type):
+
+    def __new__(cls, name, bases, attrs):
+        new_class = super(ModelAdminBase2, cls).__new__(cls, name,
+                                                        bases, attrs)
+        view_list = getattr(new_class, 'views', [])
+
+        for key, value in attrs.items():
+            if isinstance(value, views.AdminView):
+                if not value.name:
+                    value.name = key
+                view_list.append(value)
+
+        setattr(new_class, 'views', view_list)
+        return new_class
+
+
+class ModelAdmin2(with_metaclass(ModelAdminBase2)):
     """
     Adding new ModelAdmin2 attributes:
 
@@ -40,7 +58,6 @@ class ModelAdmin2(object):
             This prevents us from easily implementing methods/setters which
             bypass the blocking features of the ImmutableAdmin.
     """
-
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()
@@ -97,12 +114,13 @@ class ModelAdmin2(object):
     inlines = []
 
     #  Views
-    index_view = views.ModelListView
-    create_view = views.ModelAddFormView
-    update_view = views.ModelEditFormView
-    detail_view = views.ModelDetailView
-    delete_view = views.ModelDeleteView
-    history_view = views.ModelHistoryView
+    index_view = views.AdminView(r'^$', views.ModelListView, name='index')
+    create_view = views.AdminView(r'^create/$', views.ModelAddFormView, name='create')
+    update_view = views.AdminView(r'^(?P<pk>[0-9]+)/$', views.ModelEditFormView, name='update')
+    detail_view = views.AdminView(r'^(?P<pk>[0-9]+)/update/$', views.ModelDetailView, name='detail')
+    delete_view = views.AdminView(r'^(?P<pk>[0-9]+)/delete/$', views.ModelDeleteView, name='delete')
+    history_view = views.AdminView(r'^(?P<pk>[0-9]+)/history/$', views.ModelHistoryView, name='history')
+    views = []
 
     # API configuration
     api_serializer_class = None
@@ -145,9 +163,6 @@ class ModelAdmin2(object):
     def get_prefixed_view_name(self, view_name):
         return '{}_{}'.format(self.name, view_name)
 
-    def get_index_kwargs(self):
-        return self.get_default_view_kwargs()
-
     def get_create_kwargs(self):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({
@@ -169,15 +184,6 @@ class ModelAdmin2(object):
         })
         return kwargs
 
-    def get_detail_kwargs(self):
-        return self.get_default_view_kwargs()
-
-    def get_delete_kwargs(self):
-        return self.get_default_view_kwargs()
-
-    def get_history_kwargs(self):
-        return self.get_default_view_kwargs()
-
     def get_index_url(self):
         return reverse('admin2:{}'.format(
             self.get_prefixed_view_name('index')))
@@ -193,39 +199,20 @@ class ModelAdmin2(object):
         return self.get_default_api_view_kwargs()
 
     def get_urls(self):
-        return patterns(
-            '',
-            url(
-                regex=r'^$',
-                view=self.index_view.as_view(**self.get_index_kwargs()),
-                name=self.get_prefixed_view_name('index')
-            ),
-            url(
-                regex=r'^create/$',
-                view=self.create_view.as_view(**self.get_create_kwargs()),
-                name=self.get_prefixed_view_name('create')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.detail_view.as_view(**self.get_detail_kwargs()),
-                name=self.get_prefixed_view_name('detail')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/update/$',
-                view=self.update_view.as_view(**self.get_update_kwargs()),
-                name=self.get_prefixed_view_name('update')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/delete/$',
-                view=self.delete_view.as_view(**self.get_delete_kwargs()),
-                name=self.get_prefixed_view_name('delete')
-            ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/history/$',
-                view=self.history_view.as_view(**self.get_history_kwargs()),
-                name=self.get_prefixed_view_name('history')
+        pattern_list = []
+        for view in self.views:
+            view.model_admin = self
+            get_kwargs = getattr(self, "get_%s_kwargs" % view.name, None)
+            if not get_kwargs:
+                get_kwargs = view.get_view_kwargs
+            pattern_list.append(
+                url(
+                    regex=view.url,
+                    view=view.view.as_view(**get_kwargs()),
+                    name=self.get_prefixed_view_name(view.name)
+                )
             )
-        )
+        return patterns('', *pattern_list)
 
     def get_api_urls(self):
         return patterns(

@@ -29,6 +29,22 @@ from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter
 
 
+class AdminView(object):
+
+    def __init__(self, url, view, name=None):
+        self.url = url
+        self.view = view
+        self.name = name
+
+    def get_view_kwargs(self):
+        return {
+            'app_label': self.model_admin.app_label,
+            'model': self.model_admin.model,
+            'model_name': self.model_admin.model_name,
+            'model_admin': self.model_admin,
+        }
+
+
 class IndexView(Admin2Mixin, generic.TemplateView):
     """Context Variables
 

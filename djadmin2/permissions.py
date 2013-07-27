@@ -297,7 +297,7 @@ class TemplatePermissionChecker(object):
             if view not in self.view_name_mapping:
                 return ''
             view_name = self.view_name_mapping[view]
-            view = getattr(self._model_admin, view_name)
+            view = getattr(self._model_admin, view_name).view
         # we don't support binding view classes yet, only the name of views
         # are processed. We have the problem with view classes that we cannot
         # tell which model admin it was attached to.

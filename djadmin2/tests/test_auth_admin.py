@@ -28,7 +28,7 @@ class UserAdminTest(TestCase):
         request = self.factory.get(reverse('admin2:auth_user_create'))
         request.user = self.user
         model_admin = UserAdmin2(User, djadmin2.default)
-        view = model_admin.create_view.as_view(
+        view = model_admin.create_view.view.as_view(
             **model_admin.get_create_kwargs())
         response = view(request)
         form = response.context_data['form']
@@ -49,7 +49,7 @@ class UserAdminTest(TestCase):
             reverse('admin2:auth_user_update', args=(self.user.pk,)))
         request.user = self.user
         model_admin = UserAdmin2(User, djadmin2.default)
-        view = model_admin.update_view.as_view(
+        view = model_admin.update_view.view.as_view(
             **model_admin.get_update_kwargs())
         response = view(request, pk=self.user.pk)
         form = response.context_data['form']
