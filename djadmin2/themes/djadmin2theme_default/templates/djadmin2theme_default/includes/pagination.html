@@ -1,0 +1,19 @@
+<div class="pagination pagination-{{ position }}">
+    <ul>
+        <li class="{% if not page_obj.has_previous %}disabled{% endif %}">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
+            {% else %}
+            <a>Prev</a>
+            {% endif %}
+        </li>
+        <li class="active"><a>{{ page_obj }}</a></li>
+        <li class="{% if not page_obj.has_next %}disabled{% endif %}">
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% else %}
+            <a>Next</a>
+            {% endif %}
+        </li>
+    </ul>
+</div>
