@@ -207,7 +207,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
                 get_kwargs = view.get_view_kwargs
             pattern_list.append(
                 url(
-                    regex=view.url,
+                    regex=view.regex,
                     view=view.view.as_view(**get_kwargs()),
                     name=self.get_prefixed_view_name(view.name)
                 )
