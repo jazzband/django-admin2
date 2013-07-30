@@ -116,13 +116,11 @@ def build_date_filter(request, model_admin, queryset):
         )
     }
 
-    newset = type(
+    return type(
         b'%sDateFilterSet' % queryset.model.__name__,
         (django_filters.FilterSet,),
         filterset_dict,
     )(request.GET, queryset=queryset)
-
-    return newset
 
 
 def get_filter_for_field_name(model, field_name):
