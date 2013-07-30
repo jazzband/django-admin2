@@ -31,8 +31,8 @@ from .filters import build_list_filter
 
 class AdminView(object):
 
-    def __init__(self, url, view, name=None):
-        self.url = url
+    def __init__(self, regex, view, name=None):
+        self.regex = regex
         self.view = view
         self.name = name
 
