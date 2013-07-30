@@ -154,6 +154,13 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
             'model_admin': immutable_admin_factory(self),
         }
 
+    def get_index_kwargs(self):
+        kwargs = self.get_default_view_kwargs()
+        kwargs.update({
+            'paginate_by': self.list_per_page,
+        })
+        return kwargs
+
     def get_default_api_view_kwargs(self):
         kwargs = self.get_default_view_kwargs()
         kwargs.update({

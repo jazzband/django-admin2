@@ -95,6 +95,9 @@
         {% include 'djadmin2theme_default/includes/list_actions.html' with position='bottom' %}
       {% endif %}
 
+      {% if is_paginated %}
+        {% include 'djadmin2theme_default/includes/pagination.html' with position='centered' %}
+      {% endif %}
       <div>{{ object_list|length }} {{ model_name_pluralized }}</div>
 
     </div>
