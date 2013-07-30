@@ -26,7 +26,7 @@ from . import permissions, utils
 from .forms import AdminAuthenticationForm
 from .models import LogEntry
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
-from .filters import build_list_filter
+from .filters import build_list_filter, build_date_filter
 
 
 class AdminView(object):
@@ -155,6 +155,9 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         if self.model_admin.list_filter:
             queryset = self.build_list_filter(queryset).qs
 
+        if self.model_admin.date_hierarchy:
+            queryset = self.build_date_filter(queryset).qs
+
         queryset = self._modify_queryset_for_sort(queryset)
 
         if search_use_distinct:
@@ -194,6 +197,18 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             )
         return self._list_filter
 
+    def build_date_filter(self, queryset=None):
+        if not hasattr(self, "_date_filter"):
+            if queryset is None:
+                queryset = self.get_queryset()
+            self._date_filter = build_date_filter(
+                self.request,
+                self.model_admin,
+                queryset,
+            )
+
+        return self._date_filter
+
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
@@ -202,6 +217,15 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context['search_term'] = self.request.GET.get('q', '')
         context['list_filter'] = self.build_list_filter()
         context['sort_term'] = self.request.GET.get('sort', '')
+
+        if self.model_admin.date_hierarchy:
+            date_field = self.model_admin.date_hierarchy
+            context['years'] = (
+                context['object_list'].dates(date_field, "year")
+            )
+            context["days"] = (
+                context['object_list'].dates(date_field, "day")
+            )
         return context
 
     def get_success_url(self):

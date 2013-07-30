@@ -4,6 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 import collections
 from itertools import chain
 
+from django import forms
 from django.forms.util import flatatt
 from django.utils.html import format_html
 from django.utils.encoding import force_text
@@ -14,6 +15,10 @@ from django.utils.translation import ugettext_lazy
 import django_filters
 
 LINK_TEMPLATE = '<a href=?{0}={1} {2}>{3}</a>'
+
+
+class NumericDateFilter(django_filters.DateFilter):
+    field_class = forms.IntegerField
 
 
 class ChoicesAsLinksWidget(django_widgets.Select):
@@ -93,6 +98,31 @@ def build_list_filter(request, model_admin, queryset):
         (django_filters.FilterSet, ),
         filterset_dict,
     )(request.GET, queryset=queryset)
+
+
+def build_date_filter(request, model_admin, queryset):
+    filterset_dict = {
+        "year": NumericDateFilter(
+            name="published_date",
+            lookup_type="year",
+        ),
+        "month": NumericDateFilter(
+            name="published_date",
+            lookup_type="month",
+        ),
+        "day": NumericDateFilter(
+            name="published_date",
+            lookup_type="day",
+        )
+    }
+
+    newset = type(
+        b'%sDateFilterSet' % queryset.model.__name__,
+        (django_filters.FilterSet,),
+        filterset_dict,
+    )(request.GET, queryset=queryset)
+
+    return newset
 
 
 def get_filter_for_field_name(model, field_name):
