@@ -14,7 +14,9 @@
   </div>
   <input type="hidden" name="action" value="" />
   <small class="muted">
-    {% blocktrans with selected='<span class="selected-count">0</span>' total=object_list|length %}{{selected}} of {{total}} selected{% endblocktrans %}
+    {% if view.model_admin.actions_selection_counter %}
+      {% blocktrans with selected='<span class="selected-count">0</span>' total=object_list|length %}{{selected}} of {{total}} selected{% endblocktrans %}
+    {% endif %}
   </small>
   <div class="pull-right">
     {% if permissions.has_add_permission %}
