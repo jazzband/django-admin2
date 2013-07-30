@@ -51,6 +51,12 @@ class CommentListTest(BaseIntegrationTest):
         self.assertContains(response, "comment_post_1_b")
         self.assertNotContains(response, "comment_post_2")
 
+    def test_list_selected_hides(self):
+        post_1 = Post.objects.create(title="post_1_title", body="body")
+        Comment.objects.create(body="comment_post1_body", post=post_1)
+        response = self.client.get(reverse("admin2:blog_comment_index"))
+        self.assertNotContains(response, "of 1 selected")
+
 
 class PostListTest(BaseIntegrationTest):
     def test_view_ok(self):
@@ -63,6 +69,11 @@ class PostListTest(BaseIntegrationTest):
         Post.objects.create(title="post_2_title", body="another body")
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertContains(response, 'id="list_filter_container"')
+
+    def test_list_selected_shows(self):
+        Post.objects.create(title="post_1_title", body="body")
+        response = self.client.get(reverse("admin2:blog_post_index"))
+        self.assertContains(response, 'class="selected-count"')
 
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))

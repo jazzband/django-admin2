@@ -5,14 +5,16 @@ $(function() {
 	var selectedCount = element.find('.selected-count');
 
 	var updateSelectedCount = function() {
-		var count = 0;
-		for (var ix = 0; ix < selectCheckbox.length; ix++) {
-			if ($(selectCheckbox[ix]).prop('checked')) {
-				count++;
-			}
+		if (selectedCount.length) {
+		    var count = 0;
+		    for (var ix = 0; ix < selectCheckbox.length; ix++) {
+			    if ($(selectCheckbox[ix]).prop('checked')) {
+				    count++;
+			    }
+		    }
+		    selectAllCheckbox.prop('checked', count == selectCheckbox.length);
+		    selectedCount.text(count);
 		}
-		selectAllCheckbox.prop('checked', count == selectCheckbox.length);
-		selectedCount.text(count);
 	};
 
 	selectAllCheckbox.click(function(e) {

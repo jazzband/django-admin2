@@ -8,9 +8,8 @@ from django.conf import settings
 #   views. This is a security feature.
 # See the docstring on djadmin2.types.ModelAdmin2 for more detail.
 MODEL_ADMIN_ATTRS = (
-    'list_display', 'list_display_links', 'list_filter', 'admin',
-    'search_fields',
-    'field_renderers',
+    'actions_selection_counter', 'list_display', 'list_display_links',
+    'list_filter', 'admin', 'search_fields', 'field_renderers',
     'index_view', 'detail_view', 'create_view', 'update_view', 'delete_view',
     'get_default_view_kwargs', 'get_list_actions',
     'actions_on_bottom', 'actions_on_top',
