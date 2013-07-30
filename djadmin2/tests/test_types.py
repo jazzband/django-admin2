@@ -1,8 +1,10 @@
+from django.db import models
 from django.test import TestCase
 from django.views.generic import View
 
 from ..types import ModelAdmin2, immutable_admin_factory
 from ..views import AdminView
+from ..core import Admin2
 
 
 class ModelAdmin(object):
@@ -38,6 +40,10 @@ class ImmutableAdminFactoryTests(TestCase):
             self.immutable_admin.d
 
 
+class Thing(models.Model):
+    pass
+
+
 class ModelAdminTest(TestCase):
 
     def setUp(self):
@@ -50,4 +56,11 @@ class ModelAdminTest(TestCase):
         self.assertIn(
             self.model_admin.my_view,
             self.model_admin.views
+        )
+
+    def test_get_index_kwargs(self):
+        admin_instance = ModelAdmin2(Thing, Admin2)
+        self.assertIn(
+            'paginate_by',
+            admin_instance.get_index_kwargs().keys()
         )
