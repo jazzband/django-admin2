@@ -257,11 +257,15 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return context
 
     def _format_years(self, context):
-        return [
-            (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
-            for year in
-            context['object_list'].dates('published_date', 'year')
-        ]
+        years = context['object_list'].dates('published_date', 'year')
+        if len(years) == 1:
+            return self._format_months(context)
+        else:
+            return [
+                (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
+                for year in
+                context['object_list'].dates('published_date', 'year')
+            ]
 
     def _format_months(self, context):
         return [
