@@ -11,7 +11,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     body = models.TextField(verbose_name=_('body'))
     published = models.BooleanField(default=False, verbose_name=_('published'))
-    published_date = models.DateField(auto_now=True)
+    published_date = models.DateField()
 
     def __unicode__(self):
         return self.title

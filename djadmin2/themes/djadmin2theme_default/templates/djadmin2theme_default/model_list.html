@@ -36,12 +36,19 @@
   </div>
 {% endif %}
 
-
 <div id="model-list" class="row">
   <form id="model-list-form" class="form-inline" method="post">
     {% csrf_token %}
 
     <div class="span12">
+
+      {% if dates %}
+        <ul class="nav nav-pills">
+          {% for link, date in dates %}
+            <li><a href="{{ link }}">{{ date }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
 
       {% if view.model_admin.actions_on_top %}
         {% include 'djadmin2theme_default/includes/list_actions.html' with position='top' %}

@@ -2,6 +2,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import operator
+from collections import OrderedDict
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (PasswordChangeForm,
@@ -219,14 +220,51 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context['sort_term'] = self.request.GET.get('sort', '')
 
         if self.model_admin.date_hierarchy:
-            date_field = self.model_admin.date_hierarchy
-            context['years'] = (
-                context['object_list'].dates(date_field, "year")
-            )
-            context["days"] = (
-                context['object_list'].dates(date_field, "day")
-            )
+            year = self.request.GET.get("year", False)
+            month = self.request.GET.get("month", False)
+            day = self.request.GET.get("day", False)
+
+            if year and month and day:
+                context["dates"] = self._format_days(context)
+            elif year and month:
+                context["dates"] = self._format_days(context)
+            elif year:
+                context["dates"] = self._format_months(context)
+            else:
+                context["dates"] = self._format_years(context)
+
         return context
+
+    def _format_years(self, context):
+        return [
+            (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
+            for year in
+            context['object_list'].dates('published_date', 'year')
+        ]
+
+    def _format_months(self, context):
+        return [
+            (
+                "?year=%s&month=%s" % (
+                    date.strftime("%Y"), date.strftime("%m")
+                ),
+                date.strftime("%B %Y")
+            ) for date in
+            context["object_list"].dates('published_date', 'day')
+        ]
+
+    def _format_days(self, context):
+        return [
+            (
+                "?year=%s&month=%s&day=%s" % (
+                    date.strftime("%Y"),
+                    date.strftime("%m"),
+                    date.strftime("%d"),
+                ),
+                date.strftime("%B %d")
+            ) for date in
+            context["object_list"].dates('published_date', 'day')
+        ]
 
     def get_success_url(self):
         view_name = 'admin2:{}_{}_index'.format(
