@@ -2,7 +2,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import operator
-from collections import OrderedDict
+from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (PasswordChangeForm,
@@ -225,10 +225,31 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             day = self.request.GET.get("day", False)
 
             if year and month and day:
+                new_date = datetime.strptime(
+                    "%s %s %s" % (month, day, year),
+                    "%m %d %Y",
+                )
+                context["previous_date"] = {
+                    "link": "?year=%s&month=%s" % (year, month),
+                    "text": "‹ %s" % new_date.strftime("%B %Y")
+                }
+
+                context["active_day"] = new_date.strftime("%B %d")
+
                 context["dates"] = self._format_days(context)
             elif year and month:
+                context["previous_date"] = {
+                    "link": "?year=%s" % (year),
+                    "text": "‹ %s" % year,
+                }
+
                 context["dates"] = self._format_days(context)
             elif year:
+                context["previous_date"] = {
+                    "link": "?",
+                    "text": ugettext_lazy("‹ All dates"),
+                }
+
                 context["dates"] = self._format_months(context)
             else:
                 context["dates"] = self._format_years(context)
@@ -250,7 +271,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %Y")
             ) for date in
-            context["object_list"].dates('published_date', 'day')
+            context["object_list"].dates('published_date', 'month')
         ]
 
     def _format_days(self, context):
