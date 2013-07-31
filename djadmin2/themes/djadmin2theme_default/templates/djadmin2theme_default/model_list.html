@@ -46,14 +46,14 @@
         <ul class="date-drilldown nav well nav-pills">
           {% if previous_date %}
             <li class="previous-link">
-              <a href="{{ previous_date.link }}">
-                {{ previous_date.text }}
+              <a href="{{ previous_date.link|safe }}">
+                {{ previous_date.text|safe }}
               </a>
             </li>
           {% endif %}
           {% for link, date in dates %}
           <li class="{% ifequal active_day date %}active{% endifequal %}">
-              <a href="{{ link }}">{{ date }}</a>
+              <a href="{{ link|safe }}">{{ date }}</a>
             </li>
           {% endfor %}
         </ul>

@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
@@ -59,6 +62,46 @@ class CommentListTest(BaseIntegrationTest):
 
 
 class PostListTest(BaseIntegrationTest):
+    def _create_posts(self):
+        Post.objects.bulk_create([
+            Post(
+                title="post_1_title",
+                body="body",
+                published_date=datetime(
+                    month=7,
+                    day=22,
+                    year=2013
+                )
+            ),
+            Post(
+                title="post_2_title",
+                body="body",
+                published_date=datetime(
+                    month=5,
+                    day=20,
+                    year=2012,
+                )
+            ),
+            Post(
+                title="post_3_title",
+                body="body",
+                published_date=datetime(
+                    month=5,
+                    day=30,
+                    year=2012,
+                ),
+            ),
+            Post(
+                title="post_4_title",
+                body="body",
+                published_date=datetime(
+                    month=6,
+                    day=20,
+                    year=2012,
+                )
+            )
+        ])
+
     def test_view_ok(self):
         post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.get(reverse("admin2:blog_post_index"))
@@ -133,6 +176,65 @@ class PostListTest(BaseIntegrationTest):
         Post.objects.create(title='title', body='body', published=True)
         response = self.client.get(reverse('admin2:blog_post_index'))
         self.assertContains(response, 'icon-ok-sign')
+
+    def test_drilldowns(self):
+        self._create_posts()
+
+        response = self.client.get(reverse('admin2:blog_post_index'))
+        self.assertContains(response, '<a href="?year=2012">2012</a>')
+        self.assertContains(response, "<tr>", 4)
+
+        response = self.client.get(
+            "%s?%s" % (
+                reverse('admin2:blog_post_index'),
+                "year=2012",
+            )
+        )
+
+        self.assertContains(
+            response,
+            '<a href="?year=2012&month=05">May 2012</a>',
+        )
+        self.assertContains(
+            response,
+            'All dates',
+        )
+        self.assertContains(response, "<tr>", 3)
+
+        response = self.client.get(
+            "%s?%s" % (
+                reverse('admin2:blog_post_index'),
+                "year=2012&month=5",
+            )
+        )
+
+        self.assertContains(response, "<tr>", 2)
+        self.assertContains(
+            response,
+            '<a href="?year=2012&month=05&day=20">May 20</a>',
+        )
+        self.assertContains(response, '<a href="?year=2012">')
+
+        response = self.client.get(
+            "%s?%s" % (
+                reverse('admin2:blog_post_index'),
+                "year=2012&month=05&day=20",
+            )
+        )
+
+        self.assertContains(response, "<tr>", 1)
+        self.assertContains(
+            response,
+            '<a href="?year=2012&month=05&day=20">May 20</a>',
+        )
+        self.assertContains(
+            response,
+            '<li class="active">'
+        )
+        self.assertContains(
+            response,
+            'May 2012'
+        )
 
 
 class PostListTestCustomAction(BaseIntegrationTest):
