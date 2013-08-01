@@ -41,6 +41,7 @@ class CommentAdmin(djadmin2.ModelAdmin2):
     list_filter = ['post', ]
     actions_on_top = True
     actions_on_bottom = True
+    actions_selection_counter = False
 
 
 #  Register each model with the admin
