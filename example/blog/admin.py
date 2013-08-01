@@ -12,8 +12,9 @@ class CommentInline(admin.TabularInline):
 
 class PostAdmin(admin.ModelAdmin):
     inlines = [CommentInline, ]
-    search_fields = ('title', 'body')
+    search_fields = ('title', 'body', "published_date")
     list_filter = ['published', 'title']
+    date_hierarchy = "published_date"
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment)

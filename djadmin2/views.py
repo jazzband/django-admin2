@@ -2,6 +2,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import operator
+from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (PasswordChangeForm,
@@ -26,7 +27,7 @@ from . import permissions, utils
 from .forms import AdminAuthenticationForm
 from .models import LogEntry
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
-from .filters import build_list_filter
+from .filters import build_list_filter, build_date_filter
 
 
 class AdminView(object):
@@ -155,6 +156,9 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         if self.model_admin.list_filter:
             queryset = self.build_list_filter(queryset).qs
 
+        if self.model_admin.date_hierarchy:
+            queryset = self.build_date_filter(queryset).qs
+
         queryset = self._modify_queryset_for_sort(queryset)
 
         if search_use_distinct:
@@ -194,6 +198,18 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             )
         return self._list_filter
 
+    def build_date_filter(self, queryset=None):
+        if not hasattr(self, "_date_filter"):
+            if queryset is None:
+                queryset = self.get_queryset()
+            self._date_filter = build_date_filter(
+                self.request,
+                self.model_admin,
+                queryset,
+            )
+
+        return self._date_filter
+
     def get_context_data(self, **kwargs):
         context = super(ModelListView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
@@ -202,7 +218,78 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         context['search_term'] = self.request.GET.get('q', '')
         context['list_filter'] = self.build_list_filter()
         context['sort_term'] = self.request.GET.get('sort', '')
+
+        if self.model_admin.date_hierarchy:
+            year = self.request.GET.get("year", False)
+            month = self.request.GET.get("month", False)
+            day = self.request.GET.get("day", False)
+
+            if year and month and day:
+                new_date = datetime.strptime(
+                    "%s %s %s" % (month, day, year),
+                    "%m %d %Y",
+                )
+                context["previous_date"] = {
+                    "link": "?year=%s&month=%s" % (year, month),
+                    "text": "‹ %s" % new_date.strftime("%B %Y")
+                }
+
+                context["active_day"] = new_date.strftime("%B %d")
+
+                context["dates"] = self._format_days(context)
+            elif year and month:
+                context["previous_date"] = {
+                    "link": "?year=%s" % (year),
+                    "text": "‹ %s" % year,
+                }
+
+                context["dates"] = self._format_days(context)
+            elif year:
+                context["previous_date"] = {
+                    "link": "?",
+                    "text": ugettext_lazy("‹ All dates"),
+                }
+
+                context["dates"] = self._format_months(context)
+            else:
+                context["dates"] = self._format_years(context)
+
         return context
+
+    def _format_years(self, context):
+        years = context['object_list'].dates('published_date', 'year')
+        if len(years) == 1:
+            return self._format_months(context)
+        else:
+            return [
+                (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
+                for year in
+                context['object_list'].dates('published_date', 'year')
+            ]
+
+    def _format_months(self, context):
+        return [
+            (
+                "?year=%s&month=%s" % (
+                    date.strftime("%Y"), date.strftime("%m")
+                ),
+                date.strftime("%B %Y")
+            ) for date in
+            context["object_list"].dates('published_date', 'month')
+        ]
+
+    def _format_days(self, context):
+        return [
+            (
+                "?year=%s&month=%s&day=%s" % (
+                    date.strftime("%Y"),
+                    date.strftime("%m"),
+                    date.strftime("%d"),
+                ),
+                date.strftime("%B %d")
+            ) for date in
+            context["object_list"].dates('published_date', 'day')
+        ]
 
     def get_success_url(self):
         view_name = 'admin2:{}_{}_index'.format(
