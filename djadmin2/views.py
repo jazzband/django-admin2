@@ -153,6 +153,8 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             queryset, search_use_distinct = self.get_search_results(
                 queryset, search_term)
 
+        queryset = self._modify_queryset_for_ordering(queryset)
+
         if self.model_admin.list_filter:
             queryset = self.build_list_filter(queryset).qs
 
@@ -165,6 +167,12 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             return queryset.distinct()
         else:
             return queryset
+
+    def _modify_queryset_for_ordering(self, queryset):
+        ordering = self.model_admin.get_ordering(self.request)
+        if ordering:
+            queryset = queryset.order_by(*ordering)
+        return queryset
 
     def _modify_queryset_for_sort(self, queryset):
         # If we are sorting AND the field exists on the model

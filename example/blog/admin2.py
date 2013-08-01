@@ -35,6 +35,7 @@ class PostAdmin(djadmin2.ModelAdmin2):
     }
     save_on_top = True
     date_hierarchy = "published_date"
+    ordering = ["published_date", "title",]
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):
