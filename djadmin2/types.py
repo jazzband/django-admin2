@@ -59,6 +59,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
             bypass the blocking features of the ImmutableAdmin.
     """
     actions_selection_counter = True
+    date_hierarchy = False
     list_display = ('__str__',)
     list_display_links = ()
     list_filter = ()

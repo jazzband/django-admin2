@@ -29,11 +29,12 @@ class PostAdmin(djadmin2.ModelAdmin2):
     list_actions = [DeleteSelectedAction, CustomPublishAction, unpublish_items]
     inlines = [CommentInline]
     search_fields = ('title', '^body')
-    list_display = ('title', 'body', 'published')
+    list_display = ('title', 'body', 'published', "published_date",)
     field_renderers = {
         'title': renderers.title_renderer,
     }
     save_on_top = True
+    date_hierarchy = "published_date"
 
 
 class CommentAdmin(djadmin2.ModelAdmin2):

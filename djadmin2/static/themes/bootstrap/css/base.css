@@ -7,3 +7,12 @@
 .sort_link:hover {
     color: black;
 }
+
+.previous-link a {
+    color: gray;
+}
+
+.date-drilldown {
+    padding-bottom: 0;
+    padding-top: 0;
+}
