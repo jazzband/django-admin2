@@ -128,7 +128,7 @@ Installing the custom theme
 In the settings module, place the theme right after djadmin2 (change the highlighted line to your package's name):
 
 .. code-block:: python
-    :emphasize-lines: 5
+    :emphasize-lines: 2, 5
 
     ########### DJANGO-ADMIN2 CONFIGURATION
     ADMIN2_THEME_DIRECTORY = "djadmin2_dandy"
@@ -137,8 +137,6 @@ In the settings module, place the theme right after djadmin2 (change the highlig
         'djadmin2_dandy'
     )
     ########### END DJANGO-ADMIN2 CONFIGURATION
-
-.. todo:: Have someone besides pydanny test this!
 
 Views and their Templates
 -------------------------

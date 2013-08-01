@@ -138,15 +138,18 @@ The default theme is whatever bootstrap is most current. Specifically:
 
 .. code-block:: python
 
-    # settings.py
+    # In settings.py
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
     ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
 
 If you create a new theme, you define it thus:
 
 .. code-block:: python
 
-    # settings.py
-    ADMIN2_THEME_DIRECTORY = "djadmin2/foundation/"
+    # In settings.py
+    # Mythical theme! This does not exit... YET!
+    INSTALLED_APPS += ('djadmin2theme_foundation',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation/"
 
 
 Support this project!
