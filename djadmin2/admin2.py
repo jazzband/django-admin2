@@ -34,8 +34,10 @@ class UserSerializer(Admin2APISerializer):
 class UserAdmin2(djadmin2.ModelAdmin2):
     create_form_class = UserCreationForm
     update_form_class = UserChangeForm
-    search_fields = ('username', 'groups__name')
-    # readonly_fields = ('username',)
+    search_fields = ('username', 'groups__name', 'first_name', 'last_name',
+                     'email')
+    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff')
 
     api_serializer_class = UserSerializer
 
