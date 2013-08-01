@@ -20,14 +20,14 @@ A Django Admin 2 theme is merely a packaged Django app. Here are the necessary s
 
 .. code-block:: bash
 
-    $ mkdir djadmin2-theme-dandy
+    $ mkdir djadmin2theme-dandy
 
 4. Create a :file:`setup.py` module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-    $ cd djadmin2-theme-dandy
+    $ cd djadmin2theme-dandy
     $ touch setup.py
 
 Then enter the following information (you will probably want to change the highlighted lines below to match your package name):
@@ -60,7 +60,7 @@ Then enter the following information (you will probably want to change the highl
         sys.exit()
 
     setup(
-        name='djadmin2-theme-dandy',
+        name='djadmin2theme-dandy',
         version=0.1.0,
         description="A dandy theme for django-admin2.",
         long_description="A dandy theme for django-admin2.",
@@ -93,12 +93,14 @@ Then enter the following information (you will probably want to change the highl
 
 .. code-block:: bash
 
-    $ django-admin.py startapp djadmin2_dandy
-    $ cd djadmin2_dandy
+    $ django-admin.py startapp djadmin2theme_dandy
+    $ cd djadmin2theme_dandy
 
-.. note:: Why the djadmin2 prefix?
+.. note:: Why is the djadmin2theme prefix used everywhere?
 
-    This is so we don't pollute our eligible app infrastructure with django-admin2 themes and utilities.
+    Makes it easy to identify what is a theme and what is not.
+
+    Also we don't pollute our Python namespaces and Django app cache with names like 'foundation', 'storefront', or other useful names.
 
 6. Add a :file:`static/` file directory set:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,48 +108,47 @@ Then enter the following information (you will probably want to change the highl
 .. code-block:: bash
     :emphasize-lines: 3,4,5
 
-    $ mkdir -p static/djadmin2_dandy/{js,css,img}
+    $ mkdir -p static/djadmin2theme_dandy/{js,css,img}
 
 These directories are where the dandy theme's custom CSS, JavaScript, and Image files are placed.
 
-7. Add a :file:`templates/djadmin2_dandy` directory:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+7. Add a :file:`templates/djadmin2theme_dandy` directory:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
     :emphasize-lines: 2
 
-    $ mkdir -p templates/djadmin2_dandy
+    $ mkdir -p templates/djadmin2theme_dandy
 
-Inside of :file:`templates/djadmin2_dandy` is where the templates for dandy are defined.
+Inside of :file:`templates/djadmin2theme_dandy` is where the templates for dandy are defined.
 
 Now you can start working on templates and static files!
 
 Installing the custom theme
 ------------------------------
 
-In the settings module, place the theme right after djadmin2 (change the highlighted line to your package's name):
+In the settings module, place the theme right after djadmin2 (change the highlighted lines to your package's name):
 
 .. code-block:: python
-    :emphasize-lines: 2, 5
+    :emphasize-lines: 2, 4
 
     ########### DJANGO-ADMIN2 CONFIGURATION
-    ADMIN2_THEME_DIRECTORY = "djadmin2_dandy"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_dandy"
     INSTALLED_APPS += (
-        'djadmin2',
-        'djadmin2_dandy'
+        'djadmin2theme_dandy'
     )
     ########### END DJANGO-ADMIN2 CONFIGURATION
 
 Views and their Templates
 -------------------------
 
-See doc:`built-in-views`
+See :doc:`built-in-views`
 
 
 Available Themes
 ----------------
 
-Currently, only the default "bootstrap" theme exists. The goal of this theme is to replicate the original Django admin UI functionality as closely as possible. This helps us ensure that we are not forgetting any functionality that Django users might be dependent on.
+Currently, only the default twitter bootstrap-powered "djadmin2.themes.djadmin2theme_default" theme exists. The goal of this theme is to replicate the original Django admin UI functionality as closely as possible. This helps us ensure that we are not forgetting any functionality that Django users might be dependent on.
 
 If you'd like to experiment with UI design that differs from the original Django admin UI, please create a new theme. It would be great to have at least 1 experimental theme!
 
