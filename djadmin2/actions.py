@@ -30,6 +30,8 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         'on them. No items have been changed.'
     )
 
+    only_selected = True
+
     queryset = None
 
     def __init__(self, queryset, *args, **kwargs):
@@ -114,25 +116,20 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         return None
 
     def post(self, request):
-        if request.POST.get('confirmed'):
-            if self.process_queryset() is None:
+        if self.process_queryset() is None:
 
-                # objects_name should already be pluralized, see __init__
-                message = ungettext(
-                    self.success_message,
-                    self.success_message_plural,
-                    self.item_count
-                ) % {
-                    'count': self.item_count, 'items': self.objects_name
-                }
+            # objects_name should already be pluralized, see __init__
+            message = ungettext(
+                self.success_message,
+                self.success_message_plural,
+                self.item_count
+            ) % {
+                'count': self.item_count, 'items': self.objects_name
+            }
 
-                messages.add_message(request, messages.INFO, message)
+            messages.add_message(request, messages.INFO, message)
 
-                return None
-        else:
-            # The user has not confirmed that they want to delete the
-            # objects, so render a template asking for their confirmation.
-            return self.get(request)
+            return None
 
     def process_queryset(self):
         msg = 'Must be provided to do some actions with queryset'
@@ -160,6 +157,15 @@ class DeleteSelectedAction(BaseListAction):
     permission_classes = BaseListAction.permission_classes + (
         permissions.ModelDeletePermission,
     )
+
+    def post(self, request):
+        if request.POST.get('confirmed'):
+            super(DeleteSelectedAction, self).post(request)
+        else:
+            # The user has not confirmed that they want to delete the
+            # objects, so render a template asking for their confirmation.
+            return self.get(request)
+
 
     def process_queryset(self):
         # The user has confirmed that they want to delete the objects.

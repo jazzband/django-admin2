@@ -23,3 +23,26 @@ class CustomPublishAction(BaseListAction):
 
     def process_queryset(self):
         self.get_queryset().update(published=True)
+
+
+class PublishAllItemsAction(BaseListAction):
+    permission_classes = BaseListAction.permission_classes + (
+        permissions.ModelChangePermission,
+    )
+
+    description = ugettext_lazy('Publish all items')
+    success_message = pgettext_lazy(
+        'singular form',
+        'Successfully published %(count)s %(items)s',
+    )
+
+    success_message_plural = pgettext_lazy(
+        'plural form',
+        'Successfully published %(count)s %(items)s',
+    )
+
+    default_template_name = "model_list.html"
+    only_selected = False
+
+    def process_queryset(self):
+        self.get_queryset().update(published=True)
