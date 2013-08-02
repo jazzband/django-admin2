@@ -73,6 +73,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
     verbose_name = None
     verbose_name_plural = None
     model_admin_attributes = settings.MODEL_ADMIN_ATTRS
+    ordering = False
     save_on_top = False
     save_on_bottom = True
 
@@ -260,6 +261,9 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
                     'action_callable': action
                 }
         return actions_dict
+
+    def get_ordering(self, request):
+        return self.ordering
 
 
 class Admin2Inline(extra_views.InlineFormSet):

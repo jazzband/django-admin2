@@ -99,7 +99,16 @@ class PostListTest(BaseIntegrationTest):
                     day=20,
                     year=2012,
                 )
-            )
+            ),
+            Post(
+                title="post_5_title",
+                body="body",
+                published_date=datetime(
+                    month=6,
+                    day=20,
+                    year=2012,
+                )
+            ),
         ])
 
     def test_view_ok(self):
@@ -182,7 +191,7 @@ class PostListTest(BaseIntegrationTest):
 
         response = self.client.get(reverse('admin2:blog_post_index'))
         self.assertContains(response, '<a href="?year=2012">2012</a>')
-        self.assertContains(response, "<tr>", 4)
+        self.assertContains(response, "<tr>", 5)
 
         response = self.client.get(
             "%s?%s" % (
@@ -199,7 +208,7 @@ class PostListTest(BaseIntegrationTest):
             response,
             'All dates',
         )
-        self.assertContains(response, "<tr>", 3)
+        self.assertContains(response, "<tr>", 4)
 
         response = self.client.get(
             "%s?%s" % (
@@ -234,6 +243,30 @@ class PostListTest(BaseIntegrationTest):
         self.assertContains(
             response,
             'May 2012'
+        )
+
+    def test_ordering(self):
+        self._create_posts()
+
+        response = self.client.get(reverse("admin2:blog_post_index"))
+
+        model_admin = response.context["view"].model_admin
+        response_queryset = response.context["object_list"]
+        manual_queryset = Post.objects.order_by("-published_date", "title")
+
+        zipped_queryset = zip(
+            list(response_queryset),
+            list(manual_queryset),
+        )
+
+        self.assertTrue(all([
+            model1.pk == model2.pk
+            for model1, model2 in zipped_queryset
+        ]))
+
+        self.assertEqual(
+            model_admin.get_ordering(response.request),
+            model_admin.ordering,
         )
 
 
