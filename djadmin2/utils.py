@@ -5,6 +5,7 @@ from django.db.models import ProtectedError
 from django.db.models import ManyToManyRel
 from django.db.models.deletion import Collector
 from django.db.models.related import RelatedObject
+from django.utils import six
 
 
 def lookup_needs_distinct(opts, lookup_path):
@@ -100,7 +101,7 @@ class NestedObjects(Collector):
     This is adopted from the Django core. django-admin2 mandates that code
     doesn't depend on imports from django.contrib.admin.
 
-    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L144
+    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L144-L199
     """
     def __init__(self, *args, **kwargs):
         super(NestedObjects, self).__init__(*args, **kwargs)
@@ -158,3 +159,25 @@ class NestedObjects(Collector):
         them to the user in confirm page.
         """
         return False
+
+
+def quote(s):
+    """
+    Ensure that primary key values do not confuse the admin URLs by escaping
+    any '/', '_' and ':' and similarly problematic characters.
+    Similar to urllib.quote, except that the quoting is slightly different so
+    that it doesn't get automatically unquoted by the Web browser.
+
+    This is adopted from the Django core. django-admin2 mandates that code
+    doesn't depend on imports from django.contrib.admin.
+
+    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L48-L62
+    """
+    if not isinstance(s, six.string_types):
+        return s
+    res = list(s)
+    for i in range(len(res)):
+        c = res[i]
+        if c in """:/_#?;@&=+$,"<>%\\""":
+            res[i] = '_%02X' % ord(c)
+    return ''.join(res)
