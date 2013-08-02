@@ -269,6 +269,43 @@ class PostListTest(BaseIntegrationTest):
             model_admin.ordering,
         )
 
+    def test_all_unselected_action(self):
+        self._create_posts()
+
+        response = self.client.get(reverse("admin2:blog_post_index"))
+
+        self.assertTrue(all([
+            not post.published
+            for post in response.context["object_list"]
+        ]))
+
+        response = self.client.post(
+            reverse("admin2:blog_post_index"),
+            {
+                'action': 'PublishAllItemsAction',
+            },
+            follow=True
+        )
+
+        self.assertTrue(all([
+            post.published
+            for post in response.context["object_list"]
+        ]))
+
+        # Test function-based view
+        response = self.client.post(
+            reverse("admin2:blog_post_index"),
+            {
+                'action': 'PublishAllItemsAction',
+            },
+            follow=True,
+        )
+
+        self.assertTrue(all([
+            post.published
+            for post in response.context["object_list"]
+        ]))
+
 
 class PostListTestCustomAction(BaseIntegrationTest):
 
