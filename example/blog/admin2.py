@@ -45,6 +45,11 @@ class CommentAdmin(djadmin2.ModelAdmin2):
     actions_on_bottom = True
     actions_selection_counter = False
 
+# Register the blog app with a verbose name
+djadmin2.default.register_app_verbose_name(
+    'blog',
+    ugettext_lazy('My Blog')
+)
 
 #  Register each model with the admin
 djadmin2.default.register(Post, PostAdmin)
