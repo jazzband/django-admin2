@@ -33,6 +33,7 @@ class Admin2(object):
     def __init__(self, name='admin2'):
         self.registry = {}
         self.apps = {}
+        self.app_verbose_names = {}
         self.name = name
 
     def register(self, model, model_admin=None, **kwargs):
@@ -85,6 +86,33 @@ class Admin2(object):
         if self.apps[app_label] is {}:
             del self.apps[app_label]  # no
 
+    def register_app_verbose_name(self, app_label, app_verbose_name):
+        """
+        Registers the given app label with the given app verbose name.
+
+        If a app_label is already registered, this will raise
+        ImproperlyConfigured.
+        """
+        if app_label in self.app_verbose_names:
+            raise ImproperlyConfigured(
+                '%s is already registered in django-admin2' % app_label)
+
+        self.app_verbose_names[app_label] = app_verbose_name
+
+    def deregister_app_verbose_name(self, app_label):
+        """
+        Deregisters the given app label. Remove the app label from the
+        self.app_verbose_names as well.
+
+        If the app label is not already registered, this will raise
+        ImproperlyConfigured.
+        """
+        try:
+            del self.app_verbose_names[app_label]
+        except KeyError:
+            raise ImproperlyConfigured(
+                '%s app label was never registered in django-admin2' % app_label)
+
     def autodiscover(self):
         """
         Autodiscovers all admin2.py modules for apps in INSTALLED_APPS by
@@ -112,18 +140,21 @@ class Admin2(object):
     def get_index_kwargs(self):
         return {
             'registry': self.registry,
+            'app_verbose_names': self.app_verbose_names,
             'apps': self.apps,
         }
 
     def get_app_index_kwargs(self):
         return {
             'registry': self.registry,
+            'app_verbose_names': self.app_verbose_names,
             'apps': self.apps,
         }
 
     def get_api_index_kwargs(self):
         return {
             'registry': self.registry,
+            'app_verbose_names': self.app_verbose_names,
             'apps': self.apps,
         }
 

@@ -56,11 +56,13 @@ class IndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "index.html"
     registry = None
     apps = None
+    app_verbose_names = None
 
     def get_context_data(self, **kwargs):
         data = super(IndexView, self).get_context_data(**kwargs)
         data.update({
             'apps': self.apps,
+            'app_verbose_names': self.app_verbose_names,
         })
         return data
 
@@ -69,15 +71,16 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
     default_template_name = "app_index.html"
     registry = None
     apps = None
+    app_verbose_names = None
 
     def get_context_data(self, **kwargs):
         data = super(AppIndexView, self).get_context_data(**kwargs)
         app_label = self.kwargs['app_label']
         registry = self.apps[app_label]
-
         data.update({
             'app_label': app_label,
             'registry': registry,
+            'app_verbose_names': self.app_verbose_names,
         })
         return data
 
@@ -104,7 +107,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         #  If action_callable is a class subclassing from
         #  actions.BaseListAction then we generate the callable object.
         if hasattr(action_callable, "process_queryset"):
-            response = action_callable.as_view(queryset=queryset)(request)
+            response = action_callable.as_view(queryset=queryset, model_admin=self.model_admin)(request)
         else:
             # generate the reponse if a function.
             response = action_callable(request, queryset)
