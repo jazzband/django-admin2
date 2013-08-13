@@ -5,7 +5,9 @@
   <tr>
     <th colspan="3">
       <a href="{% url 'admin2:app_index' app_label=app_label %}">
-        {{ app_label|title }}
+      {% with app_verbose_names|verbose_name_for:app_label as verbose_name %}
+        {% firstof verbose_name app_label|title %}
+      {% endwith %}
       </a>
     </th>
   </tr>

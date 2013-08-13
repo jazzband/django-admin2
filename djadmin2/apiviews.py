@@ -46,6 +46,8 @@ class Admin2APIMixin(Admin2Mixin):
 class IndexAPIView(Admin2APIMixin, APIView):
     apps = None
     registry = None
+    app_verbose_names = None
+    app_verbose_name = None
 
     def get_model_data(self, model):
         model_admin = self.registry[model]
@@ -73,6 +75,7 @@ class IndexAPIView(Admin2APIMixin, APIView):
         return {
             'app_label': app_label,
             'models': model_data,
+            'app_verbose_name': unicode(self.app_verbose_names.get(app_label))
         }
 
     def get(self, request):

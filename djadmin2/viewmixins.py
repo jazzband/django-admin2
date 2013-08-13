@@ -116,8 +116,10 @@ class AdminModel2Mixin(Admin2Mixin):
         context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
         model = self.get_model()
         model_meta = model_options(model)
+        app_verbose_names = self.model_admin.admin.app_verbose_names
         context.update({
             'app_label': model_meta.app_label,
+            'app_verbose_name': app_verbose_names.get(model_meta.app_label),
             'model_name': model_meta.verbose_name,
             'model_name_pluralized': model_meta.verbose_name_plural
         })

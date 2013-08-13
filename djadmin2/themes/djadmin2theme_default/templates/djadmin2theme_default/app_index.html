@@ -6,7 +6,11 @@
     <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
     <span class="divider">/</span>
   </li>
-  <li class="active">{{ app_label|title }}</li>
+  <li class="active">
+    {% with app_verbose_names|verbose_name_for:app_label as verbose_name %}
+      {% firstof verbose_name app_label|title %}
+    {% endwith %}
+  </li>
 {% endblock breadcrumbs %}
 
 {% block page_title %}{% blocktrans with app_label=app_label|title %}{{ app_label }} administration{% endblocktrans %}{% endblock page_title %}
