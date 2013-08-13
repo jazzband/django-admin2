@@ -99,7 +99,10 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         action_name = request.POST['action']
         action_callable = self.get_actions()[action_name]['action_callable']
         selected_model_pks = request.POST.getlist('selected_model_pk')
-        queryset = self.model.objects.filter(pk__in=selected_model_pks)
+        if getattr(action_callable, "only_selected", True):
+            queryset = self.model.objects.filter(pk__in=selected_model_pks)
+        else:
+            queryset = self.model.objects.all()
 
         #  If action_callable is a class subclassing from
         #  actions.BaseListAction then we generate the callable object.
