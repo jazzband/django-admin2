@@ -46,6 +46,14 @@ def model_verbose_name_plural(obj):
 
 
 @register.filter
+def verbose_name_for(verbose_names, app_label):
+    """
+    Returns the verbose name of an app.
+    """
+    return verbose_names.get(app_label, None)
+
+
+@register.filter
 def model_attr_verbose_name(obj, attr):
     """
     Returns the verbose name of a model field or method.
