@@ -75,7 +75,7 @@ class IndexAPIView(Admin2APIMixin, APIView):
         return {
             'app_label': app_label,
             'models': model_data,
-            'app_verbose_name': unicode(self.app_verbose_names.get(app_label))
+            'app_verbose_name': force_str(self.app_verbose_names.get(app_label))
         }
 
     def get(self, request):
