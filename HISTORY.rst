@@ -1,8 +1,23 @@
 History
 =========
 
-0.5.2 (2013-07-14)
+0.6.0 (2013-09-12)
 
+ * Implemented LogHistory to track recent history
+ * New system for adding new views to ModelAdmin2 object
+ * Fixed missing enctype="multipart/form-data" functionality
+ * Implemented "app verbose name"
+ * Apps can have customized names
+ * List Actions can be set so they don't require selecting a model
+ * Implemented ModelAdmin2.ordering
+ * To maintain API consistency, renamed views.AdminView's "url" argument to "regex" 
+ * Implemented ModelAdmin2.date_hierarchy
+ * Changed theming system to make default theme follow the same rules as third-party themes.
+ * Inlines now separated into stacked and tabular formats
+ * Code coverage now displaying in README
+ * User list page now showing all default columns and filters
+ * Vast documentation improvements
+ * Converted to ``django.utils.encoding.force_str`` instead ``unicode`` in order to type edge cases
  * setup.py fix
 
 0.5.1 (2013-07-14)

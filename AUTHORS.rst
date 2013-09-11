@@ -47,6 +47,7 @@ Developers
 * Andrea de Marco (@z4r)
 * Kenneth Love (@kennethlove / <kenneth@gigantuan.net>)
 * Kevin Diale (@powersurge360 / <powersurge360@gmail.com>)
+* James Rivett-Carnac (@yarbelk / james.rivettcarnac@gmail.com)
 
 Translators
 -----------
