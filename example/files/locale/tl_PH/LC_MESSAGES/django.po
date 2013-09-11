@@ -1,0 +1,50 @@
+# This file is distributed under the same license as the django-admin2 package.
+#
+# Translators:
+# rukku <rk.aranas@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: django-admin2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-09-11 06:09-0500\n"
+"PO-Revision-Date: 2013-07-09 08:22+0000\n"
+"Last-Translator: rukku <rk.aranas@gmail.com>\n"
+"Language-Team: Tagalog (Philippines) (http://www.transifex.com/projects/p/"
+"django-admin2/language/tl_PH/)\n"
+"Language: tl_PH\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: models.py:9
+msgid "caption"
+msgstr ""
+
+#: models.py:10 models.py:21
+msgid "Uploaded File"
+msgstr ""
+
+#: models.py:16
+msgid "Captioned File"
+msgstr ""
+
+#: models.py:17
+msgid "Captioned Files"
+msgstr ""
+
+#: models.py:27
+msgid "Uncaptioned File"
+msgstr ""
+
+#: models.py:28
+msgid "Uncaptioned Files"
+msgstr ""
+
+#: templates/home.html:4
+msgid "Example Home"
+msgstr ""
+
+#: templates/home.html:8
+msgid "(for reference)"
+msgstr ""

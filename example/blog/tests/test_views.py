@@ -356,6 +356,7 @@ class PostDetailViewTest(BaseIntegrationTest):
 class PostCreateViewTest(BaseIntegrationTest):
     def test_view_ok(self):
         response = self.client.get(reverse("admin2:blog_post_create"))
+        self.assertNotIn('''enctype="multipart/form-data"''', response.content)
         self.assertEqual(response.status_code, 200)
 
     def test_create_post(self):
