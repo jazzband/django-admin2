@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'djadmin2',
     'djadmin2.themes.djadmin2theme_default',
     'blog',
+    'files',
 )
 
 # A sample logging configuration. The only tangible logging

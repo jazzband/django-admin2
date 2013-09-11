@@ -42,7 +42,7 @@
 
 {% block content %}
 
-    <form method="post">
+<form method="post" {% if form.is_multipart %}enctype="multipart/form-data" {% endif %}>
 
       {% if view.model_admin.save_on_top %}
         {% include "djadmin2theme_default/includes/save_buttons.html" %}

@@ -56,3 +56,6 @@ logfile
 # Sublime Text
 *.sublime-workspace
 *.sublime-project
+
+# test media upload
+media

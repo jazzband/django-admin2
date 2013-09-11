@@ -10,7 +10,7 @@ from django.test.utils import get_runner
 from django.conf import settings
 
 
-def runtests(tests=('blog', 'djadmin2',)):
+def runtests(tests=('blog', 'files', 'djadmin2')):
     '''
     Takes a list as first argument, enumerating the apps and specific testcases
     that should be executed. The syntax is the same as for what you would pass
