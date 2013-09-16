@@ -85,6 +85,14 @@ Add djadmin2 and rest_framework to your settings file:
         'crispy_forms', # Required for the default theme's layout
         ...
     )
+    
+Add the default theme in your settings file:
+
+.. code-block:: python
+
+    # In settings.py
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
 
 Add djadmin2 urls to your URLconf:
 
