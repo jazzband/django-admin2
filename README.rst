@@ -138,6 +138,17 @@ How to write django-admin2 modules
   djadmin2.default.register(Comment)
   djadmin2.default.register(User, UserAdmin2)
 
+Migrating from 0.5.x
+====================
+
+Themes are now defined explicitly, including the default theme. Therefore, your `settings` need to include this:
+
+.. code-block:: python
+
+    # In settings.py
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+
 
 Drop-In Themes
 ===============

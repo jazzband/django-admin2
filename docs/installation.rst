@@ -49,3 +49,14 @@ Development Installation
 =========================
 
 See :doc:`contributing`.
+
+Migrating from 0.5.x
+====================
+
+Themes are now defined explicitly, including the default theme. Therefore, your `settings` need to include this:
+
+.. code-block:: python
+
+    # In settings.py
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
