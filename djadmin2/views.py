@@ -52,6 +52,10 @@ class IndexView(Admin2Mixin, generic.TemplateView):
     :apps: A dictionary of apps, each app being a dictionary with keys
            being models and the value being djadmin2.types.ModelAdmin2
            objects.
+    :app_verbose_names: A dictionary containing the app verbose names,
+                        each item has a key being the `app_label` and
+                        the value being a string, (or even a lazy
+                        translation object), with the custom app name.
     """
     default_template_name = "index.html"
     registry = None
@@ -68,6 +72,18 @@ class IndexView(Admin2Mixin, generic.TemplateView):
 
 
 class AppIndexView(Admin2Mixin, generic.TemplateView):
+    """Context Variables
+
+    :app_label: Name of your app
+    :registry: A dictionary of registered models for a given app, each
+               item has a key being the model and the value being
+               djadmin2.types.ModelAdmin2 objects.
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
+    """
     default_template_name = "app_index.html"
     registry = None
     apps = None
@@ -92,6 +108,11 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
     :model: Type of object you are editing
     :model_name: Name of the object you are editing
     :app_label: Name of your app
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
     """
     default_template_name = "model_list.html"
     permission_classes = (
@@ -323,6 +344,11 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
     :model: Type of object you are editing
     :model_name: Name of the object you are editing
     :app_label: Name of your app
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
     """
     default_template_name = "model_detail.html"
     permission_classes = (
@@ -337,6 +363,11 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
     :model: Type of object you are editing
     :model_name: Name of the object you are editing
     :app_label: Name of your app
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
     """
     form_class = None
     default_template_name = "model_update_form.html"
@@ -368,6 +399,11 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
     :model: Type of object you are editing
     :model_name: Name of the object you are editing
     :app_label: Name of your app
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
     """
     form_class = None
     default_template_name = "model_update_form.html"
@@ -399,6 +435,11 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
     :model_name: Name of the object you are editing
     :app_label: Name of your app
     :deletable_objects: Objects to delete
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
     """
     success_url = "../../"  # TODO - fix this!
     default_template_name = "model_confirm_delete.html"
@@ -431,6 +472,17 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
 
 
 class ModelHistoryView(AdminModel2Mixin, generic.ListView):
+    """Context Variables
+
+    :model: Type of object you are editing
+    :model_name: Name of the object you are editing
+    :app_label: Name of your app
+    :app_verbose_names: A dictionary containing the app verbose name for
+                        a given app, the item has a key being the
+                        `app_label` and the value being a string, (or
+                        even a lazy translation object), with the custom
+                        app name.
+    """
     default_template_name = "model_history.html"
     permission_classes = (
         permissions.IsStaffPermission,
