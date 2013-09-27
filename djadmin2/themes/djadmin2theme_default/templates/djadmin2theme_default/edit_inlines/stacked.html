@@ -1,7 +1,12 @@
-{% load admin2_tags crispy_forms_tags %}
+{% load admin2_tags crispy_forms_tags i18n %}
 
 {% for inline_form in formset %}
   <div class="change_form space-below">
   {{ inline_form|crispy }}
+  {% if not inline_form.visible_fields %}
+    <p class="alert alert-warning empty-form">
+      {% trans "This form doesn't have visible fields. This doesn't mean there isn't hidden fields." %}
+    </p>
+  {% endif %}
   </div>
 {% endfor %}
