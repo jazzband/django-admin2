@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
-from django.contrib import messages
 from django.utils.translation import ugettext_lazy
 
 import djadmin2
@@ -9,32 +8,13 @@ from djadmin2 import renderers
 from djadmin2.actions import DeleteSelectedAction
 
 # Import your custom models
-from .actions import CustomPublishAction, PublishAllItemsAction
+from .actions import (CustomPublishAction, PublishAllItemsAction,
+                      unpublish_items, unpublish_all_items)
 from .models import Post, Comment
 
 
 class CommentInline(djadmin2.Admin2TabularInline):
     model = Comment
-
-
-def unpublish_items(request, queryset):
-    queryset.update(published=False)
-    messages.add_message(request, messages.INFO, ugettext_lazy(u'Items unpublished'))
-
-# Translators : action description
-unpublish_items.description = ugettext_lazy('Unpublish selected items')
-
-
-def unpublish_all_items(request, queryset):
-    queryset.update(published=False)
-    messages.add_message(
-        request,
-        messages.INFO,
-        ugettext_lazy('Items unpublished'),
-    )
-
-unpublish_all_items.description = ugettext_lazy('Unpublish all items')
-unpublish_all_items.only_selected = False
 
 
 class PostAdmin(djadmin2.ModelAdmin2):
