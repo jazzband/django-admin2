@@ -69,6 +69,7 @@ def build_list_filter(request, model_admin, queryset):
     if not isinstance(model_admin.list_filter, collections.Iterable):
         return model_admin.list_filter(
             request.GET,
+            request=request,
             queryset=queryset,
         )
     # otherwise build :mod:`django_filters.FilterSet`
