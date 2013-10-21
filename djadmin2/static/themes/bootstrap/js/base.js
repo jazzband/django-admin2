@@ -10,4 +10,8 @@ $(document).ready(function() {
         var btn = input_field.after('<button class="btn">Go</button>');
     });
 
+    $('#filter_form select').on('change', function(e){
+        debugger;
+    });
+
 });
