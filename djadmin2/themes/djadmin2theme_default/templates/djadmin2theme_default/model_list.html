@@ -6,7 +6,7 @@
 {% block page_title %}{% blocktrans with model_name=model_name %}Select {{ model_name }} to change{% endblocktrans %}{% endblock page_title %}
 
 {% block javascript %}{{ block.super }}
-<script src="/static/themes/bootstrap/js/actions.js"></script>
+<script src="{{ STATIC_URL }}themes/bootstrap/js/actions.js"></script>
 {% endblock javascript %}
 
 {% block breadcrumbs %}
