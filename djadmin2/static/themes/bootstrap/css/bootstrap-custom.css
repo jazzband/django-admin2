@@ -93,3 +93,7 @@ textarea {
 	padding-left: 15px;
 	margin-bottom: 20px;
 }
+
+.empty-form {
+	margin: 20px;
+}

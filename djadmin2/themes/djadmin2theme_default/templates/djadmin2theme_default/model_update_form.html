@@ -54,6 +54,11 @@
       <div class="change_form">
         {% csrf_token %}
         {{ form|crispy }}
+        {% if not form.visible_fields %}
+          <p class="alert alert-warning empty-form">
+            {% trans "This form doesn't have visible fields. This doesn't mean there isn't hidden fields." %}
+          </p>
+        {% endif %}
       {% for formset in inlines %}
       </div>
 
