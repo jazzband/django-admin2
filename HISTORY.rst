@@ -1,6 +1,10 @@
 History
 =========
 
+0.6.1 (???)
+
+ * Fix empty form display
+
 0.6.0 (2013-09-12)
 
  * Implemented LogHistory to track recent history
