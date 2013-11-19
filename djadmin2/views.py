@@ -204,6 +204,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
     def _modify_queryset_for_sort(self, queryset):
         # If we are sorting AND the field exists on the model
         sort_by = self.request.GET.get('sort', None)
+        sort_by = sort_by.replace('.', '__')
         if sort_by:
             # Special case when we are not explicityly displaying fields
             if sort_by == '-__str__':
@@ -214,8 +215,22 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 if field_exists[0] == '-':
                     field_exists = field_exists[1:]
 
-                options = utils.model_options(self.model)
-                options.get_field(field_exists)
+                components = field_exists.split('__')
+                field_name = components.pop()
+
+                def get_field(model, field_name):
+                    meta = utils.model_options(model)
+                    return meta.get_field(field_name)
+
+                def get_related(model, field_name):
+                    field = get_field(model, field_name)
+                    return field.related.parent_model
+
+                # All but the last are foreignkeys
+                model = reduce(get_related, components, self.model)
+                # Last field is a regular old field
+                get_field(model, field_name)
+                
                 queryset = queryset.order_by(sort_by)
             except FieldDoesNotExist:
                 # If the field does not exist then we dont sort on it
