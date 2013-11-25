@@ -28,15 +28,15 @@ class ModelAdminBase2(type):
     def __new__(cls, name, bases, attrs):
         new_class = super(ModelAdminBase2, cls).__new__(cls, name,
                                                         bases, attrs)
-        view_list = getattr(new_class, 'views', [])
-
+        view_list = []
         for key, value in attrs.items():
             if isinstance(value, views.AdminView):
                 if not value.name:
                     value.name = key
                 view_list.append(value)
 
-        setattr(new_class, 'views', view_list)
+        view_list.extend(getattr(new_class, 'views', []))
+        new_class.views = view_list
         return new_class
 
 
