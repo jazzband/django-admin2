@@ -1,3 +1,7 @@
+# make sure that everything is setup for tests. Django 1.6 doesn't necessarily
+# load the urls.py before the tests are run.
+import example.urls
+
 from test_apiviews import *
 from test_builtin_api_resources import *
 from test_permissions import *
