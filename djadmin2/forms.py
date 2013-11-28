@@ -28,7 +28,13 @@ def _copy_attributes(original, new_widget, attributes):
     for attr in attributes:
         original_value = getattr(original, attr)
         original_value = deepcopy(original_value)
-        setattr(new_widget, attr, original_value)
+
+        # Don't set the attribute if it is a property. In that case we can be
+        # sure that the widget class is taking care of the calculation for that
+        # property.
+        old_value_on_new_widget = getattr(new_widget.__class__, attr, None)
+        if not isinstance(old_value_on_new_widget, property):
+            setattr(new_widget, attr, original_value)
 
 
 def _create_widget(widget_class, copy_attributes=(), init_arguments=()):
