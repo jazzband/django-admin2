@@ -170,6 +170,15 @@ Before you submit a pull request, please run the entire django-admin2 test suite
     python runtests.py
 
 The first thing the core committers will do is run this command. Any pull request that fails this test suite will be **immediately rejected**.
+The travis continuos integration server will also run the test suite against multiple combinations of different python and django versions to cover as many possible real world installations as possible. To do the same locally you can install the `tox`_ testing tool via pip::
+
+    pip install tox
+
+Now run tox to invoke the tests::
+
+    tox
+
+.. _`tox`: https://testrun.org/tox/latest/
 
 .. index:: 
     single: Getting your Pull Request Accepting; Don't reduce test coverage!
