@@ -3,7 +3,11 @@ from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
-from django.utils import simplejson as json
+
+try:
+    from django.utils import simplejson as json
+except ImportError:
+    import json
 
 
 from djadmin2 import apiviews

@@ -166,7 +166,9 @@ _django_to_floppyforms_widget = {
     django.forms.extras.widgets.SelectDateWidget:
         _create_widget(
             floppyforms.widgets.SelectDateWidget,
-            init_arguments=('years', 'required')),
+            init_arguments=
+                ('years',)
+                if django.VERSION >= (1, 7) else ('years', 'required')),
 }
 
 _django_field_to_floppyform_widget = {
