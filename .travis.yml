@@ -1,11 +1,18 @@
 language: python
 python:
   - "2.7"
+  - "3.2"
+  - "3.3"
+  - "pypy"
+env:
+  - DJANGO="Django>=1.5,<1.5.99"
+  - DJANGO="Django>=1.6,<1.6.99"
+  - DJANGO="https://github.com/django/django/tarball/master#egg=Django"
 before_install:
   - export PIP_USE_MIRRORS=true
   - export PIP_INDEX_URL=https://simple.crate.io/
 install:
-  - pip install -r requirements/development.txt
+  - pip install -r requirements/tests.txt $DJANGO
 script:
   - coverage run runtests.py
 after_success:
