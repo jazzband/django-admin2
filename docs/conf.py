@@ -29,10 +29,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "example.example.settings")
 sys.path.insert(0, os.path.abspath('../../'))
 sys.path.insert(0, os.path.abspath('../'))
 
-from example.example import settings
-from django.core.management import setup_environ
-setup_environ(settings)
-
 # For intersphinx
 ext_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "_ext"))
 sys.path.append(ext_path)

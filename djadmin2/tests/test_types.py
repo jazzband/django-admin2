@@ -2,8 +2,8 @@ from django.db import models
 from django.test import TestCase
 from django.views.generic import View
 
+from .. import views
 from ..types import ModelAdmin2, immutable_admin_factory
-from ..views import AdminView
 from ..core import Admin2
 
 
@@ -48,7 +48,7 @@ class ModelAdminTest(TestCase):
 
     def setUp(self):
         class MyModelAdmin(ModelAdmin2):
-            my_view = AdminView(r'^$', View)
+            my_view = views.AdminView(r'^$', views.ModelListView)
 
         self.model_admin = MyModelAdmin
 

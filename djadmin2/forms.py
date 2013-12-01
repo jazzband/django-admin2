@@ -6,6 +6,7 @@ from copy import deepcopy
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+import django
 import django.forms
 import django.forms.models
 import django.forms.extras.widgets
@@ -27,7 +28,13 @@ def _copy_attributes(original, new_widget, attributes):
     for attr in attributes:
         original_value = getattr(original, attr)
         original_value = deepcopy(original_value)
-        setattr(new_widget, attr, original_value)
+
+        # Don't set the attribute if it is a property. In that case we can be
+        # sure that the widget class is taking care of the calculation for that
+        # property.
+        old_value_on_new_widget = getattr(new_widget.__class__, attr, None)
+        if not isinstance(old_value_on_new_widget, property):
+            setattr(new_widget, attr, original_value)
 
 
 def _create_widget(widget_class, copy_attributes=(), init_arguments=()):
@@ -182,6 +189,33 @@ _django_field_to_floppyform_widget = {
 }
 
 
+def allow_floppify_widget_for_field(field):
+    '''
+    We only allow to replace a widget with the floppyform counterpart if the
+    original, by django determined widget is still in place. We don't want to
+    override custom widgets that a user specified.
+    '''
+    # There is a special case for IntegerFields (and all subclasses) that
+    # replaces the default TextInput with a NumberInput, if localization is
+    # turned off. That applies for Django 1.6 upwards.
+    # See the relevant source code in django:
+    # https://github.com/django/django/blob/1.6/django/forms/fields.py#L225
+    if django.VERSION >= (1, 6):
+        if isinstance(field, django.forms.IntegerField) and not field.localize:
+            if field.widget.__class__ is django.forms.NumberInput:
+                return True
+
+    # We can check if the widget was replaced by comparing the class of the
+    # specified widget with the default widget that is specified on the field
+    # class.
+    if field.widget.__class__ is field.__class__.widget:
+        return True
+
+    # At that point we are assuming that the user replaced the original widget
+    # with a custom one. So we don't allow to overwrite it.
+    return False
+
+
 def floppify_widget(widget, field=None):
     '''
     Get an instance of django.forms.widgets.Widget and return a new widget
@@ -203,10 +237,7 @@ def floppify_widget(widget, field=None):
         create_widget = _django_field_to_floppyform_widget.get(
             field.__class__)
         if create_widget is not None:
-            # check if the default widget was replaced by a different one, in
-            # that case we cannot create the field specific floppyforms
-            # widget.
-            if field.widget.__class__ is field.__class__.widget:
+            if allow_floppify_widget_for_field(field):
                 return create_widget(widget)
     create_widget = _django_to_floppyforms_widget.get(widget.__class__)
     if create_widget is not None:
