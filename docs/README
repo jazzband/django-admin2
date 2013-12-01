@@ -8,8 +8,9 @@ To create an HTML version of the docs:
 
 * Create a virtualenv and activate it.
 
-* Install all dependencies from requirements.txt inot the virtualenv using
-  ``pip install -r requirements.txt`` (this will also install Sphinx).
+* Install all dependencies from requirements/development.txt into the
+  virtualenv using ``pip install -r requirements/development.txt`` (this will
+  also install Sphinx).
 
 * In this docs/ directory, type ``make html`` (or ``make.bat html`` on
   Windows) at a shell prompt while the virtualenv is active.

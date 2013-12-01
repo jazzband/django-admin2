@@ -341,12 +341,11 @@ class GetFloppyformWidgetTest(TestCase):
 
         widget = forms.extras.widgets.SelectDateWidget(
             attrs={'attribute': 'value'},
-            years=[2010, 2011, 2012, 2013],
-            required=False)
+            years=[2010, 2011, 2012, 2013])
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.SelectDateWidget,
-            ('attrs', 'years', 'required'))
+            ('attrs', 'years'))
 
 
 class ModelFormTest(TestCase):
