@@ -53,10 +53,11 @@ class ModelAdminTest(TestCase):
         self.model_admin = MyModelAdmin
 
     def test_views(self):
-        self.assertIn(
-            self.model_admin.my_view,
-            self.model_admin.views
-        )
+        views = [self.model_admin.my_view] + ModelAdmin2.views
+        self.assertListEqual(self.model_admin.views, views)
+
+    def test_views_not_same(self):
+        self.assertIsNot(self.model_admin.views, ModelAdmin2.views)
 
     def test_get_index_kwargs(self):
         admin_instance = ModelAdmin2(Thing, Admin2)
