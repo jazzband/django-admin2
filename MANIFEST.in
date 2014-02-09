@@ -3,4 +3,4 @@ include LICENSE
 include AUTHORS.rst
 include HISTORY.rst
 include MANIFEST.in
-recursive-include djadmin2 *.html *.css *.js
+recursive-include djadmin2 *.html *.css *.js *.png
