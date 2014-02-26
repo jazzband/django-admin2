@@ -1,14 +1,11 @@
 language: python
 python:
   - "2.7"
-before_install:
-  - export PIP_USE_MIRRORS=true
-  - export PIP_INDEX_URL=https://simple.crate.io/
 install:
   - pip install -r requirements.txt
 script:
   - coverage run runtests.py
 after_success:
   - coverage report
-  - pip install --quiet --use-mirrors python-coveralls
+  - pip install --quiet python-coveralls
   - coveralls
