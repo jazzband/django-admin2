@@ -1,9 +1,16 @@
 History
 =========
 
-0.6.1 (???)
+0.6.1 (2014-02-26)
 
  * Fix empty form display
+ * Added more explicit installation instructions
+ * Added migration instructions
+ * Added view descriptions for "registry" and "app_verbose_names"
+ * Show a nice message and margin if there are no visible fields
+ * Updated widget controls for Django 1.6 changes.
+ * Better error messages for admin views that fail to instantiate
+ * Added png glyphicons to MANIFEST
 
 0.6.0 (2013-09-12)
 
