@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
-__version__ = '0.6.0rc1'
+__version__ = '0.6.1'
 
 __author__ = 'Daniel Greenfeld & Contributors'
 
