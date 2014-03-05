@@ -169,6 +169,19 @@ If you create a new theme, you define it thus:
     # Mythical theme! This does not exit... YET!
     INSTALLED_APPS += ('djadmin2theme_foundation',)
     ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation/"
+    
+Follows Best Practices
+======================
+
+.. image:: http://twoscoops.smugmug.com/Two-Scoops-Press-Media-Kit/i-C8s5jkn/0/O/favicon-152.png
+   :name: Two Scoops Logo
+   :align: center
+   :alt: Two Scoops of Django
+   :target: http://twoscoopspress.org/products/two-scoops-of-django-1-6
+
+This project follows best practices as espoused in `Two Scoops of Django: Best Practices for Django 1.6`_.
+
+.. _`Two Scoops of Django: Best Practices for Django 1.6`: http://twoscoopspress.org/products/two-scoops-of-django-1-6
 
 
 Support this project!
