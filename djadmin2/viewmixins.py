@@ -12,7 +12,14 @@ from django.utils.encoding import force_text
 from django.utils.text import get_text_list
 from django.utils.translation import ugettext as _
 
-from braces.views import AccessMixin
+# braces 1.3 views exported AccessMixin
+# in braces 1.4 this was moved views._access and not exported in views
+# not sure if this was the intent of braces or an oversight
+# if intent - should look at AccessMixin vs. using a more specific mixin
+try:
+    from braces.views import AccessMixin
+except ImportError:
+    from braces.views._access import AccessMixin
 
 from . import settings, permissions
 from .utils import admin2_urlname, model_options
