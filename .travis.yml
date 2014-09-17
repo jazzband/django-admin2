@@ -2,21 +2,21 @@ language: python
 python: "2.7"
 env:
   matrix:
-    - TOXENV=py27-dj1.4.x
-    - TOXENV=py27-dj1.5.x
-    - TOXENV=py27-dj1.6.x
-    - TOXENV=py27-dj1.7.x
-    - TOXENV=py33-dj1.6.x
-    - TOXENV=py34-dj1.6.x
-    - TOXENV=py33-dj1.7.x
-    - TOXENV=py34-dj1.7.x
-    - TOXENV=pypy-dj1.6.x,
-    - TOXENV=pypy3-dj1.6.x
+    - TOX_ENV=py27-dj1.4.x
+    - TOX_ENV=py27-dj1.5.x
+    - TOX_ENV=py27-dj1.6.x
+    - TOX_ENV=py27-dj1.7.x
+    - TOX_ENV=py33-dj1.6.x
+    - TOX_ENV=py34-dj1.6.x
+    - TOX_ENV=py33-dj1.7.x
+    - TOX_ENV=py34-dj1.7.x
+    - TOX_ENV=pypy-dj1.6.x,
+    - TOX_ENV=pypy3-dj1.6.x
 install:
   - pip install tox
 script:
   - tox -e $TOX_ENV
-#for now commented 
+#for now commented
 #after_success:
 #  - coverage report
 #  - pip install --quiet python-coveralls
