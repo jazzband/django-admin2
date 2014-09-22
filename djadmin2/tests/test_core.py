@@ -9,7 +9,7 @@ from ..types import ModelAdmin2
 from ..core import Admin2
 
 
-class Thing(models.Model):
+class SmallThing(models.Model):
     pass
 
 
@@ -21,20 +21,20 @@ class Admin2Test(TestCase):
         self.admin2 = Admin2()
 
     def test_register(self):
-        self.admin2.register(Thing)
-        self.assertTrue(isinstance(self.admin2.registry[Thing], ModelAdmin2))
+        self.admin2.register(SmallThing)
+        self.assertTrue(isinstance(self.admin2.registry[SmallThing], ModelAdmin2))
 
     def test_register_error(self):
-        self.admin2.register(Thing)
-        self.assertRaises(ImproperlyConfigured, self.admin2.register, Thing)
+        self.admin2.register(SmallThing)
+        self.assertRaises(ImproperlyConfigured, self.admin2.register, SmallThing)
 
     def test_deregister(self):
-        self.admin2.register(Thing)
-        self.admin2.deregister(Thing)
-        self.assertTrue(Thing not in self.admin2.registry)
+        self.admin2.register(SmallThing)
+        self.admin2.deregister(SmallThing)
+        self.assertTrue(SmallThing not in self.admin2.registry)
 
     def test_deregister_error(self):
-        self.assertRaises(ImproperlyConfigured, self.admin2.deregister, Thing)
+        self.assertRaises(ImproperlyConfigured, self.admin2.deregister, SmallThing)
 
     def test_register_app_verbose_name(self):
         self.admin2.register_app_verbose_name(APP_LABEL, APP_VERBOSE_NAME)
@@ -65,7 +65,7 @@ class Admin2Test(TestCase):
         )
 
     def test_get_urls(self):
-        self.admin2.register(Thing)
+        self.admin2.register(SmallThing)
         self.assertEquals(8, len(self.admin2.get_urls()))
 
     def test_default_entries(self):

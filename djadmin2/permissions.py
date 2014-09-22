@@ -26,6 +26,7 @@ from django.db.models import get_models
 from django.utils import six
 
 from . import utils
+from django.utils.encoding import python_2_unicode_compatible, force_text
 
 
 logger = logging.getLogger('djadmin2')
@@ -185,6 +186,7 @@ class ModelDeletePermission(BasePermission):
     permissions = (model_permission('{app_label}.delete_{model_name}'),)
 
 
+@python_2_unicode_compatible
 class TemplatePermissionChecker(object):
     '''
     Can be used in the template like:
@@ -349,10 +351,10 @@ class TemplatePermissionChecker(object):
         else:
             return self._view.has_permission(self._obj)
 
-    def __unicode__(self):
+    def __str__(self):
         if self._view is None:
             return ''
-        return unicode(bool(self))
+        return force_text(bool(self))
 
 
 def create_view_permissions(app, created_models, verbosity, **kwargs):

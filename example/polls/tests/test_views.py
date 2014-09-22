@@ -39,7 +39,7 @@ class PollListTest(BaseIntegrationTest):
         poll = Poll.objects.create(question="some question", pub_date=timezone.now())
         params = {'action': 'DeleteSelectedAction', 'selected_model_pk': str(poll.pk)}
         response = self.client.post(reverse("admin2:polls_poll_index"), params)
-        self.assertInHTML('<p>Are you sure you want to delete the selected poll? All of the following items will be deleted:</p>', response.content)
+        self.assertInHTML('<p>Are you sure you want to delete the selected poll? The following item will be deleted:</p>', response.content)
 
     def test_delete_selected_poll_confirmation(self):
         poll = Poll.objects.create(question="some question", pub_date=timezone.now())

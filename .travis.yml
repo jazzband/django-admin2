@@ -2,8 +2,6 @@ language: python
 python: "2.7"
 env:
   matrix:
-    - TOX_ENV=py27-dj1.4.x
-    - TOX_ENV=py27-dj1.5.x
     - TOX_ENV=py27-dj1.6.x
     - TOX_ENV=py27-dj1.7.x
     - TOX_ENV=py33-dj1.6.x
@@ -16,7 +14,8 @@ install:
   - pip install tox
 script:
   - tox -e $TOX_ENV
-#for now commented
+# for now commented. We have to figure which version use for coverage
+# and coveralls
 #after_success:
 #  - coverage report
 #  - pip install --quiet python-coveralls

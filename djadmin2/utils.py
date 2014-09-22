@@ -89,7 +89,10 @@ def get_attr(obj, attr):
     and the __str__ attribute.
     """
     if attr == '__str__':
-        value = unicode(obj)
+        if six.PY2:
+            value = unicode(obj)
+        else:
+            value = str(obj)
     else:
         attribute = getattr(obj, attr)
         value = attribute() if callable(attribute) else attribute

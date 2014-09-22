@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 import operator
 from datetime import datetime
 
-from django.contrib.auth import get_user_model
+from django.conf import settings
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
@@ -19,16 +19,13 @@ from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy
 from django.views import generic
-
 import extra_views
 
 
 from . import permissions, utils
 from .forms import AdminAuthenticationForm
-from .models import LogEntry
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
-
 
 class AdminView(object):
 
@@ -292,14 +289,14 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return context
 
     def _format_years(self, context):
-        years = context['object_list'].dates('published_date', 'year')
+        years = self._qs_date_or_datetime(context['object_list'], 'year')
         if len(years) == 1:
             return self._format_months(context)
         else:
             return [
                 (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
                 for year in
-                context['object_list'].dates('published_date', 'year')
+                self._qs_date_or_datetime(context['object_list'], 'year')
             ]
 
     def _format_months(self, context):
@@ -310,7 +307,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %Y")
             ) for date in
-            context["object_list"].dates('published_date', 'month')
+            self._qs_date_or_datetime(context['object_list'], 'month')
         ]
 
     def _format_days(self, context):
@@ -323,8 +320,15 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %d")
             ) for date in
-            context["object_list"].dates('published_date', 'day')
+            self._qs_date_or_datetime(context['object_list'], 'day')
         ]
+
+    def _qs_date_or_datetime(self, object_list, type):
+        if isinstance(self.model._meta.get_field(self.model_admin.date_hierarchy), models.DateTimeField):
+            qs = object_list.datetimes(self.model_admin.date_hierarchy, type)
+        else:
+            qs = object_list.dates(self.model_admin.date_hierarchy, type)
+        return qs
 
     def get_success_url(self):
         view_name = 'admin2:{}_{}_index'.format(
@@ -384,6 +388,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
 
     def forms_valid(self, form, inlines):
         response = super(ModelEditFormView, self).forms_valid(form, inlines)
+        from .models import LogEntry
         LogEntry.objects.log_action(
             self.request.user.id,
             self.object,
@@ -420,6 +425,7 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
 
     def forms_valid(self, form, inlines):
         response = super(ModelAddFormView, self).forms_valid(form, inlines)
+        from .models import LogEntry
         LogEntry.objects.log_action(
             self.request.user.id,
             self.object,
@@ -463,6 +469,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
+        from .models import LogEntry
         LogEntry.objects.log_action(
             request.user.id,
             self.get_object(),
@@ -500,6 +507,7 @@ class ModelHistoryView(AdminModel2Mixin, generic.ListView):
 
     def get_queryset(self):
         content_type = ContentType.objects.get_for_model(self.get_object())
+        from .models import LogEntry
         return LogEntry.objects.filter(
             content_type=content_type,
             object_id=self.get_object().id
@@ -511,7 +519,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
     default_template_name = 'auth/password_change_form.html'
     form_class = AdminPasswordChangeForm
     admin_form_class = PasswordChangeForm
-    model = get_user_model()
+    model = settings.AUTH_USER_MODEL
     success_url = reverse_lazy('admin2:password_change_done')
 
     def get_form_kwargs(self, **kwargs):
@@ -529,6 +537,9 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
             return self.admin_form_class
         return super(PasswordChangeView, self).get_form_class()
 
+    def get_queryset(self):
+        from django.contrib.auth import get_user_model
+        return get_user_model()._default_manager.all()
 
 class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 
