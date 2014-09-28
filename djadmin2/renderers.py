@@ -10,6 +10,7 @@ from datetime import date, time, datetime
 
 from django.db import models
 from django.utils import formats, timezone
+from django.utils.encoding import force_text
 from django.template.loader import render_to_string
 
 from djadmin2 import settings
@@ -60,10 +61,10 @@ def title_renderer(value, field):
     :type value: str or unicode
     :param field: The model field instance
     :type field: django.db.models.fields.Field
-    :rtype: unicode
+    :rtype: unicode or str
 
     """
-    return unicode(value).title()
+    return force_text(value).title()
 
 
 def number_renderer(value, field):

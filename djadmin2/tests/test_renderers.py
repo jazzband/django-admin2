@@ -7,6 +7,7 @@ from decimal import Decimal
 from django.test import TestCase
 from django.db import models
 from django.utils.translation import activate
+from django.utils import six
 
 from .. import renderers
 
@@ -105,7 +106,10 @@ class NumberRendererTest(TestCase):
 
     def testEndlessFloat(self):
         out = self.renderer(1.0/3, None)
-        self.assertEqual('0.333333333333', out)
+        if six.PY2:
+            self.assertEqual('0.333333333333', out)
+        else:
+            self.assertEqual('0.3333333333333333', out)
 
     def testPlainDecimal(self):
         number = '0.123456789123456789123456789'

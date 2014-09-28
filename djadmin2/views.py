@@ -2,6 +2,8 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import operator
+from functools import reduce
+
 from datetime import datetime
 
 from django.conf import settings
