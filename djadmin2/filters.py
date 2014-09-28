@@ -2,6 +2,8 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import collections
+import six
+
 from itertools import chain
 
 from django import forms
@@ -74,7 +76,7 @@ def build_list_filter(request, model_admin, queryset):
     # otherwise build :mod:`django_filters.FilterSet`
     filters = []
     for field_filter in model_admin.list_filter:
-        if isinstance(field_filter, basestring):
+        if isinstance(field_filter, six.string_types):
             filters.append(get_filter_for_field_name(
                 queryset.model,
                 field_filter,
