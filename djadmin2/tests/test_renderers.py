@@ -57,16 +57,16 @@ class DatetimeRendererTest(TestCase):
 
     def test_time_german(self):
         activate('de')
-        out = self.renderer(dt.time(13, 37, 01), None)
+        out = self.renderer(dt.time(13, 37, 1), None)
         self.assertEqual('13:37:01', out)
 
     def test_time_chinese(self):
         activate('zh')
-        out = self.renderer(dt.time(13, 37, 01), None)
+        out = self.renderer(dt.time(13, 37, 1), None)
         self.assertEqual('1:37 p.m.', out)
 
     def test_datetime(self):
-        out = self.renderer(dt.datetime(2013, 7, 6, 13, 37, 01), None)
+        out = self.renderer(dt.datetime(2013, 7, 6, 13, 37, 1), None)
         self.assertEqual('July 6, 2013, 1:37 p.m.', out)
 
     # TODO test timezone localization

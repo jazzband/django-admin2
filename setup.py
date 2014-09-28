@@ -132,7 +132,7 @@ setup(
         'django-braces>=1.3.0',
         'djangorestframework>=2.3.3',
         'django-floppyforms>=1.1',
-        'django-filter>=0.6',
+        'django-filter>=0.7',
         'django-crispy-forms>=1.3.2',
         'pytz==2014.7'
         ],
