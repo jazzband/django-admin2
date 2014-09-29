@@ -88,7 +88,7 @@ def build_list_filter(request, model_admin, queryset):
     filterset_dict = {}
     for field_filter in filters:
         filterset_dict[field_filter.name] = field_filter
-    fields = filterset_dict.keys()
+    fields = list(filterset_dict.keys())
     filterset_dict['Meta'] = type(
         type_str('Meta'),
         (),
@@ -97,12 +97,7 @@ def build_list_filter(request, model_admin, queryset):
             'fields': fields,
         },
     )
-
-    return type(
-        type_str('%sFilterSet' % queryset.model.__name__),
-        (django_filters.FilterSet, ),
-        filterset_dict,
-    )(request.GET, queryset=queryset)
+    return type(type_str('%sFilterSet' % queryset.model.__name__),(django_filters.FilterSet, ),filterset_dict,)(request.GET, queryset=queryset)
 
 
 def build_date_filter(request, model_admin, queryset):
