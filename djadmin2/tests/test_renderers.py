@@ -13,7 +13,7 @@ from .. import renderers
 
 
 class RendererTestModel(models.Model):
-    decimal = models.DecimalField(decimal_places=5)
+    decimal = models.DecimalField(decimal_places=5, max_digits=10)
 
 
 class BooleanRendererTest(TestCase):
