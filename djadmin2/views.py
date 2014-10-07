@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
+import django
 import operator
 from datetime import datetime
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
@@ -28,6 +28,20 @@ from .forms import AdminAuthenticationForm
 from .models import LogEntry
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
+
+
+# django 1.7 compatibility
+if django.VERSION >= (1, 5):
+    from django.conf import settings
+    if hasattr(settings, 'AUTH_USER_MODEL'):
+        User = settings.AUTH_USER_MODEL
+    else:
+        from django.contrib.auth.models import User
+else:
+    try:
+        from django.contrib.auth.models import User
+    except ImportError:
+        raise ImportError('User model is not to be found.')
 
 
 class AdminView(object):
@@ -511,7 +525,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
     default_template_name = 'auth/password_change_form.html'
     form_class = AdminPasswordChangeForm
     admin_form_class = PasswordChangeForm
-    model = get_user_model()
+    model = User
     success_url = reverse_lazy('admin2:password_change_done')
 
     def get_form_kwargs(self, **kwargs):
