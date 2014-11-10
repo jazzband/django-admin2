@@ -12,6 +12,8 @@ django-admin2
    :target: https://crate.io/packages/django-admin2/
 .. image:: https://pypip.in/d/django-admin2/badge.png
    :target: https://crate.io/packages/django-admin2/
+.. image:: https://badges.gitter.im/Join Chat.svg
+   :target: https://gitter.im/pydanny/django-admin2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 One of the most useful parts of ``django.contrib.admin`` is the ability to
 configure various views that touch and alter data. django-admin2 is a complete
