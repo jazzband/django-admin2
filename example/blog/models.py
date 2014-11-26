@@ -7,13 +7,14 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 
+@python_2_unicode_compatible
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     body = models.TextField(verbose_name=_('body'))
     published = models.BooleanField(default=False, verbose_name=_('published'))
     published_date = models.DateField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     class Meta:
@@ -21,11 +22,13 @@ class Post(models.Model):
         verbose_name_plural = _('posts')
 
 
+@python_2_unicode_compatible
 class Comment(models.Model):
-    post = models.ForeignKey(Post, verbose_name=_('post'), related_name="comments")
+    post = models.ForeignKey(
+        Post, verbose_name=_('post'), related_name="comments")
     body = models.TextField(verbose_name=_('body'))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.body
 
     class Meta:
@@ -33,7 +36,7 @@ class Comment(models.Model):
         verbose_name_plural = _('comments')
 
 
-#### Models needed for testing NestedObjects
+# Models needed for testing NestedObjects
 
 @python_2_unicode_compatible
 class Count(models.Model):

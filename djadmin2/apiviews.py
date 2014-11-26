@@ -18,7 +18,7 @@ class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
     _default_view_name = 'admin2:%(app_label)s_%(model_name)s_api_detail'
 
     pk = fields.Field(source='pk')
-    __str__ = fields.Field(source='__unicode__')
+    __unicode__ = fields.Field(source='__str__')
 
 
 class Admin2APIMixin(Admin2Mixin):
