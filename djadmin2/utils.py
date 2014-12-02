@@ -59,10 +59,23 @@ def model_verbose_name_plural(model):
 def model_field_verbose_name(model, field_name):
     """
     Returns the verbose name of a model field.
+    Follows relations; e.g comment.user.username
     """
-    meta = model_options(model)
-    field = meta.get_field_by_name(field_name)[0]
-    return field.verbose_name
+    components = field_name.split('.')
+    # Get the final property (don't follow this relation)
+    field_name = components.pop()
+
+    def get_field(model, field_name):
+        meta = model_options(model)
+        return meta.get_field_by_name(field_name)[0]
+
+    def get_related(model, field_name):
+        field = get_field(model, field_name)
+        return field.related.parent_model
+
+    # Follow any relations to return the ultimate model
+    model = reduce(get_related, components, model)
+    return get_field(model, field_name).verbose_name
 
 
 def model_method_verbose_name(model, method_name):
@@ -88,12 +101,15 @@ def get_attr(obj, attr):
     Get the right value for the attribute. Handle special cases like callables
     and the __str__ attribute.
     """
-    if attr == '__str__':
-        value = unicode(obj)
-    else:
+    components = attr.split('.')
+
+    def _get_attr(obj, attr):
+        if attr == '__str__':
+            return unicode(obj)
         attribute = getattr(obj, attr)
-        value = attribute() if callable(attribute) else attribute
-    return value
+        return attribute() if callable(attribute) else attribute
+
+    return reduce(_get_attr, components, obj)
 
 
 class NestedObjects(Collector):
