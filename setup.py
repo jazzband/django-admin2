@@ -130,8 +130,8 @@ setup(
         'django>=1.6.0',
         'django-extra-views>=0.6.5',
         'django-braces>=1.3.0',
-        'djangorestframework>=2.3.3',
-        'django-floppyforms>=1.1',
+        'djangorestframework<=2.4.4',
+        'django-floppyforms<=1.2',
         'django-filter>=0.7',
         'django-crispy-forms>=1.3.2',
         'pytz==2014.7'
