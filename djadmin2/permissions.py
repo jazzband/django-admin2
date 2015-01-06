@@ -344,12 +344,19 @@ class TemplatePermissionChecker(object):
     def __nonzero__(self):
         # if no view is bound we will return false, since we don't know which
         # permission to check we stay save in disallowing the access
+        return self._cast_bool()
+
+    def __bool__(self):
+        return self._cast_bool()
+
+    def _cast_bool(self):
         if self._view is None:
             return False
         if self._obj is None:
             return self._view.has_permission()
         else:
             return self._view.has_permission(self._obj)
+
 
     def __str__(self):
         if self._view is None:
