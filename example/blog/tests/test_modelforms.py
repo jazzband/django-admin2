@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django import forms
 from django.test import TestCase
 
@@ -8,6 +10,7 @@ from ..models import Post
 
 
 class ModelFormFactoryTest(TestCase):
+
     def test_modelform_factory(self):
         form_class = modelform_factory(Post)
         self.assertTrue(form_class)
@@ -16,8 +19,9 @@ class ModelFormFactoryTest(TestCase):
 
 
 class GetFloppyformWidgetTest(TestCase):
+
     def assertExpectWidget(self, instance, new_class_,
-        equal_attributes=None, new_attributes=None):
+                           equal_attributes=None, new_attributes=None):
         new_instance = floppify_widget(instance)
         self.assertEqual(new_instance.__class__, new_class_)
         if equal_attributes:
@@ -33,8 +37,8 @@ class GetFloppyformWidgetTest(TestCase):
                 old_attr = getattr(instance, attribute)
                 new_attr = getattr(new_instance, attribute)
                 self.assertEqual(old_attr, new_attr,
-                    'Original widget\'s attribute was not copied: %r != %r' %
-                    (old_attr, new_attr))
+                                 'Original widget\'s attribute was not copied: %r != %r' %
+                                 (old_attr, new_attr))
         if new_attributes:
             for attribute, value in new_attributes.items():
                 self.assertTrue(
@@ -43,8 +47,8 @@ class GetFloppyformWidgetTest(TestCase):
                     'generated widget %r' % (attribute, new_instance))
                 new_attr = getattr(new_instance, attribute)
                 self.assertEqual(new_attr, value,
-                    'Generated widget\'s attribute is not as expected: '
-                    '%r != %r' % (new_attr, value))
+                                 'Generated widget\'s attribute is not as expected: '
+                                 '%r != %r' % (new_attr, value))
 
     def test_created_widget_doesnt_leak_attributes_into_original_widget(self):
         widget = forms.TextInput()
@@ -146,7 +150,7 @@ class GetFloppyformWidgetTest(TestCase):
             widget,
             floppyforms.widgets.ClearableFileInput,
             ['initial_text', 'input_text', 'clear_checkbox_label',
-            'template_with_initial', 'template_with_clear'])
+             'template_with_initial', 'template_with_clear'])
 
     def test_textarea_widget(self):
         self.assertExpectWidget(
@@ -222,7 +226,7 @@ class GetFloppyformWidgetTest(TestCase):
             forms.widgets.NullBooleanSelect(),
             floppyforms.widgets.NullBooleanSelect,
             ('choices', 'allow_multiple_selected',))
-        
+
         widget = forms.widgets.NullBooleanSelect()
         widget.choices = list(widget.choices)
 
@@ -341,15 +345,15 @@ class GetFloppyformWidgetTest(TestCase):
 
         widget = forms.extras.widgets.SelectDateWidget(
             attrs={'attribute': 'value'},
-            years=[2010, 2011, 2012, 2013],
-            required=False)
+            years=[2010, 2011, 2012, 2013])
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.SelectDateWidget,
-            ('attrs', 'years', 'required'))
+            ('attrs', 'years'))
 
 
 class ModelFormTest(TestCase):
+
     def test_custom_base_form(self):
         class MyForm(forms.ModelForm):
             pass
@@ -411,6 +415,7 @@ class ModelFormTest(TestCase):
 
 
 class FieldWidgetTest(TestCase):
+
     def test_dont_overwrite_none_default_widget(self):
         # we don't create the floppyform EmailInput for the email field here
         # since we have overwritten the default widget. However we replace the

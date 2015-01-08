@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from setuptools import setup
+from setuptools.command.test import test as TestCommand
 import re
 import os
 import sys
@@ -80,6 +81,25 @@ if sys.argv[-1] == 'publish':
 LONG_DESCRIPTION = remove_screenshots(open('README.rst').read())
 HISTORY = open('HISTORY.rst').read()
 
+class PyTest(TestCommand):
+    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.pytest_args = []
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        #import here, cause outside the eggs aren't loaded
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'example'))
+        import pytest
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
 setup(
     name='django-admin2',
     version=version,
@@ -105,16 +125,21 @@ setup(
     license='MIT',
     packages=get_packages('djadmin2'),
     include_package_data=True,
-    test_suite='runtests.runtests',
+    #test_suite='runtests.runtests',
     install_requires=[
-        'django>=1.5.0',
-        'django-braces>=1.0.0',
-        'django-extra-views>=0.6.2',
-        'djangorestframework>=2.3.3',
-        'django-floppyforms>=1.1',
-        'django-filter>=0.6',
-        'django-crispy-forms>=1.3.2'
+        'django>=1.6.0',
+        'django-extra-views>=0.6.5',
+        'django-braces>=1.3.0',
+        'djangorestframework<=2.4.4',
+        'django-floppyforms<=1.2',
+        'django-filter>=0.7',
+        'django-crispy-forms>=1.3.2',
+        'pytz==2014.7'
         ],
+    extras_require={
+        'testing': ['pytest', 'pytest-django', 'pytest-ipdb'],
+    },
+    cmdclass = {'test': PyTest},
     zip_safe=False,
 )
 

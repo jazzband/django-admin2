@@ -6,7 +6,7 @@ from django.db.models import ManyToManyRel
 from django.db.models.deletion import Collector
 from django.db.models.related import RelatedObject
 from django.utils import six
-
+from django.utils.encoding import force_bytes, force_text
 
 def lookup_needs_distinct(opts, lookup_path):
     """
@@ -89,7 +89,10 @@ def get_attr(obj, attr):
     and the __str__ attribute.
     """
     if attr == '__str__':
-        value = unicode(obj)
+        if six.PY2:
+            value = unicode(obj)
+        else:
+            value = str(obj)
     else:
         attribute = getattr(obj, attr)
         value = attribute() if callable(attribute) else attribute
@@ -181,3 +184,10 @@ def quote(s):
         if c in """:/_#?;@&=+$,"<>%\\""":
             res[i] = '_%02X' % ord(c)
     return ''.join(res)
+
+
+def type_str(text):
+    if six.PY2:
+        return force_bytes(text)
+    else:
+        return force_text(text)

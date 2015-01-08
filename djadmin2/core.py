@@ -8,7 +8,8 @@ from __future__ import division, absolute_import, unicode_literals
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.importlib import import_module
+
+from importlib import import_module
 
 
 from . import apiviews
@@ -122,7 +123,7 @@ class Admin2(object):
             try:
                 import_module("%s.admin2" % app_name)
             except ImportError as e:
-                if str(e) == "No module named admin2":
+                if str(e).startswith("No module named") and 'admin2' in str(e):
                     continue
                 raise e
 
@@ -188,7 +189,7 @@ class Admin2(object):
                 name='api_index'
                 ),
         )
-        for model, model_admin in self.registry.iteritems():
+        for model, model_admin in self.registry.items():
             model_options = utils.model_options(model)
             urlpatterns += patterns(
                 '',
@@ -207,3 +208,4 @@ class Admin2(object):
     def urls(self):
         # We set the application and instance namespace here
         return self.get_urls(), self.name, self.name
+

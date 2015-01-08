@@ -7,12 +7,13 @@ from decimal import Decimal
 from django.test import TestCase
 from django.db import models
 from django.utils.translation import activate
+from django.utils import six
 
 from .. import renderers
 
 
 class RendererTestModel(models.Model):
-    decimal = models.DecimalField(decimal_places=5)
+    decimal = models.DecimalField(decimal_places=5, max_digits=10)
 
 
 class BooleanRendererTest(TestCase):
@@ -57,16 +58,16 @@ class DatetimeRendererTest(TestCase):
 
     def test_time_german(self):
         activate('de')
-        out = self.renderer(dt.time(13, 37, 01), None)
+        out = self.renderer(dt.time(13, 37, 1), None)
         self.assertEqual('13:37:01', out)
 
     def test_time_chinese(self):
         activate('zh')
-        out = self.renderer(dt.time(13, 37, 01), None)
+        out = self.renderer(dt.time(13, 37, 1), None)
         self.assertEqual('1:37 p.m.', out)
 
     def test_datetime(self):
-        out = self.renderer(dt.datetime(2013, 7, 6, 13, 37, 01), None)
+        out = self.renderer(dt.datetime(2013, 7, 6, 13, 37, 1), None)
         self.assertEqual('July 6, 2013, 1:37 p.m.', out)
 
     # TODO test timezone localization
@@ -105,7 +106,10 @@ class NumberRendererTest(TestCase):
 
     def testEndlessFloat(self):
         out = self.renderer(1.0/3, None)
-        self.assertEqual('0.333333333333', out)
+        if six.PY2:
+            self.assertEqual('0.333333333333', out)
+        else:
+            self.assertEqual('0.3333333333333333', out)
 
     def testPlainDecimal(self):
         number = '0.123456789123456789123456789'

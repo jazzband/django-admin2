@@ -2,17 +2,21 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import collections
+
 from itertools import chain
 
 from django import forms
 from django.forms.util import flatatt
 from django.utils.html import format_html
-from django.utils.encoding import force_text
+from django.utils.encoding import force_text, force_bytes
 from django.utils.safestring import mark_safe
 from django.forms import widgets as django_widgets
+from django.utils import six
 from django.utils.translation import ugettext_lazy
 
 import django_filters
+
+from .utils import type_str
 
 LINK_TEMPLATE = '<a href=?{0}={1} {2}>{3}</a>'
 
@@ -74,7 +78,7 @@ def build_list_filter(request, model_admin, queryset):
     # otherwise build :mod:`django_filters.FilterSet`
     filters = []
     for field_filter in model_admin.list_filter:
-        if isinstance(field_filter, basestring):
+        if isinstance(field_filter, six.string_types):
             filters.append(get_filter_for_field_name(
                 queryset.model,
                 field_filter,
@@ -84,20 +88,16 @@ def build_list_filter(request, model_admin, queryset):
     filterset_dict = {}
     for field_filter in filters:
         filterset_dict[field_filter.name] = field_filter
-    fields = filterset_dict.keys()
+    fields = list(filterset_dict.keys())
     filterset_dict['Meta'] = type(
-        b'Meta',
+        type_str('Meta'),
         (),
         {
             'model': queryset.model,
             'fields': fields,
         },
     )
-    return type(
-        b'%sFilterSet' % queryset.model.__name__,
-        (django_filters.FilterSet, ),
-        filterset_dict,
-    )(request.GET, queryset=queryset)
+    return type(type_str('%sFilterSet' % queryset.model.__name__),(django_filters.FilterSet, ),filterset_dict,)(request.GET, queryset=queryset)
 
 
 def build_date_filter(request, model_admin, queryset):
@@ -117,7 +117,7 @@ def build_date_filter(request, model_admin, queryset):
     }
 
     return type(
-        b'%sDateFilterSet' % queryset.model.__name__,
+        type_str('%sDateFilterSet' % queryset.model.__name__),
         (django_filters.FilterSet,),
         filterset_dict,
     )(request.GET, queryset=queryset)

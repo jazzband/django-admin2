@@ -2,7 +2,6 @@
 # vim:fenc=utf-8
 
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
 
@@ -13,33 +12,30 @@ import djadmin2.filters as djadmin2_filters
 
 import django_filters
 
-
-class PostAdminSimple(djadmin2.ModelAdmin2):
-    list_filter = ['published', ]
-
-
-class PostAdminWithFilterInstances(djadmin2.ModelAdmin2):
-    list_filter = [
-        django_filters.BooleanFilter(name='published'),
-    ]
-
-
-class FS(django_filters.FilterSet):
-    class Meta:
-        model = Post
-        fields = ['published']
-
-
-class PostAdminWithFilterSetInst(djadmin2.ModelAdmin2):
-    list_filter = FS
-
-
 class ListFilterBuilderTest(TestCase):
 
     def setUp(self):
         self.rf = RequestFactory()
 
     def test_filter_building(self):
+        class PostAdminSimple(djadmin2.ModelAdmin2):
+            list_filter = ['published', ]
+
+
+        class PostAdminWithFilterInstances(djadmin2.ModelAdmin2):
+            list_filter = [
+                django_filters.BooleanFilter(name='published'),
+            ]
+
+        class FS(django_filters.FilterSet):
+            class Meta:
+                model = Post
+                fields = ['published']
+
+
+        class PostAdminWithFilterSetInst(djadmin2.ModelAdmin2):
+            list_filter = FS
+
         Post.objects.create(title="post_1_title", body="body")
         Post.objects.create(title="post_2_title", body="another body")
         request = self.rf.get(reverse("admin2:dashboard"))

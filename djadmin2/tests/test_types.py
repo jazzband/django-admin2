@@ -40,7 +40,7 @@ class ImmutableAdminFactoryTests(TestCase):
             self.immutable_admin.d
 
 
-class Thing(models.Model):
+class BigThing(models.Model):
     pass
 
 
@@ -59,7 +59,7 @@ class ModelAdminTest(TestCase):
         )
 
     def test_get_index_kwargs(self):
-        admin_instance = ModelAdmin2(Thing, Admin2)
+        admin_instance = ModelAdmin2(BigThing, Admin2)
         self.assertIn(
             'paginate_by',
             admin_instance.get_index_kwargs().keys()

@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from django.utils.encoding import force_text
 
 from ..models import Post, Comment
 
 
 class BaseIntegrationTest(TestCase):
+
     """
     Base TestCase for integration tests.
     """
+
     def setUp(self):
         self.client = Client()
         self.user = get_user_model()(username='user', is_staff=True,
@@ -23,12 +27,14 @@ class BaseIntegrationTest(TestCase):
 
 
 class AdminIndexTest(BaseIntegrationTest):
+
     def test_view_ok(self):
         response = self.client.get(reverse("admin2:dashboard"))
         self.assertContains(response, reverse("admin2:blog_post_index"))
 
 
 class UserListTest(BaseIntegrationTest):
+
     def test_search_users_m2m_group(self):
         # This test should cause the distinct search path to exectue
         group = Group.objects.create(name="Test Group")
@@ -40,6 +46,7 @@ class UserListTest(BaseIntegrationTest):
 
 
 class CommentListTest(BaseIntegrationTest):
+
     def test_search_comments(self):
         # Test search across Foriegn Keys
         post_1 = Post.objects.create(title="post_1_title", body="body")
@@ -49,7 +56,8 @@ class CommentListTest(BaseIntegrationTest):
         Comment.objects.create(body="comment_post_2", post=post_2)
 
         params = {"q": "post_1_title"}
-        response = self.client.get(reverse("admin2:blog_comment_index"), params)
+        response = self.client.get(
+            reverse("admin2:blog_comment_index"), params)
         self.assertContains(response, "comment_post_1_a")
         self.assertContains(response, "comment_post_1_b")
         self.assertNotContains(response, "comment_post_2")
@@ -62,6 +70,7 @@ class CommentListTest(BaseIntegrationTest):
 
 
 class PostListTest(BaseIntegrationTest):
+
     def _create_posts(self):
         Post.objects.bulk_create([
             Post(
@@ -129,7 +138,8 @@ class PostListTest(BaseIntegrationTest):
 
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
-        self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', response.content)
+        self.assertInHTML(
+            '<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', force_text(response.content))
 
     def test_actions_displayed_twice(self):
         # If actions_on_top and actions_on_bottom are both set
@@ -139,27 +149,33 @@ class PostListTest(BaseIntegrationTest):
 
     def test_delete_selected_post(self):
         post = Post.objects.create(title="A Post Title", body="body")
-        params = {'action': 'DeleteSelectedAction', 'selected_model_pk': str(post.pk)}
+        params = {'action': 'DeleteSelectedAction',
+                  'selected_model_pk': str(post.pk)}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         # caution : uses pluralization
-        self.assertInHTML('<p>Are you sure you want to delete the selected post? The following item will be deleted:</p>', response.content)
+        self.assertInHTML(
+            '<p>Are you sure you want to delete the selected post? The following item will be deleted:</p>', force_text(response.content))
 
     def test_delete_selected_post_confirmation(self):
         post = Post.objects.create(title="A Post Title", body="body")
-        params = {'action': 'DeleteSelectedAction', 'selected_model_pk': str(post.pk), 'confirmed': 'yes'}
+        params = {'action': 'DeleteSelectedAction',
+                  'selected_model_pk': str(post.pk), 'confirmed': 'yes'}
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         self.assertRedirects(response, reverse("admin2:blog_post_index"))
 
     def test_delete_selected_post_none_selected(self):
         Post.objects.create(title="A Post Title", body="body")
         params = {'action': 'DeleteSelectedAction'}
-        response = self.client.post(reverse("admin2:blog_post_index"), params, follow=True)
-        self.assertContains(response, "Items must be selected in order to perform actions on them. No items have been changed.")
+        response = self.client.post(
+            reverse("admin2:blog_post_index"), params, follow=True)
+        self.assertContains(
+            response, "Items must be selected in order to perform actions on them. No items have been changed.")
 
     def test_search_posts(self):
         Post.objects.create(title="A Post Title", body="body")
         Post.objects.create(title="Another Post Title", body="body")
-        Post.objects.create(title="Post With Keyword In Body", body="another post body")
+        Post.objects.create(
+            title="Post With Keyword In Body", body="another post body")
         params = {"q": "another"}
         response = self.client.get(reverse("admin2:blog_post_index"), params)
         self.assertContains(response, "Another Post Title")
@@ -167,12 +183,14 @@ class PostListTest(BaseIntegrationTest):
         self.assertNotContains(response, "A Post Title")
 
     def test_renderer_title(self):
-        Post.objects.create(title='a lowercase title', body='body', published=False)
+        Post.objects.create(
+            title='a lowercase title', body='body', published=False)
         response = self.client.get(reverse('admin2:blog_post_index'))
         self.assertContains(response, 'A Lowercase Title')
 
     def test_renderer_body(self):
-        Post.objects.create(title='title', body='a lowercase body', published=False)
+        Post.objects.create(
+            title='title', body='a lowercase body', published=False)
         response = self.client.get(reverse('admin2:blog_post_index'))
         self.assertContains(response, 'a lowercase body')
 
@@ -311,7 +329,8 @@ class PostListTestCustomAction(BaseIntegrationTest):
 
     def test_publish_action_displayed_in_list(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
-        self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="CustomPublishAction">Publish selected items</a>', response.content)
+        self.assertInHTML(
+            '<a tabindex="-1" href="#" data-name="action" data-value="CustomPublishAction">Publish selected items</a>', force_text(response.content))
 
     def test_publish_selected_items(self):
         post = Post.objects.create(title="A Post Title",
@@ -329,7 +348,8 @@ class PostListTestCustomAction(BaseIntegrationTest):
 
     def test_unpublish_action_displayed_in_list(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
-        self.assertInHTML('<a tabindex="-1" href="#" data-name="action" data-value="unpublish_items">Unpublish selected items</a>', response.content)
+        self.assertInHTML(
+            '<a tabindex="-1" href="#" data-name="action" data-value="unpublish_items">Unpublish selected items</a>', force_text(response.content))
 
     def test_unpublish_selected_items(self):
         post = Post.objects.create(title="A Post Title",
@@ -346,6 +366,7 @@ class PostListTestCustomAction(BaseIntegrationTest):
 
 
 class PostDetailViewTest(BaseIntegrationTest):
+
     def test_view_ok(self):
         post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.get(reverse("admin2:blog_post_detail",
@@ -354,9 +375,11 @@ class PostDetailViewTest(BaseIntegrationTest):
 
 
 class PostCreateViewTest(BaseIntegrationTest):
+
     def test_view_ok(self):
         response = self.client.get(reverse("admin2:blog_post_create"))
-        self.assertNotIn('''enctype="multipart/form-data"''', response.content)
+        self.assertNotIn(
+            '''enctype="multipart/form-data"''', force_text(response.content))
         self.assertEqual(response.status_code, 200)
 
     def test_create_post(self):
@@ -422,6 +445,7 @@ class PostCreateViewTest(BaseIntegrationTest):
 
 
 class PostDeleteViewTest(BaseIntegrationTest):
+
     def test_view_ok(self):
         post = Post.objects.create(title="A Post Title", body="body")
         response = self.client.get(reverse("admin2:blog_post_delete",
@@ -437,9 +461,11 @@ class PostDeleteViewTest(BaseIntegrationTest):
 
 
 class PostDeleteActionTest(BaseIntegrationTest):
+
     """
     Tests the behaviour of the 'Delete selected items' action.
     """
+
     def test_confirmation_page(self):
         p1 = Post.objects.create(title="A Post Title", body="body")
         p2 = Post.objects.create(title="A Post Title", body="body")

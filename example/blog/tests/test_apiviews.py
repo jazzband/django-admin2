@@ -1,9 +1,11 @@
+from __future__ import unicode_literals
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
-from django.utils import simplejson as json
+from django.utils.encoding import force_text
+import json
 
 
 from djadmin2 import apiviews
@@ -69,7 +71,7 @@ class ListCreateAPIViewTest(APITestCase):
         response.render()
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn('"__str__": "Foo"', response.content)
+        self.assertIn('"__unicode__": "Foo"', force_text(response.content))
 
     def test_pagination(self):
         request = self.factory.get(reverse('admin2:blog_post_api_list'))
@@ -81,7 +83,7 @@ class ListCreateAPIViewTest(APITestCase):
         response.render()
 
         self.assertEqual(response.status_code, 200)
-        data = json.loads(response.content)
+        data = json.loads(force_text(response.content))
         self.assertEqual(data['count'], 0)
         # next and previous fields exist, but are null because we have no
         # content

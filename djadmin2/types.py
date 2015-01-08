@@ -224,7 +224,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
                     'Cannot instantiate admin view "{}.{}". '
                     'The error that got raised was: {}'.format(
                         self.__class__.__name__, admin_view.name, e))
-                raise new_exception, None, trace
+                raise (new_exception, None, trace)
             pattern_list.append(
                 url(
                     regex=admin_view.url,
