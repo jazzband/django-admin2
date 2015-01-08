@@ -2,7 +2,6 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import collections
-import six
 
 from itertools import chain
 
@@ -12,6 +11,7 @@ from django.utils.html import format_html
 from django.utils.encoding import force_text, force_bytes
 from django.utils.safestring import mark_safe
 from django.forms import widgets as django_widgets
+from django.utils import six
 from django.utils.translation import ugettext_lazy
 
 import django_filters

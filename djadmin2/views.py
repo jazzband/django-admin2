@@ -28,6 +28,7 @@ from . import permissions, utils
 from .forms import AdminAuthenticationForm
 from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
+from .models import LogEntry
 
 class AdminView(object):
 
@@ -390,7 +391,6 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
 
     def forms_valid(self, form, inlines):
         response = super(ModelEditFormView, self).forms_valid(form, inlines)
-        from .models import LogEntry
         LogEntry.objects.log_action(
             self.request.user.id,
             self.object,
@@ -427,7 +427,6 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
 
     def forms_valid(self, form, inlines):
         response = super(ModelAddFormView, self).forms_valid(form, inlines)
-        from .models import LogEntry
         LogEntry.objects.log_action(
             self.request.user.id,
             self.object,
@@ -471,7 +470,6 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return context
 
     def delete(self, request, *args, **kwargs):
-        from .models import LogEntry
         LogEntry.objects.log_action(
             request.user.id,
             self.get_object(),
@@ -509,7 +507,6 @@ class ModelHistoryView(AdminModel2Mixin, generic.ListView):
 
     def get_queryset(self):
         content_type = ContentType.objects.get_for_model(self.get_object())
-        from .models import LogEntry
         return LogEntry.objects.filter(
             content_type=content_type,
             object_id=self.get_object().id

@@ -123,7 +123,6 @@ class Admin2(object):
             try:
                 import_module("%s.admin2" % app_name)
             except ImportError as e:
-
                 if str(e).startswith("No module named") and 'admin2' in str(e):
                     continue
                 raise e
