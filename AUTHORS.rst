@@ -50,6 +50,7 @@ Developers
 * James Rivett-Carnac (@yarbelk / james.rivettcarnac@gmail.com)
 * Andrew Mosson (@amosson / amosson@tippit.com)
 * marangonico 
+* Kamil Gałuszka (@galuszkak / galuszkak@gmail.com)
 
 Translators
 -----------
