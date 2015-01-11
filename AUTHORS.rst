@@ -49,8 +49,9 @@ Developers
 * Kevin Diale (@powersurge360 / <powersurge360@gmail.com>)
 * James Rivett-Carnac (@yarbelk / james.rivettcarnac@gmail.com)
 * Andrew Mosson (@amosson / amosson@tippit.com)
-* marangonico 
+* marangonico
 * Kamil Gałuszka (@galuszkak / galuszkak@gmail.com)
+* Germano Gabbianelli (@tyrion)
 
 Translators
 -----------
