@@ -78,6 +78,7 @@ class Admin2Mixin(PermissionMixin):
     app_label = None
 
     index_path = reverse_lazy('admin2:dashboard')
+    logout_path = reverse_lazy('admin2:logout')
 
     def get_template_names(self):
         return [os.path.join(
@@ -103,7 +104,7 @@ class Admin2Mixin(PermissionMixin):
         if self.is_user(request):
             from .views import LoginView
 
-            if request.path == reverse('admin2:logout'):
+            if request.path == str(self.logout_path):
                 return HttpResponseRedirect(self.index_path)
 
             if request.path == self.index_path:
