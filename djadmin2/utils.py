@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
+from collections import defaultdict
+
 from django.db.models import ProtectedError
 from django.db.models import ManyToManyRel
 from django.db.models.deletion import Collector
-from django.db.models.related import RelatedObject
+from django.db.models.fields.related import ForeignObjectRel
 from django.utils import six
 from django.utils.encoding import force_bytes, force_text
 
@@ -20,7 +22,7 @@ def lookup_needs_distinct(opts, lookup_path):
     field_name = lookup_path.split('__', 1)[0]
     field = opts.get_field_by_name(field_name)[0]
     condition1 = hasattr(field, 'rel') and isinstance(field.rel, ManyToManyRel)
-    condition2 = isinstance(field, RelatedObject) and not field.field.unique
+    condition2 = isinstance(field, ForeignObjectRel) and not field.field.unique
     return condition1 or condition2
 
 
@@ -104,25 +106,32 @@ class NestedObjects(Collector):
     This is adopted from the Django core. django-admin2 mandates that code
     doesn't depend on imports from django.contrib.admin.
 
-    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L144-L199
+    https://github.com/django/django/blob/1.8c1/django/contrib/admin/utils.py#L160-L221
     """
+
+
     def __init__(self, *args, **kwargs):
         super(NestedObjects, self).__init__(*args, **kwargs)
         self.edges = {}  # {from_instance: [to_instances]}
         self.protected = set()
+        self.model_count = defaultdict(int)
 
     def add_edge(self, source, target):
         self.edges.setdefault(source, []).append(target)
 
-    def collect(self, objs, source_attr=None, **kwargs):
+    def collect(self, objs, source=None, source_attr=None, **kwargs):
         for obj in objs:
-            if source_attr:
-                self.add_edge(getattr(obj, source_attr), obj)
+            if source_attr and not source_attr.endswith('+'):
+                related_name = source_attr % {
+                    'class': source._meta.model_name,
+                    'app_label': source._meta.app_label,
+                }
+                self.add_edge(getattr(obj, related_name), obj)
             else:
                 self.add_edge(None, obj)
+            self.model_count[obj._meta.verbose_name_plural] += 1
         try:
-            return super(NestedObjects, self).collect(
-                objs, source_attr=source_attr, **kwargs)
+            return super(NestedObjects, self).collect(objs, source_attr=source_attr, **kwargs)
         except ProtectedError as e:
             self.protected.update(e.protected_objects)
 
