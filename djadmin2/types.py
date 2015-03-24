@@ -188,7 +188,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
         form_class = (self.update_form_class if
                       self.update_form_class else self.form_class)
         if form_class is None:
-            form_class = modelform_factory(self.model)
+            form_class = modelform_factory(self.model, fields='__all__')
         kwargs.update({
             'inlines': self.inlines,
             'form_class': form_class,
