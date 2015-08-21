@@ -2,10 +2,11 @@
 
 {% load i18n %}
 {% load admin2_tags %}
+{% load staticfiles %}
 
 {% block css %}
   {{ block.super }}
-  <link href="{{ STATIC_URL }}themes/bootstrap/css/login.css" rel="stylesheet" media="screen">
+  <link href="{% static "themes/bootstrap/css/login.css" %}" rel="stylesheet" media="screen">
 {% endblock css %}
 
 {% block navbar %}{% endblock navbar %}
