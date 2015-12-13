@@ -1,6 +1,6 @@
-===============
+=============
 django-admin2
-===============
+=============
 
 .. image:: https://travis-ci.org/pydanny/django-admin2.png
    :alt: Build Status
@@ -20,7 +20,7 @@ legacy code and make it easier to write extensions and themes.
 Full Documentation at: http://django-admin2.rtfd.org/
 
 Features
-=============
+========
 
 * Rewrite of the Django Admin backend
 * Drop-in themes
@@ -42,7 +42,7 @@ Screenshots
     :target: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Select_user.png
 
 Requirements
-=============
+============
 
 * Django 1.6+
 * Python 2.7+ or Python 3.3+
@@ -111,7 +111,7 @@ Add djadmin2 urls to your URLconf:
 
 
 How to write django-admin2 modules
-=====================================
+==================================
 
 .. code-block:: python
 
@@ -149,7 +149,7 @@ Themes are now defined explicitly, including the default theme. Therefore, your 
 
 
 Drop-In Themes
-===============
+==============
 
 The default theme is whatever bootstrap is most current. Specifically:
 
@@ -183,6 +183,6 @@ This project follows best practices as espoused in `Two Scoops of Django: Best P
 
 
 Support this project!
-======================
+=====================
 
 You can hire the lead maintainer to perform dedicated work on this package. Please email pydanny@cartwheelweb.com.
