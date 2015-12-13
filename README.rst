@@ -8,10 +8,6 @@ django-admin2
 .. image:: https://coveralls.io/repos/pydanny/django-admin2/badge.png?branch=develop
    :alt: Coverage Status
    :target: https://coveralls.io/r/pydanny/django-admin2
-.. image:: https://pypip.in/v/django-admin2/badge.png
-   :target: https://crate.io/packages/django-admin2/
-.. image:: https://pypip.in/d/django-admin2/badge.png
-   :target: https://crate.io/packages/django-admin2/
 .. image:: https://badges.gitter.im/Join Chat.svg
    :target: https://gitter.im/pydanny/django-admin2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
