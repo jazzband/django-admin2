@@ -2,11 +2,11 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from django.db.models import ProtectedError
-from django.db.models import ManyToManyRel
 from django.db.models.deletion import Collector
-from django.db.models.related import RelatedObject
+from django.db.models.sql.constants import QUERY_TERMS
 from django.utils import six
 from django.utils.encoding import force_bytes, force_text
+
 
 def lookup_needs_distinct(opts, lookup_path):
     """
@@ -15,14 +15,23 @@ def lookup_needs_distinct(opts, lookup_path):
     This is adopted from the Django core. django-admin2 mandates that code
     doesn't depend on imports from django.contrib.admin.
 
-    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L20
+    https://github.com/django/django/blob/1.9.0/django/contrib/admin/utils.py#L22
     """
-    field_name = lookup_path.split('__', 1)[0]
-    field = opts.get_field_by_name(field_name)[0]
-    condition1 = hasattr(field, 'rel') and isinstance(field.rel, ManyToManyRel)
-    condition2 = isinstance(field, RelatedObject) and not field.field.unique
-    return condition1 or condition2
-
+    lookup_fields = lookup_path.split('__')
+    # Remove the last item of the lookup path if it is a query term
+    if lookup_fields[-1] in QUERY_TERMS:
+        lookup_fields = lookup_fields[:-1]
+    # Now go through the fields (following all relations) and look for an m2m
+    for field_name in lookup_fields:
+        field = opts.get_field(field_name)
+        if hasattr(field, 'get_path_info'):
+            # This field is a relation, update opts to follow the relation
+            path_info = field.get_path_info()
+            opts = path_info[-1].to_opts
+            if any(path.m2m for path in path_info):
+                # This field is a m2m relation so we know we need to call distinct
+                return True
+    return False
 
 def model_options(model):
     """
@@ -174,14 +183,14 @@ def quote(s):
     This is adopted from the Django core. django-admin2 mandates that code
     doesn't depend on imports from django.contrib.admin.
 
-    https://github.com/django/django/blob/1.5.1/django/contrib/admin/util.py#L48-L62
+    https://github.com/django/django/blob/1.9.0/django/contrib/admin/utils.py#L66-L73
     """
     if not isinstance(s, six.string_types):
         return s
     res = list(s)
     for i in range(len(res)):
         c = res[i]
-        if c in """:/_#?;@&=+$,"<>%\\""":
+        if c in """:/_#?;@&=+$,"[]<>%\n\\""":
             res[i] = '_%02X' % ord(c)
     return ''.join(res)
 
