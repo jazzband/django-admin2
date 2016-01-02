@@ -188,7 +188,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
         form_class = (self.update_form_class if
                       self.update_form_class else self.form_class)
         if form_class is None:
-            form_class = modelform_factory(self.model)
+            form_class = modelform_factory(self.model, fields='__all__')
         kwargs.update({
             'inlines': self.inlines,
             'form_class': form_class,
@@ -224,7 +224,11 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
                     'Cannot instantiate admin view "{}.{}". '
                     'The error that got raised was: {}'.format(
                         self.__class__.__name__, admin_view.name, e))
-                raise (new_exception, None, trace)
+                try:
+                    raise new_exception.with_traceback(trace)
+                except AttributeError:
+                    raise (new_exception, None, trace)
+
             pattern_list.append(
                 url(
                     regex=admin_view.url,

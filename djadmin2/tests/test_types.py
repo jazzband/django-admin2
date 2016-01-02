@@ -65,3 +65,21 @@ class ModelAdminTest(TestCase):
             'paginate_by',
             admin_instance.get_index_kwargs().keys()
         )
+
+    def test_get_urls(self):
+        admin_instance = ModelAdmin2(BigThing, Admin2)
+        self.assertEqual(6, len(admin_instance.get_urls()))
+
+    def test_get_urls_throws_type_error(self):
+        with self.assertRaises(TypeError):
+            try:
+                admin_instance = ModelAdmin2(BigThing, Admin2)
+                admin_instance.views = [views.AdminView(None, None, None)]
+                admin_instance.get_urls()
+
+            except TypeError as e:
+                message = u"Cannot instantiate admin view " \
+                    '"ModelAdmin2.None". The error that got raised was: ' \
+                    "'NoneType' object has no attribute 'as_view'"
+                self.assertEqual(e.args[0], message)
+                raise

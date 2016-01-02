@@ -13,7 +13,7 @@ from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.db import models
+from django.db import models, router
 from django.db.models.fields import FieldDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -461,8 +461,9 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             opts = utils.model_options(obj)
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                force_text(obj))
-
-        collector = utils.NestedObjects(using=None)
+                               
+        using = router.db_for_write(self.get_object()._meta.model)
+        collector = utils.NestedObjects(using=using)
         collector.collect([self.get_object()])
         context.update({
             'deletable_objects': collector.nested(_format_callback)

@@ -82,10 +82,16 @@ def model_permission(permission):
         assert model_class, (
             'Cannot apply model permissions on a view that does not '
             'have a `.model` or `.queryset` property.')
-
+        
+        try:
+            # django 1.8+
+            model_name = model_class._meta.model_name
+        except AttributeError:
+            model_name = model_class._meta.module_name
+            
         permission_name = permission.format(
             app_label=model_class._meta.app_label,
-            model_name=model_class._meta.module_name)
+            model_name=model_name)
         return request.user.has_perm(permission_name, obj)
     return has_permission
 

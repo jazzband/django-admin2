@@ -141,7 +141,7 @@ class AdminModel2Mixin(Admin2Mixin):
     def get_form_class(self):
         if self.form_class is not None:
             return self.form_class
-        return modelform_factory(self.get_model())
+        return modelform_factory(self.get_model(), fields='__all__')
 
 
 class Admin2ModelFormMixin(object):

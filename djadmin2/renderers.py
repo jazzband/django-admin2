@@ -46,11 +46,12 @@ def datetime_renderer(value, field):
 
     """
     if isinstance(value, datetime):
+        # django ticket #23466 Removing seconds from locale formats
         return formats.localize(timezone.template_localtime(value))
     elif isinstance(value, (date, time)):
-        return formats.localize(value)
+        return ":".join((formats.localize(value)).split(":")[:2])
     else:
-        return value
+        return ":".join(value.split(":")[:2])
 
 
 def title_renderer(value, field):

@@ -1,6 +1,6 @@
-===============
+=============
 django-admin2
-===============
+=============
 
 .. image:: https://travis-ci.org/pydanny/django-admin2.png
    :alt: Build Status
@@ -8,10 +8,6 @@ django-admin2
 .. image:: https://coveralls.io/repos/pydanny/django-admin2/badge.png?branch=develop
    :alt: Coverage Status
    :target: https://coveralls.io/r/pydanny/django-admin2
-.. image:: https://pypip.in/v/django-admin2/badge.png
-   :target: https://crate.io/packages/django-admin2/
-.. image:: https://pypip.in/d/django-admin2/badge.png
-   :target: https://crate.io/packages/django-admin2/
 .. image:: https://badges.gitter.im/Join Chat.svg
    :target: https://gitter.im/pydanny/django-admin2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
@@ -24,7 +20,7 @@ legacy code and make it easier to write extensions and themes.
 Full Documentation at: http://django-admin2.rtfd.org/
 
 Features
-=============
+========
 
 * Rewrite of the Django Admin backend
 * Drop-in themes
@@ -46,7 +42,7 @@ Screenshots
     :target: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Select_user.png
 
 Requirements
-=============
+============
 
 * Django 1.6+
 * Python 2.7+ or Python 3.3+
@@ -115,7 +111,7 @@ Add djadmin2 urls to your URLconf:
 
 
 How to write django-admin2 modules
-=====================================
+==================================
 
 .. code-block:: python
 
@@ -153,7 +149,7 @@ Themes are now defined explicitly, including the default theme. Therefore, your 
 
 
 Drop-In Themes
-===============
+==============
 
 The default theme is whatever bootstrap is most current. Specifically:
 
@@ -179,15 +175,14 @@ Follows Best Practices
    :name: Two Scoops Logo
    :align: center
    :alt: Two Scoops of Django
-   :target: http://twoscoopspress.org/products/two-scoops-of-django-1-6
+   :target: http://twoscoopspress.org/products/two-scoops-of-django-1-8
 
-This project follows best practices as espoused in `Two Scoops of Django: Best Practices for Django 1.6`_.
+This project follows best practices as espoused in `Two Scoops of Django: Best Practices for Django 1.8`_.
 
-.. _`Two Scoops of Django: Best Practices for Django 1.6`: http://twoscoopspress.org/products/two-scoops-of-django-1-6
+.. _`Two Scoops of Django: Best Practices for Django 1.8`: http://twoscoopspress.org/products/two-scoops-of-django-1-8
 
 
 Support this project!
-======================
+=====================
 
 You can hire the lead maintainer to perform dedicated work on this package. Please email pydanny@cartwheelweb.com.
-
