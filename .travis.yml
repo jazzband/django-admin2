@@ -20,7 +20,6 @@ env:
     - TOX_ENV=pypy-dj1.8.x
     - TOX_ENV=pypy-dj1.9.x
     - TOX_ENV=pypy3-dj1.6.x
-    - TOX_ENV=pypy3-dj1.7.x
     - TOX_ENV=pypy3-dj1.8.x
     - TOX_ENV=pypy3-dj1.9.x
 install:
@@ -44,4 +43,5 @@ matrix:
     - env: TOX_ENV=pypy-dj1.8.x
     - env: TOX_ENV=pypy-dj1.9.x
     - env: TOX_ENV=pypy3-dj1.8.x
+    - env: TOX_ENV=pypy3-dj1.9.x
     - env: TOX_ENV=pypy3-dj1.9.x
