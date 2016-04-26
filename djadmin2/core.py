@@ -5,7 +5,7 @@ Issue #99.
 """
 from __future__ import division, absolute_import, unicode_literals
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -160,8 +160,7 @@ class Admin2(object):
         }
 
     def get_urls(self):
-        urlpatterns = patterns(
-            '',
+        urlpatterns = [
             url(regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
@@ -188,11 +187,10 @@ class Admin2(object):
                     **self.get_api_index_kwargs()),
                 name='api_index'
                 ),
-        )
+        ]
         for model, model_admin in self.registry.items():
             model_options = utils.model_options(model)
-            urlpatterns += patterns(
-                '',
+            urlpatterns += [
                 url('^{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),
@@ -201,11 +199,10 @@ class Admin2(object):
                     model_options.app_label,
                     model_options.object_name.lower()),
                     include(model_admin.api_urls)),
-            )
+            ]
         return urlpatterns
 
     @property
     def urls(self):
         # We set the application and instance namespace here
         return self.get_urls(), self.name, self.name
-
