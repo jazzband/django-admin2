@@ -381,7 +381,6 @@ def create_view_permissions(app, created_models, verbosity, **kwargs):
     """
     # Is there any reason for doing this import here?
 
-    app_models = get_models(app)
     try:
         # django >= 1.7
         from django.apps import apps
