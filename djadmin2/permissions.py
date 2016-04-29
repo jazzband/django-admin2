@@ -22,7 +22,6 @@ import re
 
 from django.contrib.auth import models as auth_models
 from django.contrib.contenttypes import models as contenttypes_models
-from django.db.models import get_models
 from django.utils import six
 
 from . import utils
@@ -383,6 +382,14 @@ def create_view_permissions(app, created_models, verbosity, **kwargs):
     # Is there any reason for doing this import here?
 
     app_models = get_models(app)
+    try:
+        # django >= 1.7
+        from django.apps import apps
+        app_models = apps.get_models(app)
+    except ImportError:
+        # django < 1.7
+        from django.db.models import get_model
+        app_models = get_models(app)
 
     # This will hold the permissions we're looking for as
     # (content_type, (codename, name))
