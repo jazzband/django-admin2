@@ -5,7 +5,7 @@ Issue #99.
 """
 from __future__ import division, absolute_import, unicode_literals
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -23,7 +23,6 @@ class Admin2(object):
     The base Admin2 object.
     It keeps a registry of all registered Models and collects the urls of their
     related ModelAdmin2 instances.
-
     It also provides an index view that serves as an entry point to the
     admin site.
     """
@@ -42,11 +41,9 @@ class Admin2(object):
         Registers the given model with the given admin class. Once a model is
         registered in self.registry, we also add it to app registries in
         self.apps.
-
         If no model_admin is passed, it will use ModelAdmin2. If keyword
         arguments are given they will be passed to the admin class on
         instantiation.
-
         If a model is already registered, this will raise ImproperlyConfigured.
         """
         if model in self.registry:
@@ -66,7 +63,6 @@ class Admin2(object):
     def deregister(self, model):
         """
         Deregisters the given model. Remove the model from the self.app as well
-
         If the model is not already registered, this will raise
         ImproperlyConfigured.
         """
@@ -90,7 +86,6 @@ class Admin2(object):
     def register_app_verbose_name(self, app_label, app_verbose_name):
         """
         Registers the given app label with the given app verbose name.
-
         If a app_label is already registered, this will raise
         ImproperlyConfigured.
         """
@@ -104,7 +99,6 @@ class Admin2(object):
         """
         Deregisters the given app label. Remove the app label from the
         self.app_verbose_names as well.
-
         If the app label is not already registered, this will raise
         ImproperlyConfigured.
         """
@@ -160,8 +154,7 @@ class Admin2(object):
         }
 
     def get_urls(self):
-        urlpatterns = patterns(
-            '',
+        urlpatterns = [
             url(regex=r'^$',
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
@@ -188,11 +181,10 @@ class Admin2(object):
                     **self.get_api_index_kwargs()),
                 name='api_index'
                 ),
-        )
+        ]
         for model, model_admin in self.registry.items():
             model_options = utils.model_options(model)
-            urlpatterns += patterns(
-                '',
+            urlpatterns += [
                 url('^{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),
@@ -201,11 +193,10 @@ class Admin2(object):
                     model_options.app_label,
                     model_options.object_name.lower()),
                     include(model_admin.api_urls)),
-            )
+            ]
         return urlpatterns
 
     @property
     def urls(self):
         # We set the application and instance namespace here
         return self.get_urls(), self.name, self.name
-
