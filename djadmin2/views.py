@@ -271,38 +271,38 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
                 context["active_day"] = new_date.strftime("%B %d")
 
-                context["dates"] = self._format_days(context)
+                context["dates"] = self._format_days(self.get_queryset())
             elif year and month:
                 context["previous_date"] = {
                     "link": "?year=%s" % (year),
                     "text": "‹ %s" % year,
                 }
 
-                context["dates"] = self._format_days(context)
+                context["dates"] = self._format_days(self.get_queryset())
             elif year:
                 context["previous_date"] = {
                     "link": "?",
                     "text": ugettext_lazy("‹ All dates"),
                 }
 
-                context["dates"] = self._format_months(context)
+                context["dates"] = self._format_months(self.get_queryset())
             else:
-                context["dates"] = self._format_years(context)
+                context["dates"] = self._format_years(self.get_queryset())
 
         return context
 
-    def _format_years(self, context):
-        years = self._qs_date_or_datetime(context['object_list'], 'year')
+    def _format_years(self, queryset):
+        years = self._qs_date_or_datetime(queryset, 'year')
         if len(years) == 1:
-            return self._format_months(context)
+            return self._format_months(queryset)
         else:
             return [
                 (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
                 for year in
-                self._qs_date_or_datetime(context['object_list'], 'year')
+                self._qs_date_or_datetime(queryset, 'year')
             ]
 
-    def _format_months(self, context):
+    def _format_months(self, queryset):
         return [
             (
                 "?year=%s&month=%s" % (
@@ -310,10 +310,10 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %Y")
             ) for date in
-            self._qs_date_or_datetime(context['object_list'], 'month')
+            self._qs_date_or_datetime(queryset, 'month')
         ]
 
-    def _format_days(self, context):
+    def _format_days(self, queryset):
         return [
             (
                 "?year=%s&month=%s&day=%s" % (
@@ -323,7 +323,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %d")
             ) for date in
-            self._qs_date_or_datetime(context['object_list'], 'day')
+            self._qs_date_or_datetime(queryset, 'day')
         ]
 
     def _qs_date_or_datetime(self, object_list, type):
