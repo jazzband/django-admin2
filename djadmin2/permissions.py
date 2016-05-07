@@ -407,8 +407,8 @@ def create_view_permissions(app, created_models, verbosity, **kwargs):
 
     perms = [
         auth_models.Permission(codename=codename, name=name, content_type=ctype)
-        for ctype, (codename, name) in searched_perms
-        if (ctype.pk, codename) not in all_perms
+        for c_type, (codename, name) in searched_perms
+        if (c_type.pk, codename) not in all_perms
     ]
     auth_models.Permission.objects.bulk_create(perms)
     if verbosity >= 2:
