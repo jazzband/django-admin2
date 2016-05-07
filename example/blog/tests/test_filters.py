@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-import djadmin2.filters as djadmin2_filters
+from djadmin2 import filters as djadmin2_filters
 from djadmin2.types import ModelAdmin2
 from ..models import Post
 
