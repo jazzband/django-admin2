@@ -17,7 +17,7 @@ API_VERSION = '0.1'
 class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
     _default_view_name = 'admin2:%(app_label)s_%(model_name)s_api_detail'
 
-    pk = fields.Field(source='pk')
+    pk = fields.Field()
     __unicode__ = fields.Field(source='__str__')
 
 
@@ -91,8 +91,8 @@ class IndexAPIView(Admin2APIMixin, APIView):
 
 
 class ListCreateAPIView(Admin2APIMixin, generics.ListCreateAPIView):
-    pass
+    model = None
 
 
 class RetrieveUpdateDestroyAPIView(Admin2APIMixin, generics.RetrieveUpdateDestroyAPIView):
-    pass
+    model = None

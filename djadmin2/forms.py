@@ -199,11 +199,10 @@ def allow_floppify_widget_for_field(field):
     # replaces the default TextInput with a NumberInput, if localization is
     # turned off. That applies for Django 1.6 upwards.
     # See the relevant source code in django:
-    # https://github.com/django/django/blob/1.6/django/forms/fields.py#L225
-    if django.VERSION >= (1, 6):
-        if isinstance(field, django.forms.IntegerField) and not field.localize:
-            if field.widget.__class__ is django.forms.NumberInput:
-                return True
+    #     https://github.com/django/django/blob/1.9.6/django/forms/fields.py#L261-264
+    if isinstance(field, django.forms.IntegerField) and not field.localize:
+        if field.widget.__class__ is django.forms.NumberInput:
+            return True
 
     # We can check if the widget was replaced by comparing the class of the
     # specified widget with the default widget that is specified on the field

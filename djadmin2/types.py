@@ -201,9 +201,9 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
 
     def get_api_list_kwargs(self):
         kwargs = self.get_default_api_view_kwargs()
-        kwargs.update({
-            'paginate_by': self.list_per_page,
-        })
+        # kwargs.update({
+        #     'paginate_by': self.list_per_page,
+        # })
         return kwargs
 
     def get_api_detail_kwargs(self):

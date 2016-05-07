@@ -13,7 +13,7 @@ from djadmin2.apiviews import Admin2APISerializer
 
 
 class GroupSerializer(Admin2APISerializer):
-    permissions = PrimaryKeyRelatedField(many=True)
+    permissions = PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Group
@@ -24,11 +24,11 @@ class GroupAdmin2(djadmin2.ModelAdmin2):
 
 
 class UserSerializer(Admin2APISerializer):
-    user_permissions = PrimaryKeyRelatedField(many=True)
+    user_permissions = PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = User
-        exclude = ('passwords',)
+        exclude = ('password',)
 
 
 class UserAdmin2(djadmin2.ModelAdmin2):
