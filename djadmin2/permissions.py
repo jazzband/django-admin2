@@ -369,7 +369,7 @@ class TemplatePermissionChecker(object):
         return force_text(bool(self))
 
 
-def create_view_permissions(app_config, created_models, verbosity, **kwargs):
+def create_view_permissions(app_config, created_models=None, verbosity=2, **kwargs):
     """
     Create 'view' permissions for all models.
 
