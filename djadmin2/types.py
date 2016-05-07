@@ -169,6 +169,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
         kwargs.update({
             'serializer_class': self.api_serializer_class,
         })
+        del kwargs["model"]
         return kwargs
 
     def get_prefixed_view_name(self, view_name):
@@ -204,10 +205,13 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
         kwargs.update({
             'paginate_by': self.list_per_page,
         })
+        del kwargs["paginate_by"]
         return kwargs
 
     def get_api_detail_kwargs(self):
         return self.get_default_api_view_kwargs()
+
+
 
     def get_urls(self):
         pattern_list = []

@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
-import djadmin2
-
 from .models import CaptionedFile, UncaptionedFile
+from djadmin2 import site
 
-
-djadmin2.default.register(CaptionedFile)
-djadmin2.default.register(UncaptionedFile)
+site.default.register(CaptionedFile)
+site.default.register(UncaptionedFile)

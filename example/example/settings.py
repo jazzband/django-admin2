@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'floppyforms',
     'rest_framework',
     'crispy_forms',
-    #'djadmin2',
-    #'djadmin2.themes.djadmin2theme_default',
+    'djadmin2',
+    'djadmin2.themes.djadmin2theme_default',
     'blog',
     'files',
     'polls'
