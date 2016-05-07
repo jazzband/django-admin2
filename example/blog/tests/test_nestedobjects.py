@@ -1,4 +1,4 @@
-from django.db import DEFAULT_DB_ALIAS
+from django.db import DEFAULT_DB_ALIAS, router
 from django.test import TestCase
 
 from djadmin2.utils import NestedObjects
@@ -66,7 +66,8 @@ class NestedObjectsTests(TestCase):
         Check that the nested collector doesn't query for DO_NOTHING objects.
         """
         objs = [Event.objects.create()]
-        n = NestedObjects(using=None)
+        using = router.db_for_write(Event._meta.model)
+        n = NestedObjects(using=using)
         EventGuide.objects.create(event=objs[0])
         with self.assertNumQueries(2):
             # One for Location, one for Guest, and no query for EventGuide
