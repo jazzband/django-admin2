@@ -186,7 +186,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             queryset = self.build_list_filter(queryset).qs
 
         if self.model_admin.date_hierarchy:
-            queryset = self.build_date_filter(queryset).qs
+            queryset = self.build_date_filter(queryset, self.model_admin.date_hierarchy).qs
 
         queryset = self._modify_queryset_for_sort(queryset)
 
@@ -233,7 +233,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             )
         return self._list_filter
 
-    def build_date_filter(self, queryset=None):
+    def build_date_filter(self, queryset=None, field_name=None):
         if not hasattr(self, "_date_filter"):
             if queryset is None:
                 queryset = self.get_queryset()
@@ -241,6 +241,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 self.request,
                 self.model_admin,
                 queryset,
+                field_name
             )
 
         return self._date_filter

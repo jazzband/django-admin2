@@ -100,18 +100,18 @@ def build_list_filter(request, model_admin, queryset):
     return type(type_str('%sFilterSet' % queryset.model.__name__),(django_filters.FilterSet, ),filterset_dict,)(request.GET, queryset=queryset)
 
 
-def build_date_filter(request, model_admin, queryset):
+def build_date_filter(request, model_admin, queryset, field_name="published_date"):
     filterset_dict = {
         "year": NumericDateFilter(
-            name="published_date",
+            name=field_name,
             lookup_type="year",
         ),
         "month": NumericDateFilter(
-            name="published_date",
+            name=field_name,
             lookup_type="month",
         ),
         "day": NumericDateFilter(
-            name="published_date",
+            name=field_name,
             lookup_type="day",
         )
     }
