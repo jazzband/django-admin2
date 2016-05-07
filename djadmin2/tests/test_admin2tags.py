@@ -89,7 +89,7 @@ class TagsTests(TestCase):
         self.assertEquals(
             admin2_tags.formset_visible_fieldlist(formset),
             [u'Visible 1', u'Visible 2']
-        ) 
+        )
 
     def test_verbose_name_for(self):
         app_verbose_names = {

@@ -1,6 +1,5 @@
 from django.db import models
 from django.test import TestCase
-from django.views.generic import View
 
 from .. import views
 from ..types import ModelAdmin2, immutable_admin_factory

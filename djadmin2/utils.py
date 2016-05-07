@@ -10,6 +10,7 @@ from django.db.models.fields.related import ForeignObjectRel
 from django.utils import six
 from django.utils.encoding import force_bytes, force_text
 
+
 def lookup_needs_distinct(opts, lookup_path):
     """
     Returns True if 'distinct()' should be used to query the given lookup path.
@@ -91,10 +92,8 @@ def get_attr(obj, attr):
     and the __str__ attribute.
     """
     if attr == '__str__':
-        if six.PY2:
-            value = unicode(obj)
-        else:
-            value = str(obj)
+        from builtins import str as text
+        value = text(obj)
     else:
         attribute = getattr(obj, attr)
         value = attribute() if callable(attribute) else attribute
@@ -108,7 +107,6 @@ class NestedObjects(Collector):
 
     https://github.com/django/django/blob/1.8c1/django/contrib/admin/utils.py#L160-L221
     """
-
 
     def __init__(self, *args, **kwargs):
         super(NestedObjects, self).__init__(*args, **kwargs)

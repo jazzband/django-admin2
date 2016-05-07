@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
+from . import core
+from . import types
 
 __version__ = '0.6.1'
 
@@ -9,10 +11,6 @@ VERSION = __version__  # synonym
 
 # Default datetime input and output formats
 ISO_8601 = 'iso-8601'
-
-from . import core
-from . import types
-
 
 default = core.Admin2()
 ModelAdmin2 = types.ModelAdmin2

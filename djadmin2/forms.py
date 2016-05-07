@@ -166,9 +166,7 @@ _django_to_floppyforms_widget = {
     django.forms.extras.widgets.SelectDateWidget:
         _create_widget(
             floppyforms.widgets.SelectDateWidget,
-            init_arguments=
-                ('years',)
-                if django.VERSION >= (1, 7) else ('years', 'required')),
+            init_arguments=('years',) if django.VERSION >= (1, 7) else ('years', 'required')),
 }
 
 _django_field_to_floppyform_widget = {
@@ -272,8 +270,10 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
 
 # Translators : %(username)s will be replaced by the username_field name
 # (default : username, but could be email, or something else)
-ERROR_MESSAGE = ugettext_lazy("Please enter the correct %(username)s and password "
-        "for a staff account. Note that both fields may be case-sensitive.")
+ERROR_MESSAGE = ugettext_lazy(
+    "Please enter the correct %(username)s and password "
+    "for a staff account. Note that both fields may be case-sensitive."
+)
 
 
 class AdminAuthenticationForm(AuthenticationForm):
@@ -285,8 +285,11 @@ class AdminAuthenticationForm(AuthenticationForm):
     error_messages = {
         'required': ugettext_lazy("Please log in again, because your session has expired."),
     }
-    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput,
-            initial=1, error_messages=error_messages)
+    this_is_the_login_form = django.forms.BooleanField(
+        widget=floppyforms.HiddenInput,
+        initial=1,
+        error_messages=error_messages
+    )
 
     def clean(self):
         username = self.cleaned_data.get('username')

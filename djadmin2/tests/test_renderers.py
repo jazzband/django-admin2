@@ -109,7 +109,7 @@ class NumberRendererTest(TestCase):
         self.assertEqual('42.5', out)
 
     def testEndlessFloat(self):
-        out = self.renderer(1.0/3, None)
+        out = self.renderer(1.0 / 3, None)
         if six.PY2:
             self.assertEqual('0.333333333333', out)
         else:

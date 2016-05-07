@@ -26,24 +26,24 @@ class ActionTest(TestCase):
         self.admin2.registry[Thing].list_actions.extend([
             TestAction,
             test_function,
-            ])
+        ])
         self.assertEquals(
             get_description(
                 self.admin2.registry[Thing].list_actions[0]
-                ),
+            ),
             'Delete selected items'
-            )
+        )
         self.assertEquals(
             get_description(
                 self.admin2.registry[Thing].list_actions[1]
-                ),
+            ),
             'Test Action Class'
-            )
+        )
         self.assertEquals(
             get_description(
                 self.admin2.registry[Thing].list_actions[2]
-                ),
+            ),
             'Test function'
-            )
+        )
         self.admin2.registry[Thing].list_actions.remove(TestAction)
         self.admin2.registry[Thing].list_actions.remove(test_function)

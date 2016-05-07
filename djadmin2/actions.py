@@ -169,7 +169,6 @@ class DeleteSelectedAction(BaseListAction):
             # objects, so render a template asking for their confirmation.
             return self.get(request)
 
-
     def process_queryset(self):
         # The user has confirmed that they want to delete the objects.
         self.get_queryset().delete()

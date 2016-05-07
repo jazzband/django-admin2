@@ -30,6 +30,7 @@ from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
 from .models import LogEntry
 
+
 class AdminView(object):
 
     def __init__(self, url, view, name=None):
@@ -462,7 +463,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             opts = utils.model_options(obj)
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                force_text(obj))
-                               
+
         using = router.db_for_write(self.get_object()._meta.model)
         collector = utils.NestedObjects(using=using)
         collector.collect([self.get_object()])
@@ -541,6 +542,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
     def get_queryset(self):
         from django.contrib.auth import get_user_model
         return get_user_model()._default_manager.all()
+
 
 class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 

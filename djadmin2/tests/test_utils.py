@@ -40,7 +40,7 @@ class UtilsTest(TestCase):
         self.assertEquals(
             UtilsTestModel._meta,
             utils.model_options(UtilsTestModel)
-            )
+        )
         UtilsTestModel._meta.verbose_name = "Utils Test Model"
         UtilsTestModel._meta.verbose_name_plural = "Utils Test Models"
 
@@ -55,7 +55,7 @@ class UtilsTest(TestCase):
         self.assertEquals(
             self.instance._meta,
             utils.model_options(self.instance)
-            )
+        )
         self.instance._meta.verbose_name = "Utils Test Model"
         self.instance._meta.verbose_name_plural = "Utils Test Models"
 
@@ -165,8 +165,6 @@ class UtilsTest(TestCase):
                 utils.get_attr(Klass(), "__str__"),
                 "str"
             )
-
-
 
     def test_get_attr(self):
         class Klass(object):
