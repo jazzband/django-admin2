@@ -26,7 +26,7 @@ import extra_views
 
 from . import permissions, utils
 from .forms import AdminAuthenticationForm
-from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
+from .viewmixins import Admin2Mixin, Admin2ModelMixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
 from .models import LogEntry
 
@@ -102,7 +102,7 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
         return data
 
 
-class ModelListView(AdminModel2Mixin, generic.ListView):
+class ModelListView(Admin2ModelMixin, generic.ListView):
     """Context Variables
 
     :is_paginated: If the page is paginated (page has a next button)
@@ -347,7 +347,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return self.model_admin.search_fields
 
 
-class ModelDetailView(AdminModel2Mixin, generic.DetailView):
+class ModelDetailView(Admin2ModelMixin, generic.DetailView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -365,7 +365,7 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
         permissions.ModelViewPermission)
 
 
-class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+class ModelEditFormView(Admin2ModelMixin, Admin2ModelFormMixin,
                         extra_views.UpdateWithInlinesView):
     """Context Variables
 
@@ -401,7 +401,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
         return response
 
 
-class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+class ModelAddFormView(Admin2ModelMixin, Admin2ModelFormMixin,
                        extra_views.CreateWithInlinesView):
     """Context Variables
 
@@ -437,7 +437,7 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
         return response
 
 
-class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
+class ModelDeleteView(Admin2ModelMixin, generic.DeleteView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -481,7 +481,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
-class ModelHistoryView(AdminModel2Mixin, generic.ListView):
+class ModelHistoryView(Admin2ModelMixin, generic.ListView):
     """Context Variables
 
     :model: Type of object you are editing

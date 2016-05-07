@@ -10,7 +10,7 @@ from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
 from django.utils.translation import ugettext as _
 
 from . import permissions, utils
-from .viewmixins import AdminModel2Mixin
+from .viewmixins import Admin2ModelMixin
 
 
 def get_description(action):
@@ -22,7 +22,7 @@ def get_description(action):
         return capfirst(action.__name__.replace('_', ' '))
 
 
-class BaseListAction(AdminModel2Mixin, TemplateView):
+class BaseListAction(Admin2ModelMixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
@@ -55,7 +55,7 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         super(BaseListAction, self).__init__(*args, **kwargs)
 
     def get_queryset(self):
-        """ Replaced `get_queryset` from `AdminModel2Mixin`"""
+        """ Replaced `get_queryset` from `Admin2ModelMixin`"""
         return self.queryset
 
     def description(self):
