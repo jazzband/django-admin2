@@ -1,11 +1,10 @@
+from djadmin2.types import ModelAdmin2
 from django.contrib.auth.models import User, Permission
 from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-import djadmin2
-from djadmin2 import ModelAdmin2
 from djadmin2.permissions import TemplatePermissionChecker
 from djadmin2 import site
 from blog.models import Post
