@@ -2,19 +2,17 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import collections
-
 from itertools import chain
 
-from django import forms
-from django.forms.utils import flatatt
-from django.utils.html import format_html
-from django.utils.encoding import force_text
-from django.utils.safestring import mark_safe
-from django.forms import widgets as django_widgets
-from django.utils import six
-from django.utils.translation import ugettext_lazy
-
 import django_filters
+from django import forms
+from django.forms import widgets as django_widgets
+from django.forms.utils import flatatt
+from django.utils import six
+from django.utils.encoding import force_text
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy
 
 from .utils import type_str
 

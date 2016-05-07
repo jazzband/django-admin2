@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
-from collections import namedtuple
 import logging
 import os
 import sys
-
-from django.core.urlresolvers import reverse
-from django.conf.urls import patterns, url
-from django.utils.six import with_metaclass
+from collections import namedtuple
 
 import extra_views
+from django.conf.urls import patterns, url
+from django.core.urlresolvers import reverse
+from django.utils.six import with_metaclass
 
+from . import actions
 from . import apiviews
 from . import settings
-from . import views
-from . import actions
 from . import utils
+from . import views
 from .forms import modelform_factory
 
 

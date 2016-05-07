@@ -1,11 +1,7 @@
-from django.test import TestCase
-from django.utils import timezone
-
-from files.models import CaptionedFile
-from files.models import UncaptionedFile
-
-
 from os import path
+
+from django.test import TestCase
+from files.models import CaptionedFile
 
 
 fixture_dir = path.join(path.abspath(path.dirname(__file__)), 'fixtures')

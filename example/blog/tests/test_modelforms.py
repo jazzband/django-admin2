@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 
+import floppyforms
 from django import forms
 from django.test import TestCase
-
-import floppyforms
 
 from djadmin2.forms import floppify_widget, floppify_form, modelform_factory
 from ..models import Post

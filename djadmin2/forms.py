@@ -3,16 +3,15 @@ from __future__ import division, absolute_import, unicode_literals
 
 from copy import deepcopy
 
+import django
+import django.forms
+import django.forms.extras.widgets
+import django.forms.models
+import floppyforms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-import django
-import django.forms
-import django.forms.models
-import django.forms.extras.widgets
 from django.utils.translation import ugettext_lazy
-
-import floppyforms
 
 
 _WIDGET_COMMON_ATTRIBUTES = (

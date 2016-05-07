@@ -1,16 +1,17 @@
 from __future__ import unicode_literals
+
+import json
+
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
-import json
 
-
+from djadmin2 import ModelAdmin2
 from djadmin2 import apiviews
 from djadmin2 import default
-from djadmin2 import ModelAdmin2
 from ..models import Post
 
 

@@ -2,10 +2,10 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import operator
+from datetime import datetime
 from functools import reduce
 
-from datetime import datetime
-
+import extra_views
 from django.conf import settings
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
@@ -21,14 +21,12 @@ from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy
 from django.views import generic
-import extra_views
-
 
 from . import permissions, utils
-from .forms import AdminAuthenticationForm
-from .viewmixins import Admin2Mixin, Admin2ModelMixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
+from .forms import AdminAuthenticationForm
 from .models import LogEntry
+from .viewmixins import Admin2Mixin, Admin2ModelMixin, Admin2ModelFormMixin
 
 
 class AdminView(object):

@@ -2,7 +2,6 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from django.utils.encoding import force_str
-
 from rest_framework import fields, generics, serializers
 from rest_framework.response import Response
 from rest_framework.reverse import reverse

@@ -2,8 +2,7 @@ from django.db import DEFAULT_DB_ALIAS, router
 from django.test import TestCase
 
 from djadmin2.utils import NestedObjects
-
-from ..models import Count, Event, EventGuide, Guest, Location
+from ..models import Count, Event, EventGuide
 
 
 class NestedObjectsTests(TestCase):

@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 
+import django_filters
+from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
-from django.core.urlresolvers import reverse
 
+import djadmin2.filters as djadmin2_filters
 from djadmin2.types import ModelAdmin2
 from ..models import Post
 
-import djadmin2.filters as djadmin2_filters
-
-import django_filters
 
 class ListFilterBuilderTest(TestCase):
 

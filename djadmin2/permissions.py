@@ -20,13 +20,13 @@ from __future__ import division, absolute_import, unicode_literals
 import logging
 import re
 
+from django.apps import apps
 from django.contrib.auth import models as auth_models
 from django.contrib.contenttypes import models as contenttypes_models
-from django.apps import apps
 from django.utils import six
+from django.utils.encoding import python_2_unicode_compatible, force_text
 
 from . import utils
-from django.utils.encoding import python_2_unicode_compatible, force_text
 
 
 logger = logging.getLogger('djadmin2')

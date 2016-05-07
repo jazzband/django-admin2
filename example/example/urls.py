@@ -1,7 +1,8 @@
+from blog.views import BlogListView, BlogDetailView
 from django.conf.urls import include, url
 from django.contrib import admin
+
 from djadmin2.site import djadmin2_site
-from blog.views import BlogListView, BlogDetailView
 
 admin.autodiscover()
 djadmin2_site.autodiscover()

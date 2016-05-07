@@ -4,11 +4,10 @@ from __future__ import division, absolute_import, unicode_literals
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
-
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from djadmin2.forms import UserCreationForm, UserChangeForm
 from djadmin2.apiviews import Admin2APISerializer
+from djadmin2.forms import UserCreationForm, UserChangeForm
 from djadmin2.site import djadmin2_site
 from djadmin2.types import ModelAdmin2
 

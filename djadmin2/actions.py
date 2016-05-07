@@ -3,11 +3,11 @@ from __future__ import division, absolute_import, unicode_literals
 
 from django.contrib import messages
 from django.db import router
-from django.views.generic import TemplateView
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
+from django.views.generic import TemplateView
 
 from . import permissions, utils
 from .viewmixins import Admin2ModelMixin

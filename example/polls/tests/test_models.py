@@ -1,8 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
-
-from polls.models import Poll
 from polls.models import Choice
+from polls.models import Poll
 
 
 class PollTestCase(TestCase):
