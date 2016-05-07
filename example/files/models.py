@@ -9,8 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 @python_2_unicode_compatible
 class CaptionedFile(models.Model):
     caption = models.CharField(max_length=200, verbose_name=_('caption'))
-    publication = models.FileField(
-        upload_to='media', verbose_name=_('Uploaded File'))
+    publication = models.FileField(upload_to='media', verbose_name=_('Uploaded File'))
 
     def __str__(self):
         return self.caption
@@ -22,11 +21,10 @@ class CaptionedFile(models.Model):
 
 @python_2_unicode_compatible
 class UncaptionedFile(models.Model):
-    publication = models.FileField(
-        upload_to='media', verbose_name=_('Uploaded File'))
+    publication = models.FileField(upload_to='media', verbose_name=_('Uploaded File'))
 
     def __str__(self):
-        return self.publication
+        return self.publication.name
 
     class Meta:
         verbose_name = _('Uncaptioned File')

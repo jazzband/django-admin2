@@ -5,7 +5,7 @@ from django.test.client import RequestFactory
 
 import floppyforms
 
-import djadmin2
+from djadmin2.site import djadmin2_site
 from ..admin2 import UserAdmin2
 
 
@@ -27,7 +27,7 @@ class UserAdminTest(TestCase):
 
         request = self.factory.get(reverse('admin2:auth_user_create'))
         request.user = self.user
-        model_admin = UserAdmin2(User, djadmin2.default)
+        model_admin = UserAdmin2(User, djadmin2_site)
         view = model_admin.create_view.view.as_view(
             **model_admin.get_create_kwargs())
         response = view(request)
@@ -48,7 +48,7 @@ class UserAdminTest(TestCase):
         request = self.factory.get(
             reverse('admin2:auth_user_update', args=(self.user.pk,)))
         request.user = self.user
-        model_admin = UserAdmin2(User, djadmin2.default)
+        model_admin = UserAdmin2(User, djadmin2_site)
         view = model_admin.update_view.view.as_view(
             **model_admin.get_update_kwargs())
         response = view(request, pk=self.user.pk)

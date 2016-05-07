@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
 
-import djadmin2
+from djadmin2.site import djadmin2_site
 from ..types import ModelAdmin2
 from ..core import Admin2
 
@@ -71,4 +71,4 @@ class Admin2Test(TestCase):
     def test_default_entries(self):
         expected_default_models = (User, Group, Site)
         for model in expected_default_models:
-            self.assertTrue(isinstance(djadmin2.default.registry[model], ModelAdmin2))
+            self.assertTrue(isinstance(djadmin2_site.registry[model], ModelAdmin2))

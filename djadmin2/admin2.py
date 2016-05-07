@@ -7,9 +7,10 @@ from django.contrib.sites.models import Site
 
 from rest_framework.relations import PrimaryKeyRelatedField
 
-import djadmin2
 from djadmin2.forms import UserCreationForm, UserChangeForm
 from djadmin2.apiviews import Admin2APISerializer
+from djadmin2.site import djadmin2_site
+from djadmin2.types import ModelAdmin2
 
 
 class GroupSerializer(Admin2APISerializer):
@@ -19,7 +20,7 @@ class GroupSerializer(Admin2APISerializer):
         model = Group
 
 
-class GroupAdmin2(djadmin2.ModelAdmin2):
+class GroupAdmin2(ModelAdmin2):
     api_serializer_class = GroupSerializer
 
 
@@ -31,7 +32,7 @@ class UserSerializer(Admin2APISerializer):
         exclude = ('password',)
 
 
-class UserAdmin2(djadmin2.ModelAdmin2):
+class UserAdmin2(ModelAdmin2):
     create_form_class = UserCreationForm
     update_form_class = UserChangeForm
     search_fields = ('username', 'groups__name', 'first_name', 'last_name',
@@ -43,15 +44,15 @@ class UserAdmin2(djadmin2.ModelAdmin2):
 
 
 #  Register each model with the admin
-djadmin2.default.register(User, UserAdmin2)
-djadmin2.default.register(Group, GroupAdmin2)
+djadmin2_site.register(User, UserAdmin2)
+djadmin2_site.register(Group, GroupAdmin2)
 
 
 # Register the sites app if it's been activated in INSTALLED_APPS
 if "django.contrib.sites" in settings.INSTALLED_APPS:
 
-    class SiteAdmin2(djadmin2.ModelAdmin2):
+    class SiteAdmin2(ModelAdmin2):
         list_display = ('domain', 'name')
         search_fields = ('domain', 'name')
 
-    djadmin2.default.register(Site, SiteAdmin2)
+    djadmin2_site.register(Site, SiteAdmin2)

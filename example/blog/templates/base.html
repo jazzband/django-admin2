@@ -1,4 +1,4 @@
-{% load i18n static %}<!DOCTYPE html>
+{% load i18n staticfiles %}<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     {% block css %}
-    <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="{{ STATIC_URL }}themes/bootstrap/css/bootstrap-custom.css" rel="stylesheet" media="screen">
+    <link href="{% static "themes/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "themes/bootstrap/css/bootstrap-custom.css" %}" rel="stylesheet" media="screen">
     {% endblock css %}
   </head>
   <body>
@@ -19,8 +19,8 @@
 
     {% block javascript %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}themes/bootstrap/js/jquery.min.js">\x3C/script>')</script>
-    <script src="{{ STATIC_URL }}themes/bootstrap/js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{% static "themes/bootstrap/js/jquery.min.js" %}">\x3C/script>')</script>
+    <script src="{% static "themes/bootstrap/js/bootstrap.min.js" %}"></script>
     {% endblock javascript %}
   </body>
 </html>
