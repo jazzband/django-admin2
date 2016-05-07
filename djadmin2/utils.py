@@ -3,10 +3,7 @@ from __future__ import division, absolute_import, unicode_literals
 
 from collections import defaultdict
 
-from django.db.models import ProtectedError
-from django.db.models import ManyToManyRel
-from django.db.models.deletion import Collector
-from django.db.models.fields.related import ForeignObjectRel
+from django.db.models.deletion import Collector, ProtectedError
 from django.db.models.sql.constants import QUERY_TERMS
 from django.utils import six
 from django.utils.encoding import force_bytes, force_text
@@ -142,7 +139,7 @@ class NestedObjects(Collector):
             self.model_objs[obj._meta.model].add(obj)
         try:
             return super(NestedObjects, self).collect(objs, source_attr=source_attr, **kwargs)
-        except models.ProtectedError as e:
+        except ProtectedError as e:
             self.protected.update(e.protected_objects)
 
     def related_objects(self, related, objs):
@@ -180,7 +177,6 @@ class NestedObjects(Collector):
         them to the user in confirm page.
         """
         return False
-
 
 
 def quote(s):
