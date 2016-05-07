@@ -22,7 +22,6 @@ import re
 
 from django.contrib.auth import models as auth_models
 from django.contrib.contenttypes import models as contenttypes_models
-from django.db.models import get_models
 from django.utils import six
 
 from . import utils
@@ -370,7 +369,7 @@ class TemplatePermissionChecker(object):
         return force_text(bool(self))
 
 
-def create_view_permissions(app, created_models, verbosity, **kwargs):
+def create_view_permissions(app_config, created_models=None, verbosity=2, **kwargs):
     """
     Create 'view' permissions for all models.
 
@@ -382,7 +381,14 @@ def create_view_permissions(app, created_models, verbosity, **kwargs):
     """
     # Is there any reason for doing this import here?
 
-    app_models = get_models(app)
+    try:
+        # django >= 1.7
+        from django.apps import apps
+        app_models = apps.get_models(app_config)
+    except ImportError:
+        # django < 1.7
+        from django.db.models import get_model
+        app_models = get_models(app_config)
 
     # This will hold the permissions we're looking for as
     # (content_type, (codename, name))

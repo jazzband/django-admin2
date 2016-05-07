@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
-
+from djadmin2.types import ModelAdmin2
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.core.urlresolvers import reverse
 
 from ..models import Post
 
-import djadmin2
-import djadmin2.filters as djadmin2_filters
+from djadmin2 import filters as djadmin2_filters
 
 import django_filters
 
@@ -18,11 +17,11 @@ class ListFilterBuilderTest(TestCase):
         self.rf = RequestFactory()
 
     def test_filter_building(self):
-        class PostAdminSimple(djadmin2.ModelAdmin2):
+        class PostAdminSimple(ModelAdmin2):
             list_filter = ['published', ]
 
 
-        class PostAdminWithFilterInstances(djadmin2.ModelAdmin2):
+        class PostAdminWithFilterInstances(ModelAdmin2):
             list_filter = [
                 django_filters.BooleanFilter(name='published'),
             ]
@@ -33,7 +32,7 @@ class ListFilterBuilderTest(TestCase):
                 fields = ['published']
 
 
-        class PostAdminWithFilterSetInst(djadmin2.ModelAdmin2):
+        class PostAdminWithFilterSetInst(ModelAdmin2):
             list_filter = FS
 
         Post.objects.create(title="post_1_title", body="body")
