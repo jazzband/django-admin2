@@ -1,47 +1,21 @@
 sudo: false
 language: python
-python: "2.7"
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
 env:
-  matrix:
-    - TOX_ENV=py27-dj1.6.x
-    - TOX_ENV=py27-dj1.7.x
-    - TOX_ENV=py27-dj1.8.x
-    - TOX_ENV=py27-dj1.9.x
-    - TOX_ENV=py33-dj1.6.x
-    - TOX_ENV=py33-dj1.7.x
-    - TOX_ENV=py33-dj1.8.x
-    - TOX_ENV=py33-dj1.9.x
-    - TOX_ENV=py34-dj1.6.x
-    - TOX_ENV=py34-dj1.7.x
-    - TOX_ENV=py34-dj1.8.x
-    - TOX_ENV=py34-dj1.9.x
-    - TOX_ENV=pypy-dj1.6.x
-    - TOX_ENV=pypy-dj1.7.x
-    - TOX_ENV=pypy-dj1.8.x
-    - TOX_ENV=pypy-dj1.9.x
-    - TOX_ENV=pypy3-dj1.6.x
-    - TOX_ENV=pypy3-dj1.8.x
-    - TOX_ENV=pypy3-dj1.9.x
+  - DJANGO=1.8
+  - DJANGO=1.9
+  - DJANGO=master
+matrix:
+  exclude:
+    - python: "3.3"
+      env: DJANGO=1.9
+    - python: "3.3"
+      env: DJANGO=master
 install:
   - pip install tox
 script:
-  - tox -e $TOX_ENV
-# for now commented. We have to figure which version use for coverage
-# and coveralls
-#after_success:
-#  - coverage report
-#  - pip install --quiet python-coveralls
-#  - coveralls
-matrix:
-  allow_failures:
-    - env: TOX_ENV=py27-dj1.8.x
-    - env: TOX_ENV=py27-dj1.9.x
-    - env: TOX_ENV=py33-dj1.8.x
-    - env: TOX_ENV=py33-dj1.9.x
-    - env: TOX_ENV=py34-dj1.8.x
-    - env: TOX_ENV=py34-dj1.9.x
-    - env: TOX_ENV=pypy-dj1.8.x
-    - env: TOX_ENV=pypy-dj1.9.x
-    - env: TOX_ENV=pypy3-dj1.8.x
-    - env: TOX_ENV=pypy3-dj1.9.x
-    - env: TOX_ENV=pypy3-dj1.9.x
+  - tox -e py${TRAVIS_PYTHON_VERSION//[.]/}-$DJANGO
