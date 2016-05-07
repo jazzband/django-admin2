@@ -369,7 +369,7 @@ class TemplatePermissionChecker(object):
         return force_text(bool(self))
 
 
-def create_view_permissions(app, created_models, verbosity, **kwargs):
+def create_view_permissions(app_config, created_models=None, verbosity=2, **kwargs):
     """
     Create 'view' permissions for all models.
 
@@ -381,7 +381,7 @@ def create_view_permissions(app, created_models, verbosity, **kwargs):
     """
     # Is there any reason for doing this import here?
 
-    app_models = apps.get_models(app)
+    app_models = apps.get_models(app_config)
 
     # This will hold the permissions we're looking for as
     # (content_type, (codename, name))
