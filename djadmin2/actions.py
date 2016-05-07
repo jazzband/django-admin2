@@ -2,6 +2,7 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from django.contrib import messages
+from django.db import router
 from django.views.generic import TemplateView
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
@@ -94,7 +95,9 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                force_text(obj))
 
-        collector = utils.NestedObjects(using=None)
+        using = router.db_for_write(self.model)
+
+        collector = utils.NestedObjects(using=using)
         collector.collect(self.queryset)
 
         context.update({
