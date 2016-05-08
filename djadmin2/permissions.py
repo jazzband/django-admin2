@@ -20,14 +20,12 @@ from __future__ import division, absolute_import, unicode_literals
 import logging
 import re
 
+from django.db.utils import DEFAULT_DB_ALIAS
 from django.apps import apps
-from django.contrib.auth import models as auth_models
-from django.contrib.contenttypes import models as contenttypes_models
+from django.core.exceptions import ValidationError
+from django.db import router
 from django.utils import six
 from django.utils.encoding import python_2_unicode_compatible, force_text
-
-from . import utils
-
 
 logger = logging.getLogger('djadmin2')
 
@@ -369,7 +367,7 @@ class TemplatePermissionChecker(object):
         return force_text(bool(self))
 
 
-def create_view_permissions(app_config, created_models=None, verbosity=2, **kwargs):
+def create_view_permissions(app_config, verbosity=2, interactive=True, using=DEFAULT_DB_ALIAS, **kwargs):  # noqa
     """
     Create 'view' permissions for all models.
 
@@ -377,40 +375,63 @@ def create_view_permissions(app_config, created_models=None, verbosity=2, **kwar
     Since we want to support read-only views, we need to add our own
     permission.
 
-    Copied from ``django.contrib.auth.management.create_permissions``.
-    """
-    # Is there any reason for doing this import here?
+    Copied from ``https://github.com/django/django/blob/1.9.6/django/contrib/auth/management/__init__.py#L60``.
 
-    app_models = apps.get_models(app_config)
+    """
+    if not app_config.models_module:
+        return
+
+    try:
+        Permission = apps.get_model('auth', 'Permission')
+    except LookupError:
+        return
+
+    if not router.allow_migrate_model(using, Permission):
+        return
+
+    from django.contrib.contenttypes.models import ContentType
 
     # This will hold the permissions we're looking for as
     # (content_type, (codename, name))
     searched_perms = list()
     # The codenames and ctypes that should exist.
     ctypes = set()
-    for klass in app_models:
-        ctype = contenttypes_models.ContentType.objects.get_for_model(klass)
+    for klass in app_config.get_models():
+        # Force looking up the content types in the current database
+        # before creating foreign keys to them.
+        ctype = ContentType.objects.db_manager(using).get_for_model(klass)
         ctypes.add(ctype)
-
-        opts = utils.model_options(klass)
-        perm = ('view_%s' % opts.object_name.lower(), u'Can view %s' % opts.verbose_name_raw)
+        perm = ('view_%s' % klass.object_name.lower(), u'Can view %s' % klass._meta.verbose_name_raw)
         searched_perms.append((ctype, perm))
 
     # Find all the Permissions that have a content_type for a model we're
     # looking for.  We don't need to check for codenames since we already have
     # a list of the ones we're going to create.
-    all_perms = set(auth_models.Permission.objects.filter(
+    all_perms = set(Permission.objects.using(using).filter(
         content_type__in=ctypes,
     ).values_list(
         "content_type", "codename"
     ))
 
     perms = [
-        auth_models.Permission(codename=codename, name=name, content_type=ctype)
-        for c_type, (codename, name) in searched_perms
-        if (c_type.pk, codename) not in all_perms
+        Permission(codename=codename, name=name, content_type=ct)
+        for ct, (codename, name) in searched_perms
+        if (ct.pk, codename) not in all_perms
     ]
-    auth_models.Permission.objects.bulk_create(perms)
+    # Validate the permissions before bulk_creation to avoid cryptic
+    # database error when the verbose_name is longer than 50 characters
+    permission_name_max_length = Permission._meta.get_field('name').max_length
+    verbose_name_max_length = permission_name_max_length - 11  # len('Can change ') prefix
+    for perm in perms:
+        if len(perm.name) > permission_name_max_length:
+            raise ValidationError(
+                "The verbose_name of %s.%s is longer than %s characters" % (
+                    perm.content_type.app_label,
+                    perm.content_type.model,
+                    verbose_name_max_length,
+                )
+            )
+    Permission.objects.using(using).bulk_create(perms)
     if verbosity >= 2:
         for perm in perms:
-            logger.info("Adding permission '%s'" % perm)
+            print("Adding permission '%s'" % perm)
