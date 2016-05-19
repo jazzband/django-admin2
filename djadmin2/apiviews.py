@@ -16,11 +16,29 @@ API_VERSION = '0.1'
 class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
     _default_view_name = 'admin2:%(app_label)s_%(model_name)s_api_detail'
 
-    pk = fields.Field()
-    __unicode__ = fields.Field(source='__str__')
+    pk = fields.ReadOnlyField()
+    __unicode__ = fields.ReadOnlyField(source='__str__')
 
+    def get_extra_kwargs(self):
+        extra_kwargs = super(Admin2APISerializer, self).get_extra_kwargs()
+        extra_kwargs.update({
+            'url': {'view_name': self._get_default_view_name(self.Meta.model)}
+        })
+        return extra_kwargs
+
+    def _get_default_view_name(self, model):
+        """
+        Return the view name to use if 'view_name' is not specified in 'Meta'
+        """
+        model_meta = model._meta
+        format_kwargs = {
+            'app_label': model_meta.app_label,
+            'model_name': model_meta.object_name.lower()
+        }
+        return self._default_view_name % format_kwargs
 
 class Admin2APIMixin(Admin2Mixin):
+    model = None
     raise_exception = True
 
     def get_serializer_class(self):
@@ -90,8 +108,8 @@ class IndexAPIView(Admin2APIMixin, APIView):
 
 
 class ListCreateAPIView(Admin2APIMixin, generics.ListCreateAPIView):
-    model = None
+    pass
 
 
 class RetrieveUpdateDestroyAPIView(Admin2APIMixin, generics.RetrieveUpdateDestroyAPIView):
-    model = None
+    pass
