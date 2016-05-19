@@ -319,6 +319,6 @@ class Admin2UserChangeForm(UserChangeForm):
         if self.instance and self.instance.pk:
             return reverse_lazy('admin2:password_change', args=[self.instance.pk])
         return 'password/'
-    
+
 UserCreationForm = floppify_form(UserCreationForm)
 UserChangeForm = floppify_form(Admin2UserChangeForm)
