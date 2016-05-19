@@ -182,7 +182,7 @@ _django_field_to_floppyform_widget = {
     django.forms.fields.SlugField:
         _create_widget(floppyforms.widgets.SlugInput),
     django.forms.fields.GenericIPAddressField:
-        _create_widget(floppyforms.widgets.IPAddressInput),
+        _create_widget(floppyforms.widgets.TextInput),
     django.forms.fields.SplitDateTimeField:
         _create_splitdatetimewidget(floppyforms.widgets.SplitDateTimeWidget),
 }
