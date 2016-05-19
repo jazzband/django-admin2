@@ -102,7 +102,6 @@ class GetFloppyformWidgetTest(TestCase):
             floppyforms.widgets.HiddenInput)
 
         widget = forms.widgets.HiddenInput()
-        widget.is_hidden = False
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.HiddenInput,
@@ -488,13 +487,13 @@ class FieldWidgetTest(TestCase):
         self.assertTrue(isinstance(widget, floppyforms.widgets.SlugInput))
         self.assertEqual(widget.input_type, 'text')
 
-    def test_ipaddress_field(self):
+    def test_genericipaddress_field(self):
         class MyForm(forms.ModelForm):
             ipaddress = forms.GenericIPAddressField()
 
         form_class = modelform_factory(model=Post, form=MyForm, exclude=[])
         widget = form_class().fields['ipaddress'].widget
-        self.assertTrue(isinstance(widget, floppyforms.widgets.IPAddressInput))
+        self.assertTrue(isinstance(widget, floppyforms.widgets.TextInput))
         self.assertEqual(widget.input_type, 'text')
 
     def test_splitdatetime_field(self):
