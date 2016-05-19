@@ -490,7 +490,7 @@ class FieldWidgetTest(TestCase):
 
     def test_ipaddress_field(self):
         class MyForm(forms.ModelForm):
-            ipaddress = forms.IPAddressField()
+            ipaddress = forms.GenericIPAddressField()
 
         form_class = modelform_factory(model=Post, form=MyForm, exclude=[])
         widget = form_class().fields['ipaddress'].widget
