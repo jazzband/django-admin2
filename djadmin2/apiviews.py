@@ -37,6 +37,7 @@ class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
         }
         return self._default_view_name % format_kwargs
 
+
 class Admin2APIMixin(Admin2Mixin):
     model = None
     raise_exception = True
