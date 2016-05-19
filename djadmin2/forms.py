@@ -11,7 +11,8 @@ import floppyforms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.utils.translation import ugettext_lazy
+from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 
 
 _WIDGET_COMMON_ATTRIBUTES = (
@@ -268,7 +269,7 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
 
 # Translators : %(username)s will be replaced by the username_field name
 # (default : username, but could be email, or something else)
-ERROR_MESSAGE = ugettext_lazy(
+ERROR_MESSAGE = _(
     "Please enter the correct %(username)s and password "
     "for a staff account. Note that both fields may be case-sensitive."
 )
@@ -281,7 +282,7 @@ class AdminAuthenticationForm(AuthenticationForm):
 
     """
     error_messages = {
-        'required': ugettext_lazy("Please log in again, because your session has expired."),
+        'required': _("Please log in again, because your session has expired."),
     }
     this_is_the_login_form = django.forms.BooleanField(
         widget=floppyforms.HiddenInput,
@@ -307,5 +308,17 @@ class AdminAuthenticationForm(AuthenticationForm):
         return self.cleaned_data
 
 
+class Admin2UserChangeForm(UserChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super(Admin2UserChangeForm, self).__init__(*args, **kwargs)
+        print(self.fields['password'].help_text)
+        self.fields['password'].help_text = _("Raw passwords are not stored, so there is no way to see "
+                      "this user's password, but you can change the password "
+                      "using <a href=\"%s\">this form</a>." % self.get_update_password_url())
+
+    def get_update_password_url(self):
+        return reverse_lazy('admin2:password_change', args=[self.instance.pk])
+
 UserCreationForm = floppify_form(UserCreationForm)
-UserChangeForm = floppify_form(UserChangeForm)
+UserChangeForm = floppify_form(Admin2UserChangeForm)
