@@ -313,12 +313,12 @@ class Admin2UserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super(Admin2UserChangeForm, self).__init__(*args, **kwargs)
         print(self.fields['password'].help_text)
-        self.fields['password'].help_text = _("Raw passwords are not stored, so there is no way to see "
-                      "this user's password, but you can change the password "
-                      "using <a href=\"%s\">this form</a>." % self.get_update_password_url())
+        self.fields['password'].help_text = _("Raw passwords are not stored, so there is no way to see this user's password, but you can change the password using <a href=\"%s\">this form</a>." % self.get_update_password_url())
 
     def get_update_password_url(self):
-        return reverse_lazy('admin2:password_change', args=[self.instance.pk])
-
+        if self.instance and self.instance.pk:
+            return reverse_lazy('admin2:password_change', args=[self.instance.pk])
+        return 'password/'
+    
 UserCreationForm = floppify_form(UserCreationForm)
 UserChangeForm = floppify_form(Admin2UserChangeForm)
