@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'crispy_forms',
     'djadmin2',
+    'djadmin2.tests',
     'djadmin2.themes.djadmin2theme_default',
     'blog',
     'files',
@@ -141,7 +142,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-MEDIA_ROOT = os.path.join(BASE_DIR)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
 
 ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"

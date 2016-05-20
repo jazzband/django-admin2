@@ -1,12 +1,8 @@
-from django.db import models
 from django.test import TestCase
 
 from ..core import Admin2
 from ..actions import get_description
-
-
-class Thing(models.Model):
-    pass
+from .models import Thing
 
 
 class TestAction(object):

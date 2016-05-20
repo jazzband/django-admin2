@@ -1,17 +1,12 @@
-from django.db import models
-from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase
 from django.contrib.auth.models import Group, User
 from django.contrib.sites.models import Site
+from django.core.exceptions import ImproperlyConfigured
+from django.test import TestCase
 
 from djadmin2.site import djadmin2_site
-from ..types import ModelAdmin2
+from .models import SmallThing
 from ..core import Admin2
-
-
-class SmallThing(models.Model):
-    pass
-
+from ..types import ModelAdmin2
 
 APP_LABEL, APP_VERBOSE_NAME = 'app_one_label', 'App One Verbose Name'
 

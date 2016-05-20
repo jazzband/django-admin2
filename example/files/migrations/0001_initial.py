@@ -13,24 +13,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CaptionedFile',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('caption', models.CharField(max_length=200, verbose_name='caption')),
-                ('publication', models.FileField(upload_to='media', verbose_name='Uploaded File')),
+                ('publication', models.FileField(verbose_name='Uploaded File', upload_to='captioned-files')),
             ],
             options={
-                'verbose_name_plural': 'Captioned Files',
                 'verbose_name': 'Captioned File',
+                'verbose_name_plural': 'Captioned Files',
             },
         ),
         migrations.CreateModel(
             name='UncaptionedFile',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
-                ('publication', models.FileField(upload_to='media', verbose_name='Uploaded File')),
+                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
+                ('publication', models.FileField(verbose_name='Uploaded File', upload_to='uncaptioned-files')),
             ],
             options={
-                'verbose_name_plural': 'Uncaptioned Files',
                 'verbose_name': 'Uncaptioned File',
+                'verbose_name_plural': 'Uncaptioned Files',
             },
         ),
     ]
