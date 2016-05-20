@@ -72,7 +72,7 @@ class ListCreateAPIViewTest(APITestCase):
         response.render()
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn('"__unicode__": "Foo"', force_text(response.content))
+        self.assertIn('"__unicode__":"Foo"', force_text(response.content))
 
     def test_pagination(self):
         request = self.factory.get(reverse('admin2:blog_post_api_list'))
