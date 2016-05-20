@@ -20,6 +20,7 @@ from __future__ import division, absolute_import, unicode_literals
 import logging
 import re
 
+from django.contrib.auth import get_permission_codename
 from django.db.utils import DEFAULT_DB_ALIAS
 from django.apps import apps
 from django.core.exceptions import ValidationError
@@ -400,8 +401,9 @@ def create_view_permissions(app_config, verbosity=2, interactive=True, using=DEF
         # Force looking up the content types in the current database
         # before creating foreign keys to them.
         ctype = ContentType.objects.db_manager(using).get_for_model(klass)
+
         ctypes.add(ctype)
-        perm = ('view_%s' % klass.object_name.lower(), u'Can view %s' % klass._meta.verbose_name_raw)
+        perm = (get_permission_codename('view', klass._meta), 'Can view %s' % (klass._meta.verbose_name_raw))
         searched_perms.append((ctype, perm))
 
     # Find all the Permissions that have a content_type for a model we're
