@@ -33,17 +33,17 @@ Add djadmin2 urls to your URLconf:
 .. code-block:: python
 
    # urls.py
-   from django.conf.urls import patterns, include
+   from django.conf.urls import include
    
    import djadmin2
    
    djadmin2.default.autodiscover()
 
 
-   urlpatterns = patterns(
+   urlpatterns = [
       ...
       url(r'^admin2/', include(djadmin2.default.urls)),
-   )
+   ]
 
 Development Installation
 =========================

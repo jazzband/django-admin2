@@ -8,7 +8,7 @@ How To Create a Theme
 A Django Admin 2 theme is merely a packaged Django app. Here are the necessary steps to create a theme called '*dandy*':
 
 
-1. Make sure you have Django 1.5 or higher installed.
+1. Make sure you have Django 1.8 or higher installed.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
