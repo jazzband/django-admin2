@@ -548,6 +548,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
             update_session_auth_hash(self.request, self.object)
         return HttpResponseRedirect(self.get_success_url())
 
+
 class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 
     default_template_name = 'auth/password_change_done.html'
