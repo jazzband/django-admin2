@@ -160,7 +160,7 @@ class GetFloppyformWidgetTest(TestCase):
             forms.DateInput(),
             floppyforms.DateInput)
 
-        widget = forms.widgets.DateInput(format='DATE_FORMAT')
+        widget = forms.widgets.DateInput(format='%Y-%m-%d')
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.DateInput,
@@ -309,13 +309,13 @@ class GetFloppyformWidgetTest(TestCase):
             floppyforms.widgets.SplitDateTimeWidget)
 
         widget = forms.widgets.SplitDateTimeWidget(
-            date_format='DATE_FORMAT', time_format='TIME_FORMAT')
+            date_format='%Y-%m-%d', time_format='TIME_FORMAT')
         new_widget = floppify_widget(widget)
         self.assertTrue(isinstance(
             new_widget.widgets[0], floppyforms.widgets.DateInput))
         self.assertTrue(isinstance(
             new_widget.widgets[1], floppyforms.widgets.TimeInput))
-        self.assertEqual(new_widget.widgets[0].format, 'DATE_FORMAT')
+        self.assertEqual(new_widget.widgets[0].format, '%Y-%m-%d')
         self.assertEqual(new_widget.widgets[1].format, 'TIME_FORMAT')
 
     def test_splithiddendatetime_widget(self):
@@ -325,13 +325,13 @@ class GetFloppyformWidgetTest(TestCase):
             floppyforms.widgets.SplitHiddenDateTimeWidget)
 
         widget = forms.widgets.SplitHiddenDateTimeWidget(
-            date_format='DATE_FORMAT', time_format='TIME_FORMAT')
+            date_format='%Y-%m-%d', time_format='TIME_FORMAT')
         new_widget = floppify_widget(widget)
         self.assertTrue(isinstance(
             new_widget.widgets[0], floppyforms.widgets.DateInput))
         self.assertTrue(isinstance(
             new_widget.widgets[1], floppyforms.widgets.TimeInput))
-        self.assertEqual(new_widget.widgets[0].format, 'DATE_FORMAT')
+        self.assertEqual(new_widget.widgets[0].format, '%Y-%m-%d')
         self.assertEqual(new_widget.widgets[0].is_hidden, True)
         self.assertEqual(new_widget.widgets[1].format, 'TIME_FORMAT')
         self.assertEqual(new_widget.widgets[1].is_hidden, True)
