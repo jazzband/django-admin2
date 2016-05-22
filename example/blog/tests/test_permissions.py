@@ -1,6 +1,7 @@
 from blog.models import Post
 from django.contrib.auth.models import User, Permission
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 from django.template import Template, Context
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -47,8 +48,8 @@ class TemplatePermissionTest(TestCase):
             codename='add_post')
         self.user.user_permissions.add(post_add_permission)
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         result = self.render('{{ permissions.has_add_permission }}', context)
         self.assertEqual(result, 'True')
@@ -120,10 +121,11 @@ class TemplatePermissionTest(TestCase):
             content_type__app_label='blog',
             content_type__model='post',
             codename='add_post')
+
         self.user.user_permissions.add(post_add_permission)
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         result = self.render(
             '{% load admin2_tags %}'
@@ -202,8 +204,8 @@ class TemplatePermissionTest(TestCase):
         self.user.user_permissions.add(user_change_permission)
 
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         result = self.render(
             '{% load admin2_tags %}'
@@ -263,8 +265,8 @@ class TemplatePermissionTest(TestCase):
             codename='add_post')
         self.user.user_permissions.add(post_add_permission)
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         # object level permission are not supported by default. So this will
         # return ``False``.
