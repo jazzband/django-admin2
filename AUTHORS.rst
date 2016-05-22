@@ -52,6 +52,7 @@ Developers
 * marangonico
 * Kamil Gałuszka (@galuszkak / galuszkak@gmail.com)
 * Germano Gabbianelli (@tyrion)
+* Arthur (@arthur-wsw / arthur@wallstreetweb.net)
 
 Translators
 -----------
