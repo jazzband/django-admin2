@@ -544,8 +544,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        if self.request.user == self.object:
-            update_session_auth_hash(self.request, self.object)
+        update_session_auth_hash(self.request, form.user)
         return HttpResponseRedirect(self.get_success_url())
 
 
