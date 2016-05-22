@@ -7,6 +7,7 @@ from functools import reduce
 
 import extra_views
 from django.conf import settings
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
@@ -541,6 +542,11 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
         from django.contrib.auth import get_user_model
         return get_user_model()._default_manager.all()
 
+    def form_valid(self, form):
+        self.object = form.save()
+        if self.request.user == self.object:
+            update_session_auth_hash(self.request, self.object)
+        return HttpResponseRedirect(self.get_success_url())
 
 class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 
