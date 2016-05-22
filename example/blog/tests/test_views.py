@@ -516,18 +516,19 @@ class TestAuthViews(TestCase):
     def test_change_password_for_myself(self):
         self.client.login(username=self.user.username,
                           password='password')
+
         request = self.client.post(reverse('admin2:password_change',
                                            kwargs={'pk': self.user.pk}),
                                    {'old_password': 'password',
-                                    'new_password1': 'user',
-                                    'new_password2': 'user'})
+                                    'new_password1': 'new_password',
+                                    'new_password2': 'new_password'})
         self.assertRedirects(request, reverse('admin2:password_change_done'))
         self.client.logout()
 
         self.assertFalse(self.client.login(username=self.user.username,
                                            password='password'))
         self.assertTrue(self.client.login(username=self.user.username,
-                                          password='user'))
+                                          password='new_password'))
 
     def test_change_password(self):
         self.client.login(username=self.user.username,
@@ -539,8 +540,7 @@ class TestAuthViews(TestCase):
 
         request = self.client.post(reverse('admin2:password_change',
                                            kwargs={'pk': new_user.pk}),
-                                   {'old_password': 'new_user',
-                                    'password1': 'new_user_password',
+                                   {'password1': 'new_user_password',
                                     'password2': 'new_user_password'})
         self.assertRedirects(request, reverse('admin2:password_change_done'))
         self.client.logout()
