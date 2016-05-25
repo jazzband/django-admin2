@@ -2,14 +2,15 @@
 from __future__ import division, absolute_import, unicode_literals
 
 from django.contrib import messages
-from django.views.generic import TemplateView
+from django.db import router
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
+from django.views.generic import TemplateView
 
 from . import permissions, utils
-from .viewmixins import AdminModel2Mixin
+from .viewmixins import Admin2ModelMixin
 
 
 def get_description(action):
@@ -21,7 +22,7 @@ def get_description(action):
         return capfirst(action.__name__.replace('_', ' '))
 
 
-class BaseListAction(AdminModel2Mixin, TemplateView):
+class BaseListAction(Admin2ModelMixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
@@ -54,7 +55,7 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
         super(BaseListAction, self).__init__(*args, **kwargs)
 
     def get_queryset(self):
-        """ Replaced `get_queryset` from `AdminModel2Mixin`"""
+        """ Replaced `get_queryset` from `Admin2ModelMixin`"""
         return self.queryset
 
     def description(self):
@@ -94,7 +95,9 @@ class BaseListAction(AdminModel2Mixin, TemplateView):
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                force_text(obj))
 
-        collector = utils.NestedObjects(using=None)
+        using = router.db_for_write(self.model)
+
+        collector = utils.NestedObjects(using=using)
         collector.collect(self.queryset)
 
         context.update({
@@ -165,7 +168,6 @@ class DeleteSelectedAction(BaseListAction):
             # The user has not confirmed that they want to delete the
             # objects, so render a template asking for their confirmation.
             return self.get(request)
-
 
     def process_queryset(self):
         # The user has confirmed that they want to delete the objects.

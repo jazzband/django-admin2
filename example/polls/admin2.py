@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
-import djadmin2
-
+from djadmin2.site import djadmin2_site
+from djadmin2.types import Admin2TabularInline, ModelAdmin2
 from .models import Poll, Choice
 
 
-class ChoiceInline(djadmin2.Admin2TabularInline):
+class ChoiceInline(Admin2TabularInline):
     model = Choice
     extra = 3
 
 
-class PollAdmin(djadmin2.ModelAdmin2):
+class PollAdmin(ModelAdmin2):
     fieldsets = [
         (None, {'fields': ['question']}),
         ('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
@@ -23,4 +23,4 @@ class PollAdmin(djadmin2.ModelAdmin2):
     date_hierarchy = 'pub_date'
 
 
-djadmin2.default.register(Poll, PollAdmin)
+djadmin2_site.register(Poll, PollAdmin)

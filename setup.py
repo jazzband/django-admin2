@@ -127,14 +127,15 @@ setup(
     include_package_data=True,
     #test_suite='runtests.runtests',
     install_requires=[
-        'django>=1.6.0',
+        'django>=1.8.0',
         'django-extra-views>=0.6.5',
         'django-braces>=1.3.0',
-        'djangorestframework<=2.4.4',
-        'django-floppyforms<=1.2',
-        'django-filter<0.12.0',
+        'djangorestframework>=3.3.3',
+        'django-floppyforms>=1.6.2',
+        'django-filter>=0.13.0',
         'django-crispy-forms>=1.3.2',
-        'pytz==2014.7'
+        'pytz==2014.7',
+        'future>=0.15.2',
         ],
     extras_require={
         'testing': ['pytest', 'pytest-django', 'pytest-ipdb'],

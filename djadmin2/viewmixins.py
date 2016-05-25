@@ -116,11 +116,11 @@ class Admin2Mixin(PermissionMixin):
         return super(Admin2Mixin, self).dispatch(request, *args, **kwargs)
 
 
-class AdminModel2Mixin(Admin2Mixin):
+class Admin2ModelMixin(Admin2Mixin):
     model_admin = None
 
     def get_context_data(self, **kwargs):
-        context = super(AdminModel2Mixin, self).get_context_data(**kwargs)
+        context = super(Admin2ModelMixin, self).get_context_data(**kwargs)
         model = self.get_model()
         model_meta = model_options(model)
         app_verbose_names = self.model_admin.admin.app_verbose_names

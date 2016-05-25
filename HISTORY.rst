@@ -1,6 +1,20 @@
 History
 =========
 
+0.6.2 (?)
+
+* Fix Django 1.8 issues and add 1.9 compatibility
+* Update all dependancies (DRF, floppyforms, filters, ...)
+* Regenerate example project to make it django 1.9 compatible
+* Update tox and travis and add flake8
+* Rename AdminModel2Mixin to Admin2ModelMixin
+* Add migrations
+* Replace IPAddressField with GenericIPAddressField
+* Fix password link in user admin
+* Fix user logout on password change
+* Fix tests
+
+
 0.6.1 (2014-02-26)
 
  * Fix empty form display

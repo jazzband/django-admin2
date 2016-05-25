@@ -1,14 +1,14 @@
+from blog.models import Post
 from django.contrib.auth.models import User, Permission
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 from django.template import Template, Context
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-import djadmin2
-from djadmin2 import ModelAdmin2
 from djadmin2.permissions import TemplatePermissionChecker
-
-from blog.models import Post
+from djadmin2.site import djadmin2_site
+from djadmin2.types import ModelAdmin2
 
 
 class TemplatePermissionTest(TestCase):
@@ -26,7 +26,7 @@ class TemplatePermissionTest(TestCase):
         return template.render(context)
 
     def test_permission_wrapper(self):
-        model_admin = ModelAdmin2(Post, djadmin2.default)
+        model_admin = ModelAdmin2(Post, djadmin2_site)
         request = self.factory.get(reverse('admin2:blog_post_index'))
         request.user = self.user
         permissions = TemplatePermissionChecker(request, model_admin)
@@ -48,8 +48,8 @@ class TemplatePermissionTest(TestCase):
             codename='add_post')
         self.user.user_permissions.add(post_add_permission)
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         result = self.render('{{ permissions.has_add_permission }}', context)
         self.assertEqual(result, 'True')
@@ -61,7 +61,7 @@ class TemplatePermissionTest(TestCase):
             codename='add_post')
         self.user.user_permissions.add(post_add_permission)
 
-        model_admin = ModelAdmin2(Post, djadmin2.default)
+        model_admin = ModelAdmin2(Post, djadmin2_site)
         request = self.factory.get(reverse('admin2:blog_post_index'))
         request.user = self.user
         permissions = TemplatePermissionChecker(request, model_admin)
@@ -89,8 +89,8 @@ class TemplatePermissionTest(TestCase):
         self.assertEqual(result, '')
 
     def test_admin_binding(self):
-        user_admin = djadmin2.default.get_admin_by_name('auth_user')
-        post_admin = djadmin2.default.get_admin_by_name('blog_post')
+        user_admin = djadmin2_site.get_admin_by_name('auth_user')
+        post_admin = djadmin2_site.get_admin_by_name('blog_post')
         request = self.factory.get(reverse('admin2:auth_user_index'))
         request.user = self.user
         permissions = TemplatePermissionChecker(request, user_admin)
@@ -121,10 +121,11 @@ class TemplatePermissionTest(TestCase):
             content_type__app_label='blog',
             content_type__model='post',
             codename='add_post')
+
         self.user.user_permissions.add(post_add_permission)
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         result = self.render(
             '{% load admin2_tags %}'
@@ -155,8 +156,8 @@ class TemplatePermissionTest(TestCase):
         self.assertEqual(result, '')
 
     def test_view_binding(self):
-        user_admin = djadmin2.default.get_admin_by_name('auth_user')
-        post_admin = djadmin2.default.get_admin_by_name('blog_post')
+        user_admin = djadmin2_site.get_admin_by_name('auth_user')
+        post_admin = djadmin2_site.get_admin_by_name('blog_post')
         request = self.factory.get(reverse('admin2:auth_user_index'))
         request.user = self.user
         permissions = TemplatePermissionChecker(request, user_admin)
@@ -203,8 +204,8 @@ class TemplatePermissionTest(TestCase):
         self.user.user_permissions.add(user_change_permission)
 
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         result = self.render(
             '{% load admin2_tags %}'
@@ -235,7 +236,7 @@ class TemplatePermissionTest(TestCase):
         self.assertEqual(result, '1True2False34True')
 
     def test_object_level_permission(self):
-        model_admin = ModelAdmin2(Post, djadmin2.default)
+        model_admin = ModelAdmin2(Post, djadmin2_site)
         request = self.factory.get(reverse('admin2:blog_post_index'))
         request.user = self.user
         permissions = TemplatePermissionChecker(request, model_admin)
@@ -264,8 +265,8 @@ class TemplatePermissionTest(TestCase):
             codename='add_post')
         self.user.user_permissions.add(post_add_permission)
         # invalidate the users permission cache
-        if hasattr(self.user, '_perm_cache'):
-            del self.user._perm_cache
+        self.user = get_object_or_404(User, pk=self.user.id)
+        request.user = self.user
 
         # object level permission are not supported by default. So this will
         # return ``False``.

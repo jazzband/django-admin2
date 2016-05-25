@@ -5,15 +5,11 @@ import datetime as dt
 from decimal import Decimal
 
 from django.test import TestCase
-from django.db import models
-from django.utils.translation import activate
 from django.utils import six
+from django.utils.translation import activate
 
 from .. import renderers
-
-
-class RendererTestModel(models.Model):
-    decimal = models.DecimalField(decimal_places=5, max_digits=10)
+from .models import RendererTestModel
 
 
 class BooleanRendererTest(TestCase):
@@ -109,7 +105,7 @@ class NumberRendererTest(TestCase):
         self.assertEqual('42.5', out)
 
     def testEndlessFloat(self):
-        out = self.renderer(1.0/3, None)
+        out = self.renderer(1.0 / 3, None)
         if six.PY2:
             self.assertEqual('0.333333333333', out)
         else:

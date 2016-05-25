@@ -1,12 +1,8 @@
-from django.db import models
 from django.test import TestCase
 
 from ..core import Admin2
 from ..actions import get_description
-
-
-class Thing(models.Model):
-    pass
+from .models import Thing
 
 
 class TestAction(object):
@@ -26,24 +22,24 @@ class ActionTest(TestCase):
         self.admin2.registry[Thing].list_actions.extend([
             TestAction,
             test_function,
-            ])
+        ])
         self.assertEquals(
             get_description(
                 self.admin2.registry[Thing].list_actions[0]
-                ),
+            ),
             'Delete selected items'
-            )
+        )
         self.assertEquals(
             get_description(
                 self.admin2.registry[Thing].list_actions[1]
-                ),
+            ),
             'Test Action Class'
-            )
+        )
         self.assertEquals(
             get_description(
                 self.admin2.registry[Thing].list_actions[2]
-                ),
+            ),
             'Test function'
-            )
+        )
         self.admin2.registry[Thing].list_actions.remove(TestAction)
         self.admin2.registry[Thing].list_actions.remove(test_function)

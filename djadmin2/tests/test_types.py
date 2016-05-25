@@ -1,10 +1,9 @@
-from django.db import models
 from django.test import TestCase
-from django.views.generic import View
 
 from .. import views
 from ..types import ModelAdmin2, immutable_admin_factory
 from ..core import Admin2
+from .models import BigThing
 
 
 class ModelAdmin(object):
@@ -38,10 +37,6 @@ class ImmutableAdminFactoryTests(TestCase):
         with self.assertRaises(AttributeError):
             # 'ImmutableAdmin' object has no attribute 'd'
             self.immutable_admin.d
-
-
-class BigThing(models.Model):
-    pass
 
 
 class ModelAdminTest(TestCase):

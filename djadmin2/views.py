@@ -2,11 +2,12 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import operator
+from datetime import datetime
 from functools import reduce
 
-from datetime import datetime
-
+import extra_views
 from django.conf import settings
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
 from django.contrib.auth.views import (logout as auth_logout,
@@ -21,14 +22,13 @@ from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy
 from django.views import generic
-import extra_views
-
 
 from . import permissions, utils
-from .forms import AdminAuthenticationForm
-from .viewmixins import Admin2Mixin, AdminModel2Mixin, Admin2ModelFormMixin
 from .filters import build_list_filter, build_date_filter
+from .forms import AdminAuthenticationForm
 from .models import LogEntry
+from .viewmixins import Admin2Mixin, Admin2ModelMixin, Admin2ModelFormMixin
+
 
 class AdminView(object):
 
@@ -101,7 +101,7 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
         return data
 
 
-class ModelListView(AdminModel2Mixin, generic.ListView):
+class ModelListView(Admin2ModelMixin, generic.ListView):
     """Context Variables
 
     :is_paginated: If the page is paginated (page has a next button)
@@ -186,7 +186,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             queryset = self.build_list_filter(queryset).qs
 
         if self.model_admin.date_hierarchy:
-            queryset = self.build_date_filter(queryset).qs
+            queryset = self.build_date_filter(queryset, self.model_admin.date_hierarchy).qs
 
         queryset = self._modify_queryset_for_sort(queryset)
 
@@ -233,7 +233,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
             )
         return self._list_filter
 
-    def build_date_filter(self, queryset=None):
+    def build_date_filter(self, queryset=None, field_name=None):
         if not hasattr(self, "_date_filter"):
             if queryset is None:
                 queryset = self.get_queryset()
@@ -241,6 +241,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 self.request,
                 self.model_admin,
                 queryset,
+                field_name
             )
 
         return self._date_filter
@@ -271,38 +272,38 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
 
                 context["active_day"] = new_date.strftime("%B %d")
 
-                context["dates"] = self._format_days(context)
+                context["dates"] = self._format_days(self.get_queryset())
             elif year and month:
                 context["previous_date"] = {
                     "link": "?year=%s" % (year),
                     "text": "‹ %s" % year,
                 }
 
-                context["dates"] = self._format_days(context)
+                context["dates"] = self._format_days(self.get_queryset())
             elif year:
                 context["previous_date"] = {
                     "link": "?",
                     "text": ugettext_lazy("‹ All dates"),
                 }
 
-                context["dates"] = self._format_months(context)
+                context["dates"] = self._format_months(self.get_queryset())
             else:
-                context["dates"] = self._format_years(context)
+                context["dates"] = self._format_years(self.get_queryset())
 
         return context
 
-    def _format_years(self, context):
-        years = self._qs_date_or_datetime(context['object_list'], 'year')
+    def _format_years(self, queryset):
+        years = self._qs_date_or_datetime(queryset, 'year')
         if len(years) == 1:
-            return self._format_months(context)
+            return self._format_months(queryset)
         else:
             return [
                 (("?year=%s" % year.strftime("%Y")), year.strftime("%Y"))
                 for year in
-                self._qs_date_or_datetime(context['object_list'], 'year')
+                self._qs_date_or_datetime(queryset, 'year')
             ]
 
-    def _format_months(self, context):
+    def _format_months(self, queryset):
         return [
             (
                 "?year=%s&month=%s" % (
@@ -310,10 +311,10 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %Y")
             ) for date in
-            self._qs_date_or_datetime(context['object_list'], 'month')
+            self._qs_date_or_datetime(queryset, 'month')
         ]
 
-    def _format_days(self, context):
+    def _format_days(self, queryset):
         return [
             (
                 "?year=%s&month=%s&day=%s" % (
@@ -323,7 +324,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
                 ),
                 date.strftime("%B %d")
             ) for date in
-            self._qs_date_or_datetime(context['object_list'], 'day')
+            self._qs_date_or_datetime(queryset, 'day')
         ]
 
     def _qs_date_or_datetime(self, object_list, type):
@@ -345,7 +346,7 @@ class ModelListView(AdminModel2Mixin, generic.ListView):
         return self.model_admin.search_fields
 
 
-class ModelDetailView(AdminModel2Mixin, generic.DetailView):
+class ModelDetailView(Admin2ModelMixin, generic.DetailView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -363,7 +364,7 @@ class ModelDetailView(AdminModel2Mixin, generic.DetailView):
         permissions.ModelViewPermission)
 
 
-class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+class ModelEditFormView(Admin2ModelMixin, Admin2ModelFormMixin,
                         extra_views.UpdateWithInlinesView):
     """Context Variables
 
@@ -399,7 +400,7 @@ class ModelEditFormView(AdminModel2Mixin, Admin2ModelFormMixin,
         return response
 
 
-class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
+class ModelAddFormView(Admin2ModelMixin, Admin2ModelFormMixin,
                        extra_views.CreateWithInlinesView):
     """Context Variables
 
@@ -435,7 +436,7 @@ class ModelAddFormView(AdminModel2Mixin, Admin2ModelFormMixin,
         return response
 
 
-class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
+class ModelDeleteView(Admin2ModelMixin, generic.DeleteView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -461,7 +462,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
             opts = utils.model_options(obj)
             return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
                                force_text(obj))
-                               
+
         using = router.db_for_write(self.get_object()._meta.model)
         collector = utils.NestedObjects(using=using)
         collector.collect([self.get_object()])
@@ -479,7 +480,7 @@ class ModelDeleteView(AdminModel2Mixin, generic.DeleteView):
         return super(ModelDeleteView, self).delete(request, *args, **kwargs)
 
 
-class ModelHistoryView(AdminModel2Mixin, generic.ListView):
+class ModelHistoryView(Admin2ModelMixin, generic.ListView):
     """Context Variables
 
     :model: Type of object you are editing
@@ -540,6 +541,13 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
     def get_queryset(self):
         from django.contrib.auth import get_user_model
         return get_user_model()._default_manager.all()
+
+    def form_valid(self, form):
+        self.object = form.save()
+        if self.request.user == self.get_object():
+            update_session_auth_hash(self.request, form.user)
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class PasswordChangeDoneView(Admin2Mixin, generic.TemplateView):
 

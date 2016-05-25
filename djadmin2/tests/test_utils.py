@@ -1,27 +1,9 @@
-from django.db import models
 from django.test import TestCase
 from django.utils import six
 
 from .. import utils
 from ..views import IndexView
-
-
-class UtilsTestModel(models.Model):
-
-    field1 = models.CharField(max_length=23)
-    field2 = models.CharField('second field', max_length=42)
-
-    def simple_method(self):
-        return 42
-
-    def was_published_recently(self):
-        return True
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Published recently?'
-
-    class Meta:
-        verbose_name = "Utils Test Model"
-        verbose_name_plural = "Utils Test Models"
+from .models import UtilsTestModel
 
 
 class UtilsTest(TestCase):
@@ -40,7 +22,7 @@ class UtilsTest(TestCase):
         self.assertEquals(
             UtilsTestModel._meta,
             utils.model_options(UtilsTestModel)
-            )
+        )
         UtilsTestModel._meta.verbose_name = "Utils Test Model"
         UtilsTestModel._meta.verbose_name_plural = "Utils Test Models"
 
@@ -55,7 +37,7 @@ class UtilsTest(TestCase):
         self.assertEquals(
             self.instance._meta,
             utils.model_options(self.instance)
-            )
+        )
         self.instance._meta.verbose_name = "Utils Test Model"
         self.instance._meta.verbose_name_plural = "Utils Test Models"
 
@@ -165,8 +147,6 @@ class UtilsTest(TestCase):
                 utils.get_attr(Klass(), "__str__"),
                 "str"
             )
-
-
 
     def test_get_attr(self):
         class Klass(object):

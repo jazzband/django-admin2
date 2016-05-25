@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 
+import floppyforms
 from django import forms
 from django.test import TestCase
-
-import floppyforms
 
 from djadmin2.forms import floppify_widget, floppify_form, modelform_factory
 from ..models import Post
@@ -103,7 +102,6 @@ class GetFloppyformWidgetTest(TestCase):
             floppyforms.widgets.HiddenInput)
 
         widget = forms.widgets.HiddenInput()
-        widget.is_hidden = False
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.HiddenInput,
@@ -162,7 +160,7 @@ class GetFloppyformWidgetTest(TestCase):
             forms.DateInput(),
             floppyforms.DateInput)
 
-        widget = forms.widgets.DateInput(format='DATE_FORMAT')
+        widget = forms.widgets.DateInput(format='%Y-%m-%d')
         self.assertExpectWidget(
             widget,
             floppyforms.widgets.DateInput,
@@ -311,13 +309,13 @@ class GetFloppyformWidgetTest(TestCase):
             floppyforms.widgets.SplitDateTimeWidget)
 
         widget = forms.widgets.SplitDateTimeWidget(
-            date_format='DATE_FORMAT', time_format='TIME_FORMAT')
+            date_format='%Y-%m-%d', time_format='TIME_FORMAT')
         new_widget = floppify_widget(widget)
         self.assertTrue(isinstance(
             new_widget.widgets[0], floppyforms.widgets.DateInput))
         self.assertTrue(isinstance(
             new_widget.widgets[1], floppyforms.widgets.TimeInput))
-        self.assertEqual(new_widget.widgets[0].format, 'DATE_FORMAT')
+        self.assertEqual(new_widget.widgets[0].format, '%Y-%m-%d')
         self.assertEqual(new_widget.widgets[1].format, 'TIME_FORMAT')
 
     def test_splithiddendatetime_widget(self):
@@ -327,13 +325,13 @@ class GetFloppyformWidgetTest(TestCase):
             floppyforms.widgets.SplitHiddenDateTimeWidget)
 
         widget = forms.widgets.SplitHiddenDateTimeWidget(
-            date_format='DATE_FORMAT', time_format='TIME_FORMAT')
+            date_format='%Y-%m-%d', time_format='TIME_FORMAT')
         new_widget = floppify_widget(widget)
         self.assertTrue(isinstance(
             new_widget.widgets[0], floppyforms.widgets.DateInput))
         self.assertTrue(isinstance(
             new_widget.widgets[1], floppyforms.widgets.TimeInput))
-        self.assertEqual(new_widget.widgets[0].format, 'DATE_FORMAT')
+        self.assertEqual(new_widget.widgets[0].format, '%Y-%m-%d')
         self.assertEqual(new_widget.widgets[0].is_hidden, True)
         self.assertEqual(new_widget.widgets[1].format, 'TIME_FORMAT')
         self.assertEqual(new_widget.widgets[1].is_hidden, True)
@@ -489,13 +487,13 @@ class FieldWidgetTest(TestCase):
         self.assertTrue(isinstance(widget, floppyforms.widgets.SlugInput))
         self.assertEqual(widget.input_type, 'text')
 
-    def test_ipaddress_field(self):
+    def test_genericipaddress_field(self):
         class MyForm(forms.ModelForm):
-            ipaddress = forms.IPAddressField()
+            ipaddress = forms.GenericIPAddressField()
 
         form_class = modelform_factory(model=Post, form=MyForm, exclude=[])
         widget = form_class().fields['ipaddress'].widget
-        self.assertTrue(isinstance(widget, floppyforms.widgets.IPAddressInput))
+        self.assertTrue(isinstance(widget, floppyforms.widgets.TextInput))
         self.assertEqual(widget.input_type, 'text')
 
     def test_splitdatetime_field(self):

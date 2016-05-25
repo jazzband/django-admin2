@@ -3,16 +3,16 @@ from __future__ import division, absolute_import, unicode_literals
 
 from copy import deepcopy
 
+import django
+import django.forms
+import django.forms.extras.widgets
+import django.forms.models
+import floppyforms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-import django
-import django.forms
-import django.forms.models
-import django.forms.extras.widgets
-from django.utils.translation import ugettext_lazy
-
-import floppyforms
+from django.core.urlresolvers import reverse_lazy
+from django.utils.translation import ugettext_lazy as _
 
 
 _WIDGET_COMMON_ATTRIBUTES = (
@@ -166,9 +166,7 @@ _django_to_floppyforms_widget = {
     django.forms.extras.widgets.SelectDateWidget:
         _create_widget(
             floppyforms.widgets.SelectDateWidget,
-            init_arguments=
-                ('years',)
-                if django.VERSION >= (1, 7) else ('years', 'required')),
+            init_arguments=('years',) if django.VERSION >= (1, 7) else ('years', 'required')),
 }
 
 _django_field_to_floppyform_widget = {
@@ -184,8 +182,8 @@ _django_field_to_floppyform_widget = {
         _create_widget(floppyforms.widgets.URLInput),
     django.forms.fields.SlugField:
         _create_widget(floppyforms.widgets.SlugInput),
-    django.forms.fields.IPAddressField:
-        _create_widget(floppyforms.widgets.IPAddressInput),
+    django.forms.fields.GenericIPAddressField:
+        _create_widget(floppyforms.widgets.TextInput),
     django.forms.fields.SplitDateTimeField:
         _create_splitdatetimewidget(floppyforms.widgets.SplitDateTimeWidget),
 }
@@ -201,11 +199,10 @@ def allow_floppify_widget_for_field(field):
     # replaces the default TextInput with a NumberInput, if localization is
     # turned off. That applies for Django 1.6 upwards.
     # See the relevant source code in django:
-    # https://github.com/django/django/blob/1.6/django/forms/fields.py#L225
-    if django.VERSION >= (1, 6):
-        if isinstance(field, django.forms.IntegerField) and not field.localize:
-            if field.widget.__class__ is django.forms.NumberInput:
-                return True
+    #     https://github.com/django/django/blob/1.9.6/django/forms/fields.py#L261-264
+    if isinstance(field, django.forms.IntegerField) and not field.localize:
+        if field.widget.__class__ is django.forms.NumberInput:
+            return True
 
     # We can check if the widget was replaced by comparing the class of the
     # specified widget with the default widget that is specified on the field
@@ -272,8 +269,10 @@ def modelform_factory(model, form=django.forms.models.ModelForm, fields=None,
 
 # Translators : %(username)s will be replaced by the username_field name
 # (default : username, but could be email, or something else)
-ERROR_MESSAGE = ugettext_lazy("Please enter the correct %(username)s and password "
-        "for a staff account. Note that both fields may be case-sensitive.")
+ERROR_MESSAGE = _(
+    "Please enter the correct %(username)s and password "
+    "for a staff account. Note that both fields may be case-sensitive."
+)
 
 
 class AdminAuthenticationForm(AuthenticationForm):
@@ -283,10 +282,13 @@ class AdminAuthenticationForm(AuthenticationForm):
 
     """
     error_messages = {
-        'required': ugettext_lazy("Please log in again, because your session has expired."),
+        'required': _("Please log in again, because your session has expired."),
     }
-    this_is_the_login_form = django.forms.BooleanField(widget=floppyforms.HiddenInput,
-            initial=1, error_messages=error_messages)
+    this_is_the_login_form = django.forms.BooleanField(
+        widget=floppyforms.HiddenInput,
+        initial=1,
+        error_messages=error_messages
+    )
 
     def clean(self):
         username = self.cleaned_data.get('username')
@@ -306,5 +308,17 @@ class AdminAuthenticationForm(AuthenticationForm):
         return self.cleaned_data
 
 
+class Admin2UserChangeForm(UserChangeForm):
+
+    def __init__(self, *args, **kwargs):
+        super(Admin2UserChangeForm, self).__init__(*args, **kwargs)
+        print(self.fields['password'].help_text)
+        self.fields['password'].help_text = _("Raw passwords are not stored, so there is no way to see this user's password, but you can change the password using <a href=\"%s\">this form</a>." % self.get_update_password_url())
+
+    def get_update_password_url(self):
+        if self.instance and self.instance.pk:
+            return reverse_lazy('admin2:password_change', args=[self.instance.pk])
+        return 'password/'
+
 UserCreationForm = floppify_form(UserCreationForm)
-UserChangeForm = floppify_form(UserChangeForm)
+UserChangeForm = floppify_form(Admin2UserChangeForm)

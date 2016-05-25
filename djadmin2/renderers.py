@@ -9,9 +9,9 @@ import os.path
 from datetime import date, time, datetime
 
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils import formats, timezone
 from django.utils.encoding import force_text
-from django.template.loader import render_to_string
 
 from djadmin2 import settings
 

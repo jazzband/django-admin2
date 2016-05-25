@@ -1,22 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, absolute_import, unicode_literals
 
-from collections import namedtuple
 import logging
 import os
 import sys
-
-from django.core.urlresolvers import reverse
-from django.conf.urls import patterns, url
-from django.utils.six import with_metaclass
+from collections import namedtuple
 
 import extra_views
+from django.conf.urls import url
+from django.core.urlresolvers import reverse
+from django.utils.six import with_metaclass
 
+from . import actions
 from . import apiviews
 from . import settings
-from . import views
-from . import actions
 from . import utils
+from . import views
 from .forms import modelform_factory
 
 
@@ -202,7 +201,8 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
     def get_api_list_kwargs(self):
         kwargs = self.get_default_api_view_kwargs()
         kwargs.update({
-            'paginate_by': self.list_per_page,
+            'queryset': self.model.objects.all(),
+            # 'paginate_by': self.list_per_page,
         })
         return kwargs
 
@@ -236,11 +236,10 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
                     name=self.get_prefixed_view_name(admin_view.name)
                 )
             )
-        return patterns('', *pattern_list)
+        return pattern_list
 
     def get_api_urls(self):
-        return patterns(
-            '',
+        return [
             url(
                 regex=r'^$',
                 view=self.api_list_view.as_view(**self.get_api_list_kwargs()),
@@ -252,7 +251,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
                     **self.get_api_detail_kwargs()),
                 name=self.get_prefixed_view_name('api_detail'),
             ),
-        )
+        ]
 
     @property
     def urls(self):

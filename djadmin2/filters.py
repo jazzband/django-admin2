@@ -2,19 +2,17 @@
 from __future__ import division, absolute_import, unicode_literals
 
 import collections
-
 from itertools import chain
 
-from django import forms
-from django.forms.util import flatatt
-from django.utils.html import format_html
-from django.utils.encoding import force_text, force_bytes
-from django.utils.safestring import mark_safe
-from django.forms import widgets as django_widgets
-from django.utils import six
-from django.utils.translation import ugettext_lazy
-
 import django_filters
+from django import forms
+from django.forms import widgets as django_widgets
+from django.forms.utils import flatatt
+from django.utils import six
+from django.utils.encoding import force_text
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy
 
 from .utils import type_str
 
@@ -97,21 +95,21 @@ def build_list_filter(request, model_admin, queryset):
             'fields': fields,
         },
     )
-    return type(type_str('%sFilterSet' % queryset.model.__name__),(django_filters.FilterSet, ),filterset_dict,)(request.GET, queryset=queryset)
+    return type(type_str('%sFilterSet' % queryset.model.__name__), (django_filters.FilterSet, ), filterset_dict,)(request.GET, queryset=queryset)
 
 
-def build_date_filter(request, model_admin, queryset):
+def build_date_filter(request, model_admin, queryset, field_name="published_date"):
     filterset_dict = {
         "year": NumericDateFilter(
-            name="published_date",
+            name=field_name,
             lookup_type="year",
         ),
         "month": NumericDateFilter(
-            name="published_date",
+            name=field_name,
             lookup_type="month",
         ),
         "day": NumericDateFilter(
-            name="published_date",
+            name=field_name,
             lookup_type="day",
         )
     }

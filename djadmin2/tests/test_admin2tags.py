@@ -1,25 +1,10 @@
-from django.db import models
 from django import forms
 from django.forms.formsets import formset_factory
 from django.test import TestCase
 
 from ..templatetags import admin2_tags
 from ..views import IndexView
-
-
-class TagsTestsModel(models.Model):
-
-    field1 = models.CharField(max_length=23)
-    field2 = models.CharField('second field', max_length=42)
-
-    def was_published_recently(self):
-        return True
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Published recently?'
-
-    class Meta:
-        verbose_name = "Tags Test Model"
-        verbose_name_plural = "Tags Test Models"
+from .models import TagsTestsModel
 
 
 class TagsTestForm(forms.Form):
@@ -89,7 +74,7 @@ class TagsTests(TestCase):
         self.assertEquals(
             admin2_tags.formset_visible_fieldlist(formset),
             [u'Visible 1', u'Visible 2']
-        ) 
+        )
 
     def test_verbose_name_for(self):
         app_verbose_names = {

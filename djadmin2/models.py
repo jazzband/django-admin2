@@ -5,13 +5,11 @@ from __future__ import division, absolute_import, unicode_literals
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models import signals
 from django.utils.encoding import force_text
-from django.utils.encoding import smart_text
 from django.utils.encoding import python_2_unicode_compatible
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from . import permissions
 from .utils import quote
 
 
@@ -99,10 +97,3 @@ class LogEntry(models.Model):
                 quote(self.object_id)
             )
         return None
-
-# setup signal handlers here, since ``models.py`` will be imported by django
-# for sure if ``djadmin2`` is listed in the ``INSTALLED_APPS``.
-
-signals.post_syncdb.connect(
-    permissions.create_view_permissions,
-    dispatch_uid="django-admin2.djadmin2.permissions.create_view_permissions")

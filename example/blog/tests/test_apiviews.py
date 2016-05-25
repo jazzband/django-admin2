@@ -1,16 +1,17 @@
 from __future__ import unicode_literals
+
+import json
+
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.utils.encoding import force_text
-import json
-
 
 from djadmin2 import apiviews
-from djadmin2 import default
-from djadmin2 import ModelAdmin2
+from djadmin2.site import djadmin2_site
+from djadmin2.types import ModelAdmin2
 from ..models import Post
 
 
@@ -24,21 +25,21 @@ class APITestCase(TestCase):
         self.user.save()
 
     def get_model_admin(self, model):
-        return ModelAdmin2(model, default)
+        return ModelAdmin2(model, djadmin2_site)
 
 
 class IndexAPIViewTest(APITestCase):
     def test_response_ok(self):
         request = self.factory.get(reverse('admin2:api_index'))
         request.user = self.user
-        view = apiviews.IndexAPIView.as_view(**default.get_api_index_kwargs())
+        view = apiviews.IndexAPIView.as_view(**djadmin2_site.get_api_index_kwargs())
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
     def test_view_permission(self):
         request = self.factory.get(reverse('admin2:api_index'))
         request.user = AnonymousUser()
-        view = apiviews.IndexAPIView.as_view(**default.get_api_index_kwargs())
+        view = apiviews.IndexAPIView.as_view(**djadmin2_site.get_api_index_kwargs())
         self.assertRaises(PermissionDenied, view, request)
 
 
@@ -71,7 +72,7 @@ class ListCreateAPIViewTest(APITestCase):
         response.render()
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn('"__unicode__": "Foo"', force_text(response.content))
+        self.assertIn('"__unicode__":"Foo"', force_text(response.content))
 
     def test_pagination(self):
         request = self.factory.get(reverse('admin2:blog_post_api_list'))
