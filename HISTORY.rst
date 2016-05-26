@@ -4,7 +4,8 @@ History
 0.6.2 (?)
 
 * Fix Django 1.8 issues and add 1.9 compatibility
-* Update all dependancies (DRF, floppyforms, filters, ...)
+* Update django-rest-framework
+* Remove django-crispy-forms and django-floppyforms
 * Regenerate example project to make it django 1.9 compatible
 * Update tox and travis and add flake8
 * Rename AdminModel2Mixin to Admin2ModelMixin

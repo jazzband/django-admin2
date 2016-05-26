@@ -1,6 +1,6 @@
 {% extends "djadmin2theme_bootstrap3/base.html" %}
 
-{% load i18n admin2_tags crispy_forms_tags %}
+{% load i18n admin2_tags %}
 
 {# Translators : examples : Add post, Change object #}
 {% block title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}
@@ -53,7 +53,7 @@
             <div class="panel-body">
                 <div class="change_form">
                     {% csrf_token %}
-                    {{ form|crispy }}
+                    {{ form.as_p }}
                     {% if not form.visible_fields %}
                         <p class="alert alert-warning empty-form">
                             {% trans "This form doesn't have visible fields. This doesn't mean there are no hidden fields." %}

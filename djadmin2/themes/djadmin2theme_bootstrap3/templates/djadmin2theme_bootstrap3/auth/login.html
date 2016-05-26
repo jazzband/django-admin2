@@ -1,5 +1,5 @@
 {% extends "djadmin2theme_bootstrap3/base.html" %}
-{% load i18n staticfiles admin2_tags crispy_forms_tags %}
+{% load i18n staticfiles admin2_tags %}
 
 {% block navbar %}{% endblock navbar %}
 {% block breacrumbs %}{% endblock breacrumbs %}
@@ -17,7 +17,7 @@
                     <div class="panel-body">
                         <form method="post" class="">
                             {% csrf_token %}
-                            {{ form|crispy }}
+                            {{ form }}
                             <input type="hidden" name="this_is_the_login_form" value="1"/>
                             <input type="hidden" name="next" value="{{ next }}"/>
                             <button class="btn btn-lg btn-success btn-block" type="submit">

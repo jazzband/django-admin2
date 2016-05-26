@@ -9,6 +9,7 @@ from collections import namedtuple
 import extra_views
 from django.conf.urls import url
 from django.core.urlresolvers import reverse
+from django.forms import modelform_factory
 from django.utils.six import with_metaclass
 
 from . import actions
@@ -16,7 +17,6 @@ from . import apiviews
 from . import settings
 from . import utils
 from . import views
-from .forms import modelform_factory
 
 
 logger = logging.getLogger('djadmin2')

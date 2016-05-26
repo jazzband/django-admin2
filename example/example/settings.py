@@ -40,9 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'floppyforms',
     'rest_framework',
-    'crispy_forms',
     'djadmin2',
     'djadmin2.tests',
     'djadmin2.themes.djadmin2theme_bootstrap3',
@@ -149,5 +147,4 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
-CRISPY_TEMPLATE_PACK = "bootstrap3"
 ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"

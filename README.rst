@@ -44,18 +44,16 @@ Screenshots
 Requirements
 ============
 
-* Django 1.6+
+* Django 1.7+
 * Python 2.7+ or Python 3.3+
 * django-braces_
 * django-extra-views_
-* django-floppyforms_
 * django-rest-framework_
 * django-filter_
 * Sphinx_ (for documentation)
 
 .. _django-braces: https://github.com/brack3t/django-braces
 .. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
-.. _django-floppyforms: https://github.com/brutasse/django-floppyforms
 .. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
 .. _django-filter: https://github.com/alex/django-filter
 .. _Sphinx: http://sphinx-doc.org/
@@ -79,8 +77,6 @@ Add djadmin2 and rest_framework to your settings file:
         ...
         'djadmin2',
         'rest_framework', # for the browsable API templates
-        'floppyforms', # For HTML5 form fields
-        'crispy_forms', # Required for the default theme's layout
         ...
     )
 
@@ -94,7 +90,6 @@ Add setting for apps and the default theme in your settings file:
         'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
         'PAGE_SIZE': 10
     }
-    CRISPY_TEMPLATE_PACK = "bootstrap3"
     ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 Add djadmin2 urls to your URLconf:
@@ -154,7 +149,6 @@ Themes are a new default theme based on bootstrap3 and also some new settings to
         'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
         'PAGE_SIZE': 10
     }
-    CRISPY_TEMPLATE_PACK = "bootstrap3"
     ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 
