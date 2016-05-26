@@ -1,0 +1,6 @@
+@mixin btn-outline($color, $hover-color: #FFF) {
+  color: $color;
+  &:hover {
+    color: $hover-color;
+  }
+}

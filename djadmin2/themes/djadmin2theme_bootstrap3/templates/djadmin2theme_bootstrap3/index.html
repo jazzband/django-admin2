@@ -1,0 +1,25 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load admin2_tags i18n %}
+
+{% block breacrumbs %}{% endblock breacrumbs %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% for app_label, registry in apps.items %}
+                {% include 'djadmin2theme_bootstrap3/includes/app_model_list.html' %}
+            {% endfor %}
+        </div>
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {% trans "Recent Actions" %}
+                </div>
+                <div class="panel-body">
+                    <p>{% trans "My Actions" %}</p>
+                    {% action_history %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

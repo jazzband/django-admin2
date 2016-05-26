@@ -18,15 +18,22 @@ Add djadmin2 and rest_framework to your settings file:
 
 .. code-block:: python
 
-   INSTALLED_APPS = (
-      ...
-      'djadmin2',
-      'djadmin2.themes.djadmin2theme_default', # for the default theme
-      'rest_framework', # for the browsable API templates
-      'floppyforms', # For HTML5 form fields
-      'crispy_forms', # Required for the default theme's layout
-      ...
-   )
+    INSTALLED_APPS = (
+        ...
+        'djadmin2',
+        'djadmin2.themes.djadmin2theme_bootstrap3', # for the default theme
+        'rest_framework', # for the browsable API templates
+        'floppyforms', # For HTML5 form fields
+        'crispy_forms', # Required for the default theme's layout
+        ...
+    )
+
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10
+    }
+    CRISPY_TEMPLATE_PACK = "bootstrap3"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 Add djadmin2 urls to your URLconf:
 
@@ -53,10 +60,15 @@ See :doc:`contributing`.
 Migrating from 0.5.x
 ====================
 
-Themes are now defined explicitly, including the default theme. Therefore, your `settings` need to include this:
+Themes are a new default theme based on bootstrap3 and also some new settings to add. Therefore, your `settings` need to include this:
 
 .. code-block:: python
 
     # In settings.py
-    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10
+    }
+    CRISPY_TEMPLATE_PACK = "bootstrap3"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"

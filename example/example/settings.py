@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'djadmin2',
     'djadmin2.tests',
-    'djadmin2.themes.djadmin2theme_default',
+    'djadmin2.themes.djadmin2theme_bootstrap3',
     'blog',
     'files',
     'polls'
@@ -145,9 +145,9 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = "/media/"
 
-ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"
-
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+CRISPY_TEMPLATE_PACK = "bootstrap3"
+ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"

@@ -83,14 +83,19 @@ Add djadmin2 and rest_framework to your settings file:
         'crispy_forms', # Required for the default theme's layout
         ...
     )
-    
-Add the default theme in your settings file:
+
+Add setting for apps and the default theme in your settings file:
 
 .. code-block:: python
 
     # In settings.py
-    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10
+    }
+    CRISPY_TEMPLATE_PACK = "bootstrap3"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 Add djadmin2 urls to your URLconf:
 
@@ -136,16 +141,21 @@ How to write django-admin2 modules
   djadmin2.default.register(Comment)
   djadmin2.default.register(User, UserAdmin2)
 
-Migrating from 0.5.x
+Migrating from 0.6.x
 ====================
 
-Themes are now defined explicitly, including the default theme. Therefore, your `settings` need to include this:
+Themes are a new default theme based on bootstrap3 and also some new settings to add. Therefore, your `settings` need to include this:
 
 .. code-block:: python
 
     # In settings.py
-    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10
+    }
+    CRISPY_TEMPLATE_PACK = "bootstrap3"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 
 Drop-In Themes
@@ -156,8 +166,8 @@ The default theme is whatever bootstrap is most current. Specifically:
 .. code-block:: python
 
     # In settings.py
-    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 If you create a new theme, you define it thus:
 
@@ -166,7 +176,7 @@ If you create a new theme, you define it thus:
     # In settings.py
     # Mythical theme! This does not exit... YET!
     INSTALLED_APPS += ('djadmin2theme_foundation',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation"
     
 Follows Best Practices
 ======================

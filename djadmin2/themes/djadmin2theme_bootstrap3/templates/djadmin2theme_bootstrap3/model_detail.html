@@ -1,0 +1,23 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load i18n admin2_tags %}
+
+{% block title %}{{ object }}{% endblock title %}
+
+{% block page_title %}{{ object }}{% endblock page_title %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+    </li>
+    <li>
+        <a href="{% url "admin2:app_index" app_label=app_label %}">{% firstof app_verbose_name app_label|title %}</a>
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a>
+    </li>
+    <li class="active">{{ object }}</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {{ object }}
+{% endblock content %}

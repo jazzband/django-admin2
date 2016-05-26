@@ -1,0 +1,18 @@
+{% load i18n %}
+
+{% if actions %}
+    <ol class="unstyled">
+        {% for action in actions %}
+        <li>
+            {% if action.is_addition %}<i class="added fa fa-plus"></i>
+            {% elif action.is_change %}<i class="changed fa fa-pencil"></i>
+            {% else %}<i class="deleted fa fa-minus"></i>
+            {% endif %} {{ action }}
+            <span class="muted">{{ action.content_type.model }}</span>
+        </li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <p>{% trans "None available" %}</p>
+{% endif %}
+

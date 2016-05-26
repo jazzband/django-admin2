@@ -1,0 +1,14 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load i18n admin2_tags %}
+
+{% block breadcrumbs %}
+  <li>
+    <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+  </li>
+  <li class="active">{% trans "Log out" %}</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <p>{% trans "Thanks for spending some quality time with the Web site today." %}</p>
+    <p><a href="{% url 'admin2:dashboard' %}">{% trans 'Log in again' %}</a></p>
+{% endblock content %}

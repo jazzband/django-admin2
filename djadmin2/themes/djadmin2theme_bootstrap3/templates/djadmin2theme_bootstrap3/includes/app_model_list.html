@@ -1,0 +1,46 @@
+{% load i18n admin2_tags %}
+
+<table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th colspan="3">
+            <a href="{% url 'admin2:app_index' app_label=app_label %}">
+                {% with app_verbose_names|verbose_name_for:app_label as verbose_name %}
+                    {% firstof verbose_name app_label|title %}
+                {% endwith %}
+            </a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for model_class, model_admin in registry.items %}
+        {% with permissions|for_admin:model_admin as permissions %}
+            {% if permissions.has_view_permission or permissions.has_add_permission or permissions.has_change_permission %}
+                <tr>
+                    <td width="40%">
+                        {% if permissions.has_view_permission %}
+                            <a href="{{ model_admin.get_index_url }}">
+                        {% endif %}
+                        {{ model_admin.verbose_name_plural|title }}
+                        {% if permissions.has_view_permission %}</a>{% endif %}
+                    </td>
+                    <td class="text-right">
+                        {% if permissions.has_add_permission %}
+                            <a href="{% url model_admin|admin2_urlname:'create' %}">
+                                <i class="fa fa-plus"></i> {% trans "Add" %}
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td class="text-right">
+                        {% if permissions.has_change_permission %}
+                            <a href="{{ model_admin.get_index_url }}">
+                                <i class="fa fa-pencil"></i> {% trans "Change" %}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
+    </tbody>
+</table>

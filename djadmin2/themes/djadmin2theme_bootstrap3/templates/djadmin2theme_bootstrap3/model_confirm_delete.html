@@ -1,0 +1,49 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load i18n admin2_tags %}
+
+{% block title %}{% trans "Are you sure?" %}{% endblock title %}
+
+{% block page_title %}{% trans "Are you sure?" %}{% endblock page_title %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+    </li>
+    <li>
+        <a href="{% url "admin2:app_index" app_label=app_label %}">{% firstof app_verbose_name app_label|title %}</a>
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a>
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a>
+    </li>
+    <li class="active">{% trans "Delete" %}</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <p>
+        {# Translators : this is singular, example : delete the post "My Title" #}
+        {% blocktrans with model_name=model_name object=object %}
+            Are you sure you want to delete the {{ model_name }} "{{ object }}"?
+        {% endblocktrans %}
+
+        {% blocktrans count counter=deletable_objects|length %}
+            The following item will be deleted:
+            {% plural %}
+            All of the following items will be deleted:
+        {% endblocktrans %}
+    </p>
+
+    <ul>
+        {{ deletable_objects|unordered_list }}
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-sm btn-danger" type="submit">
+            {% trans "Yes, I'm sure" %}
+        </button>
+    </form>
+{% endblock content %}

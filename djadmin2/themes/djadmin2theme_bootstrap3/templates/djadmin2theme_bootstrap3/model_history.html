@@ -1,0 +1,52 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load i18n admin2_tags %}
+
+{% block title %}{% trans "History for" %} {{ object }}{% endblock title %}
+
+{% block page_title %}{% trans "History for" %} {{ object }}{% endblock page_title %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+    </li>
+    <li>
+        <a href="{% url "admin2:app_index" app_label=app_label %}">{% firstof app_verbose_name app_label|title %}</a>
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a>
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a>
+    </li>
+    <li class="active">{% trans "History" %}</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    <p>
+        {% blocktrans with object=object %}History for {{ object }}{% endblocktrans %}
+
+        {% if object_list %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>{% trans "Date/Time" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th>{% trans "Action" %}</th>
+                    <th>{% trans "Message" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for log in object_list %}
+                    <tr>
+                        <td>{{ log.action_time }}</td>
+                        <td>{{ log.user }}</td>
+                        <td>{{ log.action_type|capfirst }}</td>
+                        <td>{{ log.change_message }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>{% trans "No history for this object." %}</p>
+        {% endif %}
+{% endblock content %}

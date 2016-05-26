@@ -2,8 +2,8 @@
 {% load staticfiles i18n %}
 
 {% block content %}
-<div class="row-fluid">
-    <div class="span10">
+<div class="row">
+    <div class="col-md-12">
         <h1>Example.com</h1>
 
         <h3>{% trans "Imagine that this is a real site" %}</h3>
@@ -24,26 +24,29 @@
         <p>{% trans "Now, explore the Django admin for example.com. Click on either of the following:" %}</p>
     </div>
 </div>
-<div class="row-fluid">
-    <div class="span5">
-        <h4>The original <a href="{% url "admin:index" %}">Django Admin</a></h4>
+<div class="row">
+    <div class="col-sm-6">
+        {% url "admin:index" as admin_url %}
+        <h4>{% blocktrans %}The original <a href="{{ admin_url }}">Django Admin</a>{% endblocktrans %}</h4>
 
         <a href="{% url "admin:index" %}">
-            <img class="img-polaroid" src="{% static 'img/admin.png' %}" />
+            <img class="img-responsive" src="{% static 'img/admin.png' %}" />
         </a>
 
-        <p>Powered by django.contrib.admin. This is just here for reference.</p>
+        <p>{% trans "Powered by django.contrib.admin. This is just here for reference." %}</p>
     </div>
-    <div class="offset1 span5">
-        <h4>The new <a href="{% url "admin2:dashboard" %}">Admin2</a></h4>
+    <div class="col-sm-6">
+        {% url "admin2:dashboard" as admin2_url %}
+        <h4>{% blocktrans %}The new <a href="{{ admin2_url }}">Admin2</a>{% endblocktrans %}</h4>
 
         <a href="{% url "admin2:dashboard" %}">
-            <img class="img-polaroid" src="{% static 'img/admin2.png' %}" />
+            <img class="img-responsive" src="{% static 'img/admin2.png' %}" />
         </a>
 
-        <p>Powered by django-admin2.</p>
+        <p>{% trans "Powered by django-admin2." %}</p>
     </div>
 </div>
 <hr />
-<h2>See the <a href="{% url 'blog_list' %}">Blog</a> in Action</h2>
+{% url 'blog_list' as blog_url %}
+<h2>{% blocktrans %}See the <a href="{{ blog_url }}">Blog</a> in Action{% endblocktrans %}</h2>
 {% endblock %}

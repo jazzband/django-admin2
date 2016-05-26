@@ -198,12 +198,12 @@ class PostListTest(BaseIntegrationTest):
     def test_renderer_unpublished(self):
         Post.objects.create(title='title', body='body', published=False)
         response = self.client.get(reverse('admin2:blog_post_index'))
-        self.assertContains(response, 'icon-minus-sign')
+        self.assertContains(response, 'fa fa-minus')
 
     def test_renderer_published(self):
         Post.objects.create(title='title', body='body', published=True)
         response = self.client.get(reverse('admin2:blog_post_index'))
-        self.assertContains(response, 'icon-ok-sign')
+        self.assertContains(response, 'fa fa-check')
 
     def test_drilldowns(self):
         self._create_posts()
