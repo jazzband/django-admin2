@@ -6,21 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% trans "Site administration" %}{% endblock title %} | django-admin2</title>
     {% block css %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-              integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
-              integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
-              crossorigin="anonymous">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
-              integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1"
-              crossorigin="anonymous">
+        <link href="{% static "djadmin2theme_bootstrap3/libs/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
+        <link href="{% static "djadmin2theme_bootstrap3/libs/bootstrap/css/bootstrap-theme.min.css" %}" rel="stylesheet" media="screen">
+        <link href="{% static "djadmin2theme_bootstrap3/libs/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" media="screen">
         <link href="{% static "djadmin2theme_bootstrap3/css/base.css" %}" rel="stylesheet" media="screen">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <script src="{% static "djadmin2theme_bootstrap3/libs/html5shiv.js" %}"></script>
+            <script src="{% static "djadmin2theme_bootstrap3/libs/respond.min.js" %}"></script>
         <![endif]-->
     {% endblock css %}
 </head>
@@ -110,11 +104,8 @@
 </div>
 
 {% block javascript %}
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-            crossorigin="anonymous"></script>
+    <script src="{% static "djadmin2theme_bootstrap3/libs/jquery.min.js" %}"></script>
+    <script src="{% static "djadmin2theme_bootstrap3/libs/bootstrap/js/bootstrap.min.js" %}"></script>
     <script src="{% static "djadmin2theme_bootstrap3/js/sb-admin-2.js" %}"></script>
     <script src="{% static "djadmin2theme_bootstrap3/js/base.js" %}"></script>
 {% endblock javascript %}
