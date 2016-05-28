@@ -36,18 +36,17 @@ Add djadmin2 urls to your URLconf:
 
 .. code-block:: python
 
-   # urls.py
-   from django.conf.urls import include
-   
-   import djadmin2
-   
-   djadmin2.default.autodiscover()
+    # urls.py
+    from django.conf.urls import include
 
+    from djadmin2.site import djadmin2_site
 
-   urlpatterns = [
+    djadmin2_site.autodiscover()
+
+    urlpatterns = [
       ...
       url(r'^admin2/', include(djadmin2.default.urls)),
-   ]
+    ]
 
 Development Installation
 =========================
@@ -72,6 +71,23 @@ Therefore, your `settings` need to include this:
         'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
         'PAGE_SIZE': 10
     }
+
+
+The default admin2 site has move into djadmin2.site make sure your use the news djadmin2_site in your urls.py:
+
+.. code-block:: python
+
+    # urls.py
+    from django.conf.urls import include
+
+    from djadmin2.site import djadmin2_site
+
+    djadmin2_site.autodiscover()
+
+    urlpatterns = [
+      ...
+      url(r'^admin2/', include(djadmin2.default.urls)),
+    ]
 
 
 Migrating from 0.5.x
