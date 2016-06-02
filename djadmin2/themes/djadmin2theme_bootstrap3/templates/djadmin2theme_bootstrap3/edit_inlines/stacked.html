@@ -1,0 +1,12 @@
+{% load i18n admin2_tags %}
+
+{% for inline_form in formset %}
+    <div class="change_form space-below">
+        {{ inline_form }}
+        {% if not inline_form.visible_fields %}
+            <p class="alert alert-warning empty-form">
+                {% trans "This form doesn't have visible fields. This doesn't mean there are no hidden fields." %}
+            </p>
+        {% endif %}
+    </div>
+{% endfor %}

@@ -15,4 +15,4 @@ MODEL_ADMIN_ATTRS = (
     'get_list_actions', 'get_ordering', 'actions_on_bottom', 'actions_on_top',
     'ordering', 'save_on_top', 'save_on_bottom', 'readonly_fields', )
 
-ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "djadmin2theme_default")
+ADMIN2_THEME_DIRECTORY = getattr(settings, "ADMIN2_THEME_DIRECTORY", "djadmin2theme_bootstrap3")

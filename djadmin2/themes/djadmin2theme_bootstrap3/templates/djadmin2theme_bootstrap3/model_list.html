@@ -1,0 +1,141 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load i18n staticfiles admin2_tags %}
+
+{% block title %}{% blocktrans with model_name=model_name %}Select {{ model_name }} to change{% endblocktrans %}{% endblock title %}
+
+{% block page_title %}{% blocktrans with model_name=model_name %}Select {{ model_name }} to change{% endblocktrans %}{% endblock page_title %}
+
+{% block javascript %}{{ block.super }}
+    <script src="{% static "djadmin2theme_bootstrap3/js/actions.js" %}"></script>
+{% endblock javascript %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+    </li>
+    <li>
+        <a href="{% url "admin2:app_index" app_label=app_label %}">{% firstof app_verbose_name app_label|title %}</a>
+    </li>
+    <li class="active">{{ model_name_pluralized|title }}</li>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {% if search_fields %}
+        <div class="row model-search">
+            <div class="col-md-12">
+                <form method="get" class="form-inline form-search" role="search">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="{% trans 'Search Term' %}" name="q" value="{{ search_term }}">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i> {% trans "Search" %}</button>
+                      </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+
+    <div id="model-list" class="row">
+        <form id="model-list-form" class="form-inline" method="post">
+            {% csrf_token %}
+            <div class="col-md-8">
+                {% if dates %}
+                    <ul class="date-drilldown nav well nav-pills">
+                        {% if previous_date %}
+                            <li class="previous-link">
+                                <a href="{{ previous_date.link|safe }}">
+                                    {{ previous_date.text|safe }}
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% for link, date in dates %}
+                            <li class="{% ifequal active_day date %}active{% endifequal %}">
+                                <a href="{{ link|safe }}">{{ date }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                {% if view.model_admin.actions_on_top %}
+                    {% include 'djadmin2theme_bootstrap3/includes/list_actions.html' with position='top' %}
+                {% endif %}
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <th class="checkbox-column"><input type="checkbox" class="model-select-all"></th>
+                    {% for attr in view.model_admin.list_display %}
+                        <th>
+                            {# comment if we sorted on this field last time invert the sort #}
+                            {% if sort_term == attr %}
+                                <a class='sort_link' href='./?sort=-{{ attr }}'>
+                            {% else %}
+                                <a class='sort_link' href='./?sort={{ attr }}'>
+                            {% endif %}
+
+                            {% if forloop.first and attr == "__str__" %}
+                                {{ model_name|capfirst }}
+                            {% else %}
+                                {{ model|model_attr_verbose_name:attr|capfirst }}
+                            {% endif %}
+                            </a>
+                        </th>
+                    {% endfor %}
+                    </thead>
+                    <tbody>
+                    {% for obj in object_list %}
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="model-select" name="selected_model_pk" value="{{ obj.pk }}">
+                            </td>
+                            {% for attr in view.model_admin.list_display %}
+                                <td>
+                                    {% if permissions.has_change_permission %}
+                                        <a href="{% url view|admin2_urlname:'update' pk=obj.pk %}">{% render obj attr %}</a>
+                                    {% else %}
+                                        {% if permissions.has_view_permission %}
+                                            <a href="{% url view|admin2_urlname:'detail' pk=obj.pk %}">{% render obj attr %}</a>
+                                        {% else %}
+                                            {% render obj attr %}
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {% if view.model_admin.actions_on_bottom %}
+                    {% include 'djadmin2theme_bootstrap3/includes/list_actions.html' with position='bottom' %}
+                {% endif %}
+
+                {% if is_paginated %}
+                    {% include 'djadmin2theme_bootstrap3/includes/pagination.html' with position='centered' %}
+                {% endif %}
+                <div>
+                    {{ object_list|length }} {{ model_name_pluralized }}
+                </div>
+
+            </div>
+        </form>
+
+        {% block filters %}
+            <div id="list_filter_container" class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {# Translators : action verb #}{% trans "Filter" %}
+                    </div>
+                    <div class="panel-body">
+                        {% if list_filter %}
+                            <form id='filter_form' class="form-search">
+                                {{ list_filter.form.as_p }}
+                            </form>
+                        {% else %}
+                            <a href='./'>{% trans "Reset Filter" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endblock filters %}
+    </div>
+{% endblock content %}

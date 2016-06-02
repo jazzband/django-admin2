@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load i18n staticfiles %}
 
 {% block content %}
-<div class="row-fluid">
-    <div class="span10">
-        <h1>The blog of Example.com</h1>
+<div class="row">
+    <div class="col-md-12">
+        <h1>{% trans "The blog of Example.com" %}</h1>
 
         {% for post in post_list %}
             <h3>
@@ -17,15 +17,18 @@
                     {{ post.body }}
                 </p>
             {% else %}
-                <p> Unpublished - Choose an <a href="{% url 'home' %}">admin</a> tool and publish it.</p>
+                {% url 'home' as home_url %}
+                <p>
+                    {% blocktrans %}Unpublished - Choose an <a href="{{ home_url }}">admin</a> tool and publish it.{% endblocktrans %}
+                </p>
             {% endif %}
         {% empty %}
-            <h3>No Content Yet!</h3>
-
-            <p>Choose an <a href="{% url 'home' %}">admin</a> tool and add content.</p>
+            <h3>{% trans "No Content Yet!" %}</h3>
+            <p>
+                {% url 'home' as home_url %}
+                {% blocktrans %}Choose an <a href="{{ home_url }}">admin</a> tool and add content.{% endblocktrans %}
+            </p>
         {% endfor %}
-
     </div>
 </div>
-
 {% endblock %}

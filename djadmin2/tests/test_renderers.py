@@ -19,15 +19,15 @@ class BooleanRendererTest(TestCase):
 
     def test_boolean(self):
         out1 = self.renderer(True, None)
-        self.assertIn('icon-ok-sign', out1)
+        self.assertIn('fa fa-check', out1)
         out2 = self.renderer(False, None)
-        self.assertIn('icon-minus-sign', out2)
+        self.assertIn('fa fa-minus', out2)
 
     def test_string(self):
         out1 = self.renderer('yeah', None)
-        self.assertIn('icon-ok-sign', out1)
+        self.assertIn('fa fa-check', out1)
         out2 = self.renderer('', None)
-        self.assertIn('icon-minus-sign', out2)
+        self.assertIn('fa fa-minus', out2)
 
 
 class DatetimeRendererTest(TestCase):

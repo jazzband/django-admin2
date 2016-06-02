@@ -1,0 +1,24 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+{% load admin2_tags i18n %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+    </li>
+    <li class="active">
+        {% with app_verbose_names|verbose_name_for:app_label as verbose_name %}
+            {% firstof verbose_name app_label|title %}
+        {% endwith %}
+    </li>
+{% endblock breadcrumbs %}
+
+{% block page_title %}{% blocktrans with app_label=app_label|title %}{{ app_label }} administration
+{% endblocktrans %}{% endblock page_title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-8">
+            {% include 'djadmin2theme_bootstrap3/includes/app_model_list.html' %}
+        </div>
+    </div>
+{% endblock content %}

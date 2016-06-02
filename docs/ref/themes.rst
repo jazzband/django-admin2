@@ -148,7 +148,7 @@ See :doc:`built-in-views`
 Available Themes
 ----------------
 
-Currently, only the default twitter bootstrap-powered "djadmin2.themes.djadmin2theme_default" theme exists. The goal of this theme is to replicate the original Django admin UI functionality as closely as possible. This helps us ensure that we are not forgetting any functionality that Django users might be dependent on.
+Currently, only the default twitter bootstrap-powered "djadmin2.themes.djadmin2theme_bootstrap3" theme exists. The goal of this theme is to replicate the original Django admin UI functionality as closely as possible. This helps us ensure that we are not forgetting any functionality that Django users might be dependent on.
 
 If you'd like to experiment with UI design that differs from the original Django admin UI, please create a new theme. It would be great to have at least 1 experimental theme!
 

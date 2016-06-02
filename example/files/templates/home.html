@@ -1,10 +1,11 @@
-{% extends "djadmin2theme_default/base.html" %}
+{% extends "djadmin2theme_bootstrap3/base.html" %}
 {% load i18n %}
-{% block content %}
-<h1>{% trans "Example Home" %}</h1>
 
-<ul>
-    <li><a href="{% url "admin2:dashboard" %}">django-admin2</a></li>
-    <li><a href="{% url "admin:index" %}">django.contrib.admin</a> {% trans "(for reference)" %}</li>
-</ul>
+{% block content %}
+    <h1>{% trans "Example Home" %}</h1>
+
+    <ul>
+        <li><a href="{% url "admin2:dashboard" %}">django-admin2</a></li>
+        <li><a href="{% url "admin:index" %}">django.contrib.admin</a> {% trans "(for reference)" %}</li>
+    </ul>
 {% endblock %}

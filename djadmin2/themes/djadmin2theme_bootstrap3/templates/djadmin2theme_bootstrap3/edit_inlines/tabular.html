@@ -1,0 +1,43 @@
+{% load i18n admin2_tags %}
+
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+        {% for field in formset|formset_visible_fieldlist %}
+            <th>{{ field }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for inline_form in formset %}
+        <tr>
+            {% for field in inline_form.visible_fields %}
+                <td>
+                    {% if forloop.first %}
+                        {% for hidden_field in inline_form.hidden_fields %}
+                            {{ hidden_field }}
+                        {% endfor %}
+                    {% endif %}
+                    {{ field }}
+                </td>
+            {% endfor %}
+            {% if not inline_form.visible_fields %}
+                <td>
+                    <p class="alert alert-warning empty-form">
+                        {% trans "This form doesn't have visible fields. This doesn't mean there are no hidden fields." %}
+                    </p>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    <tr class="new_row">
+        <td colspan="3">
+            <div class="add_comment">
+                <a href="#" class="btn btn-sm btn-default">
+                    <i class="fa fa-plus"></i> {% trans "Add another comment" %}
+                </a>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

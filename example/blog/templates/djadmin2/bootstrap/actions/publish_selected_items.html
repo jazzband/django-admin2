@@ -1,4 +1,4 @@
-{% extends "djadmin2theme_default/base.html" %}
+{% extends "djadmin2theme_bootstrap3/base.html" %}
 {% load admin2_tags i18n %}
 
 {% block title %}{% trans "Are you sure?" %}{% endblock title %}
@@ -6,15 +6,22 @@
 {% block page_title %}{% trans "Are you sure?" %}{% endblock page_title %}
 
 {% block breadcrumbs %}
-    <li><a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a> <span class="divider">/</span></li>
-    <li><a href="{% url "admin2:app_index" app_label=app_label %}">{{ app_label|title }}</a> <span class="divider">/</span></li>
-    <li><a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a> <span class="divider">/</span></li>
-    <li class="active">{% trans "Publish" %}</li>
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+    </li>
+    <li>
+        <a href="{% url "admin2:app_index" app_label=app_label %}">{{ app_label|title }}</a>
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a>
+    </li>
+    <li class="active">
+        {% trans "Publish" %}
+    </li>
 {% endblock breadcrumbs %}
 
 
 {% block content %}
-
 <p>
 {% blocktrans with objects_name=objects_name count counter=deletable_objects|length %}Are you sure you want to publish the selected {{ objects_name }}?
  The following item will be published:
@@ -34,7 +41,6 @@
     {% for item in queryset %}
         <input type="hidden" name="selected_model_pk" value="{{ item.pk }}" />
     {% endfor %}
-    <button class="btn btn-small btn-danger" type="submit">{% trans "Publish" %}</button>
+    <button class="btn btn-sm btn-danger" type="submit">{% trans "Publish" %}</button>
 </form>
-
 {% endblock content %}

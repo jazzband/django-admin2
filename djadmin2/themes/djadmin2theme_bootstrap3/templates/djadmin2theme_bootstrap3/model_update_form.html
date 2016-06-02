@@ -1,0 +1,78 @@
+{% extends "djadmin2theme_bootstrap3/base.html" %}
+
+{% load i18n admin2_tags %}
+
+{# Translators : examples : Add post, Change object #}
+{% block title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}
+{% endblocktrans %}{% endblock title %}
+
+{# Translators : examples : Add post, Change object #}
+{% block page_title %}{% blocktrans with action=action model_name=model_name %}{{ action_name }} {{ model_name }}
+{% endblocktrans %}{% endblock page_title %}
+
+{% block page_title_link %}
+    {% if object.pk %}
+        <a href="{% url view|admin2_urlname:"history" pk=object.pk %}" class="btn btn-sm btn-info pull-right">{% trans "History" %}</a>
+    {% endif %}
+{% endblock page_title_link %}
+
+{% block breadcrumbs %}
+    <li>
+        <a href="{% url "admin2:dashboard" %}">{% trans "Home" %}</a>
+
+    </li>
+    <li>
+        <a href="{% url "admin2:app_index" app_label=app_label %}">{% firstof app_verbose_name app_label|title %}</a>
+
+    </li>
+    <li>
+        <a href="{% url view|admin2_urlname:"index" %}">{{ model_name_pluralized|title }}</a>
+
+    </li>
+    {% if action == 'Add' %}
+        <li class="active">{{ action_name }}</li>
+    {% else %}
+        <li>
+            <a href="{% url view|admin2_urlname:"detail" pk=object.pk %}">{{ object }}</a>
+
+        </li>
+        <li class="active">{% trans 'Change' %}</li>
+    {% endif %}
+{% endblock breadcrumbs %}
+
+
+{% block content %}
+    <form method="post" {% if form.is_multipart %}enctype="multipart/form-data" {% endif %}>
+        <div class="panel panel-default">
+            {% if view.model_admin.save_on_top %}
+                <div class="panel-heading">
+                    {% include "djadmin2theme_bootstrap3/includes/save_buttons.html" %}
+                </div>
+            {% endif %}
+
+            <div class="panel-body">
+                <div class="change_form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if not form.visible_fields %}
+                        <p class="alert alert-warning empty-form">
+                            {% trans "This form doesn't have visible fields. This doesn't mean there are no hidden fields." %}
+                        </p>
+                    {% endif %}
+                    {% for formset in inlines %}
+                        </div>
+                        <div class="comments_form">
+                        <h4>{{ formset.model|model_verbose_name_plural|capfirst }}</h4>
+                        {{ formset.management_form }}
+                        {% include formset.template %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% if view.model_admin.save_on_bottom %}
+                <div class="panel-footer">
+                    {% include "djadmin2theme_bootstrap3/includes/save_buttons.html" %}
+                </div>
+            {% endif %}
+        </div>
+    </form>
+{% endblock content %}

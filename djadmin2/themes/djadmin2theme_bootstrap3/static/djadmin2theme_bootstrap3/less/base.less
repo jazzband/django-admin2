@@ -1,0 +1,51 @@
+@import "sb-admin2/sb-admin-2";
+
+#wrapper {
+    &.no-sidebar {
+        #page-wrapper {
+            margin: 0;
+        }
+    }
+}
+
+.model-search {
+    margin-bottom: 15px;
+}
+
+.sort_link {
+    display: block;
+    cursor: pointer;
+    color: black;
+}
+
+.sort_link:hover {
+    color: black;
+}
+
+.previous-link a {
+    color: gray;
+}
+
+.date-drilldown {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+#page-wrapper {
+    ol.breadcrumb {
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+    h1.page-header {
+        margin-top: 30px;
+        font-size: 24px;
+    }
+}
+@media (min-width: 768px) {
+  #page-wrapper {
+    ol.breadcrumb {
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+  }
+}

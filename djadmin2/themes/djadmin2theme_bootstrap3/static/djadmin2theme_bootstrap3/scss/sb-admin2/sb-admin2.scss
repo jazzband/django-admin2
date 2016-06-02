@@ -1,0 +1,262 @@
+@import "variables";
+
+@import "mixins/btn-outline";
+@import "mixins/panel";
+
+body {
+  background-color: $gray-lightest;
+}
+
+#wrapper {
+  width: 100%;
+}
+
+#page-wrapper {
+  padding: 0 15px;
+  min-height: 568px;
+  background-color: #fff;
+}
+
+@media (min-width: 768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 250px;
+    padding: 0 30px;
+    border-left: 1px solid darken($gray-lightest, 6.5%);
+  }
+}
+
+.navbar-top-links {
+  margin-right: 0;
+  li {
+    display: inline-block;
+    &:last-child {
+      margin-right: 15px;
+    }
+    a {
+      padding: 15px;
+      min-height: 50px;
+    }
+  }
+  .dropdown-menu li {
+    display: block;
+    &:last-child {
+      margin-right: 0;
+    }
+    a {
+      padding: 3px 20px;
+      min-height: 0;
+      div {
+        white-space: normal;
+      }
+    }
+  }
+  .dropdown-messages, .dropdown-tasks, .dropdown-alerts {
+    width: 310px;
+    min-width: 0;
+  }
+  .dropdown-messages {
+    margin-left: 5px;
+  }
+  .dropdown-tasks {
+    margin-left: -59px;
+  }
+  .dropdown-alerts {
+    margin-left: -123px;
+  }
+  .dropdown-user {
+    right: 0;
+    left: auto;
+  }
+}
+
+.sidebar {
+  .sidebar-nav.navbar-collapse {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .sidebar-search {
+    padding: 15px;
+  }
+  ul li {
+    border-bottom: 1px solid darken($gray-lightest, 6.5%);
+    a.active {
+      background-color: $gray-lighter;
+    }
+  }
+  .arrow {
+    float: right;
+  }
+  .fa.arrow:before {
+    content: "\f104";
+  }
+  .active > a > .fa.arrow:before {
+    content: "\f107";
+  }
+  .nav-second-level li, .nav-third-level li {
+    border-bottom: 0 !important;
+  }
+  .nav-second-level li a {
+    padding-left: 37px;
+  }
+  .nav-third-level li a {
+    padding-left: 52px;
+  }
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    z-index: 1;
+    position: absolute;
+    width: 250px;
+    margin-top: 51px;
+  }
+  .navbar-top-links {
+    .dropdown-messages, .dropdown-tasks, .dropdown-alerts {
+      margin-left: auto;
+    }
+  }
+}
+
+.btn-outline {
+  color: inherit;
+  background-color: transparent;
+  transition: all .5s;
+  &.btn-primary {
+    @include btn-outline($brand-primary);
+  }
+  &.btn-success {
+    @include btn-outline($brand-success);
+  }
+  &.btn-info {
+    @include btn-outline($brand-info);
+  }
+  &.btn-warning {
+    @include btn-outline($brand-warning);
+  }
+  &.btn-danger {
+    @include btn-outline($brand-danger);
+  }
+}
+
+
+.chat {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted $gray-light;
+    &.left .chat-body {
+      margin-left: 60px;
+    }
+    &.right .chat-body {
+      margin-right: 60px;
+    }
+    .chat-body p {
+      margin: 0;
+    }
+  }
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon {
+  margin-right: 5px;
+}
+
+.chat-panel .panel-body {
+  height: 350px;
+  overflow-y: scroll;
+}
+
+.login-panel {
+  margin-top: 25%;
+}
+
+.flot-chart {
+  display: block;
+  height: 400px;
+}
+
+.flot-chart-content {
+  width: 100%;
+  height: 100%;
+}
+
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+}
+
+table.dataTable thead {
+  .sorting, .sorting_asc, .sorting_desc, .sorting_asc_disabled, .sorting_desc_disabled {
+    background: 0 0;
+  }
+  .sorting_asc:after {
+    content: "\f0de";
+    float: right;
+    font-family: fontawesome;
+  }
+  .sorting_desc:after {
+    content: "\f0dd";
+    float: right;
+    font-family: fontawesome;
+  }
+  .sorting:after {
+    content: "\f0dc";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50, 50, 50, 0.5);
+  }
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.428571429;
+  &.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 1.33;
+  }
+  &.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+  }
+}
+
+.show-grid {
+  [class^=col-] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #ddd;
+    background-color: #eee !important;
+  }
+  margin: 15px 0;
+}
+
+.huge {
+  font-size: 40px;
+}
+
+.panel-green {
+  @include panel-color($brand-success);
+}
+.panel-red {
+  @include panel-color($brand-danger);
+}
+
+.panel-yellow {
+  @include panel-color($brand-warning);
+}

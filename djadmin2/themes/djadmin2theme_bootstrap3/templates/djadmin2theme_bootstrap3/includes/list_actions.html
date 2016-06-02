@@ -1,0 +1,31 @@
+{% load i18n admin2_tags %}
+
+<div class="navbar actions-{{ position }}">
+    <div class="btn-group">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            {% trans "Actions" %} <span class="fa fa-caret-down"></span>
+        </button>
+        <ul class="dropdown-menu">
+            {% for action in actions %}
+                <li>
+                    <a tabindex="-1" href="#" data-name="action" data-value="{{ action.name }}">
+                        {{ action.description }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <input type="hidden" name="action" value=""/>
+    <small class="muted">
+        {% if view.model_admin.actions_selection_counter %}
+            {% blocktrans with selected='<span class="selected-count">0</span>' total=object_list|length %}{{ selected }} of {{ total }} selected{% endblocktrans %}
+        {% endif %}
+    </small>
+    <div class="pull-right">
+        {% if permissions.has_add_permission %}
+            <a href="{% url view|admin2_urlname:'create' %}" class="btn btn-default">
+                <i class="fa fa-plus"></i> {% blocktrans with model_verbose_name=model|model_verbose_name %}Add {{ model_verbose_name }}{% endblocktrans %}
+            </a>
+        {% endif %}
+    </div>
+</div>

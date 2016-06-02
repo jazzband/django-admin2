@@ -44,18 +44,16 @@ Screenshots
 Requirements
 ============
 
-* Django 1.6+
+* Django 1.7+
 * Python 2.7+ or Python 3.3+
 * django-braces_
 * django-extra-views_
-* django-floppyforms_
 * django-rest-framework_
 * django-filter_
 * Sphinx_ (for documentation)
 
 .. _django-braces: https://github.com/brack3t/django-braces
 .. _django-extra-views: https://github.com/AndrewIngram/django-extra-views
-.. _django-floppyforms: https://github.com/brutasse/django-floppyforms
 .. _django-rest-framework: https://github.com/tomchristie/django-rest-framework
 .. _django-filter: https://github.com/alex/django-filter
 .. _Sphinx: http://sphinx-doc.org/
@@ -79,35 +77,36 @@ Add djadmin2 and rest_framework to your settings file:
         ...
         'djadmin2',
         'rest_framework', # for the browsable API templates
-        'floppyforms', # For HTML5 form fields
-        'crispy_forms', # Required for the default theme's layout
         ...
     )
-    
-Add the default theme in your settings file:
+
+Add setting for apps and the default theme in your settings file:
 
 .. code-block:: python
 
     # In settings.py
-    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10
+    }
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 Add djadmin2 urls to your URLconf:
 
 .. code-block:: python
 
-   # urls.py
-   from django.conf.urls import patterns, include
+    # urls.py
+    from django.conf.urls import include
 
-   import djadmin2
+    from djadmin2.site import djadmin2_site
 
-   djadmin2.default.autodiscover()
+    djadmin2_site.autodiscover()
 
-
-   urlpatterns = patterns(
+    urlpatterns = [
       ...
       url(r'^admin2/', include(djadmin2.default.urls)),
-   )
+    ]
 
 
 How to write django-admin2 modules
@@ -136,6 +135,41 @@ How to write django-admin2 modules
   djadmin2.default.register(Comment)
   djadmin2.default.register(User, UserAdmin2)
 
+Migrating from 0.6.x
+====================
+
+- The default theme has been updated to bootstrap3, be sure to replace your reference to the new one.
+- Django rest framework also include multiple pagination system, the only one supported now is the PageNumberPagination.
+
+Therefore, your `settings` need to include this:
+
+.. code-block:: python
+
+    # In settings.py
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
+
+    REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+        'PAGE_SIZE': 10
+    }
+
+The default admin2 site has move into djadmin2.site make sure your use the news djadmin2_site in your urls.py:
+
+.. code-block:: python
+
+    # urls.py
+    from django.conf.urls import include
+
+    from djadmin2.site import djadmin2_site
+
+    djadmin2_site.autodiscover()
+
+    urlpatterns = [
+      ...
+      url(r'^admin2/', include(djadmin2.default.urls)),
+    ]
+
 Migrating from 0.5.x
 ====================
 
@@ -145,8 +179,7 @@ Themes are now defined explicitly, including the default theme. Therefore, your 
 
     # In settings.py
     INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
-
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default"
 
 Drop-In Themes
 ==============
@@ -156,8 +189,8 @@ The default theme is whatever bootstrap is most current. Specifically:
 .. code-block:: python
 
     # In settings.py
-    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_default',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_default/"
+    INSTALLED_APPS += ('djadmin2.themes.djadmin2theme_bootstrap3',)
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_bootstrap3"
 
 If you create a new theme, you define it thus:
 
@@ -166,7 +199,7 @@ If you create a new theme, you define it thus:
     # In settings.py
     # Mythical theme! This does not exit... YET!
     INSTALLED_APPS += ('djadmin2theme_foundation',)
-    ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation/"
+    ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation"
     
 Follows Best Practices
 ======================

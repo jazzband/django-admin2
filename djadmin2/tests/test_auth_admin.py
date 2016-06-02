@@ -1,9 +1,8 @@
+from django import forms
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
-
-import floppyforms
 
 from djadmin2.site import djadmin2_site
 from ..admin2 import UserAdmin2
@@ -23,7 +22,7 @@ class UserAdminTest(TestCase):
         form = UserAdmin2.create_form_class()
         self.assertTrue(
             isinstance(form.fields['username'].widget,
-                       floppyforms.TextInput))
+                       forms.TextInput))
 
         request = self.factory.get(reverse('admin2:auth_user_create'))
         request.user = self.user
@@ -34,16 +33,16 @@ class UserAdminTest(TestCase):
         form = response.context_data['form']
         self.assertTrue(
             isinstance(form.fields['username'].widget,
-                       floppyforms.TextInput))
+                       forms.TextInput))
 
     def test_update_form_uses_floppyform_widgets(self):
         form = UserAdmin2.update_form_class()
         self.assertTrue(
             isinstance(form.fields['username'].widget,
-                       floppyforms.TextInput))
+                       forms.TextInput))
         self.assertTrue(
             isinstance(form.fields['date_joined'].widget,
-                       floppyforms.DateTimeInput))
+                       forms.DateTimeInput))
 
         request = self.factory.get(
             reverse('admin2:auth_user_update', args=(self.user.pk,)))
@@ -55,7 +54,7 @@ class UserAdminTest(TestCase):
         form = response.context_data['form']
         self.assertTrue(
             isinstance(form.fields['username'].widget,
-                       floppyforms.TextInput))
+                       forms.TextInput))
         self.assertTrue(
             isinstance(form.fields['date_joined'].widget,
-                       floppyforms.DateTimeInput))
+                       forms.DateTimeInput))

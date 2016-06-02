@@ -37,8 +37,8 @@ Local Installation
 Try the example projects
 --------------------------
 
-1. cd into example/ (or example2/)
-2. create the database: ``$ python manage.py syncdb``
+1. cd into example/
+2. create the database: ``$ python manage.py migrate``
 3. run the dev server: ``$ python manage.py runserver``
 
 .. _virtualenv: http://www.virtualenv.org/en/latest/

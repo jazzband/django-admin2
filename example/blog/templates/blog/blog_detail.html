@@ -2,10 +2,11 @@
 {% load staticfiles %}
 
 {% block content %}
-<div class="row-fluid">
-    <div class="span10">
-        <h3> <a href='{% url 'blog_list' %}'>Back to the Blog</a> </h3>
-
+<div class="row">
+    <div class="col-md-12">
+        <h3>
+            <a href='{% url 'blog_list' %}'>{% trans "Back to the Blog" %}</a>
+        </h3>
         <h3>
             {{ post.title }}
         </h3>
@@ -14,7 +15,6 @@
             <p>
                 {{ post.body }}
             </p>
-
             <ul>
                 {% for comment in post.comments.all %}
                     <li>{{ comment.body }}</li>
@@ -22,9 +22,11 @@
                     <li>No comments yet</li>
                 {% endfor %}
             </ul>
-
         {% else %}
-            <p> Unpublished - Choose an <a href="{% url 'home' %}">admin</a> tool and publish it.</p>
+            <p>
+                {% url 'home' as home_url %}
+                {% blocktrans %} Unpublished - Choose an <a href="{{ home_url }}">admin</a> tool and publish it.{% endblocktrans %}
+            </p>
         {% endif %}
     </div>
 </div>

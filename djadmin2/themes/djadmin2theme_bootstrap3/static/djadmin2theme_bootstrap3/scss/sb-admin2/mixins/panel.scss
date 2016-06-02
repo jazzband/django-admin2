@@ -1,0 +1,14 @@
+@mixin panel-color($color) {
+  border-color: $color;
+  .panel-heading {
+    border-color: $color;
+    color: white;
+    background-color: $color;
+  }
+  a {
+    color: $color;
+    &:hover {
+      color: darken($color, 15%);
+    }
+  }
+}
