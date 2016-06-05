@@ -132,7 +132,7 @@ setup(
         'django-braces>=1.3.0',
         'djangorestframework>=3.3.3',
         'django-filter>=0.13.0',
-        'pytz==2014.7',
+        'pytz==2016.4',
         'future>=0.15.2',
         ],
     extras_require={
