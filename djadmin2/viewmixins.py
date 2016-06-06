@@ -76,6 +76,7 @@ class Admin2Mixin(PermissionMixin):
     model_admin = None
     model_name = None
     app_label = None
+    login_view = None
 
     index_path = reverse_lazy('admin2:dashboard')
 
@@ -101,8 +102,6 @@ class Admin2Mixin(PermissionMixin):
     def dispatch(self, request, *args, **kwargs):
 
         if self.is_user(request):
-            from .views import LoginView
-
             if request.path == reverse('admin2:logout'):
                 return HttpResponseRedirect(self.index_path)
 
@@ -110,8 +109,7 @@ class Admin2Mixin(PermissionMixin):
                 extra = {
                     'next': request.GET.get('next', self.index_path)
                 }
-                return LoginView().dispatch(request, extra_context=extra,
-                                            *args, **kwargs)
+                return self.login_view().dispatch(request, extra_context=extra, *args, **kwargs)
 
         return super(Admin2Mixin, self).dispatch(request, *args, **kwargs)
 

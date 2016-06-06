@@ -45,3 +45,38 @@ In your Django project's root URLconf module (``urls.py``) modify the code to in
 In real projects the new IndexView would likely be placed into a ``views.py`` module.
 
 .. note:: Considering that dashboard is more intuitive of a name, perhaps the ``IndexView`` should be renamed ``DashboardView``?
+
+Customizing the Login view
+==========================
+
+The login view could also be customized.
+
+In your Django project's root URLconf module (``urls.py``) modify the code to include the commented code before the ``djadmin2.default.autodiscover()``:
+
+.. code-block:: python
+
+    from django.conf.urls import patterns, include, url
+
+    from djadmin2.site import djadmin2_site
+    from djadmin2.views import LoginView
+
+
+    ######### Begin django-admin2 customization code
+    # Create a new django-admin2 index view
+    class CustomLoginView(LoginView):
+
+        # specify the template
+        default_template_name = "custom_login_template.html"
+
+    # override the default index_view
+    djadmin2_site.login_view = CustomLoginView
+    ######### end django-admin2 customization code
+
+    djadmin2_site.autodiscover()
+
+    urlpatterns = patterns('',
+        url(r'^admin2/', include(djadmin2_site.urls)),
+        # ... Place the rest of the project URLs here
+    )
+
+In real projects the new LoginView would likely be placed into a ``views.py`` module.
