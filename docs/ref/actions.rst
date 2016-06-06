@@ -54,11 +54,13 @@ In our blog/admin.py module we write:
 
 .. code-block:: python
 
-    import djadmin2
+    from djadmin2.actions import BaseListAction
+    from djadmin2.site import djadmin2_site
+    from djadmin2.types import ModelAdmin2
 
     from .models import Post, Comment
 
-    class DeleteAllComments(djadmin2.actions.BaseListAction):
+    class DeleteAllComments(BaseListAction):
 
         description = 'Delete selected items'
         default_template_name = 'actions/delete_all_comments_confirmation.html'
@@ -74,11 +76,11 @@ In our blog/admin.py module we write:
 
     custom_function_action.description = 'Do other action'
 
-    class PostAdmin(djadmin2.ModelAdmin2):
+    class PostAdmin(ModelAdmin2):
         actions = [DeleteAllComments, custom_function_action]
 
-    djadmin2.default.register(Post, PostAdmin)
-    djadmin2.default.register(Comment)
+    djadmin2_site.register(Post, PostAdmin)
+    djadmin2_site.register(Comment)
 
 
 .. warning::

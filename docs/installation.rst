@@ -45,7 +45,7 @@ Add djadmin2 urls to your URLconf:
 
     urlpatterns = [
       ...
-      url(r'^admin2/', include(djadmin2.default.urls)),
+      url(r'^admin2/', include(djadmin2_site.urls)),
     ]
 
 Development Installation
@@ -86,7 +86,7 @@ The default admin2 site has move into djadmin2.site make sure your use the news 
 
     urlpatterns = [
       ...
-      url(r'^admin2/', include(djadmin2.default.urls)),
+      url(r'^admin2/', include(djadmin2_site.urls)),
     ]
 
 

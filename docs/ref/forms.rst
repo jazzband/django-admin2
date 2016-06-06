@@ -23,18 +23,20 @@ Enter the following code in ``accounts/admin2.py``:
     from django.contrib.auth import get_user_model
     from django.contrib.auth.models import Group
 
-    import djadmin2
+    from djadmin2.site import djadmin2_site
+    from djadmin2.forms import UserCreationForm, UserChangeForm
+    from djadmin2.types import ModelAdmin2
 
     # fetch the User model
     User = get_user_model()
 
     # Incorporate the 
-    class UserAdmin2(djadmin2.ModelAdmin2):
-        create_form_class = djadmin2.forms.UserCreationForm
-        update_form_class = djadmin2.forms.UserChangeForm
+    class UserAdmin2(ModelAdmin2):
+        create_form_class = UserCreationForm
+        update_form_class = UserChangeForm
 
-    djadmin2.default.register(User, UserAdmin2)
-    djadmin2.default.register(Group)
+    djadmin2_site.register(User, UserAdmin2)
+    djadmin2_site.register(Group)
 
 Done! The User and Group controls will appear in your django-admin2 dashboard.
 
