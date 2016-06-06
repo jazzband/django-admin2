@@ -18,4 +18,3 @@ urlpatterns = [
     url(r'^blog/detail(?P<pk>\d+)/$', BlogDetailView.as_view(template_name="blog/blog_detail.html"), name='blog_detail'),
     url(r'^$', BlogListView.as_view(template_name="blog/home.html"), name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
