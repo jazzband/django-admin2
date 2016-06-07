@@ -201,6 +201,15 @@ If you create a new theme, you define it thus:
     INSTALLED_APPS += ('djadmin2theme_foundation',)
     ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation"
     
+    
+Code of Conduct
+======================
+
+Everyone interacting in the django-admin2 project's codebases, issue trackers, chat
+rooms, and mailing lists is expected to follow the `PyPA Code of Conduct`_.
+
+.. _`PyPA Code of Conduct`: https://www.pypa.io/en/latest/code-of-conduct/
+    
 Follows Best Practices
 ======================
 
