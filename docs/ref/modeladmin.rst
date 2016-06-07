@@ -7,12 +7,13 @@ The `ModelAdmin2` class is the representation of a model in the admin interface.
 .. code-block:: python
 
     from .models import Post
-    import djadmin2
+    from djadmin2.site import djadmin2_site
+    from djadmin2.types import ModelAdmin2
 
-    class PostAdmin(djadmin2.ModelAdmin2):
+    class PostAdmin(ModelAdmin2):
         pass
 
-    djadmin2.default.register(Post, PostAdmin)
+    djadmin2_site.register(Post, PostAdmin)
 
 Adding a new view
 =================
@@ -29,12 +30,13 @@ is expected a string that is the name of your view.
 
     from .models import Post
     from djadmin2 import views
-    import djadmin2
+    from djadmin2.site import djadmin2_site
+    from djadmin2.types import ModelAdmin2
 
-    class PostAdmin(djadmin2.ModelAdmin2):
+    class PostAdmin(ModelAdmin2):
         preview_post = views.AdminView(r'^preview/$', views.PreviewPostView)
 
-    djadmin2.default.register(Post, PostAdmin)
+    djadmin2_site.register(Post, PostAdmin)
 
 Replacing an existing view
 ==========================
@@ -46,9 +48,10 @@ the view that you want replace:
 
     from .models import Post
     from djadmin2 import views
-    import djadmin2
+    from djadmin2.site import djadmin2_site
+    from djadmin2.types import ModelAdmin2
 
-    class PostAdmin(djadmin2.ModelAdmin2):
+    class PostAdmin(ModelAdmin2):
         create_view = views.AdminView(r'^create/$', views.MyCustomCreateView)
 
-    djadmin2.default.register(Post, PostAdmin)
+    djadmin2_site.register(Post, PostAdmin)

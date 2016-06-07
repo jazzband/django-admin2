@@ -38,19 +38,19 @@ If you've worked with Django, this implementation should look familiar:
 
   from .models import Post, Comment
 
-  import djadmin2
+  from djadmin2.site import djadmin2_site
+  from djadmin2.types import ModelAdmin2
 
 
-  class UserAdmin2(djadmin2.ModelAdmin2):
+  class UserAdmin2(ModelAdmin2):
       create_form_class = UserCreationForm
       update_form_class = UserChangeForm
 
 
   #  Register each model with the admin
-  djadmin2.default.register(Post)
-  djadmin2.default.register(Comment)
-  djadmin2.default.register(User, UserAdmin2)
-
+  djadmin2_site.register(Post)
+  djadmin2_site.register(Comment)
+  djadmin2_site.register(User, UserAdmin2)
 
 .. _GitHub: https://github.com/twoscoops/django-admin2
 
