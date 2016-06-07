@@ -105,7 +105,7 @@ Add djadmin2 urls to your URLconf:
 
     urlpatterns = [
       ...
-      url(r'^admin2/', include(djadmin2.default.urls)),
+      url(r'^admin2/', include(djadmin2_site.urls)),
     ]
 
 
@@ -118,22 +118,22 @@ How to write django-admin2 modules
   # Import your custom models
   from django.contrib.auth.forms import UserCreationForm, UserChangeForm
   from django.contrib.auth.models import User
+  from djadmin2.site import djadmin2_site
+  from djadmin2.types import ModelAdmin2
 
   from .models import Post, Comment
 
-  import djadmin2
 
-
-  class UserAdmin2(djadmin2.ModelAdmin2):
+  class UserAdmin2(ModelAdmin2):
       # Replicates the traditional admin for django.contrib.auth.models.User
       create_form_class = UserCreationForm
       update_form_class = UserChangeForm
 
 
   #  Register each model with the admin
-  djadmin2.default.register(Post)
-  djadmin2.default.register(Comment)
-  djadmin2.default.register(User, UserAdmin2)
+  djadmin2_site.register(Post)
+  djadmin2_site.register(Comment)
+  djadmin2_site.register(User, UserAdmin2)
 
 Migrating from 0.6.x
 ====================
@@ -167,7 +167,7 @@ The default admin2 site has move into djadmin2.site make sure your use the news 
 
     urlpatterns = [
       ...
-      url(r'^admin2/', include(djadmin2.default.urls)),
+      url(r'^admin2/', include(djadmin2_site.urls)),
     ]
 
 Migrating from 0.5.x

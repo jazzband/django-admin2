@@ -14,31 +14,31 @@ When you first log into django-admin2, just like ``django.contrib.admin`` you ar
 
 However, because this is the dashboard view, the method of customization and configuration is different than other django-admin2 views.
 
-In your Django project's root URLconf module (``urls.py``) modify the code to include the commented code before the ``djadmin2.default.autodiscover()``:
+In your Django project's root URLconf module (``urls.py``) modify the code to include the commented code before the ``djadmin2_site.autodiscover()``:
 
 .. code-block:: python
 
     from django.conf.urls import patterns, include, url
 
-    import djadmin2
+    from djadmin2.site import djadmin2_site
+    from djadmin2.views import IndexView
 
 
     ######### Begin django-admin2 customization code
     # Create a new django-admin2 index view
-    class IndexView(djadmin2.views.IndexView):
+    class CustomIndexView(IndexView):
 
         # specify the template
         default_template_name = "custom_dashboard_template.html"
 
     # override the default index_view
-    djadmin2.default.index_view = IndexView
+    djadmin2_site.index_view = CustomIndexView
     ######### end django-admin2 customization code
 
-
-    djadmin2.default.autodiscover()
+    djadmin2_site.autodiscover()
 
     urlpatterns = patterns('',
-        url(r'^admin2/', include(djadmin2.default.urls)),
+        url(r'^admin2/', include(djadmin2_site.urls)),
         # ... Place the rest of the project URLs here
     )
 
