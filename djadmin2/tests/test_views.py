@@ -1,12 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from django.utils.encoding import force_text
-from os import path
 
 from .. import views
-
-fixture_dir = path.join(path.abspath(path.dirname(__file__)), 'fixtures')
-fixture_file = path.join(fixture_dir, 'pubtest.txt')
 
 
 class AdminViewTest(TestCase):
