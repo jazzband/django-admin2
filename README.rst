@@ -17,7 +17,7 @@ rewrite of that library using modern Class-Based Views and enjoying a design
 focused on extendibility and adaptability. By starting over, we can avoid the
 legacy code and make it easier to write extensions and themes.
 
-Full Documentation at: http://django-admin2.rtfd.org/
+Full Documentation at: https://django-admin2.readthedocs.io/
 
 Features
 ========
