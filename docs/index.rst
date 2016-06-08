@@ -2,9 +2,9 @@
 Welcome to django-admin2's documentation!
 =========================================
 
-.. image:: https://travis-ci.org/pydanny/django-admin2.png
+.. image:: https://travis-ci.org/jazzband/django-admin2.png
    :alt: Build Status
-   :target: https://travis-ci.org/pydanny/django-admin2
+   :target: https://travis-ci.org/jazzband/django-admin2
 
 **Warning:** This project is currently in an **alpha** state and currently not meant for real projects.
 
