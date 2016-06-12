@@ -18,7 +18,7 @@ In your Django project's root URLconf module (``urls.py``) modify the code to in
 
 .. code-block:: python
 
-    from django.conf.urls import patterns, include, url
+    from django.conf.urls import include, url
 
     from djadmin2.site import djadmin2_site
     from djadmin2.views import IndexView
@@ -37,10 +37,10 @@ In your Django project's root URLconf module (``urls.py``) modify the code to in
 
     djadmin2_site.autodiscover()
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         url(r'^admin2/', include(djadmin2_site.urls)),
         # ... Place the rest of the project URLs here
-    )
+    ]
 
 In real projects the new IndexView would likely be placed into a ``views.py`` module.
 

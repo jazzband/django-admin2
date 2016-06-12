@@ -6,7 +6,7 @@ Contributing
 
 .. warning:: Before you begin working on your contribution, please read and become familiar with the design_ of ``django-admin2``. The design_ document should hopefully make it clear what our constraints and goals are for the project.
 
-.. _design: https://django-admin2.readthedocs.org/en/latest/design.html
+.. _design: https://django-admin2.readthedocs.io/en/latest/design.html
 
 .. index::
     single: Contributing; Setup
@@ -42,7 +42,7 @@ Try the example projects
 3. run the dev server: ``$ python manage.py runserver``
 
 .. _virtualenv: http://www.virtualenv.org/en/latest/
-.. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.org/en/latest/
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 
 .. index::
     single: Contributing; Issues
@@ -254,7 +254,7 @@ Internationalize
 
 Any new text visible to the user must be internationalized_.
 
-.. _internationalized: https://django-admin2.readthedocs.org/en/latest/internationalization.html
+.. _internationalized: https://django-admin2.readthedocs.io/en/latest/internationalization.html
 
 
 How pull requests are checked, tested, and done

@@ -2,12 +2,15 @@
 django-admin2
 =============
 
-.. image:: https://travis-ci.org/pydanny/django-admin2.png
+.. image:: https://jazzband.co/static/img/jazzband.svg
+   :target: https://jazzband.co/
+   :alt: Jazzband
+.. image:: https://travis-ci.org/jazzband/django-admin2.png
    :alt: Build Status
-   :target: https://travis-ci.org/pydanny/django-admin2
-.. image:: https://coveralls.io/repos/pydanny/django-admin2/badge.png?branch=develop
+   :target: https://travis-ci.org/jazzband/django-admin2
+.. image:: https://coveralls.io/repos/jazzband/django-admin2/badge.png?branch=develop
    :alt: Coverage Status
-   :target: https://coveralls.io/r/pydanny/django-admin2
+   :target: https://coveralls.io/r/jazzband/django-admin2
 .. image:: https://badges.gitter.im/Join Chat.svg
    :target: https://gitter.im/pydanny/django-admin2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
@@ -17,7 +20,7 @@ rewrite of that library using modern Class-Based Views and enjoying a design
 focused on extendibility and adaptability. By starting over, we can avoid the
 legacy code and make it easier to write extensions and themes.
 
-Full Documentation at: http://django-admin2.rtfd.org/
+Full Documentation at: https://django-admin2.readthedocs.io/
 
 Features
 ========
@@ -29,17 +32,17 @@ Features
 Screenshots
 ===========
 
-.. image:: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Site_administration.png
+.. image:: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Site_administration.png
     :width: 722px
     :alt: Site administration
     :align: center
-    :target: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Site_administration.png
+    :target: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Site_administration.png
 
-.. image:: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Select_user.png
+.. image:: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Select_user.png
     :width: 722px
     :alt: Select user
     :align: center
-    :target: https://github.com/pydanny/django-admin2/raw/develop/screenshots/Select_user.png
+    :target: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Select_user.png
 
 Requirements
 ============
@@ -200,7 +203,16 @@ If you create a new theme, you define it thus:
     # Mythical theme! This does not exit... YET!
     INSTALLED_APPS += ('djadmin2theme_foundation',)
     ADMIN2_THEME_DIRECTORY = "djadmin2theme_foundation"
-    
+
+
+Code of Conduct
+======================
+
+Everyone interacting in the django-admin2 project's codebases, issue trackers, chat
+rooms, and mailing lists is expected to follow the `Jazzband Code of Conduct`_.
+
+.. _`Jazzband Code of Conduct`: https://jazzband.co/about/conduct
+
 Follows Best Practices
 ======================
 
@@ -213,9 +225,3 @@ Follows Best Practices
 This project follows best practices as espoused in `Two Scoops of Django: Best Practices for Django 1.8`_.
 
 .. _`Two Scoops of Django: Best Practices for Django 1.8`: http://twoscoopspress.org/products/two-scoops-of-django-1-8
-
-
-Support this project!
-=====================
-
-You can hire the lead maintainer to perform dedicated work on this package. Please email pydanny@cartwheelweb.com.

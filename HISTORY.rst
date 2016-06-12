@@ -57,9 +57,9 @@ History
  * Pull requests going forward are internationalized_
  * FAQ_ begun
  
-.. _`internationalized`: https://django-admin2.readthedocs.org/en/latest/contributing.html#internationalize
-.. _`Documentation on built-in views`: https://django-admin2.readthedocs.org/en/latest/ref/built-in-views.html
-.. _faq: https://django-admin2.readthedocs.org/en/latest/faq.html
+.. _`internationalized`: https://django-admin2.readthedocs.io/en/latest/contributing.html#internationalize
+.. _`Documentation on built-in views`: https://django-admin2.readthedocs.io/en/latest/ref/built-in-views.html
+.. _faq: https://django-admin2.readthedocs.io/en/latest/faq.html
 
 0.5.0 (2013-07-08)
 
