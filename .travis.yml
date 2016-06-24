@@ -1,28 +1,43 @@
 sudo: false
 language: python
+cache:
+  directories:
+  - "~/.cache/pip"
 python:
-  - "2.7"
-  - "3.3"
-  - "3.4"
-  - "3.5"
+- '2.7'
+- '3.3'
+- '3.4'
+- '3.5'
 env:
-  - DJANGO=1.8
-  - DJANGO=1.9
-  - DJANGO=master
+- DJANGO=1.8
+- DJANGO=1.9
+- DJANGO=master
 matrix:
   exclude:
-    - python: "3.3"
-      env: DJANGO=1.9
-    - python: "3.3"
-      env: DJANGO=master
+  - python: '3.3'
+    env: DJANGO=1.9
+  - python: '3.3'
+    env: DJANGO=master
   allow_failures:
-    - python: "2.7"
-      env: DJANGO=master
-    - python: "3.4"
-      env: DJANGO=master
-    - python: "3.5"
-      env: DJANGO=master
+  - python: '2.7'
+    env: DJANGO=master
+  - python: '3.4'
+    env: DJANGO=master
+  - python: '3.5'
+    env: DJANGO=master
 install:
-  - pip install tox
+- pip install tox
 script:
-  - tox -e py${TRAVIS_PYTHON_VERSION//[.]/}-$DJANGO
+- tox -e py${TRAVIS_PYTHON_VERSION//[.]/}-$DJANGO
+deploy:
+  provider: pypi
+  user: jazzband
+  distributions: sdist bdist_wheel
+  password:
+    secure: UQh5R++1zOsJm31oIL0w4YsIyP1A83kv/EdpwhuXqs8HZB+Mpo5h2ylu/qVioTaiXvYEVfO1myY57du7YvC+u6oOxD8tyduBOyZMJXa15+/kdVbvjlRWJ/c8wGgmjlOAun209g9WoTAMVX8t1+thHEJqWxx07nlnPCAJSmdms+w=
+  on:
+    tags: true
+    repo: jazzband/django-admin2
+    # only do the PyPI release for exactly one scenario of the test matrix:
+    condition: "$DJANGO = 1.9"
+    python: 2.7

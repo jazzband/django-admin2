@@ -2,7 +2,7 @@
 django-admin2
 =============
 
-.. image:: https://jazzband.co/static/img/jazzband.svg
+.. image:: https://jazzband.co/static/img/badge.svg
    :target: https://jazzband.co/
    :alt: Jazzband
 .. image:: https://travis-ci.org/jazzband/django-admin2.png
