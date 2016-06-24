@@ -8,9 +8,9 @@ django-admin2
 .. image:: https://travis-ci.org/jazzband/django-admin2.png
    :alt: Build Status
    :target: https://travis-ci.org/jazzband/django-admin2
-.. image:: https://coveralls.io/repos/jazzband/django-admin2/badge.png?branch=develop
+.. image:: https://coveralls.io/repos/github/jazzband/django-admin2/badge.svg?branch=develop
    :alt: Coverage Status
-   :target: https://coveralls.io/r/jazzband/django-admin2
+   :target: https://coveralls.io/github/jazzband/django-admin2?branch=develop
 .. image:: https://badges.gitter.im/Join Chat.svg
    :target: https://gitter.im/pydanny/django-admin2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
