@@ -83,7 +83,7 @@ class Admin2(object):
 
         # if no more models in an app's registry
         # then delete the app from the apps.
-        if self.apps[app_label] is {}:
+        if not len(self.apps[app_label]):
             del self.apps[app_label]  # no
 
     def register_app_verbose_name(self, app_label, app_verbose_name):
