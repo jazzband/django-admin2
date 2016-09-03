@@ -27,6 +27,7 @@ class Admin2(object):
     admin site.
     """
     index_view = views.IndexView
+    login_view = views.LoginView
     app_index_view = views.AppIndexView
     api_index_view = apiviews.IndexAPIView
 
@@ -142,6 +143,7 @@ class Admin2(object):
             'registry': self.registry,
             'app_verbose_names': self.app_verbose_names,
             'apps': self.apps,
+            'login_view': self.login_view,
         }
 
     def get_app_index_kwargs(self):
