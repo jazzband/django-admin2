@@ -1,7 +1,7 @@
-django-extra-views>=0.8.0
+django-extra-views>=0.6.5
 django-braces>=1.3.0
-djangorestframework>=3.5.3
-django-filter>=0.15.3
-django-debug-toolbar>=1.5
+djangorestframework>=3.3.3
+django-filter>=0.13.0
+django-debug-toolbar>=0.9.4
 future>=0.15.2
 pytz>=2016.4
