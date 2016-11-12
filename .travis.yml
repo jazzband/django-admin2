@@ -24,7 +24,9 @@ matrix:
     - python: '3.5'
       env: DJANGO=master
 install:
+  - pip install -U pip
   - pip install tox
+  - tox --version
 script:
   - tox -e py${TRAVIS_PYTHON_VERSION//[.]/}-$DJANGO
 deploy:
