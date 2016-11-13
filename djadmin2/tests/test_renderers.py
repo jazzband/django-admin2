@@ -117,6 +117,6 @@ class NumberRendererTest(TestCase):
         self.assertEqual(number, out)
 
     def testFieldDecimal(self):
-        field = RendererTestModel._meta.get_field_by_name('decimal')[0]
+        field = RendererTestModel._meta.get_field('decimal')
         out = self.renderer(Decimal('0.123456789'), field)
         self.assertEqual('0.12345', out)

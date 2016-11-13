@@ -138,7 +138,7 @@ def render(context, model_instance, attribute_name):
 
     # Apply renderer and return value
     try:
-        field = model_instance._meta.get_field_by_name(attribute_name)[0]
+        field = model_instance._meta.get_field(attribute_name)
     except FieldDoesNotExist:
         # There is no field with the specified name.
         # It must be a method instead.

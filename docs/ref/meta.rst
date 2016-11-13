@@ -149,7 +149,7 @@ Attributes
     ``admin``
         Is ``None``. Doesn't seem to be used anywhere. So we don't need to
         document it.
-        
+
         TODO: Create a django ticket to suggest removing it.
 
 ``auto_created``
@@ -249,9 +249,6 @@ Methods
     TODO ...
 
 ``get_field(self, name, many_to_many=True)``
-    TODO ...
-
-``get_field_by_name(self, name)``
     TODO ...
 
 ``get_all_field_names(self)``
