@@ -73,7 +73,7 @@ def model_field_verbose_name(model, field_name):
     Returns the verbose name of a model field.
     """
     meta = model_options(model)
-    field = meta.get_field_by_name(field_name)[0]
+    field = meta.get_field(field_name)
     return field.verbose_name
 
 
