@@ -1,19 +1,23 @@
 History
 =========
 
-0.6.2 (?)
+0.7.0 (2016-11-16)
 
-* Fix Django 1.8 issues and add 1.9 compatibility
-* Update django-rest-framework
+* Fix Django 1.8 issues and add 1.9, 1.10 compatibility
+* Update django-rest-framework to 3.3.x
 * Remove django-crispy-forms and django-floppyforms
 * Regenerate example project to make it django 1.9 compatible
 * Update tox and travis and add flake8
 * Rename AdminModel2Mixin to Admin2ModelMixin
-* Add migrations
+* Add migrations 
+* remove south migrations
 * Replace IPAddressField with GenericIPAddressField
 * Fix password link in user admin
 * Fix user logout on password change
 * Fix tests
+* Drop support of django versions lower then 1.8
+* Drop older url.patterns
+
 
 
 0.6.1 (2014-02-26)
