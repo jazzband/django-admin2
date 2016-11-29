@@ -128,10 +128,10 @@ setup(
     #test_suite='runtests.runtests',
     install_requires=[
         'django>=1.8.0',
-        'django-extra-views<=0.7.1',
+        'django-extra-views==0.8.0',
         'django-braces>=1.3.0',
-        'djangorestframework<=3.3.3',
-        'django-filter>=0.15.3',
+        'djangorestframework<=3.5.3',
+        'django-filter==1.0.0',
         'pytz==2016.4',
         'future>=0.15.2',
         ],

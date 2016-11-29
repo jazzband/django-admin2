@@ -56,6 +56,7 @@ class Admin2APIMixin(Admin2Mixin):
 
                 class Meta:
                     model = model_class
+                    fields = '__all__'
 
             return ModelAPISerilizer
         return super(Admin2APIMixin, self).get_serializer_class()

@@ -285,6 +285,7 @@ class Admin2Inline(extra_views.InlineFormSet):
     adds some useful functionality.
     """
     template = None
+    fields = '__all__'
 
     def construct_formset(self):
         """
