@@ -17,6 +17,7 @@ class GroupSerializer(Admin2APISerializer):
 
     class Meta:
         model = Group
+        fields = '__all__'
 
 
 class GroupAdmin2(ModelAdmin2):

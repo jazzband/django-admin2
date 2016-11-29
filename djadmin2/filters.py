@@ -102,17 +102,22 @@ def build_date_filter(request, model_admin, queryset, field_name="published_date
     filterset_dict = {
         "year": NumericDateFilter(
             name=field_name,
-            lookup_type="year",
+            lookup_expr="year",
         ),
         "month": NumericDateFilter(
             name=field_name,
-            lookup_type="month",
+            lookup_expr="month",
         ),
         "day": NumericDateFilter(
             name=field_name,
-            lookup_type="day",
+            lookup_expr="day",
         )
     }
+    filterset_dict["Meta"] = type(
+        type_str('Meta'),
+        (object, ),
+        {"model": queryset.model, "fields": [field_name]},
+    )
 
     return type(
         type_str('%sDateFilterSet' % queryset.model.__name__),
