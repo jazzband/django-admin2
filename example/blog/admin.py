@@ -16,5 +16,6 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ['published', 'title']
     date_hierarchy = "published_date"
 
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment)
