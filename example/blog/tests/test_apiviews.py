@@ -4,9 +4,9 @@ import json
 
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.urls import reverse
 from django.utils.encoding import force_text
 
 from djadmin2 import apiviews

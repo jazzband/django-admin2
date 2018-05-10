@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from django.utils.translation import ugettext_lazy as _
 

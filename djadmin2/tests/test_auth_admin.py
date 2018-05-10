@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.urls import reverse
+
 
 from djadmin2.site import djadmin2_site
 from ..admin2 import UserAdmin2

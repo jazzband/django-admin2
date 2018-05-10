@@ -4,7 +4,7 @@ from __future__ import division, absolute_import, unicode_literals
 from django.utils.encoding import force_str
 from rest_framework import fields, generics, serializers
 from rest_framework.response import Response
-from rest_framework.reverse import reverse
+from rest_framework.reverse import reverse as drf_reverse
 from rest_framework.views import APIView
 
 from . import utils
@@ -76,7 +76,7 @@ class IndexAPIView(Admin2APIMixin, APIView):
             'app_label': model_options.app_label,
             'model_name': model_options.object_name.lower(),
         }
-        model_url = reverse(
+        model_url = drf_reverse(
             '%(current_app)s:%(app_label)s_%(model_name)s_api_list' % opts,
             request=self.request,
             format=self.kwargs.get('format'))

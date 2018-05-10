@@ -13,7 +13,6 @@ from django.contrib.auth.forms import (PasswordChangeForm,
 from django.contrib.auth.views import (logout as auth_logout,
                                        login as auth_login)
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.db import models, router
 from django.db.models.fields import FieldDoesNotExist
 from django.http import HttpResponseRedirect
@@ -21,6 +20,8 @@ from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy
+from django.urls import reverse, reverse_lazy
+
 from django.views import generic
 
 from . import permissions, utils

@@ -2,9 +2,9 @@
 # vim:fenc=utf-8
 
 import django_filters
-from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.urls import reverse
 
 from djadmin2 import filters as djadmin2_filters
 from djadmin2.types import ModelAdmin2
@@ -20,7 +20,6 @@ class ListFilterBuilderTest(TestCase):
         class PostAdminSimple(ModelAdmin2):
             list_filter = ['published', ]
 
-
         class PostAdminWithFilterInstances(ModelAdmin2):
             list_filter = [
                 django_filters.BooleanFilter(name='published'),
@@ -30,7 +29,6 @@ class ListFilterBuilderTest(TestCase):
             class Meta:
                 model = Post
                 fields = ['published']
-
 
         class PostAdminWithFilterSetInst(ModelAdmin2):
             list_filter = FS
