@@ -27,6 +27,7 @@ class ChoicesAsLinksWidget(django_widgets.Select):
     """Select form widget taht renders links for choices
     instead of select element with options.
     """
+
     def render(self, name, value, attrs=None, choices=()):
         links = []
         for choice_value, choice_label in chain(self.choices, choices):
@@ -48,6 +49,7 @@ class NullBooleanLinksWidget(
             ('2', ugettext_lazy('Yes')),
             ('3', ugettext_lazy('No')),
         ]
+
 
 #: Maps `django_filter`'s field filters types to our
 #: custom form widget.

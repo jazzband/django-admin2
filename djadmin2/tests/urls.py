@@ -12,6 +12,7 @@ from djadmin2.views import LoginView
 class CustomLoginView(LoginView):
     default_template_name = "custom_login_template.html"
 
+
 djadmin2_site.login_view = CustomLoginView
 djadmin2_site.autodiscover()
 
