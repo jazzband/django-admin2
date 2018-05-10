@@ -30,9 +30,11 @@ class LogEntry(models.Model):
 
     action_time = models.DateTimeField(_('action time'), auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             related_name='log_entries')
+                             related_name='log_entries',
+                             on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
-                                     related_name='log_entries')
+                                     related_name='log_entries',
+                                     on_delete=models.CASCADE)
     object_id = models.TextField(_('object id'), blank=True, null=True)
     object_repr = models.CharField(_('object repr'), max_length=200)
     action_flag = models.PositiveSmallIntegerField(_('action flag'))
