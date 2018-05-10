@@ -25,7 +25,8 @@ class Post(models.Model):
 @python_2_unicode_compatible
 class Comment(models.Model):
     post = models.ForeignKey(
-        Post, verbose_name=_('post'), related_name="comments")
+        Post, verbose_name=_('post'), related_name="comments",
+        on_delete=models.CASCADE)
     body = models.TextField(verbose_name=_('body'))
 
     def __str__(self):
@@ -41,7 +42,7 @@ class Comment(models.Model):
 @python_2_unicode_compatible
 class Count(models.Model):
     num = models.PositiveSmallIntegerField()
-    parent = models.ForeignKey('self', null=True)
+    parent = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return six.text_type(self.num)
