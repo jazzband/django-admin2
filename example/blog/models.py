@@ -53,11 +53,14 @@ class Event(models.Model):
 
 
 class Location(models.Model):
-    event = models.OneToOneField(Event, verbose_name='awesome event')
+    event = models.OneToOneField(
+        Event, verbose_name='awesome event',
+        on_delete=models.CASCADE
+    )
 
 
 class Guest(models.Model):
-    event = models.OneToOneField(Event)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
 
     class Meta:
