@@ -10,5 +10,7 @@ class Djadmin2Config(AppConfig):
     verbose_name = _("Django Admin2")
 
     def ready(self):
-        post_migrate.connect(create_view_permissions,
-                             dispatch_uid="django-admin2.djadmin2.permissions.create_view_permissions")
+        post_migrate.connect(
+            create_view_permissions,
+            dispatch_uid="django-admin2.djadmin2.permissions.create_view_permissions"
+        )

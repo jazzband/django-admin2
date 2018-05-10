@@ -5,8 +5,8 @@ from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from django.urls import reverse
 from django.utils.encoding import force_text
 
 from ..models import Post, Comment

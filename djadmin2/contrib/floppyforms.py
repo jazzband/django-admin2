@@ -78,6 +78,7 @@ def _create_multiwidget(widget_class, copy_attributes=(), init_arguments=()):
         return multiwidget
     return create_new_multiwidget
 
+
 # this dictionary keeps a mapping from django's widget classes to a callable
 # that will accept an instance of this class. It will return a new instance of
 # a corresponding floppyforms widget, with the same semantics -- all relevant

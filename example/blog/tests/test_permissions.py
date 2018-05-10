@@ -1,10 +1,10 @@
 from blog.models import Post
 from django.contrib.auth.models import User, Permission
-from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.template import Template, Context
 from django.test import TestCase
 from django.test.client import RequestFactory
+from django.urls import reverse
 
 from djadmin2.permissions import TemplatePermissionChecker
 from djadmin2.site import djadmin2_site

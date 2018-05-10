@@ -65,3 +65,4 @@ media
 .idea/
 
 .cache
+.pytest_cache

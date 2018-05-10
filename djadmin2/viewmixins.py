@@ -5,9 +5,9 @@ import os
 
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.models import modelform_factory
 from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_text
 from django.utils.text import get_text_list
 from django.utils.translation import ugettext as _

@@ -8,8 +8,8 @@ from collections import namedtuple
 
 import extra_views
 from django.conf.urls import url
-from django.core.urlresolvers import reverse
 from django.forms import modelform_factory
+from django.urls import reverse
 from django.utils.six import with_metaclass
 
 from . import actions

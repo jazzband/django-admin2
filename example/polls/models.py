@@ -30,7 +30,11 @@ class Poll(models.Model):
 
 @python_2_unicode_compatible
 class Choice(models.Model):
-    poll = models.ForeignKey(Poll, verbose_name=_('poll'))
+    poll = models.ForeignKey(
+        Poll,
+        verbose_name=_('poll'),
+        on_delete=models.CASCADE
+    )
     choice_text = models.CharField(
         max_length=200, verbose_name=_('choice text'))
     votes = models.IntegerField(default=0, verbose_name=_('votes'))

@@ -32,7 +32,7 @@ class PostAdmin(ModelAdmin2):
     }
     save_on_top = True
     date_hierarchy = "published_date"
-    ordering = ["-published_date", "title",]
+    ordering = ["-published_date", "title", ]
 
 
 class CommentAdmin(ModelAdmin2):
@@ -41,6 +41,7 @@ class CommentAdmin(ModelAdmin2):
     actions_on_top = True
     actions_on_bottom = True
     actions_selection_counter = False
+
 
 # Register the blog app with a verbose name
 djadmin2_site.register_app_verbose_name(
@@ -51,4 +52,3 @@ djadmin2_site.register_app_verbose_name(
 #  Register each model with the admin
 djadmin2_site.register(Post, PostAdmin)
 djadmin2_site.register(Comment, CommentAdmin)
-
