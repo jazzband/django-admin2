@@ -5,11 +5,11 @@ cache:
   - "~/.cache/pip"
 python:
 - '2.7'
-- '3.4'
+- '3.6'
 - '3.5'
 env:
 - DJANGO=2.0
-- DJANGO=1.10
+- DJANGO=2.1
 - DJANGO=1.11
 - DJANGO=master
 matrix:
@@ -18,10 +18,14 @@ matrix:
     env: DJANGO=master
   - python: '2.7'
     env: DJANGO=2.0
+  - python: '2.7'
+    env: DJANGO=2.1
+  - python: '3.6'
+    env: DJANGO=1.11
   allow_failures:
   - python: '3.5'
     env: DJANGO=master
-  - python: '3.4'
+  - python: '3.6'
     env: DJANGO=master
   
 install:
