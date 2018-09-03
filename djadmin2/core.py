@@ -8,7 +8,7 @@ from __future__ import division, absolute_import, unicode_literals
 from importlib import import_module
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.core.exceptions import ImproperlyConfigured
 
 from . import apiviews
