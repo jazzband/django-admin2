@@ -81,6 +81,7 @@ if sys.argv[-1] == 'publish':
 LONG_DESCRIPTION = remove_screenshots(open('README.rst').read())
 HISTORY = open('HISTORY.rst').read()
 
+
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
 
@@ -100,6 +101,7 @@ class PyTest(TestCommand):
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
+
 setup(
     name='django-admin2',
     version=version,
@@ -113,7 +115,9 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: JavaScript",
         "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -127,12 +131,12 @@ setup(
     include_package_data=True,
     #test_suite='runtests.runtests',
     install_requires=[
-        'django>=1.8.0',
-        'django-extra-views==0.8.0',
+        'django>=1.11.1',
+        'django-extra-views>=0.11.0',
         'django-braces>=1.3.0',
-        'djangorestframework<=3.5.3',
+        'djangorestframework>=3.8.2',
         'django-filter==1.0.0',
-        'pytz==2016.4',
+        'pytz>=2016.4',
         'future>=0.15.2',
         ],
     extras_require={
