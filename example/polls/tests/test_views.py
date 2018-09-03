@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import force_text
 

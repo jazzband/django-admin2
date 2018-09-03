@@ -8,7 +8,7 @@ from __future__ import division, absolute_import, unicode_literals
 from importlib import import_module
 
 from django.conf import settings
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.core.exceptions import ImproperlyConfigured
 
 from . import apiviews
@@ -195,11 +195,11 @@ class Admin2(object):
                 url('^{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),
-                    include(model_admin.urls)),
+                    model_admin.urls),
                 url('^api/v0/{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),
-                    include(model_admin.api_urls)),
+                    model_admin.api_urls),
             ]
         return urlpatterns
 

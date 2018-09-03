@@ -22,8 +22,16 @@ class Migration(migrations.Migration):
                 ('object_repr', models.CharField(max_length=200, verbose_name='object repr')),
                 ('action_flag', models.PositiveSmallIntegerField(verbose_name='action flag')),
                 ('change_message', models.TextField(verbose_name='change message', blank=True)),
-                ('content_type', models.ForeignKey(related_name='log_entries', null=True, blank=True, to='contenttypes.ContentType')),
-                ('user', models.ForeignKey(related_name='log_entries', to=settings.AUTH_USER_MODEL)),
+                ('content_type', models.ForeignKey(
+                    related_name='log_entries',
+                    null=True,
+                    blank=True,
+                    to='contenttypes.ContentType',
+                    on_delete=models.CASCADE)),
+                ('user', models.ForeignKey(
+                    related_name='log_entries',
+                    to=settings.AUTH_USER_MODEL,
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'log entry',

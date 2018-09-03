@@ -37,6 +37,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='choice',
             name='poll',
-            field=models.ForeignKey(verbose_name='poll', to='polls.Poll'),
+            field=models.ForeignKey(
+                verbose_name='poll',
+                to='polls.Poll',
+                on_delete=models.CASCADE),
         ),
     ]

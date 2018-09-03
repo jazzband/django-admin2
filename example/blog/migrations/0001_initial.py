@@ -27,7 +27,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('num', models.PositiveSmallIntegerField()),
-                ('parent', models.ForeignKey(to='blog.Count', null=True)),
+                ('parent', models.ForeignKey(
+                    to='blog.Count', null=True, on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -49,7 +50,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
-                ('event', models.OneToOneField(to='blog.Event')),
+                ('event', models.OneToOneField(
+                    to='blog.Event',
+                    on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name': 'awesome guest',
@@ -59,7 +62,10 @@ class Migration(migrations.Migration):
             name='Location',
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('event', models.OneToOneField(verbose_name='awesome event', to='blog.Event')),
+                ('event', models.OneToOneField(
+                    verbose_name='awesome event',
+                    to='blog.Event',
+                    on_delete=models.CASCADE)),
             ],
         ),
         migrations.CreateModel(
@@ -79,6 +85,10 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='comment',
             name='post',
-            field=models.ForeignKey(related_name='comments', verbose_name='post', to='blog.Post'),
+            field=models.ForeignKey(
+                related_name='comments',
+                verbose_name='post',
+                to='blog.Post',
+                on_delete=models.CASCADE),
         ),
     ]

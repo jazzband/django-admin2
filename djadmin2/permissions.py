@@ -35,7 +35,7 @@ def is_authenticated(request, view, obj=None):
     '''
     Checks if the current user is authenticated.
     '''
-    return request.user.is_authenticated()
+    return request.user.is_authenticated
 
 
 def is_staff(request, view, obj=None):

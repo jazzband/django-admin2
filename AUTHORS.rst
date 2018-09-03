@@ -4,6 +4,7 @@ CONTRIBUTORS
 Project Lead
 ------------
 
+* Asif Saif Uddin (@auvipy)
 * Daniel Greenfeld (@pydanny / <pydanny@gmail.com>)
 
 Translation Managers
@@ -11,6 +12,7 @@ Translation Managers
 
 * Henri Colas (@NotSqrt)
 * Danilo Bargen (@dbrgn)
+* Asif Saif Uddin (@auvipy)
 
 Developers
 ----------
