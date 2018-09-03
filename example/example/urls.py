@@ -12,8 +12,8 @@ from djadmin2.site import djadmin2_site
 djadmin2_site.autodiscover()
 
 urlpatterns = [
-    url(r'^admin2/', include(djadmin2_site.urls)),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin2/', djadmin2_site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^blog/', BlogListView.as_view(template_name="blog/blog_list.html"),
         name='blog_list'),
     url(r'^blog/detail(?P<pk>\d+)/$',

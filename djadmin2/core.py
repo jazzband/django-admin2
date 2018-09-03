@@ -195,11 +195,11 @@ class Admin2(object):
                 url('^{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),
-                    include(model_admin.urls)),
+                    model_admin.urls),
                 url('^api/v0/{}/{}/'.format(
                     model_options.app_label,
                     model_options.object_name.lower()),
-                    include(model_admin.api_urls)),
+                    model_admin.api_urls),
             ]
         return urlpatterns
 
