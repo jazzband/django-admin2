@@ -111,7 +111,7 @@ def build_date_filter(request, model_admin, queryset, field_name="published_date
             lookup_expr="month",
         ),
         "day": NumericDateFilter(
-            name=field_name,
+            field_name=field_name,
             lookup_expr="day",
         )
     }
