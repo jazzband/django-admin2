@@ -87,7 +87,7 @@ def build_list_filter(request, model_admin, queryset):
             filters.append(field_filter)
     filterset_dict = {}
     for field_filter in filters:
-        filterset_dict[field_filter.name] = field_filter
+        filterset_dict[field_filter.field_name] = field_filter
     fields = list(filterset_dict.keys())
     filterset_dict['Meta'] = type(
         type_str('Meta'),
@@ -103,15 +103,15 @@ def build_list_filter(request, model_admin, queryset):
 def build_date_filter(request, model_admin, queryset, field_name="published_date"):
     filterset_dict = {
         "year": NumericDateFilter(
-            name=field_name,
+            field_name=field_name,
             lookup_expr="year",
         ),
         "month": NumericDateFilter(
-            name=field_name,
+            field_name=field_name,
             lookup_expr="month",
         ),
         "day": NumericDateFilter(
-            name=field_name,
+            field_name=field_name,
             lookup_expr="day",
         )
     }

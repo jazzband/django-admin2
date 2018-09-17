@@ -116,6 +116,7 @@ class ModelListView(Admin2ModelMixin, generic.ListView):
                         app name.
     """
     default_template_name = "model_list.html"
+    paginate_by = 10
     permission_classes = (
         permissions.IsStaffPermission,
         permissions.ModelViewPermission)
@@ -494,6 +495,7 @@ class ModelHistoryView(Admin2ModelMixin, generic.ListView):
                         app name.
     """
     default_template_name = "model_history.html"
+    paginate_by = 10
     permission_classes = (
         permissions.IsStaffPermission,
         permissions.ModelChangePermission
