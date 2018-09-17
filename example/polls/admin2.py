@@ -9,7 +9,7 @@ from .models import Poll, Choice
 class ChoiceInline(Admin2TabularInline):
     model = Choice
     fields = '__all__'
-    extra = 3
+    factory_kwargs = 3
 
 
 class PollAdmin(ModelAdmin2):
