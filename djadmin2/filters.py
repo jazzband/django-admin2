@@ -137,6 +137,6 @@ def get_filter_for_field_name(model, field_name):
     )
     filter_.widget = FILTER_TYPE_TO_WIDGET.get(
         filter_.__class__,
-        filter_.widget,
+        filter_.extra['widget'],
     )
     return filter_
