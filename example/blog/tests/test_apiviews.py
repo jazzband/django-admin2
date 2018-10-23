@@ -32,14 +32,16 @@ class IndexAPIViewTest(APITestCase):
     def test_response_ok(self):
         request = self.factory.get(reverse('admin2:api_index'))
         request.user = self.user
-        view = apiviews.IndexAPIView.as_view(**djadmin2_site.get_api_index_kwargs())
+        view = apiviews.IndexAPIView.as_view(
+            **djadmin2_site.get_api_index_kwargs())
         response = view(request)
         self.assertEqual(response.status_code, 200)
 
     def test_view_permission(self):
         request = self.factory.get(reverse('admin2:api_index'))
         request.user = AnonymousUser()
-        view = apiviews.IndexAPIView.as_view(**djadmin2_site.get_api_index_kwargs())
+        view = apiviews.IndexAPIView.as_view(
+            **djadmin2_site.get_api_index_kwargs())
         self.assertRaises(PermissionDenied, view, request)
 
 
@@ -99,7 +101,7 @@ class RetrieveUpdateDestroyAPIViewTest(APITestCase):
         post = Post.objects.create(title='Foo', body='Bar')
         request = self.factory.get(
             reverse('admin2:blog_post_api_detail',
-            kwargs={'pk': post.pk}))
+                    kwargs={'pk': post.pk}))
         request.user = self.user
         model_admin = self.get_model_admin(Post)
         view = apiviews.RetrieveUpdateDestroyAPIView.as_view(
@@ -111,7 +113,7 @@ class RetrieveUpdateDestroyAPIViewTest(APITestCase):
         post = Post.objects.create(title='Foo', body='Bar')
         request = self.factory.get(
             reverse('admin2:blog_post_api_detail',
-            kwargs={'pk': post.pk}))
+                    kwargs={'pk': post.pk}))
         request.user = AnonymousUser()
         model_admin = self.get_model_admin(Post)
         view = apiviews.RetrieveUpdateDestroyAPIView.as_view(

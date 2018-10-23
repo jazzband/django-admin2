@@ -31,9 +31,9 @@ class ImmutableAdminFactoryTests(TestCase):
             del self.immutable_admin.a
 
     def test_attributes(self):
-        self.assertEquals(self.immutable_admin.a, 1)
-        self.assertEquals(self.immutable_admin.b, 2)
-        self.assertEquals(self.immutable_admin.c, 3)
+        self.assertEqual(self.immutable_admin.a, 1)
+        self.assertEqual(self.immutable_admin.b, 2)
+        self.assertEqual(self.immutable_admin.c, 3)
         with self.assertRaises(AttributeError):
             # 'ImmutableAdmin' object has no attribute 'd'
             self.immutable_admin.d

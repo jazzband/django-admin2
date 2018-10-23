@@ -33,7 +33,7 @@ class Admin2Test(TestCase):
 
     def test_register_app_verbose_name(self):
         self.admin2.register_app_verbose_name(APP_LABEL, APP_VERBOSE_NAME)
-        self.assertEquals(
+        self.assertEqual(
             self.admin2.app_verbose_names[APP_LABEL],
             APP_VERBOSE_NAME
         )
@@ -61,7 +61,7 @@ class Admin2Test(TestCase):
 
     def test_get_urls(self):
         self.admin2.register(SmallThing)
-        self.assertEquals(8, len(self.admin2.get_urls()))
+        self.assertEqual(8, len(self.admin2.get_urls()))
 
     def test_default_entries(self):
         expected_default_models = (User, Group, Site)

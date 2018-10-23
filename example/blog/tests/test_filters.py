@@ -22,7 +22,7 @@ class ListFilterBuilderTest(TestCase):
 
         class PostAdminWithFilterInstances(ModelAdmin2):
             list_filter = [
-                django_filters.BooleanFilter(name='published'),
+                django_filters.BooleanFilter(field_name='published'),
             ]
 
         class FS(django_filters.FilterSet):

@@ -23,19 +23,19 @@ class ActionTest(TestCase):
             TestAction,
             test_function,
         ])
-        self.assertEquals(
+        self.assertEqual(
             get_description(
                 self.admin2.registry[Thing].list_actions[0]
             ),
             'Delete selected items'
         )
-        self.assertEquals(
+        self.assertEqual(
             get_description(
                 self.admin2.registry[Thing].list_actions[1]
             ),
             'Test Action Class'
         )
-        self.assertEquals(
+        self.assertEqual(
             get_description(
                 self.admin2.registry[Thing].list_actions[2]
             ),

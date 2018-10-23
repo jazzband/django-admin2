@@ -13,13 +13,13 @@ class AdminViewTest(TestCase):
         self.admin_view = views.AdminView(r'^$', views.ModelListView, name='admin-view')
 
     def test_url(self):
-        self.assertEquals(self.admin_view.url, r'^$')
+        self.assertEqual(self.admin_view.url, r'^$')
 
     def test_view(self):
-        self.assertEquals(self.admin_view.view, views.ModelListView)
+        self.assertEqual(self.admin_view.view, views.ModelListView)
 
     def test_name(self):
-        self.assertEquals(self.admin_view.name, 'admin-view')
+        self.assertEqual(self.admin_view.name, 'admin-view')
 
 
 @override_settings(ROOT_URLCONF='djadmin2.tests.urls')
