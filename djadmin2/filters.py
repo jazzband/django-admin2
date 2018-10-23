@@ -135,7 +135,7 @@ def get_filter_for_field_name(model, field_name):
         django_filters.filterset.get_model_field(model, field_name,),
         field_name,
     )
-    filter_.extra['widget'] = FILTER_TYPE_TO_WIDGET.get(
+    filter_.extra = FILTER_TYPE_TO_WIDGET.get(
         filter_.__class__,
         filter_.widget,
     )
