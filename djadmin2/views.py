@@ -10,8 +10,8 @@ from django.conf import settings
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
-from django.contrib.auth.views import (logout as auth_logout,
-                                       login as auth_login)
+from django.contrib.auth.views import (LogoutView as auth_logout,
+                                       LoginView as auth_login)
 from django.contrib.contenttypes.models import ContentType
 from django.db import models, router
 from django.db.models.fields import FieldDoesNotExist
