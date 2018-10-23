@@ -71,11 +71,14 @@ class TemplatePermissionTest(TestCase):
 
         result = self.render('{{ permissions.has_add_permission }}', context)
         self.assertEqual(result, 'True')
-        result = self.render('{{ permissions.blog_post.has_add_permission }}', context)
+        result = self.render(
+            '{{ permissions.blog_post.has_add_permission }}', context)
         self.assertEqual(result, 'True')
-        result = self.render('{{ permissions.blog_post.has_change_permission }}', context)
+        result = self.render(
+            '{{ permissions.blog_post.has_change_permission }}', context)
         self.assertEqual(result, 'False')
-        result = self.render('{{ permissions.auth_user.has_delete_permission }}', context)
+        result = self.render(
+            '{{ permissions.auth_user.has_delete_permission }}', context)
         self.assertEqual(result, 'False')
 
         result = self.render(
@@ -112,7 +115,7 @@ class TemplatePermissionTest(TestCase):
             '{% load admin2_tags %}'
             '{{ permissions.has_add_permission }}'
             '{% with permissions|for_admin:post_admin as permissions %}'
-                '{{ permissions.has_add_permission }}'
+            '{{ permissions.has_add_permission }}'
             '{% endwith %}',
             context)
         self.assertEqual(result, 'FalseFalse')
@@ -131,7 +134,7 @@ class TemplatePermissionTest(TestCase):
             '{% load admin2_tags %}'
             '{{ permissions.has_add_permission }}'
             '{% with permissions|for_admin:post_admin as permissions %}'
-                '{{ permissions.has_add_permission }}'
+            '{{ permissions.has_add_permission }}'
             '{% endwith %}'
             '{{ permissions.blog_post.has_add_permission }}',
             context)
@@ -141,7 +144,7 @@ class TemplatePermissionTest(TestCase):
         result = self.render(
             '{% load admin2_tags %}'
             '{% with permissions|for_admin:"blog_post" as permissions %}'
-                '{{ permissions.has_add_permission }}'
+            '{{ permissions.has_add_permission }}'
             '{% endwith %}',
             context)
         self.assertEqual(result, 'True')
@@ -150,7 +153,7 @@ class TemplatePermissionTest(TestCase):
         result = self.render(
             '{% load admin2_tags %}'
             '{% with permissions|for_admin:"invalid_admin_name" as permissions %}'
-                '{{ permissions.has_add_permission }}'
+            '{{ permissions.has_add_permission }}'
             '{% endwith %}',
             context)
         self.assertEqual(result, '')
@@ -186,8 +189,8 @@ class TemplatePermissionTest(TestCase):
             # user add permission
             '{{ permissions.has_add_permission }}'
             '{% with permissions|for_admin:"blog_post"|for_view:"add" as post_add_perm %}'
-                # post add permission
-                '{{ post_add_perm }}'
+            # post add permission
+            '{{ post_add_perm }}'
             '{% endwith %}',
             context)
         self.assertEqual(result, 'FalseFalse')
@@ -212,8 +215,8 @@ class TemplatePermissionTest(TestCase):
             # user add permission
             '{{ permissions.has_add_permission }}'
             '{% with permissions|for_admin:"blog_post"|for_view:"add" as post_add_perm %}'
-                # post add permission
-                '{{ post_add_perm }}'
+            # post add permission
+            '{{ post_add_perm }}'
             '{% endwith %}'
             # user change permission
             '{{ permissions|for_view:"change" }}',
@@ -224,13 +227,13 @@ class TemplatePermissionTest(TestCase):
         result = self.render(
             '{% load admin2_tags %}'
             '{% with permissions|for_view:"change" as user_change_perm %}'
-                '1{{ user_change_perm }}'
-                '2{{ user_change_perm|for_view:"add" }}'
-                # this shouldn't return True or False but '' since the
-                # previously bound change view doesn't belong to the newly
-                # bound blog_post admin
-                '3{{ user_change_perm|for_admin:"blog_post" }}'
-                '4{{ user_change_perm|for_admin:"blog_post"|for_view:"add" }}'
+            '1{{ user_change_perm }}'
+            '2{{ user_change_perm|for_view:"add" }}'
+            # this shouldn't return True or False but '' since the
+            # previously bound change view doesn't belong to the newly
+            # bound blog_post admin
+            '3{{ user_change_perm|for_admin:"blog_post" }}'
+            '4{{ user_change_perm|for_admin:"blog_post"|for_view:"add" }}'
             '{% endwith %}',
             context)
         self.assertEqual(result, '1True2False34True')
@@ -282,7 +285,7 @@ class TemplatePermissionTest(TestCase):
             '{% load admin2_tags %}'
             '{{ permissions.has_add_permission }}'
             '{% with permissions|for_object:post as permissions %}'
-                '{{ permissions.has_add_permission }}'
+            '{{ permissions.has_add_permission }}'
             '{% endwith %}',
             context)
         self.assertEqual(result, 'TrueFalse')
