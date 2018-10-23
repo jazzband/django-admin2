@@ -45,7 +45,7 @@ class ListFilterBuilderTest(TestCase):
             issubclass(list_filter_inst.__class__, django_filters.FilterSet)
         )
         self.assertEqual(
-            list_filter_inst.filters['published'].widget,
+            list_filter_inst.filters['published'].extra['widget'],
             djadmin2_filters.NullBooleanLinksWidget,
         )
         list_filter_inst = djadmin2_filters.build_list_filter(
@@ -54,7 +54,7 @@ class ListFilterBuilderTest(TestCase):
             Post.objects.all(),
         )
         self.assertNotEqual(
-            list_filter_inst.filters['published'].widget,
+            list_filter_inst.filters['published'].extra['widget'],
             djadmin2_filters.NullBooleanLinksWidget,
         )
         list_filter_inst = djadmin2_filters.build_list_filter(
