@@ -166,7 +166,7 @@ class Admin2(object):
                 view=self.index_view.as_view(**self.get_index_kwargs()),
                 name='dashboard'
                 ),
-            url(regex='^auth/user/(?P<pk>\d+)/update/password/$',
+            url(regex=r'^auth/user/(?P<pk>\d+)/update/password/$',
                 view=views.PasswordChangeView.as_view(),
                 name='password_change'
                 ),
