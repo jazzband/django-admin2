@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'django_filters'
     'rest_framework',
     'djadmin2',
     'djadmin2.tests',
