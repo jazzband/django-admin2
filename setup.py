@@ -135,7 +135,7 @@ setup(
         'django-extra-views>=0.12.0',
         'django-braces>=1.3.0',
         'djangorestframework>=3.9.0',
-        'django-filter==2.0.0',
+        'django-filter==1.1.0',
         'pytz>=2016.4',
         'future>=0.15.2',
         ],
