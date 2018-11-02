@@ -279,7 +279,7 @@ class ModelAdmin2(with_metaclass(ModelAdminBase2)):
         return self.ordering
 
 
-class Admin2Inline(extra_views.InlineFormSet):
+class Admin2Inline(extra_views.InlineFormSetFactory):
     """
     A simple extension of django-extra-view's InlineFormSet that
     adds some useful functionality.
