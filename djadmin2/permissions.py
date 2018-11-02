@@ -259,7 +259,7 @@ class TemplatePermissionChecker(object):
     needs an interface beeing implemented like suggested in:
     https://github.com/twoscoops/django-admin2/issues/142
     '''
-    _has_named_permission_regex = re.compile('^has_(?P<name>\w+)_permission$')
+    _has_named_permission_regex = re.compile('^has_(?P<name>\\w+)_permission$')
 
     view_name_mapping = {
         'view': 'detail_view',
