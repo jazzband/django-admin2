@@ -45,9 +45,9 @@ INSTALLED_APPS = [
     'djadmin2',
     'djadmin2.tests',
     'djadmin2.themes.djadmin2theme_bootstrap3',
-    'blog',
+    #'blog',
     'files',
-    'polls'
+    #'polls'
 ]
 
 MIDDLEWARE = [
