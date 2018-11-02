@@ -27,6 +27,10 @@ matrix:
     env: DJANGO=master
   - python: '3.6'
     env: DJANGO=master
+  - python: '3.5'
+    env: DJANGO=2.1
+  - python: '3.6'
+    env: DJANGO=2.1
   
 install:
 - pip install tox
@@ -43,4 +47,4 @@ deploy:
     repo: jazzband/django-admin2
     # only do the PyPI release for exactly one scenario of the test matrix:
     condition: "$DJANGO = 1.11"
-    python: 2.7
+    python: 3.6
