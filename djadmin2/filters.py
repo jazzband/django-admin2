@@ -24,7 +24,7 @@ class NumericDateFilter(django_filters.DateFilter):
 
 
 class ChoicesAsLinksWidget(django_widgets.Select):
-    """Select form widget taht renders links for choices
+    """Select form widget that renders links for choices
     instead of select element with options.
     """
 
