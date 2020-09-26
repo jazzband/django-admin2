@@ -37,7 +37,6 @@ Then enter the following information (you will probably want to change the highl
 
 
     #!/usr/bin/env python
-    # -*- coding: utf-8 -*-
 
     from setuptools import setup
     import re

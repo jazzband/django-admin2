@@ -1,13 +1,10 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from ..models import Post, Comment
 
@@ -140,7 +137,7 @@ class PostListTest(BaseIntegrationTest):
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertInHTML(
-            '<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', force_text(response.content))
+            '<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', force_str(response.content))
 
     def test_actions_displayed_twice(self):
         # If actions_on_top and actions_on_bottom are both set
@@ -155,7 +152,7 @@ class PostListTest(BaseIntegrationTest):
         response = self.client.post(reverse("admin2:blog_post_index"), params)
         # caution : uses pluralization
         self.assertInHTML(
-            '<p>Are you sure you want to delete the selected post? The following item will be deleted:</p>', force_text(response.content))
+            '<p>Are you sure you want to delete the selected post? The following item will be deleted:</p>', force_str(response.content))
 
     def test_delete_selected_post_confirmation(self):
         post = Post.objects.create(title="A Post Title", body="body")
@@ -331,7 +328,7 @@ class PostListTestCustomAction(BaseIntegrationTest):
     def test_publish_action_displayed_in_list(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertInHTML(
-            '<a tabindex="-1" href="#" data-name="action" data-value="CustomPublishAction">Publish selected items</a>', force_text(response.content))
+            '<a tabindex="-1" href="#" data-name="action" data-value="CustomPublishAction">Publish selected items</a>', force_str(response.content))
 
     def test_publish_selected_items(self):
         post = Post.objects.create(title="A Post Title",
@@ -350,7 +347,7 @@ class PostListTestCustomAction(BaseIntegrationTest):
     def test_unpublish_action_displayed_in_list(self):
         response = self.client.get(reverse("admin2:blog_post_index"))
         self.assertInHTML(
-            '<a tabindex="-1" href="#" data-name="action" data-value="unpublish_items">Unpublish selected items</a>', force_text(response.content))
+            '<a tabindex="-1" href="#" data-name="action" data-value="unpublish_items">Unpublish selected items</a>', force_str(response.content))
 
     def test_unpublish_selected_items(self):
         post = Post.objects.create(title="A Post Title",
@@ -380,7 +377,7 @@ class PostCreateViewTest(BaseIntegrationTest):
     def test_view_ok(self):
         response = self.client.get(reverse("admin2:blog_post_create"))
         self.assertNotIn(
-            '''enctype="multipart/form-data"''', force_text(response.content))
+            '''enctype="multipart/form-data"''', force_str(response.content))
         self.assertEqual(response.status_code, 200)
 
     def test_create_post(self):

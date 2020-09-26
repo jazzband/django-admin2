@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
 """
 There are currently a few renderers that come directly with django-admin2. They
 are used by default for some field types.
 """
-from __future__ import division, absolute_import, unicode_literals
-
 import os.path
 from datetime import date, time, datetime
 
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils import formats, timezone
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from djadmin2 import settings
 
@@ -65,7 +62,7 @@ def title_renderer(value, field):
     :rtype: unicode or str
 
     """
-    return force_text(value).title()
+    return force_str(value).title()
 
 
 def number_renderer(value, field):

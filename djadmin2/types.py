@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 import logging
 import os
 import sys
@@ -10,7 +7,6 @@ import extra_views
 from django.conf.urls import url
 from django.forms import modelform_factory
 from django.urls import reverse
-from django.utils.six import with_metaclass
 
 from . import actions
 from . import apiviews
@@ -39,7 +35,7 @@ class ModelAdminBase2(type):
         return new_class
 
 
-class ModelAdmin2(with_metaclass(ModelAdminBase2)):
+class ModelAdmin2(metaclass=ModelAdminBase2):
     """
     Adding new ModelAdmin2 attributes:
 
@@ -320,7 +316,6 @@ def immutable_admin_factory(model_admin):
     'workaround/hack' will read our documentation.
     """
     ImmutableAdmin = namedtuple('ImmutableAdmin',
-                                model_admin.model_admin_attributes,
-                                verbose=False)
+                                model_admin.model_admin_attributes)
     return ImmutableAdmin(*[getattr(
         model_admin, x) for x in model_admin.model_admin_attributes])

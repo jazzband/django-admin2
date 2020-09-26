@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
 
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 from djadmin2 import renderers
 from djadmin2.actions import DeleteSelectedAction
@@ -46,7 +44,7 @@ class CommentAdmin(ModelAdmin2):
 # Register the blog app with a verbose name
 djadmin2_site.register_app_verbose_name(
     'blog',
-    ugettext_lazy('My Blog')
+    gettext_lazy('My Blog')
 )
 
 #  Register each model with the admin

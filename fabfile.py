@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import print_function, division, absolute_import, unicode_literals
-
 from fabric.api import local, lcd
 from fabric.contrib.console import confirm
 

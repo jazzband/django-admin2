@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from ..models import Poll
 
@@ -40,7 +40,7 @@ class PollListTest(BaseIntegrationTest):
     def test_actions_displayed(self):
         response = self.client.get(reverse("admin2:polls_poll_index"))
         self.assertInHTML(
-            '<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', force_text(response.content))
+            '<a tabindex="-1" href="#" data-name="action" data-value="DeleteSelectedAction">Delete selected items</a>', force_str(response.content))
 
     def test_delete_selected_poll(self):
         poll = Poll.objects.create(
@@ -49,7 +49,7 @@ class PollListTest(BaseIntegrationTest):
                   'selected_model_pk': str(poll.pk)}
         response = self.client.post(reverse("admin2:polls_poll_index"), params)
         self.assertInHTML(
-            '<p>Are you sure you want to delete the selected poll? The following item will be deleted:</p>', force_text(response.content))
+            '<p>Are you sure you want to delete the selected poll? The following item will be deleted:</p>', force_str(response.content))
 
     def test_delete_selected_poll_confirmation(self):
         poll = Poll.objects.create(

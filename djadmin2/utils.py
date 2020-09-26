@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 from collections import defaultdict
 
+from django.core.exceptions import FieldDoesNotExist
+from django.db.models.constants import LOOKUP_SEP
 from django.db.models.deletion import Collector, ProtectedError
-from django.db.models.sql.constants import QUERY_TERMS
-from django.utils import six
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 
 
 def lookup_needs_distinct(opts, lookup_path):
@@ -19,20 +16,24 @@ def lookup_needs_distinct(opts, lookup_path):
     https://github.com/django/django/blob/1.9.6/django/contrib/admin/utils.py#L22
     """
 
-    lookup_fields = lookup_path.split('__')
-    # Remove the last item of the lookup path if it is a query term
-    if lookup_fields[-1] in QUERY_TERMS:
-        lookup_fields = lookup_fields[:-1]
-    # Now go through the fields (following all relations) and look for an m2m
+    lookup_fields = lookup_path.split(LOOKUP_SEP)
+    # Go through the fields (following all relations) and look for an m2m.
     for field_name in lookup_fields:
-        field = opts.get_field(field_name)
-        if hasattr(field, 'get_path_info'):
-            # This field is a relation, update opts to follow the relation
-            path_info = field.get_path_info()
-            opts = path_info[-1].to_opts
-            if any(path.m2m for path in path_info):
-                # This field is a m2m relation so we know we need to call distinct
-                return True
+        if field_name == 'pk':
+            field_name = opts.pk.name
+        try:
+            field = opts.get_field(field_name)
+        except FieldDoesNotExist:
+            # Ignore query lookups.
+            continue
+        else:
+            if hasattr(field, 'get_path_info'):
+                # This field is a relation; update opts to follow the relation.
+                path_info = field.get_path_info()
+                opts = path_info[-1].to_opts
+                if any(path.m2m for path in path_info):
+                    # This field is a m2m relation so distinct must be called.
+                    return True
     return False
 
 
@@ -142,9 +143,17 @@ class NestedObjects(Collector):
         except ProtectedError as e:
             self.protected.update(e.protected_objects)
 
-    def related_objects(self, related, objs):
-        qs = super(NestedObjects, self).related_objects(related, objs)
-        return qs.select_related(related.field.name)
+    def related_objects(self, *args):
+        # Django >= 3.1
+        if len(args) == 3:
+            related_model, related_fields, objs = args
+            qs = super().related_objects(related_model, related_fields, objs)
+            return qs.select_related(*[related_field.name for related_field in related_fields])
+        # Django < 3.1
+        elif len(args) == 2:
+            related, objs = args
+            qs = super(NestedObjects, self).related_objects(related, objs)
+            return qs.select_related(related.field.name)
 
     def _nested(self, obj, seen, format_callback):
         if obj in seen:
@@ -191,7 +200,7 @@ def quote(s):
 
     https://github.com/django/django/blob/1.9.6/django/contrib/admin/utils.py#L66-L73
     """
-    if not isinstance(s, six.string_types):
+    if not isinstance(s, str):
         return s
     res = list(s)
     for i in range(len(res)):
@@ -202,7 +211,4 @@ def quote(s):
 
 
 def type_str(text):
-    if six.PY2:
-        return force_bytes(text)
-    else:
-        return force_text(text)
+    return force_str(text)

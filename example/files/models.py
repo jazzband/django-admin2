@@ -1,12 +1,7 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
-@python_2_unicode_compatible
 class CaptionedFile(models.Model):
     caption = models.CharField(max_length=200, verbose_name=_('caption'))
     publication = models.FileField(upload_to='captioned-files', verbose_name=_('Uploaded File'))
@@ -19,7 +14,6 @@ class CaptionedFile(models.Model):
         verbose_name_plural = _('Captioned Files')
 
 
-@python_2_unicode_compatible
 class UncaptionedFile(models.Model):
     publication = models.FileField(upload_to='uncaptioned-files', verbose_name=_('Uploaded File'))
 

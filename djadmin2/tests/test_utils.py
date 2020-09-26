@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.utils import six
 
 from .. import utils
 from ..views import IndexView
@@ -137,16 +136,10 @@ class UtilsTest(TestCase):
             def __unicode__(self):
                 return "unicode"
 
-        if six.PY2:
-            self.assertEqual(
-                utils.get_attr(Klass(), "__str__"),
-                "unicode"
-            )
-        else:
-            self.assertEqual(
-                utils.get_attr(Klass(), "__str__"),
-                "str"
-            )
+        self.assertEqual(
+            utils.get_attr(Klass(), "__str__"),
+            "str"
+        )
 
     def test_get_attr(self):
         class Klass(object):

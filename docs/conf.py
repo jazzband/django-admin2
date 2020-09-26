@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # django-admin2 documentation build configuration file, created by
 # sphinx-quickstart on Sat May 18 12:59:02 2013.
 #

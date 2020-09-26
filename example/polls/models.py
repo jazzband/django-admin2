@@ -1,15 +1,10 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 import datetime
 
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
-@python_2_unicode_compatible
 class Poll(models.Model):
     question = models.CharField(max_length=200, verbose_name=_('question'))
     pub_date = models.DateTimeField(verbose_name=_('date published'))
@@ -28,7 +23,6 @@ class Poll(models.Model):
         verbose_name_plural = _('polls')
 
 
-@python_2_unicode_compatible
 class Choice(models.Model):
     poll = models.ForeignKey(
         Poll,

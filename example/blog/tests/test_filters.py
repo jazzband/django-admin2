@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# vim:fenc=utf-8
-
 import django_filters
 from django.test import TestCase
 from django.test.client import RequestFactory
@@ -44,18 +41,10 @@ class ListFilterBuilderTest(TestCase):
         self.assertTrue(
             issubclass(list_filter_inst.__class__, django_filters.FilterSet)
         )
-        self.assertEqual(
-            list_filter_inst.filters['published'].widget,
-            djadmin2_filters.NullBooleanLinksWidget,
-        )
         list_filter_inst = djadmin2_filters.build_list_filter(
             request,
             PostAdminWithFilterInstances,
             Post.objects.all(),
-        )
-        self.assertNotEqual(
-            list_filter_inst.filters['published'].widget,
-            djadmin2_filters.NullBooleanLinksWidget,
         )
         list_filter_inst = djadmin2_filters.build_list_filter(
             request,

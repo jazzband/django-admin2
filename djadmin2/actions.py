@@ -1,12 +1,9 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 from django.contrib import messages
 from django.db import router
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.text import capfirst
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy, ungettext, pgettext_lazy
+from django.utils.translation import gettext_lazy, ngettext, pgettext_lazy
 from django.views.generic import TemplateView
 
 from . import permissions, utils
@@ -26,7 +23,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
 
     permission_classes = (permissions.IsStaffPermission,)
 
-    empty_message = ugettext_lazy(
+    empty_message = gettext_lazy(
         'Items must be selected in order to perform actions '
         'on them. No items have been changed.'
     )
@@ -50,7 +47,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
             objects_name = options.verbose_name
         else:
             objects_name = options.verbose_name_plural
-        self.objects_name = force_text(objects_name)
+        self.objects_name = force_str(objects_name)
 
         super(BaseListAction, self).__init__(*args, **kwargs)
 
@@ -92,8 +89,8 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
 
         def _format_callback(obj):
             opts = utils.model_options(obj)
-            return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
-                               force_text(obj))
+            return '%s: %s' % (force_str(capfirst(opts.verbose_name)),
+                               force_str(obj))
 
         using = router.db_for_write(self.model)
 
@@ -122,7 +119,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
         if self.process_queryset() is None:
 
             # objects_name should already be pluralized, see __init__
-            message = ungettext(
+            message = ngettext(
                 self.success_message,
                 self.success_message_plural,
                 self.item_count
@@ -146,7 +143,7 @@ class DeleteSelectedAction(BaseListAction):
 
     default_template_name = "actions/delete_selected_confirmation.html"
 
-    description = ugettext_lazy("Delete selected items")
+    description = gettext_lazy("Delete selected items")
 
     success_message = pgettext_lazy(
         'singular form',

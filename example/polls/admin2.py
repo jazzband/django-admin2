@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 from djadmin2.site import djadmin2_site
 from djadmin2.types import Admin2TabularInline, ModelAdmin2
 from .models import Poll, Choice

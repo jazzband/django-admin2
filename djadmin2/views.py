@@ -1,25 +1,22 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 import operator
 from datetime import datetime
 from functools import reduce
 
 import extra_views
+from django.core.exceptions import FieldDoesNotExist
 from django.conf import settings
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import (logout as auth_logout,
+                                 update_session_auth_hash)
 from django.contrib.auth.forms import (PasswordChangeForm,
                                        AdminPasswordChangeForm)
-from django.contrib.auth.views import (logout as auth_logout,
-                                       login as auth_login)
+from django.contrib.auth.views import LoginView as DjangoLoginView
 from django.contrib.contenttypes.models import ContentType
 from django.db import models, router
-from django.db.models.fields import FieldDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.text import capfirst
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 from django.urls import reverse, reverse_lazy
 
 from django.views import generic
@@ -285,7 +282,7 @@ class ModelListView(Admin2ModelMixin, generic.ListView):
             elif year:
                 context["previous_date"] = {
                     "link": "?",
-                    "text": ugettext_lazy("‹ All dates"),
+                    "text": gettext_lazy("‹ All dates"),
                 }
 
                 context["dates"] = self._format_months(self.get_queryset())
@@ -389,7 +386,7 @@ class ModelEditFormView(Admin2ModelMixin, Admin2ModelFormMixin,
         context = super(ModelEditFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
         context['action'] = "Change"
-        context['action_name'] = ugettext_lazy("Change")
+        context['action_name'] = gettext_lazy("Change")
         return context
 
     def forms_valid(self, form, inlines):
@@ -425,7 +422,7 @@ class ModelAddFormView(Admin2ModelMixin, Admin2ModelFormMixin,
         context = super(ModelAddFormView, self).get_context_data(**kwargs)
         context['model'] = self.get_model()
         context['action'] = "Add"
-        context['action_name'] = ugettext_lazy("Add")
+        context['action_name'] = gettext_lazy("Add")
         return context
 
     def forms_valid(self, form, inlines):
@@ -462,8 +459,8 @@ class ModelDeleteView(Admin2ModelMixin, generic.DeleteView):
 
         def _format_callback(obj):
             opts = utils.model_options(obj)
-            return '%s: %s' % (force_text(capfirst(opts.verbose_name)),
-                               force_text(obj))
+            return '%s: %s' % (force_str(capfirst(opts.verbose_name)),
+                               force_str(obj))
 
         using = router.db_for_write(self.get_object()._meta.model)
         collector = utils.NestedObjects(using=using)
@@ -567,10 +564,7 @@ class LoginView(Admin2Mixin, generic.TemplateView):
     authentication_form = AdminAuthenticationForm
 
     def dispatch(self, request, *args, **kwargs):
-        return auth_login(request,
-                          authentication_form=self.authentication_form,
-                          template_name=self.get_template_names(),
-                          *args, **kwargs)
+        return DjangoLoginView.as_view(template_name=self.get_templates(), authentication_form=self.authentication_form, *args, **kwargs)(request)
 
 
 class LogoutView(Admin2Mixin, generic.TemplateView):
@@ -582,5 +576,6 @@ class LogoutView(Admin2Mixin, generic.TemplateView):
     default_template_name = 'auth/logout.html'
 
     def get(self, request, *args, **kwargs):
-        return auth_logout(request, template_name=self.get_template_names(),
-                           *args, **kwargs)
+        auth_logout(request)
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)

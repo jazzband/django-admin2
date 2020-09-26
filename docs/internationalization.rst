@@ -71,7 +71,7 @@ Marking strings for translation
 
 **Python code**
 
-Make sure to use ugettext or ugettext_lazy on strings that will be shown to the users,
+Make sure to use ugettext or gettext_lazy on strings that will be shown to the users,
 with string interpolation ( "%(name_of_variable)s" instead of "%s" ) where needed.
 
 Remember that all languages do not use the same word order, so try to provide flexible strings to translate !
