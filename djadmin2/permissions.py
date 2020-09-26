@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 djadmin2's permission handling. The permission classes have the same API as
 the permission handling classes of the django-rest-framework. That way, we can
@@ -15,8 +14,6 @@ interface:
 The permission classes are then just fancy wrappers of these basic checks of
 which it can hold multiple.
 """
-from __future__ import division, absolute_import, unicode_literals
-
 import logging
 import re
 
@@ -25,8 +22,7 @@ from django.db.utils import DEFAULT_DB_ALIAS
 from django.apps import apps
 from django.core.exceptions import ValidationError
 from django.db import router
-from django.utils import six
-from django.utils.encoding import python_2_unicode_compatible, force_text
+from django.utils.encoding import force_str
 
 logger = logging.getLogger('djadmin2')
 
@@ -191,7 +187,6 @@ class ModelDeletePermission(BasePermission):
     permissions = (model_permission('{app_label}.delete_{model_name}'),)
 
 
-@python_2_unicode_compatible
 class TemplatePermissionChecker(object):
     '''
     Can be used in the template like:
@@ -286,7 +281,7 @@ class TemplatePermissionChecker(object):
         Return a clone of the permission wrapper with a new model_admin bind
         to it.
         '''
-        if isinstance(admin, six.string_types):
+        if isinstance(admin, str):
             try:
                 admin = self._model_admin.admin.get_admin_by_name(admin)
             except ValueError:
@@ -300,7 +295,7 @@ class TemplatePermissionChecker(object):
         '''
         Return a clone of the permission wrapper with a new view bind to it.
         '''
-        if isinstance(view, six.string_types):
+        if isinstance(view, str):
             if view not in self.view_name_mapping:
                 return ''
             view_name = self.view_name_mapping[view]
@@ -365,7 +360,7 @@ class TemplatePermissionChecker(object):
     def __str__(self):
         if self._view is None:
             return ''
-        return force_text(bool(self))
+        return force_str(bool(self))
 
 
 def create_view_permissions(app_config, verbosity=2, interactive=True, using=DEFAULT_DB_ALIAS, **kwargs):  # noqa

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
@@ -131,11 +130,11 @@ setup(
     include_package_data=True,
     #test_suite='runtests.runtests',
     install_requires=[
-        'django>=1.11.1',
+        'django>=2.2',
         'django-extra-views>=0.12.0',
         'django-braces>=1.3.0',
-        'djangorestframework>=3.9.0',
-        'django-filter==1.1.0',
+        'djangorestframework>=3.11.1',
+        'django-filter==2.3.0',
         'pytz>=2016.4',
         'future>=0.15.2',
         ],

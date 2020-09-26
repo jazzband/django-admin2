@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 import datetime as dt
 from decimal import Decimal
 
 from django.test import TestCase
-from django.utils import six
 from django.utils.translation import activate
 
 from .. import renderers
@@ -106,10 +102,7 @@ class NumberRendererTest(TestCase):
 
     def testEndlessFloat(self):
         out = self.renderer(1.0 / 3, None)
-        if six.PY2:
-            self.assertEqual('0.333333333333', out)
-        else:
-            self.assertEqual('0.3333333333333333', out)
+        self.assertEqual('0.3333333333333333', out)
 
     def testPlainDecimal(self):
         number = '0.123456789123456789123456789'

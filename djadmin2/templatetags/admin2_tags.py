@@ -1,11 +1,8 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 from numbers import Number
 from datetime import date, time, datetime
 
 from django import template
-from django.db.models.fields import FieldDoesNotExist
+from django.core.exceptions import FieldDoesNotExist
 
 from .. import utils, renderers, models, settings
 

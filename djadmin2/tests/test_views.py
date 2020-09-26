@@ -1,7 +1,7 @@
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 
 from .. import views
@@ -27,4 +27,4 @@ class CustomLoginViewTest(TestCase):
 
     def test_view_ok(self):
         response = self.client.get(reverse("admin2:dashboard"))
-        self.assertInHTML('<h3 class="panel-title">Custom login view</h3>', force_text(response.content))
+        self.assertInHTML('<h3 class="panel-title">Custom login view</h3>', force_str(response.content))

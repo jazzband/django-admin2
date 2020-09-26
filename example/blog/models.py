@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
 from django.db import models
-from django.utils import six
-from django.utils.encoding import python_2_unicode_compatible
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
-@python_2_unicode_compatible
 class Post(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('title'))
     body = models.TextField(verbose_name=_('body'))
@@ -22,7 +16,6 @@ class Post(models.Model):
         verbose_name_plural = _('posts')
 
 
-@python_2_unicode_compatible
 class Comment(models.Model):
     post = models.ForeignKey(
         Post, verbose_name=_('post'), related_name="comments",
@@ -39,13 +32,12 @@ class Comment(models.Model):
 
 # Models needed for testing NestedObjects
 
-@python_2_unicode_compatible
 class Count(models.Model):
     num = models.PositiveSmallIntegerField()
     parent = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return six.text_type(self.num)
+        return str(self.num)
 
 
 class Event(models.Model):

@@ -1,18 +1,14 @@
-# -*- coding: utf-8 -*-
-from __future__ import division, absolute_import, unicode_literals
-
-import collections
+import collections.abc
 from itertools import chain
 
 import django_filters
 from django import forms
 from django.forms import widgets as django_widgets
 from django.forms.utils import flatatt
-from django.utils import six
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext_lazy
+from django.utils.translation import gettext_lazy
 
 from .utils import type_str
 
@@ -33,7 +29,7 @@ class ChoicesAsLinksWidget(django_widgets.Select):
         for choice_value, choice_label in chain(self.choices, choices):
             links.append(format_html(
                 LINK_TEMPLATE,
-                name, choice_value, flatatt(attrs), force_text(choice_label),
+                name, choice_value, flatatt(attrs), force_str(choice_label),
             ))
         return mark_safe(u"<br />".join(links))
 
@@ -45,9 +41,9 @@ class NullBooleanLinksWidget(
     def __init__(self, attrs=None, choices=()):
         super(ChoicesAsLinksWidget, self).__init__(attrs)
         self.choices = [
-            ('1', ugettext_lazy('Unknown')),
-            ('2', ugettext_lazy('Yes')),
-            ('3', ugettext_lazy('No')),
+            ('1', gettext_lazy('Unknown')),
+            ('2', gettext_lazy('Yes')),
+            ('3', gettext_lazy('No')),
         ]
 
 
@@ -70,7 +66,7 @@ def build_list_filter(request, model_admin, queryset):
     `request.GET` and `queryset`.
     """
     # if ``list_filter`` is not iterable return it right away
-    if not isinstance(model_admin.list_filter, collections.Iterable):
+    if not isinstance(model_admin.list_filter, collections.abc.Iterable):
         return model_admin.list_filter(
             request.GET,
             queryset=queryset,
@@ -78,7 +74,7 @@ def build_list_filter(request, model_admin, queryset):
     # otherwise build :mod:`django_filters.FilterSet`
     filters = []
     for field_filter in model_admin.list_filter:
-        if isinstance(field_filter, six.string_types):
+        if isinstance(field_filter, str):
             filters.append(get_filter_for_field_name(
                 queryset.model,
                 field_filter,
@@ -135,8 +131,9 @@ def get_filter_for_field_name(model, field_name):
         django_filters.filterset.get_model_field(model, field_name,),
         field_name,
     )
+    print("EXTRA!!!!")
+    print(filter_.extra)
     filter_.widget = FILTER_TYPE_TO_WIDGET.get(
-        filter_.__class__,
-        filter_.widget,
+        filter_.__class__
     )
     return filter_
