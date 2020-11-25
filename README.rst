@@ -9,7 +9,8 @@ django-admin2
    :target: https://github.com/jazzband/django-admin2/actions
    :alt: GitHub Actions
 .. image:: https://codecov.io/gh/jazzband/django-admin2/branch/develop/graph/badge.svg?token=PcC594rhI4
-:target: https://codecov.io/gh/jazzband/django-admin2
+   :target: https://codecov.io/gh/jazzband/django-admin2
+   :alt: Code coverage
 
 One of the most useful parts of ``django.contrib.admin`` is the ability to
 configure various views that touch and alter data. django-admin2 is a complete
