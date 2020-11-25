@@ -132,7 +132,7 @@ Pull upstream changes into your fork regularly
 
 To pull in upstream changes::
 
-    git remote add upstream https://github.com/twoscoops/django-admin2.git
+    git remote add upstream https://github.com/jazzband/django-admin2.git
     git pull upstream develop
 
 For more info, see http://help.github.com/fork-a-repo/
@@ -284,6 +284,6 @@ We finish with a merge and push to GitHub::
     git push origin develop
 
 .. _installation: install.html
-.. _GitHub project: https://github.com/twoscoops/django-admin2
-.. _issue tracker: https://github.com/twoscoops/django-admin2/issues
+.. _GitHub project: https://github.com/jazzband/django-admin2
+.. _issue tracker: https://github.com/jazzband/django-admin2/issues
 .. _pydanny: http://pydanny.com

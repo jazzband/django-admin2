@@ -5,14 +5,11 @@ django-admin2
 .. image:: https://jazzband.co/static/img/badge.svg
    :target: https://jazzband.co/
    :alt: Jazzband
-.. image:: https://travis-ci.org/jazzband/django-admin2.png
-   :alt: Build Status
-   :target: https://travis-ci.org/jazzband/django-admin2
-.. image:: https://coveralls.io/repos/github/jazzband/django-admin2/badge.svg?branch=develop
-   :alt: Coverage Status
-   :target: https://coveralls.io/github/jazzband/django-admin2?branch=develop
-.. image:: https://badges.gitter.im/Join Chat.svg
-   :target: https://gitter.im/pydanny/django-admin2?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+.. image:: https://github.com/jazzband/django-admin2/workflows/Test/badge.svg
+   :target: https://github.com/jazzband/django-admin2/actions
+   :alt: GitHub Actions
+.. image:: https://codecov.io/gh/jazzband/django-admin2/branch/develop/graph/badge.svg?token=PcC594rhI4
+:target: https://codecov.io/gh/jazzband/django-admin2
 
 One of the most useful parts of ``django.contrib.admin`` is the ability to
 configure various views that touch and alter data. django-admin2 is a complete
