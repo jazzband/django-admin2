@@ -8,7 +8,7 @@ django-admin2
 .. image:: https://github.com/jazzband/django-admin2/workflows/Test/badge.svg
    :target: https://github.com/jazzband/django-admin2/actions
    :alt: GitHub Actions
-.. image:: https://codecov.io/gh/jazzband/django-admin2/branch/develop/graph/badge.svg?token=PcC594rhI4
+.. image:: https://codecov.io/gh/jazzband/django-admin2/branch/main/graph/badge.svg?token=PcC594rhI4
    :target: https://codecov.io/gh/jazzband/django-admin2
    :alt: Code coverage
 
@@ -30,17 +30,17 @@ Features
 Screenshots
 ===========
 
-.. image:: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Site_administration.png
+.. image:: https://github.com/jazzband/django-admin2/raw/main/screenshots/Site_administration.png
     :width: 722px
     :alt: Site administration
     :align: center
-    :target: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Site_administration.png
+    :target: https://github.com/jazzband/django-admin2/raw/main/screenshots/Site_administration.png
 
-.. image:: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Select_user.png
+.. image:: https://github.com/jazzband/django-admin2/raw/main/screenshots/Select_user.png
     :width: 722px
     :alt: Select user
     :align: center
-    :target: https://github.com/jazzband/django-admin2/raw/develop/screenshots/Select_user.png
+    :target: https://github.com/jazzband/django-admin2/raw/main/screenshots/Select_user.png
 
 Requirements
 ============

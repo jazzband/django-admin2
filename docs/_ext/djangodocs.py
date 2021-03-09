@@ -1,4 +1,4 @@
-# Taken from https://github.com/django/django/blob/master/docs/_ext/djangodocs.py
+# Taken from https://github.com/django/django/blob/main/docs/_ext/djangodocs.py
 
 import re
 from sphinx import addnodes

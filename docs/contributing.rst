@@ -109,8 +109,7 @@ Now when you go to your fork on GitHub, you will see this branch listed under
 the "Source" tab where it says "Switch Branches".  Go ahead and select your
 topic branch from this list, and then click the "Pull request" button.
 
-Your pull request should be applied to the **develop** branch of django-admin2.
-Be sure to change from the default of ``master`` to ``develop``.
+Your pull request should be applied to the **main** branch of django-admin2.
 
 Next, you can add a comment about your branch.  If this in response to
 a submitted issue, it is good to put a link to that issue in this initial
@@ -133,7 +132,7 @@ Pull upstream changes into your fork regularly
 To pull in upstream changes::
 
     git remote add upstream https://github.com/jazzband/django-admin2.git
-    git pull upstream develop
+    git pull upstream main
 
 For more info, see http://help.github.com/fork-a-repo/
 
@@ -145,7 +144,7 @@ Advanced git users: Pull with rebase
 
 This will pull and then reapply your work on top of the upcoming changes::
 
-    git pull --rebase upstream develop
+    git pull --rebase upstream main
 
 It saves you from an extra merge, keeping the history cleaner, but it's potentially dangerous because you're rewriting history. For more info, see http://gitready.com/advanced/2009/02/11/pull-with-rebase.html
 
@@ -262,8 +261,8 @@ How pull requests are checked, tested, and done
 
 First we pull the code into a local branch::
 
-    git checkout develop
-    git checkout -b <submitter-github-name>-<submitter-branch> develop
+    git checkout main
+    git checkout -b <submitter-github-name>-<submitter-branch> main
     git pull git://github.com/<submitter-github-name>/django-admin2.git <submitter-branch> <branch-name>
 
 Then we run the tests::
@@ -279,9 +278,9 @@ We do the following:
 
 We finish with a merge and push to GitHub::
 
-    git checkout develop
+    git checkout main
     git merge <branch-name>
-    git push origin develop
+    git push origin main
 
 .. _installation: install.html
 .. _GitHub project: https://github.com/jazzband/django-admin2

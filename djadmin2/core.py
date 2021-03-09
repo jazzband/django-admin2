@@ -5,7 +5,7 @@ Issue #99.
 from importlib import import_module
 
 from django.conf import settings
-from django.conf.urls import url
+from django.urls import re_path
 from django.core.exceptions import ImproperlyConfigured
 
 from . import apiviews
@@ -23,12 +23,13 @@ class Admin2(object):
     It also provides an index view that serves as an entry point to the
     admin site.
     """
+
     index_view = views.IndexView
     login_view = views.LoginView
     app_index_view = views.AppIndexView
     api_index_view = apiviews.IndexAPIView
 
-    def __init__(self, name='admin2'):
+    def __init__(self, name="admin2"):
         self.registry = {}
         self.apps = {}
         self.app_verbose_names = {}
@@ -48,7 +49,8 @@ class Admin2(object):
         """
         if model in self.registry:
             raise ImproperlyConfigured(
-                '%s is already registered in django-admin2' % model)
+                "%s is already registered in django-admin2" % model
+            )
         if not model_admin:
             model_admin = types.ModelAdmin2
         self.registry[model] = model_admin(model, admin=self, **kwargs)
@@ -71,7 +73,8 @@ class Admin2(object):
             del self.registry[model]
         except KeyError:
             raise ImproperlyConfigured(
-                '%s was never registered in django-admin2' % model)
+                "%s was never registered in django-admin2" % model
+            )
 
         # Remove the model from the apps registry
         # Get the app label
@@ -93,7 +96,8 @@ class Admin2(object):
         """
         if app_label in self.app_verbose_names:
             raise ImproperlyConfigured(
-                '%s is already registered in django-admin2' % app_label)
+                "%s is already registered in django-admin2" % app_label
+            )
 
         self.app_verbose_names[app_label] = app_verbose_name
 
@@ -109,7 +113,8 @@ class Admin2(object):
             del self.app_verbose_names[app_label]
         except KeyError:
             raise ImproperlyConfigured(
-                '%s app label was never registered in django-admin2' % app_label)
+                "%s app label was never registered in django-admin2" % app_label
+            )
 
     def autodiscover(self):
         """
@@ -120,7 +125,7 @@ class Admin2(object):
             try:
                 import_module("%s.admin2" % app_name)
             except ImportError as e:
-                if str(e).startswith("No module named") and 'admin2' in str(e):
+                if str(e).startswith("No module named") and "admin2" in str(e):
                     continue
                 raise e
 
@@ -132,71 +137,74 @@ class Admin2(object):
         for object_admin in self.registry.values():
             if object_admin.name == name:
                 return object_admin
-        raise ValueError(
-            u'No object admin found with name {}'.format(repr(name)))
+        raise ValueError(u"No object admin found with name {}".format(repr(name)))
 
     def get_index_kwargs(self):
         return {
-            'registry': self.registry,
-            'app_verbose_names': self.app_verbose_names,
-            'apps': self.apps,
-            'login_view': self.login_view,
+            "registry": self.registry,
+            "app_verbose_names": self.app_verbose_names,
+            "apps": self.apps,
+            "login_view": self.login_view,
         }
 
     def get_app_index_kwargs(self):
         return {
-            'registry': self.registry,
-            'app_verbose_names': self.app_verbose_names,
-            'apps': self.apps,
+            "registry": self.registry,
+            "app_verbose_names": self.app_verbose_names,
+            "apps": self.apps,
         }
 
     def get_api_index_kwargs(self):
         return {
-            'registry': self.registry,
-            'app_verbose_names': self.app_verbose_names,
-            'apps': self.apps,
+            "registry": self.registry,
+            "app_verbose_names": self.app_verbose_names,
+            "apps": self.apps,
         }
 
     def get_urls(self):
         urlpatterns = [
-            url(regex=r'^$',
+            re_path(
+                r"^$",
                 view=self.index_view.as_view(**self.get_index_kwargs()),
-                name='dashboard'
-                ),
-            url(regex=r'^auth/user/(?P<pk>\d+)/update/password/$',
+                name="dashboard",
+            ),
+            re_path(
+                r"^auth/user/(?P<pk>\d+)/update/password/$",
                 view=views.PasswordChangeView.as_view(),
-                name='password_change'
-                ),
-            url(regex='^password_change_done/$',
+                name="password_change",
+            ),
+            re_path(
+                "^password_change_done/$",
                 view=views.PasswordChangeDoneView.as_view(),
-                name='password_change_done'
-                ),
-            url(regex='^logout/$',
-                view=views.LogoutView.as_view(),
-                name='logout'
-                ),
-            url(regex=r'^(?P<app_label>\w+)/$',
-                view=self.app_index_view.as_view(
-                    **self.get_app_index_kwargs()),
-                name='app_index'
-                ),
-            url(regex=r'^api/v0/$',
-                view=self.api_index_view.as_view(
-                    **self.get_api_index_kwargs()),
-                name='api_index'
-                ),
+                name="password_change_done",
+            ),
+            re_path("^logout/$", view=views.LogoutView.as_view(), name="logout"),
+            re_path(
+                r"^(?P<app_label>\w+)/$",
+                view=self.app_index_view.as_view(**self.get_app_index_kwargs()),
+                name="app_index",
+            ),
+            re_path(
+                r"^api/v0/$",
+                view=self.api_index_view.as_view(**self.get_api_index_kwargs()),
+                name="api_index",
+            ),
         ]
         for model, model_admin in self.registry.items():
             model_options = utils.model_options(model)
             urlpatterns += [
-                url('^{}/{}/'.format(
-                    model_options.app_label,
-                    model_options.object_name.lower()),
-                    model_admin.urls),
-                url('^api/v0/{}/{}/'.format(
-                    model_options.app_label,
-                    model_options.object_name.lower()),
-                    model_admin.api_urls),
+                re_path(
+                    "^{}/{}/".format(
+                        model_options.app_label, model_options.object_name.lower()
+                    ),
+                    model_admin.urls,
+                ),
+                re_path(
+                    "^api/v0/{}/{}/".format(
+                        model_options.app_label, model_options.object_name.lower()
+                    ),
+                    model_admin.api_urls,
+                ),
             ]
         return urlpatterns
 

@@ -4,9 +4,8 @@ import sys
 from collections import namedtuple
 
 import extra_views
-from django.conf.urls import url
 from django.forms import modelform_factory
-from django.urls import reverse
+from django.urls import re_path, reverse
 
 from . import actions
 from . import apiviews
@@ -15,14 +14,12 @@ from . import utils
 from . import views
 
 
-logger = logging.getLogger('djadmin2')
+logger = logging.getLogger("djadmin2")
 
 
 class ModelAdminBase2(type):
-
     def __new__(cls, name, bases, attrs):
-        new_class = super(ModelAdminBase2, cls).__new__(cls, name,
-                                                        bases, attrs)
+        new_class = super(ModelAdminBase2, cls).__new__(cls, name, bases, attrs)
         view_list = []
         for key, value in attrs.items():
             if isinstance(value, views.AdminView):
@@ -30,7 +27,7 @@ class ModelAdminBase2(type):
                     value.name = key
                 view_list.append(value)
 
-        view_list.extend(getattr(new_class, 'views', []))
+        view_list.extend(getattr(new_class, "views", []))
         new_class.views = view_list
         return new_class
 
@@ -54,9 +51,10 @@ class ModelAdmin2(metaclass=ModelAdminBase2):
             This prevents us from easily implementing methods/setters which
             bypass the blocking features of the ImmutableAdmin.
     """
+
     actions_selection_counter = True
     date_hierarchy = False
-    list_display = ('__str__',)
+    list_display = ("__str__",)
     list_display_links = ()
     list_filter = ()
     list_select_related = False
@@ -113,12 +111,20 @@ class ModelAdmin2(metaclass=ModelAdminBase2):
     inlines = []
 
     #  Views
-    index_view = views.AdminView(r'^$', views.ModelListView, name='index')
-    create_view = views.AdminView(r'^create/$', views.ModelAddFormView, name='create')
-    update_view = views.AdminView(r'^(?P<pk>[0-9]+)/$', views.ModelEditFormView, name='update')
-    detail_view = views.AdminView(r'^(?P<pk>[0-9]+)/update/$', views.ModelDetailView, name='detail')
-    delete_view = views.AdminView(r'^(?P<pk>[0-9]+)/delete/$', views.ModelDeleteView, name='delete')
-    history_view = views.AdminView(r'^(?P<pk>[0-9]+)/history/$', views.ModelHistoryView, name='history')
+    index_view = views.AdminView(r"^$", views.ModelListView, name="index")
+    create_view = views.AdminView(r"^create/$", views.ModelAddFormView, name="create")
+    update_view = views.AdminView(
+        r"^(?P<pk>[0-9]+)/$", views.ModelEditFormView, name="update"
+    )
+    detail_view = views.AdminView(
+        r"^(?P<pk>[0-9]+)/update/$", views.ModelDetailView, name="detail"
+    )
+    delete_view = views.AdminView(
+        r"^(?P<pk>[0-9]+)/delete/$", views.ModelDeleteView, name="delete"
+    )
+    history_view = views.AdminView(
+        r"^(?P<pk>[0-9]+)/history/$", views.ModelHistoryView, name="history"
+    )
     views = []
 
     # API configuration
@@ -137,7 +143,7 @@ class ModelAdmin2(metaclass=ModelAdminBase2):
         self.model_name = model_options.object_name.lower()
 
         if self.name is None:
-            self.name = '{}_{}'.format(self.app_label, self.model_name)
+            self.name = "{}_{}".format(self.app_label, self.model_name)
 
         if self.verbose_name is None:
             self.verbose_name = model_options.verbose_name
@@ -146,60 +152,73 @@ class ModelAdmin2(metaclass=ModelAdminBase2):
 
     def get_default_view_kwargs(self):
         return {
-            'app_label': self.app_label,
-            'model': self.model,
-            'model_name': self.model_name,
-            'model_admin': immutable_admin_factory(self),
+            "app_label": self.app_label,
+            "model": self.model,
+            "model_name": self.model_name,
+            "model_admin": immutable_admin_factory(self),
         }
 
     def get_index_kwargs(self):
         kwargs = self.get_default_view_kwargs()
-        kwargs.update({
-            'paginate_by': self.list_per_page,
-        })
+        kwargs.update(
+            {
+                "paginate_by": self.list_per_page,
+            }
+        )
         return kwargs
 
     def get_default_api_view_kwargs(self):
         kwargs = self.get_default_view_kwargs()
-        kwargs.update({
-            'serializer_class': self.api_serializer_class,
-        })
+        kwargs.update(
+            {
+                "serializer_class": self.api_serializer_class,
+            }
+        )
         return kwargs
 
     def get_prefixed_view_name(self, view_name):
-        return '{}_{}'.format(self.name, view_name)
+        return "{}_{}".format(self.name, view_name)
 
     def get_create_kwargs(self):
         kwargs = self.get_default_view_kwargs()
-        kwargs.update({
-            'inlines': self.inlines,
-            'form_class': (self.create_form_class if
-                           self.create_form_class else self.form_class),
-        })
+        kwargs.update(
+            {
+                "inlines": self.inlines,
+                "form_class": (
+                    self.create_form_class
+                    if self.create_form_class
+                    else self.form_class
+                ),
+            }
+        )
         return kwargs
 
     def get_update_kwargs(self):
         kwargs = self.get_default_view_kwargs()
-        form_class = (self.update_form_class if
-                      self.update_form_class else self.form_class)
+        form_class = (
+            self.update_form_class if self.update_form_class else self.form_class
+        )
         if form_class is None:
-            form_class = modelform_factory(self.model, fields='__all__')
-        kwargs.update({
-            'inlines': self.inlines,
-            'form_class': form_class,
-        })
+            form_class = modelform_factory(self.model, fields="__all__")
+        kwargs.update(
+            {
+                "inlines": self.inlines,
+                "form_class": form_class,
+            }
+        )
         return kwargs
 
     def get_index_url(self):
-        return reverse('admin2:{}'.format(
-            self.get_prefixed_view_name('index')))
+        return reverse("admin2:{}".format(self.get_prefixed_view_name("index")))
 
     def get_api_list_kwargs(self):
         kwargs = self.get_default_api_view_kwargs()
-        kwargs.update({
-            'queryset': self.model.objects.all(),
-            # 'paginate_by': self.list_per_page,
-        })
+        kwargs.update(
+            {
+                "queryset": self.model.objects.all(),
+                # 'paginate_by': self.list_per_page,
+            }
+        )
         return kwargs
 
     def get_api_detail_kwargs(self):
@@ -218,34 +237,35 @@ class ModelAdmin2(metaclass=ModelAdminBase2):
                 trace = sys.exc_info()[2]
                 new_exception = TypeError(
                     'Cannot instantiate admin view "{}.{}". '
-                    'The error that got raised was: {}'.format(
-                        self.__class__.__name__, admin_view.name, e))
+                    "The error that got raised was: {}".format(
+                        self.__class__.__name__, admin_view.name, e
+                    )
+                )
                 try:
                     raise new_exception.with_traceback(trace)
                 except AttributeError:
                     raise (new_exception, None, trace)
 
             pattern_list.append(
-                url(
-                    regex=admin_view.url,
+                re_path(
+                    admin_view.url,
                     view=view_instance,
-                    name=self.get_prefixed_view_name(admin_view.name)
+                    name=self.get_prefixed_view_name(admin_view.name),
                 )
             )
         return pattern_list
 
     def get_api_urls(self):
         return [
-            url(
-                regex=r'^$',
+            re_path(
+                r"^$",
                 view=self.api_list_view.as_view(**self.get_api_list_kwargs()),
-                name=self.get_prefixed_view_name('api_list'),
+                name=self.get_prefixed_view_name("api_list"),
             ),
-            url(
-                regex=r'^(?P<pk>[0-9]+)/$',
-                view=self.api_detail_view.as_view(
-                    **self.get_api_detail_kwargs()),
-                name=self.get_prefixed_view_name('api_detail'),
+            re_path(
+                r"^(?P<pk>[0-9]+)/$",
+                view=self.api_detail_view.as_view(**self.get_api_detail_kwargs()),
+                name=self.get_prefixed_view_name("api_detail"),
             ),
         ]
 
@@ -262,12 +282,12 @@ class ModelAdmin2(metaclass=ModelAdminBase2):
         actions_dict = {}
 
         for cls in type(self).mro()[::-1]:
-            class_actions = getattr(cls, 'list_actions', [])
+            class_actions = getattr(cls, "list_actions", [])
             for action in class_actions:
                 actions_dict[action.__name__] = {
-                    'name': action.__name__,
-                    'description': actions.get_description(action),
-                    'action_callable': action
+                    "name": action.__name__,
+                    "description": actions.get_description(action),
+                    "action_callable": action,
                 }
         return actions_dict
 
@@ -280,8 +300,9 @@ class Admin2Inline(extra_views.InlineFormSetFactory):
     A simple extension of django-extra-view's InlineFormSet that
     adds some useful functionality.
     """
+
     template = None
-    fields = '__all__'
+    fields = "__all__"
 
     def construct_formset(self):
         """
@@ -296,12 +317,14 @@ class Admin2Inline(extra_views.InlineFormSetFactory):
 
 class Admin2TabularInline(Admin2Inline):
     template = os.path.join(
-        settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/tabular.html')
+        settings.ADMIN2_THEME_DIRECTORY, "edit_inlines/tabular.html"
+    )
 
 
 class Admin2StackedInline(Admin2Inline):
     template = os.path.join(
-        settings.ADMIN2_THEME_DIRECTORY, 'edit_inlines/stacked.html')
+        settings.ADMIN2_THEME_DIRECTORY, "edit_inlines/stacked.html"
+    )
 
 
 def immutable_admin_factory(model_admin):
@@ -315,7 +338,7 @@ def immutable_admin_factory(model_admin):
     the result, but hopefully developers attempting that
     'workaround/hack' will read our documentation.
     """
-    ImmutableAdmin = namedtuple('ImmutableAdmin',
-                                model_admin.model_admin_attributes)
-    return ImmutableAdmin(*[getattr(
-        model_admin, x) for x in model_admin.model_admin_attributes])
+    ImmutableAdmin = namedtuple("ImmutableAdmin", model_admin.model_admin_attributes)
+    return ImmutableAdmin(
+        *[getattr(model_admin, x) for x in model_admin.model_admin_attributes]
+    )

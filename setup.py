@@ -136,7 +136,6 @@ setup(
         'djangorestframework>=3.11.1',
         'django-filter==2.3.0',
         'pytz>=2016.4',
-        'future>=0.15.2',
         ],
     extras_require={
         'testing': ['pytest', 'pytest-django', 'pytest-ipdb'],

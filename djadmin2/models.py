@@ -3,8 +3,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.encoding import force_str
-from django.utils.encoding import smart_text
-from django.utils.translation import ugettext, gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 from .utils import quote
 
@@ -13,7 +12,7 @@ class LogEntryManager(models.Manager):
     def log_action(self, user_id, obj, action_flag, change_message=''):
         content_type_id = ContentType.objects.get_for_model(obj).id
         e = self.model(None, None, user_id, content_type_id,
-                       smart_text(obj.id), force_str(obj)[:200],
+                       force_str(obj.id), force_str(obj)[:200],
                        action_flag, change_message)
         e.save()
 
@@ -43,22 +42,22 @@ class LogEntry(models.Model):
         ordering = ('-action_time',)
 
     def __repr__(self):
-        return smart_text(self.action_time)
+        return force_str(self.action_time)
 
     def __str__(self):
         if self.action_flag == self.ADDITION:
-            return ugettext('Added "%(object)s".') % {
+            return gettext('Added "%(object)s".') % {
                 'object': self.object_repr}
         elif self.action_flag == self.CHANGE:
-            return ugettext('Changed "%(object)s" - %(changes)s') % {
+            return gettext('Changed "%(object)s" - %(changes)s') % {
                 'object': self.object_repr,
                 'changes': self.change_message,
             }
         elif self.action_flag == self.DELETION:
-            return ugettext('Deleted "%(object)s."') % {
+            return gettext('Deleted "%(object)s."') % {
                 'object': self.object_repr}
 
-        return ugettext('LogEntry Object')
+        return gettext('LogEntry Object')
 
     def is_addition(self):
         return self.action_flag == self.ADDITION
