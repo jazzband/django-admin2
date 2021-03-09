@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.db import router
 from django.utils.encoding import force_str
 from django.utils.text import capfirst
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy, ngettext, pgettext_lazy
 from django.views.generic import TemplateView
 

@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.encoding import force_str
-from django.utils.translation import ugettext, gettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 
 from .utils import quote
 
@@ -46,18 +46,18 @@ class LogEntry(models.Model):
 
     def __str__(self):
         if self.action_flag == self.ADDITION:
-            return ugettext('Added "%(object)s".') % {
+            return gettext('Added "%(object)s".') % {
                 'object': self.object_repr}
         elif self.action_flag == self.CHANGE:
-            return ugettext('Changed "%(object)s" - %(changes)s') % {
+            return gettext('Changed "%(object)s" - %(changes)s') % {
                 'object': self.object_repr,
                 'changes': self.change_message,
             }
         elif self.action_flag == self.DELETION:
-            return ugettext('Deleted "%(object)s."') % {
+            return gettext('Deleted "%(object)s."') % {
                 'object': self.object_repr}
 
-        return ugettext('LogEntry Object')
+        return gettext('LogEntry Object')
 
     def is_addition(self):
         return self.action_flag == self.ADDITION

@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.utils.encoding import force_str
 from django.utils.text import get_text_list
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 # braces 1.3 views exported AccessMixin
 # in braces 1.4 this was moved views._access and not exported in views
