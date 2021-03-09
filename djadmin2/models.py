@@ -3,7 +3,6 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.encoding import force_str
-from django.utils.encoding import smart_text
 from django.utils.translation import ugettext, gettext_lazy as _
 
 from .utils import quote
@@ -13,7 +12,7 @@ class LogEntryManager(models.Manager):
     def log_action(self, user_id, obj, action_flag, change_message=''):
         content_type_id = ContentType.objects.get_for_model(obj).id
         e = self.model(None, None, user_id, content_type_id,
-                       smart_text(obj.id), force_str(obj)[:200],
+                       force_str(obj.id), force_str(obj)[:200],
                        action_flag, change_message)
         e.save()
 
@@ -43,7 +42,7 @@ class LogEntry(models.Model):
         ordering = ('-action_time',)
 
     def __repr__(self):
-        return smart_text(self.action_time)
+        return force_str(self.action_time)
 
     def __str__(self):
         if self.action_flag == self.ADDITION:
