@@ -19,7 +19,7 @@ logger = logging.getLogger("djadmin2")
 
 class ModelAdminBase2(type):
     def __new__(cls, name, bases, attrs):
-        new_class = super(ModelAdminBase2, cls).__new__(cls, name, bases, attrs)
+        new_class = super().__new__(cls, name, bases, attrs)
         view_list = []
         for key, value in attrs.items():
             if isinstance(value, views.AdminView):
@@ -309,7 +309,7 @@ class Admin2Inline(extra_views.InlineFormSetFactory):
         Overrides construct_formset to attach the model class as
         an attribute of the returned formset instance.
         """
-        formset = super(Admin2Inline, self).construct_formset()
+        formset = super().construct_formset()
         formset.model = self.inline_model
         formset.template = self.template
         return formset
