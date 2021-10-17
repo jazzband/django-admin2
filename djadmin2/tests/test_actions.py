@@ -5,7 +5,7 @@ from ..actions import get_description
 from .models import Thing
 
 
-class TestAction(object):
+class TestAction:
     description = "Test Action Class"
 
 

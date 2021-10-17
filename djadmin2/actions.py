@@ -49,7 +49,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
             objects_name = options.verbose_name_plural
         self.objects_name = force_str(objects_name)
 
-        super(BaseListAction, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get_queryset(self):
         """ Replaced `get_queryset` from `Admin2ModelMixin`"""
@@ -85,7 +85,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
         """ Utility method when you want to display nested objects
             (such as during a bulk update/delete)
         """
-        context = super(BaseListAction, self).get_context_data()
+        context = super().get_context_data()
 
         def _format_callback(obj):
             opts = utils.model_options(obj)
@@ -108,7 +108,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
 
     def get(self, request):
         if self.item_count > 0:
-            return super(BaseListAction, self).get(request)
+            return super().get(request)
 
         message = _(self.empty_message)
         messages.add_message(request, messages.INFO, message)
@@ -160,7 +160,7 @@ class DeleteSelectedAction(BaseListAction):
 
     def post(self, request):
         if request.POST.get('confirmed'):
-            super(DeleteSelectedAction, self).post(request)
+            super().post(request)
         else:
             # The user has not confirmed that they want to delete the
             # objects, so render a template asking for their confirmation.
