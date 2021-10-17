@@ -45,8 +45,8 @@ Screenshots
 Requirements
 ============
 
-* Django 1.11+
-* Python 2.7+ or Python 3.4+
+* Django 2.2+
+* Python 3.5+
 * django-braces_
 * django-extra-views_
 * django-rest-framework_
