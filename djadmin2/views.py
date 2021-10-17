@@ -28,7 +28,7 @@ from .models import LogEntry
 from .viewmixins import Admin2Mixin, Admin2ModelMixin, Admin2ModelFormMixin
 
 
-class AdminView(object):
+class AdminView:
 
     def __init__(self, url, view, name=None):
         self.url = url
@@ -61,7 +61,7 @@ class IndexView(Admin2Mixin, generic.TemplateView):
     app_verbose_names = None
 
     def get_context_data(self, **kwargs):
-        data = super(IndexView, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
         data.update({
             'apps': self.apps,
             'app_verbose_names': self.app_verbose_names,
@@ -88,7 +88,7 @@ class AppIndexView(Admin2Mixin, generic.TemplateView):
     app_verbose_names = None
 
     def get_context_data(self, **kwargs):
-        data = super(AppIndexView, self).get_context_data(**kwargs)
+        data = super().get_context_data(**kwargs)
         app_label = self.kwargs['app_label']
         registry = self.apps[app_label]
         data.update({
@@ -172,7 +172,7 @@ class ModelListView(Admin2ModelMixin, generic.ListView):
         return queryset, use_distinct
 
     def get_queryset(self):
-        queryset = super(ModelListView, self).get_queryset()
+        queryset = super().get_queryset()
         search_term = self.request.GET.get('q', None)
         search_use_distinct = False
         if self.model_admin.search_fields and search_term:
@@ -246,7 +246,7 @@ class ModelListView(Admin2ModelMixin, generic.ListView):
         return self._date_filter
 
     def get_context_data(self, **kwargs):
-        context = super(ModelListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['model'] = self.get_model()
         context['actions'] = self.get_actions().values()
         context['search_fields'] = self.get_search_fields()
@@ -419,14 +419,14 @@ class ModelAddFormView(Admin2ModelMixin, Admin2ModelFormMixin,
         permissions.ModelAddPermission)
 
     def get_context_data(self, **kwargs):
-        context = super(ModelAddFormView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['model'] = self.get_model()
         context['action'] = "Add"
         context['action_name'] = gettext_lazy("Add")
         return context
 
     def forms_valid(self, form, inlines):
-        response = super(ModelAddFormView, self).forms_valid(form, inlines)
+        response = super().forms_valid(form, inlines)
         LogEntry.objects.log_action(
             self.request.user.id,
             self.object,
@@ -455,7 +455,7 @@ class ModelDeleteView(Admin2ModelMixin, generic.DeleteView):
         permissions.ModelDeletePermission)
 
     def get_context_data(self, **kwargs):
-        context = super(ModelDeleteView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
         def _format_callback(obj):
             opts = utils.model_options(obj)
@@ -476,7 +476,7 @@ class ModelDeleteView(Admin2ModelMixin, generic.DeleteView):
             self.get_object(),
             LogEntry.DELETION,
             'Object deleted.')
-        return super(ModelDeleteView, self).delete(request, *args, **kwargs)
+        return super().delete(request, *args, **kwargs)
 
 
 class ModelHistoryView(Admin2ModelMixin, generic.ListView):
@@ -499,7 +499,7 @@ class ModelHistoryView(Admin2ModelMixin, generic.ListView):
     )
 
     def get_context_data(self, **kwargs):
-        context = super(ModelHistoryView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['model'] = self.get_model()
         context['object'] = self.get_object()
         return context
@@ -536,7 +536,7 @@ class PasswordChangeView(Admin2Mixin, generic.UpdateView):
     def get_form_class(self):
         if self.request.user == self.get_object():
             return self.admin_form_class
-        return super(PasswordChangeView, self).get_form_class()
+        return super().get_form_class()
 
     def get_queryset(self):
         from django.contrib.auth import get_user_model
