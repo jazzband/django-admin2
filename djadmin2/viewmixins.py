@@ -31,7 +31,7 @@ class PermissionMixin(AccessMixin):
         self.permissions = [
             permission_class()
             for permission_class in self.permission_classes]
-        super(PermissionMixin, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def has_permission(self, obj=None):
         '''
@@ -55,10 +55,10 @@ class PermissionMixin(AccessMixin):
                     request.get_full_path(),
                     self.get_login_url(),
                     self.get_redirect_field_name())
-        return super(PermissionMixin, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(PermissionMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         permission_checker = permissions.TemplatePermissionChecker(
             self.request, self.model_admin)
         context.update({
@@ -111,14 +111,14 @@ class Admin2Mixin(PermissionMixin):
                 }
                 return self.login_view().dispatch(request, extra_context=extra, *args, **kwargs)
 
-        return super(Admin2Mixin, self).dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
 
 class Admin2ModelMixin(Admin2Mixin):
     model_admin = None
 
     def get_context_data(self, **kwargs):
-        context = super(Admin2ModelMixin, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         model = self.get_model()
         model_meta = model_options(model)
         app_verbose_names = self.model_admin.admin.app_verbose_names
@@ -142,7 +142,7 @@ class Admin2ModelMixin(Admin2Mixin):
         return modelform_factory(self.get_model(), fields='__all__')
 
 
-class Admin2ModelFormMixin(object):
+class Admin2ModelFormMixin:
     def get_success_url(self):
         if '_continue' in self.request.POST:
             view_name = admin2_urlname(self, 'update')
