@@ -119,7 +119,7 @@ class NestedObjects(Collector):
     """
 
     def __init__(self, *args, **kwargs):
-        super(NestedObjects, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.edges = {}  # {from_instance: [to_instances]}
         self.protected = set()
         self.model_objs = defaultdict(set)
@@ -139,7 +139,7 @@ class NestedObjects(Collector):
                 self.add_edge(None, obj)
             self.model_objs[obj._meta.model].add(obj)
         try:
-            return super(NestedObjects, self).collect(objs, source_attr=source_attr, **kwargs)
+            return super().collect(objs, source_attr=source_attr, **kwargs)
         except ProtectedError as e:
             self.protected.update(e.protected_objects)
 
