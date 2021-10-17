@@ -134,7 +134,7 @@ setup(
         'django-extra-views>=0.12.0',
         'django-braces>=1.3.0',
         'djangorestframework>=3.11.1',
-        'django-filter>=21.1',
+        'django-filter>=2.4.0',
         'pytz>=2016.4',
         ],
     extras_require={
