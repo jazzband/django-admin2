@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from djadmin2.site import djadmin2_site
 from .models import CaptionedFile, UncaptionedFile
 

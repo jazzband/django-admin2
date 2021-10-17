@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
@@ -113,10 +113,10 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Programming Language :: JavaScript",
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -134,7 +134,7 @@ setup(
         'django-extra-views>=0.12.0',
         'django-braces>=1.3.0',
         'djangorestframework>=3.11.1',
-        'django-filter==2.3.0',
+        'django-filter>=2.4.0',
         'pytz>=2016.4',
         ],
     extras_require={
