@@ -91,7 +91,7 @@ def model_permission(permission):
     return has_permission
 
 
-class BasePermission(object):
+class BasePermission:
     '''
     Provides a base class with a common API. It implements a compatible
     interface to django-rest-framework permission backends.
@@ -187,7 +187,7 @@ class ModelDeletePermission(BasePermission):
     permissions = (model_permission('{app_label}.delete_{model_name}'),)
 
 
-class TemplatePermissionChecker(object):
+class TemplatePermissionChecker:
     '''
     Can be used in the template like:
 

@@ -56,7 +56,7 @@ class Admin2UserCreationForm(UserCreationForm):
 class Admin2UserChangeForm(UserChangeForm):
 
     def __init__(self, *args, **kwargs):
-        super(Admin2UserChangeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         print(self.fields['password'].help_text)
         self.fields['password'].help_text = _("Raw passwords are not stored, so there is no way to see this user's password, but you can change the password using <a href=\"%s\">this form</a>." % self.get_update_password_url())
 
