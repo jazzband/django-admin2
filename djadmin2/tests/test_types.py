@@ -6,7 +6,7 @@ from ..core import Admin2
 from .models import BigThing
 
 
-class ModelAdmin(object):
+class ModelAdmin:
     model_admin_attributes = ['a', 'b', 'c']
     a = 1  # covered
     b = 2  # covered
@@ -73,7 +73,7 @@ class ModelAdminTest(TestCase):
                 admin_instance.get_urls()
 
             except TypeError as e:
-                message = u"Cannot instantiate admin view " \
+                message = "Cannot instantiate admin view " \
                     '"ModelAdmin2.None". The error that got raised was: ' \
                     "'NoneType' object has no attribute 'as_view'"
                 self.assertEqual(e.args[0], message)

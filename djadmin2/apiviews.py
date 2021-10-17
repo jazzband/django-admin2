@@ -17,7 +17,7 @@ class Admin2APISerializer(serializers.HyperlinkedModelSerializer):
     __unicode__ = fields.ReadOnlyField(source='__str__')
 
     def get_extra_kwargs(self):
-        extra_kwargs = super(Admin2APISerializer, self).get_extra_kwargs()
+        extra_kwargs = super().get_extra_kwargs()
         extra_kwargs.update({
             'url': {'view_name': self._get_default_view_name(self.Meta.model)}
         })
@@ -56,7 +56,7 @@ class Admin2APIMixin(Admin2Mixin):
                     fields = '__all__'
 
             return ModelAPISerilizer
-        return super(Admin2APIMixin, self).get_serializer_class()
+        return super().get_serializer_class()
 
 
 class IndexAPIView(Admin2APIMixin, APIView):

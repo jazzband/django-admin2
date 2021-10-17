@@ -73,12 +73,12 @@ class TagsTests(TestCase):
         formset = TagsTestFormSet()
         self.assertEqual(
             admin2_tags.formset_visible_fieldlist(formset),
-            [u'Visible 1', u'Visible 2']
+            ['Visible 1', 'Visible 2']
         )
 
     def test_verbose_name_for(self):
         app_verbose_names = {
-            u'app_one_label': 'App One Verbose Name',
+            'app_one_label': 'App One Verbose Name',
         }
         self.assertEqual(
             "App One Verbose Name",

@@ -119,7 +119,7 @@ class UtilsTest(TestCase):
         )
 
     def test_get_attr_callable(self):
-        class Klass(object):
+        class Klass:
             def hello(self):
                 return "hello"
 
@@ -129,7 +129,7 @@ class UtilsTest(TestCase):
         )
 
     def test_get_attr_str(self):
-        class Klass(object):
+        class Klass:
             def __str__(self):
                 return "str"
 
@@ -142,7 +142,7 @@ class UtilsTest(TestCase):
         )
 
     def test_get_attr(self):
-        class Klass(object):
+        class Klass:
             attr = "value"
 
         self.assertEqual(

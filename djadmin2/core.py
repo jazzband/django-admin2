@@ -14,7 +14,7 @@ from . import utils
 from . import views
 
 
-class Admin2(object):
+class Admin2:
     """
     The base Admin2 object.
     It keeps a registry of all registered Models and collects the urls of their
@@ -137,7 +137,7 @@ class Admin2(object):
         for object_admin in self.registry.values():
             if object_admin.name == name:
                 return object_admin
-        raise ValueError(u"No object admin found with name {}".format(repr(name)))
+        raise ValueError("No object admin found with name {}".format(repr(name)))
 
     def get_index_kwargs(self):
         return {
