@@ -137,7 +137,7 @@ class BaseListAction(Admin2ModelMixin, TemplateView):
 
 
 class DeleteSelectedAction(BaseListAction):
-    # TODO: Check that user has permission to delete all related obejcts.  See
+    # TODO: Check that user has permission to delete all related objects.  See
     # `get_deleted_objects` in contrib.admin.util for how this is currently
     # done.  (Hint: I think we can do better.)
 

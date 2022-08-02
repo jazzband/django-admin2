@@ -4,7 +4,7 @@ Django's Model._meta
 
 Currently django implements most of its behaviour that makes using models so
 nice using a metaclass. A metaclass is invoked when an actual class is created
-and can change that class' behaviour by adding or modifing its attributes and
+and can change that class' behaviour by adding or modifying its attributes and
 methods. This means that django is actually changing your model class at the
 moment when the ``models.py`` file of your app is loaded.
 
@@ -68,7 +68,7 @@ the `django documentation
 ``db_table``
     Contains the name of the database table used for this model. This is
     either what was set on ``Meta`` or defaults to a string that is built
-    from ``app_label`` and ``model_name`` seperated by an underscore. So for
+    from ``app_label`` and ``model_name`` separated by an underscore. So for
     example the ``db_table`` for ``django.contrib.auth.models.User`` is
     ``'auth_user'``.
 

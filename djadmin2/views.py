@@ -132,7 +132,7 @@ class ModelListView(Admin2ModelMixin, generic.ListView):
         if hasattr(action_callable, "process_queryset"):
             response = action_callable.as_view(queryset=queryset, model_admin=self.model_admin)(request)
         else:
-            # generate the reponse if a function.
+            # generate the response if a function.
             response = action_callable(request, queryset)
 
         if response is None:
@@ -204,7 +204,7 @@ class ModelListView(Admin2ModelMixin, generic.ListView):
         # If we are sorting AND the field exists on the model
         sort_by = self.request.GET.get('sort', None)
         if sort_by:
-            # Special case when we are not explicityly displaying fields
+            # Special case when we are not explicitly displaying fields
             if sort_by == '-__str__':
                 queryset = queryset[::-1]
             try:
