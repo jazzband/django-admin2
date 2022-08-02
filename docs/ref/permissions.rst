@@ -78,7 +78,7 @@ method takes are pretty self explanatory:
 
 Based on these arguments should the ``has_permission`` method than return
 either ``True`` if the permission shall be granted or ``False`` if the access
-to the user shall be diened.
+to the user shall be denied.
 
 Here is an example implementation of a custom permission class:
 
@@ -214,7 +214,7 @@ So what we actually did here is that we just put the name of the
 ``ModelAdmin2`` that is used for the model you want to access between the
 ``permissions`` variable and the ``has_view_permission``. This name will be the
 app label followed by the model name in lowercase with an underscore in between
-for ordinary django models. That way you can break free of beeing limitted to
+for ordinary django models. That way you can break free of beeing limited to
 permission checks for the current ``ModelAdmin2``. But that doesn't help you
 either if you don't know from the beginning on which model admin you want to
 check the permissions. Imagine the admin's index page that should show a list

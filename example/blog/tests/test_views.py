@@ -34,7 +34,7 @@ class AdminIndexTest(BaseIntegrationTest):
 class UserListTest(BaseIntegrationTest):
 
     def test_search_users_m2m_group(self):
-        # This test should cause the distinct search path to exectue
+        # This test should cause the distinct search path to execute
         group = Group.objects.create(name="Test Group")
         self.user.groups.add(group)
 
